@@ -224,6 +224,8 @@
         overlay.remove();
         styles.remove();
         document.body.style.overflow = '';
+        // Dispatch event to trigger intro animation
+        window.dispatchEvent(new CustomEvent('auth-complete'));
       } else {
         error.classList.add('visible');
         input.value = '';

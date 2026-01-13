@@ -1463,44 +1463,46 @@
 
       if (!overlay) return;
 
-      // Skip intro if returning visitor (optional - remove if you want it every time)
-      // const hasVisited = sessionStorage.getItem('intro-shown');
-      // if (hasVisited) {
-      //   overlay.classList.add('is-hidden');
-      //   body.classList.remove('intro-active');
-      //   return;
-      // }
-
       // Timing configuration (in milliseconds)
       const FADE_IN_DELAY = 100;      // Small delay before fade in starts
       const FADE_IN_DURATION = 800;   // How long the fade in takes
       const DISPLAY_DURATION = 2000;  // How long to show after fade in completes
       const FADE_OUT_DURATION = 600;  // How long the fade out takes
 
-      // Step 1: Fade in the logo
-      setTimeout(() => {
-        overlay.classList.add('is-visible');
-
-        // Step 2: After fade in + display time, fade out
+      function runIntroAnimation() {
+        // Step 1: Fade in the logo
         setTimeout(() => {
-          overlay.classList.remove('is-visible');
-          overlay.classList.add('is-fading');
+          overlay.classList.add('is-visible');
 
-          // Step 3: After content fades, hide the overlay
+          // Step 2: After fade in + display time, fade out
           setTimeout(() => {
-            overlay.classList.add('is-hidden');
-            body.classList.remove('intro-active');
+            overlay.classList.remove('is-visible');
+            overlay.classList.add('is-fading');
 
-            // Mark as shown for this session (optional)
-            // sessionStorage.setItem('intro-shown', 'true');
-
-            // Remove overlay from DOM after transition completes
+            // Step 3: After content fades, hide the overlay
             setTimeout(() => {
-              overlay.remove();
-            }, 800);
-          }, FADE_OUT_DURATION);
-        }, FADE_IN_DURATION + DISPLAY_DURATION);
-      }, FADE_IN_DELAY);
+              overlay.classList.add('is-hidden');
+              body.classList.remove('intro-active');
+
+              // Remove overlay from DOM after transition completes
+              setTimeout(() => {
+                overlay.remove();
+              }, 800);
+            }, FADE_OUT_DURATION);
+          }, FADE_IN_DURATION + DISPLAY_DURATION);
+        }, FADE_IN_DELAY);
+      }
+
+      // Check if already authenticated (returning in same session)
+      const isAuthenticated = sessionStorage.getItem('site_authenticated') === 'true';
+
+      if (isAuthenticated) {
+        // Already authenticated - run intro immediately
+        runIntroAnimation();
+      } else {
+        // Wait for authentication to complete, then run intro
+        window.addEventListener('auth-complete', runIntroAnimation, { once: true });
+      }
     })();
   </script>
 
