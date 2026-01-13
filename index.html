@@ -220,6 +220,75 @@
     }
 
     /* ==========================================
+       SPOTIFY PLAYER
+       ========================================== */
+    .spotify-player {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .spotify-toggle {
+      background: rgba(30, 215, 96, 0.9);
+      border: none;
+      width: 40px;
+      height: 40px;
+      border-radius: 50% 50% 0 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: var(--space-4);
+      margin-bottom: -1px;
+      transition: background 0.2s, transform 0.2s;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .spotify-toggle:hover {
+      background: rgba(30, 215, 96, 1);
+      transform: translateY(-2px);
+    }
+
+    .spotify-toggle__icon {
+      font-size: 1.25rem;
+      color: #000;
+    }
+
+    .spotify-embed {
+      width: 100%;
+      max-width: 400px;
+      background: #282828;
+      border-radius: 12px 12px 0 0;
+      overflow: hidden;
+      transform: translateY(100%);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+      margin-right: var(--space-4);
+    }
+
+    .spotify-player.is-open .spotify-embed {
+      transform: translateY(0);
+    }
+
+    .spotify-player.is-open .spotify-toggle {
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .spotify-player.is-open .spotify-toggle__icon {
+      transform: rotate(180deg);
+    }
+
+    .spotify-embed iframe {
+      display: block;
+      border-radius: 12px;
+    }
+
+    /* ==========================================
        RESPONSIVE
        ========================================== */
     @media (max-width: 768px) {
@@ -236,6 +305,15 @@
 
       .artwork-focus-section {
         padding: var(--space-4);
+      }
+
+      .spotify-embed {
+        max-width: calc(100% - var(--space-4));
+        margin-right: var(--space-2);
+      }
+
+      .spotify-toggle {
+        margin-right: var(--space-2);
       }
     }
   </style>
@@ -612,6 +690,30 @@
     </main>
 
     <!-- ====================================================================
+         SPOTIFY PLAYER
+         Edit: Replace the playlist ID in the src URL with your own
+         To get your playlist ID: Open playlist in Spotify > Share > Copy link
+         The ID is the string after /playlist/ (e.g., 37i9dQZF1DXcBWIGoYBM5M)
+         ==================================================================== -->
+    <div class="spotify-player" id="spotify-player">
+      <button class="spotify-toggle" id="spotify-toggle" aria-label="Toggle music player">
+        <span class="spotify-toggle__icon">&#9835;</span>
+      </button>
+      <div class="spotify-embed">
+        <iframe
+          src="https://open.spotify.com/embed/playlist/37i9dQZF1DXcBWIGoYBM5M?utm_source=generator&theme=0"
+          width="100%"
+          height="80"
+          frameBorder="0"
+          allowfullscreen=""
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy"
+          title="Spotify Playlist"
+        ></iframe>
+      </div>
+    </div>
+
+    <!-- ====================================================================
          FOOTER
          Edit: Update copyright text and add social links as needed
          ==================================================================== -->
@@ -645,6 +747,20 @@
   <!-- Update copyright year automatically -->
   <script>
     document.getElementById('current-year').textContent = new Date().getFullYear();
+  </script>
+
+  <!-- Spotify player toggle -->
+  <script>
+    (function() {
+      const player = document.getElementById('spotify-player');
+      const toggle = document.getElementById('spotify-toggle');
+
+      if (toggle && player) {
+        toggle.addEventListener('click', function() {
+          player.classList.toggle('is-open');
+        });
+      }
+    })();
   </script>
 
   <!-- Scroll-driven artwork reveal and zoom -->
