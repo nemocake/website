@@ -18,10 +18,232 @@
   
   <!-- Favicon - Add your favicon files -->
   <!-- <link rel="icon" href="./assets/images/favicon.ico"> -->
+
+  <style>
+    /* ==========================================
+       SCROLL SNAP SYSTEM
+       ========================================== */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body.has-artwork-bg {
+      scroll-snap-type: y mandatory;
+      overflow-y: scroll;
+    }
+
+    .snap-section {
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+
+    /* Fullscreen Artwork Background */
+    .artwork-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      transition: transform 0.6s ease-out;
+      transform-origin: center center;
+    }
+
+    .artwork-background iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Zoom effect when artwork is in focus */
+    .artwork-background.zoomed {
+      transform: scale(1.15);
+    }
+
+    /* Page wrapper above artwork */
+    body.has-artwork-bg .page-wrapper {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header - stays solid */
+    body.has-artwork-bg .site-header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    /* Footer */
+    body.has-artwork-bg .site-footer {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+    }
+
+    /* ==========================================
+       SECTION CONTENT STYLING
+       ========================================== */
+
+    /* Section inner content wrapper */
+    body.has-artwork-bg .scroll-section .section-content {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px);
+      border-radius: var(--radius-xl);
+      padding: var(--space-12) var(--space-8);
+      margin: 0 auto;
+      max-width: 100%;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      transition: transform 0.4s ease-out, opacity 0.4s ease-out;
+    }
+
+    /* Hero section - special treatment */
+    body.has-artwork-bg .section--hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: var(--space-16);
+      padding-bottom: var(--space-16);
+    }
+
+    body.has-artwork-bg .section--hero .section-content {
+      background: rgba(255, 255, 255, 0.88);
+      text-align: center;
+    }
+
+    /* Regular sections */
+    body.has-artwork-bg .scroll-section:not(.section--hero) {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: var(--space-8) 0;
+    }
+
+    /* ==========================================
+       ARTWORK FOCUS SECTION
+       ========================================== */
+    .artwork-focus-section {
+      height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-end;
+      padding: var(--space-8);
+    }
+
+    /* Art description box */
+    .art-description {
+      max-width: 400px;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(20px);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      color: #fff;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  opacity 0.6s ease-out;
+    }
+
+    .art-description.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .art-description__label {
+      font-size: var(--text-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: var(--space-2);
+    }
+
+    .art-description__title {
+      font-size: var(--text-xl);
+      font-weight: var(--font-semibold);
+      margin-bottom: var(--space-2);
+      line-height: 1.3;
+    }
+
+    .art-description__artist {
+      font-size: var(--text-sm);
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: var(--space-4);
+    }
+
+    .art-description__text {
+      font-size: var(--text-sm);
+      line-height: 1.6;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .art-description__link {
+      display: inline-block;
+      margin-top: var(--space-4);
+      font-size: var(--text-sm);
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .art-description__link:hover {
+      color: #fff;
+    }
+
+    /* Scroll hint */
+    .scroll-hint {
+      position: absolute;
+      bottom: var(--space-8);
+      left: 50%;
+      transform: translateX(-50%);
+      color: rgba(255, 255, 255, 0.7);
+      font-size: var(--text-sm);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+      animation: pulse 2s ease-in-out infinite;
+      transition: opacity 0.3s;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.5; transform: translateX(-50%) translateY(0); }
+      50% { opacity: 1; transform: translateX(-50%) translateY(5px); }
+    }
+
+    /* ==========================================
+       RESPONSIVE
+       ========================================== */
+    @media (max-width: 768px) {
+      body.has-artwork-bg .scroll-section .section-content {
+        padding: var(--space-8) var(--space-4);
+        border-radius: var(--radius-lg);
+        margin: 0 var(--space-2);
+      }
+
+      .art-description {
+        max-width: 100%;
+        margin: 0 var(--space-2);
+      }
+
+      .artwork-focus-section {
+        padding: var(--space-4);
+      }
+    }
+  </style>
 </head>
-<body>
+<body class="has-artwork-bg">
   <!-- Password Protection -->
   <script src="./assets/js/auth.js"></script>
+
+  <!-- Artwork Background -->
+  <div class="artwork-background">
+    <iframe
+      src="https://cdn.feralfileassets.com/previews/500ccc6e-d7ad-443f-a9df-0bf709b3b3c9/1645052262/index.html"
+      title="36 Points by Sage Jenson"
+      loading="lazy"
+      allow="autoplay"
+    ></iframe>
+  </div>
+
   <div class="page-wrapper">
     
     <!-- ====================================================================
@@ -69,40 +291,62 @@
            HERO SECTION
            Edit: Update headline, subtitle, and call-to-action button
            ================================================================== -->
-      <section class="section section--hero">
+      <section class="section section--hero scroll-section snap-section" data-scroll-section="hero">
         <div class="container">
-          <div class="text-center">
-            
+          <div class="section-content">
+
             <!-- Hero Headline -->
             <h1 class="mb-4">
               <!-- Edit: Your main headline -->
               Welcome to My Space
             </h1>
-            
+
             <!-- Hero Subtitle -->
             <p class="lead mb-8" style="max-width: 40rem; margin-left: auto; margin-right: auto;">
               <!-- Edit: Brief introduction about yourself or your site -->
-              Designer, developer, and creative thinker. I build digital experiences 
+              Designer, developer, and creative thinker. I build digital experiences
               that blend form and function.
             </p>
-            
+
             <!-- Call to Action Buttons -->
             <div class="flex flex--center gap-4">
               <a href="./projects/" class="btn btn--primary">View Projects</a>
               <a href="./about/" class="btn btn--secondary">About Me</a>
             </div>
-            
+
           </div>
         </div>
       </section>
 
       <!-- ==================================================================
+           ARTWORK FOCUS SECTION
+           Edit: Update the artwork description below
+           ================================================================== -->
+      <div class="artwork-focus-section snap-section" id="artwork-focus">
+        <!-- Art Description Box - Edit content below -->
+        <div class="art-description" id="art-description">
+          <p class="art-description__label">Featured Artwork</p>
+          <h3 class="art-description__title">36 Points</h3>
+          <p class="art-description__artist">by Sage Jenson</p>
+          <p class="art-description__text">
+            A generative artwork exploring the relationship between form and motion.
+            The piece evolves continuously, creating unique patterns that never repeat.
+          </p>
+          <a href="https://feralfile.com" target="_blank" rel="noopener" class="art-description__link">
+            View on Feral File &rarr;
+          </a>
+        </div>
+        <span class="scroll-hint">continue scrolling</span>
+      </div>
+
+      <!-- ==================================================================
            FEATURED PROJECTS SECTION
            Edit: Add your project cards using the widget-card component
            ================================================================== -->
-      <section class="section section--alt">
+      <section class="section scroll-section snap-section" data-scroll-section="projects">
         <div class="container">
-          
+          <div class="section-content">
+
           <!-- Section Header -->
           <div class="section-header">
             <h2 class="section-title">Featured Projects</h2>
@@ -111,7 +355,7 @@
               A selection of recent work spanning design, development, and creative direction.
             </p>
           </div>
-          
+
           <!-- Projects Grid -->
           <div class="grid grid--cols-3">
             
@@ -200,7 +444,8 @@
           <div class="text-center mt-12">
             <a href="./projects/" class="btn btn--secondary">View All Projects</a>
           </div>
-          
+
+          </div>
         </div>
       </section>
 
@@ -208,9 +453,10 @@
            BLOG SECTION
            Edit: Add your latest blog post cards
            ================================================================== -->
-      <section class="section">
+      <section class="section scroll-section snap-section" data-scroll-section="blog">
         <div class="container">
-          
+          <div class="section-content">
+
           <!-- Section Header -->
           <div class="section-header">
             <h2 class="section-title">Latest Posts</h2>
@@ -219,7 +465,7 @@
               Thoughts on design, technology, and the creative process.
             </p>
           </div>
-          
+
           <!-- Blog Posts Grid -->
           <div class="grid grid--cols-2">
             
@@ -281,7 +527,8 @@
           <div class="text-center mt-12">
             <a href="./blog/" class="btn btn--secondary">Read More Posts</a>
           </div>
-          
+
+          </div>
         </div>
       </section>
 
@@ -290,9 +537,10 @@
            Demonstrates the slider component with autoplay
            Edit: Replace demo slides with your actual content
            ================================================================== -->
-      <section class="section section--alt">
+      <section class="section scroll-section snap-section" data-scroll-section="gallery">
         <div class="container">
-          
+          <div class="section-content">
+
           <!-- Section Header -->
           <div class="section-header">
             <h2 class="section-title">Gallery</h2>
@@ -350,7 +598,8 @@
             </div>
             <!-- Navigation and dots are auto-generated by slider.js -->
           </div>
-          
+
+          </div>
         </div>
       </section>
 
@@ -391,6 +640,87 @@
   <script>
     document.getElementById('current-year').textContent = new Date().getFullYear();
   </script>
-  
+
+  <!-- Scroll-driven artwork reveal and zoom -->
+  <script>
+    (function() {
+      const artworkBg = document.querySelector('.artwork-background');
+      const artworkFocus = document.getElementById('artwork-focus');
+      const artDescription = document.getElementById('art-description');
+      const scrollHints = document.querySelectorAll('.scroll-hint');
+
+      // Throttle function for performance
+      function throttle(func, limit) {
+        let inThrottle;
+        return function(...args) {
+          if (!inThrottle) {
+            func.apply(this, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+          }
+        };
+      }
+
+      // Check if artwork focus section is in view
+      function isInViewport(el) {
+        const rect = el.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        // Consider "in view" when at least 50% visible
+        const visibleTop = Math.max(0, rect.top);
+        const visibleBottom = Math.min(windowHeight, rect.bottom);
+        const visibleHeight = visibleBottom - visibleTop;
+        return visibleHeight > windowHeight * 0.5;
+      }
+
+      // Calculate visibility percentage
+      function getVisibilityPercent(el) {
+        const rect = el.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        if (rect.bottom < 0 || rect.top > windowHeight) return 0;
+        const visibleTop = Math.max(0, rect.top);
+        const visibleBottom = Math.min(windowHeight, rect.bottom);
+        return (visibleBottom - visibleTop) / windowHeight;
+      }
+
+      // Update artwork zoom and description visibility
+      function updateArtworkFocus() {
+        if (!artworkFocus || !artworkBg || !artDescription) return;
+
+        const isArtworkVisible = isInViewport(artworkFocus);
+        const visibilityPercent = getVisibilityPercent(artworkFocus);
+
+        // Zoom effect
+        if (isArtworkVisible) {
+          artworkBg.classList.add('zoomed');
+          // Fade in art description with delay
+          setTimeout(() => {
+            artDescription.classList.add('visible');
+          }, 300);
+        } else {
+          artworkBg.classList.remove('zoomed');
+          artDescription.classList.remove('visible');
+        }
+
+        // Update scroll hints opacity
+        scrollHints.forEach(hint => {
+          const parent = hint.closest('.snap-section, .artwork-focus-section');
+          if (parent) {
+            const parentVisible = getVisibilityPercent(parent);
+            hint.style.opacity = parentVisible > 0.8 ? '1' : '0';
+          }
+        });
+      }
+
+      // Listen for scroll
+      window.addEventListener('scroll', throttle(updateArtworkFocus, 50), { passive: true });
+
+      // Initial update
+      updateArtworkFocus();
+
+      // Update on resize
+      window.addEventListener('resize', throttle(updateArtworkFocus, 100), { passive: true });
+    })();
+  </script>
+
 </body>
 </html>

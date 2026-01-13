@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artwork Embed Demo | Your Name</title>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="./assets/css/variables.css">
+  <link rel="stylesheet" href="./assets/css/reset.css">
+  <link rel="stylesheet" href="./assets/css/base.css">
+  <link rel="stylesheet" href="./assets/css/layout.css">
+  <link rel="stylesheet" href="./assets/css/components.css">
+  <link rel="stylesheet" href="./assets/css/utilities.css">
+
+  <style>
+    /* ========================================
+       OPTION 1: FRAMED ARTWORK
+       Use this to embed artwork in a section
+       ======================================== */
+    .artwork-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;  /* Change ratio as needed */
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: #000;
+    }
+
+    .artwork-frame iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Optional: Add a subtle border/glow */
+    .artwork-frame--bordered {
+      box-shadow: 0 0 0 1px var(--color-border),
+                  0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    /* ========================================
+       OPTION 2: FULLSCREEN BACKGROUND
+       Uncomment body.has-artwork-bg styles
+       and add class to <body> to enable
+       ======================================== */
+    .artwork-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      pointer-events: none; /* Allow clicks through to content */
+    }
+
+    .artwork-background iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* When using background artwork, add overlay for readability */
+    body.has-artwork-bg .page-wrapper {
+      position: relative;
+      z-index: 1;
+    }
+
+    body.has-artwork-bg .content-overlay {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(8px);
+      border-radius: var(--radius-lg);
+      padding: var(--space-8);
+    }
+
+    /* Dark overlay variant */
+    body.has-artwork-bg.dark-overlay .content-overlay {
+      background: rgba(0, 0, 0, 0.75);
+      color: #fff;
+    }
+
+    /* Demo page specific styles */
+    .demo-section {
+      padding: var(--space-12) 0;
+    }
+
+    .demo-section + .demo-section {
+      border-top: 1px solid var(--color-border);
+    }
+
+    .demo-controls {
+      display: flex;
+      gap: var(--space-4);
+      margin-top: var(--space-6);
+      flex-wrap: wrap;
+    }
+
+    .demo-controls button {
+      padding: var(--space-3) var(--space-6);
+      background: var(--color-text);
+      color: var(--color-background);
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-size: var(--text-sm);
+      transition: opacity 0.2s;
+    }
+
+    .demo-controls button:hover {
+      opacity: 0.8;
+    }
+
+    .demo-controls button.active {
+      background: var(--color-accent);
+    }
+
+    .code-block {
+      background: var(--color-surface);
+      padding: var(--space-4);
+      border-radius: var(--radius-md);
+      overflow-x: auto;
+      font-family: monospace;
+      font-size: var(--text-sm);
+      margin-top: var(--space-4);
+    }
+  </style>
+</head>
+<body>
+  <!-- Password Protection -->
+  <script src="./assets/js/auth.js"></script>
+
+  <!-- OPTION 2: Fullscreen Background (hidden by default) -->
+  <div class="artwork-background" id="artwork-bg" style="display: none;">
+    <iframe
+      src="https://cdn.feralfileassets.com/previews/500ccc6e-d7ad-443f-a9df-0bf709b3b3c9/1645052262/index.html"
+      title="36 Points by Sage Jenson"
+      loading="lazy"
+      allow="autoplay"
+    ></iframe>
+  </div>
+
+  <div class="page-wrapper">
+
+    <!-- Header -->
+    <header class="site-header">
+      <div class="container">
+        <div class="header-inner">
+          <a href="./" class="site-logo">Your Name</a>
+          <nav class="main-nav">
+            <a href="./" class="nav-link">Home</a>
+            <a href="./projects/" class="nav-link">Projects</a>
+            <a href="./blog/" class="nav-link">Blog</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- Demo Section 1: Framed Artwork -->
+      <section class="demo-section">
+        <div class="container">
+          <div class="content-overlay">
+            <h1>Artwork Embed Demo</h1>
+            <p>Experiment with different ways to embed live artwork on your site.</p>
+
+            <h2 style="margin-top: var(--space-8);">Option 1: Framed Artwork</h2>
+            <p>Embed the artwork in a contained frame. Great for showcasing pieces in a gallery or section.</p>
+
+            <!-- FRAMED ARTWORK EMBED -->
+            <div class="artwork-frame artwork-frame--bordered" style="margin-top: var(--space-6);">
+              <iframe
+                src="https://cdn.feralfileassets.com/previews/500ccc6e-d7ad-443f-a9df-0bf709b3b3c9/1645052262/index.html"
+                title="36 Points by Sage Jenson"
+                loading="lazy"
+                allow="autoplay"
+              ></iframe>
+            </div>
+            <p style="margin-top: var(--space-4); color: var(--color-text-muted); font-size: var(--text-sm);">
+              "36 Points" by Sage Jenson
+            </p>
+
+            <div class="code-block">
+&lt;div class="artwork-frame"&gt;<br>
+&nbsp;&nbsp;&lt;iframe src="YOUR_ARTWORK_URL" title="Artwork Title"&gt;&lt;/iframe&gt;<br>
+&lt;/div&gt;
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Demo Section 2: Background Controls -->
+      <section class="demo-section">
+        <div class="container">
+          <div class="content-overlay">
+            <h2>Option 2: Fullscreen Background</h2>
+            <p>Use the artwork as a living background behind your content. Toggle it on to see the effect.</p>
+
+            <div class="demo-controls">
+              <button id="toggle-bg">Toggle Background Artwork</button>
+              <button id="toggle-overlay">Toggle Dark Overlay</button>
+              <button id="toggle-pointer">Toggle Artwork Interaction</button>
+            </div>
+
+            <div class="code-block" style="margin-top: var(--space-6);">
+&lt;!-- Add before page-wrapper --&gt;<br>
+&lt;div class="artwork-background"&gt;<br>
+&nbsp;&nbsp;&lt;iframe src="YOUR_ARTWORK_URL"&gt;&lt;/iframe&gt;<br>
+&lt;/div&gt;<br><br>
+&lt;!-- Add class to body --&gt;<br>
+&lt;body class="has-artwork-bg"&gt;
+            </div>
+
+            <h3 style="margin-top: var(--space-8);">Tips:</h3>
+            <ul style="margin-left: var(--space-6);">
+              <li>Use <code>content-overlay</code> class on content sections for readability</li>
+              <li>Add <code>dark-overlay</code> to body for dark theme over light artwork</li>
+              <li>Set <code>pointer-events: auto</code> on artwork-background to allow interaction</li>
+              <li>Adjust <code>backdrop-filter: blur()</code> for more/less blur effect</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Demo Section 3: Different Sizes -->
+      <section class="demo-section">
+        <div class="container">
+          <div class="content-overlay">
+            <h2>Size Variations</h2>
+            <p>Adjust the frame size using aspect-ratio or fixed dimensions.</p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-6); margin-top: var(--space-6);">
+
+              <!-- Square -->
+              <div>
+                <h4>Square (1:1)</h4>
+                <div class="artwork-frame artwork-frame--bordered" style="aspect-ratio: 1 / 1;">
+                  <iframe
+                    src="https://cdn.feralfileassets.com/previews/500ccc6e-d7ad-443f-a9df-0bf709b3b3c9/1645052262/index.html"
+                    title="36 Points"
+                    loading="lazy"
+                    allow="autoplay"
+                  ></iframe>
+                </div>
+              </div>
+
+              <!-- Portrait -->
+              <div>
+                <h4>Portrait (3:4)</h4>
+                <div class="artwork-frame artwork-frame--bordered" style="aspect-ratio: 3 / 4; max-height: 400px;">
+                  <iframe
+                    src="https://cdn.feralfileassets.com/previews/500ccc6e-d7ad-443f-a9df-0bf709b3b3c9/1645052262/index.html"
+                    title="36 Points"
+                    loading="lazy"
+                    allow="autoplay"
+                  ></iframe>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="container">
+        <p>&copy; 2024 Your Name</p>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    // Demo controls
+    const bgElement = document.getElementById('artwork-bg');
+    const toggleBgBtn = document.getElementById('toggle-bg');
+    const toggleOverlayBtn = document.getElementById('toggle-overlay');
+    const togglePointerBtn = document.getElementById('toggle-pointer');
+
+    let bgEnabled = false;
+    let darkOverlay = false;
+    let pointerEnabled = false;
+
+    toggleBgBtn.addEventListener('click', () => {
+      bgEnabled = !bgEnabled;
+      bgElement.style.display = bgEnabled ? 'block' : 'none';
+      document.body.classList.toggle('has-artwork-bg', bgEnabled);
+      toggleBgBtn.classList.toggle('active', bgEnabled);
+    });
+
+    toggleOverlayBtn.addEventListener('click', () => {
+      darkOverlay = !darkOverlay;
+      document.body.classList.toggle('dark-overlay', darkOverlay);
+      toggleOverlayBtn.classList.toggle('active', darkOverlay);
+    });
+
+    togglePointerBtn.addEventListener('click', () => {
+      pointerEnabled = !pointerEnabled;
+      bgElement.style.pointerEvents = pointerEnabled ? 'auto' : 'none';
+      togglePointerBtn.classList.toggle('active', pointerEnabled);
+    });
+  </script>
+
+</body>
+</html>
