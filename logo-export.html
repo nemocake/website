@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logo Export - con.rad</title>
+  <style>
+    @font-face {
+      font-family: 'Kiya';
+      src: url('./assets/fonts/kiya/Kiya Handwrite.woff2') format('woff2'),
+           url('./assets/fonts/kiya/Kiya Handwrite.woff') format('woff'),
+           url('./assets/fonts/kiya/Kiya Handwrite.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+
+    .export-container {
+      text-align: center;
+      padding: 100px 200px;
+    }
+
+    .logo {
+      font-family: 'Kiya', cursive;
+      font-size: 8rem;
+      font-weight: normal;
+      color: #000;
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+    }
+
+    .tagline {
+      font-size: 2rem;
+      color: rgba(0, 0, 0, 0.5);
+      font-weight: 400;
+      letter-spacing: 0.02em;
+    }
+
+    /* Size variants - uncomment the one you want */
+
+    /* Small (1x) */
+    /*
+    .logo { font-size: 4rem; }
+    .tagline { font-size: 1rem; }
+    .export-container { padding: 50px 100px; }
+    */
+
+    /* Large (2x) - default */
+
+    /* Extra Large (4x) */
+    /*
+    .logo { font-size: 16rem; }
+    .tagline { font-size: 4rem; }
+    .export-container { padding: 200px 400px; }
+    */
+
+    /* Controls - hide when screenshotting */
+    .controls {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      padding: 15px 20px;
+      background: rgba(0, 0, 0, 0.8);
+      border-radius: 10px;
+      z-index: 100;
+    }
+
+    .controls button {
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      cursor: pointer;
+      background: #fff;
+      color: #000;
+      transition: opacity 0.2s;
+    }
+
+    .controls button:hover {
+      opacity: 0.8;
+    }
+
+    .controls.hidden {
+      display: none;
+    }
+
+    /* Transparent background option */
+    body.transparent {
+      background: transparent;
+    }
+
+    /* Dark mode option */
+    body.dark {
+      background: #000;
+    }
+    body.dark .logo {
+      color: #fff;
+    }
+    body.dark .tagline {
+      color: rgba(255, 255, 255, 0.5);
+    }
+  </style>
+</head>
+<body>
+  <div class="export-container" id="export-area">
+    <div class="logo">con.rad</div>
+    <div class="tagline">building curiosity...</div>
+  </div>
+
+  <div class="controls" id="controls">
+    <button onclick="setSize('small')">1x</button>
+    <button onclick="setSize('medium')">2x</button>
+    <button onclick="setSize('large')">4x</button>
+    <button onclick="toggleDark()">Dark/Light</button>
+    <button onclick="hideControls()">Hide UI</button>
+  </div>
+
+  <script>
+    const logo = document.querySelector('.logo');
+    const tagline = document.querySelector('.tagline');
+    const container = document.querySelector('.export-container');
+    const controls = document.getElementById('controls');
+
+    function setSize(size) {
+      switch(size) {
+        case 'small':
+          logo.style.fontSize = '4rem';
+          tagline.style.fontSize = '1rem';
+          container.style.padding = '50px 100px';
+          break;
+        case 'medium':
+          logo.style.fontSize = '8rem';
+          tagline.style.fontSize = '2rem';
+          container.style.padding = '100px 200px';
+          break;
+        case 'large':
+          logo.style.fontSize = '16rem';
+          tagline.style.fontSize = '4rem';
+          container.style.padding = '200px 400px';
+          break;
+      }
+    }
+
+    function toggleDark() {
+      document.body.classList.toggle('dark');
+    }
+
+    function hideControls() {
+      controls.classList.add('hidden');
+      // Press any key to show controls again
+      document.addEventListener('keydown', showControls, { once: true });
+    }
+
+    function showControls() {
+      controls.classList.remove('hidden');
+    }
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (e.key === '1') setSize('small');
+      if (e.key === '2') setSize('medium');
+      if (e.key === '4') setSize('large');
+      if (e.key === 'd') toggleDark();
+      if (e.key === 'h') hideControls();
+    });
+  </script>
+</body>
+</html>
