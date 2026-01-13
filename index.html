@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Personal website showcasing projects, blog posts, and inspirations.">
   
-  <title>Home | Your Name</title>
+  <title>Home | con.rad</title>
   
   <!-- Stylesheets -->
   <link rel="stylesheet" href="./assets/css/variables.css">
@@ -210,6 +210,29 @@
     }
 
     /* ==========================================
+       LOGO STYLING
+       ========================================== */
+    .site-logo {
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      line-height: 1.2;
+    }
+
+    .logo-name {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--color-text);
+    }
+
+    .logo-tagline {
+      font-size: 0.7rem;
+      font-weight: 400;
+      color: var(--color-text-muted);
+      letter-spacing: 0.02em;
+    }
+
+    /* ==========================================
        RESPONSIVE
        ========================================== */
     @media (max-width: 768px) {
@@ -255,7 +278,10 @@
         <div class="header-inner">
           
           <!-- Site Logo / Name -->
-          <a href="./" class="site-logo">Your Name</a>
+          <a href="./" class="site-logo">
+            <span class="logo-name">con.rad</span>
+            <span class="logo-tagline">building curiosity...</span>
+          </a>
           
           <!-- Desktop Navigation -->
           <nav class="main-nav" aria-label="Main navigation">
@@ -616,7 +642,7 @@
           <!-- Copyright -->
           <p class="footer-text">
             <!-- Edit: Your copyright text -->
-            &copy; <span id="current-year"></span> Your Name. All rights reserved.
+            &copy; <span id="current-year"></span> con.rad. All rights reserved.
           </p>
           
           <!-- Footer Links (optional) -->
