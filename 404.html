@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  
+  <title>Page Not Found | Your Name</title>
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="./assets/css/variables.css">
+  <link rel="stylesheet" href="./assets/css/reset.css">
+  <link rel="stylesheet" href="./assets/css/base.css">
+  <link rel="stylesheet" href="./assets/css/layout.css">
+  <link rel="stylesheet" href="./assets/css/components.css">
+  <link rel="stylesheet" href="./assets/css/utilities.css">
+</head>
+<body>
+  <div class="page-wrapper">
+    
+    <!-- Header -->
+    <header class="site-header">
+      <div class="container">
+        <div class="header-inner">
+          <a href="./" class="site-logo">Your Name</a>
+          
+          <nav class="main-nav" aria-label="Main navigation">
+            <a href="./" class="nav-link">Home</a>
+            <a href="./projects/" class="nav-link">Projects</a>
+            <a href="./blog/" class="nav-link">Blog</a>
+            <a href="./inspirations/" class="nav-link">Inspirations</a>
+            <a href="./about/" class="nav-link">About</a>
+          </nav>
+          
+          <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+            <span class="nav-toggle-icon"></span>
+          </button>
+        </div>
+      </div>
+      
+      <nav class="mobile-nav" aria-label="Mobile navigation">
+        <a href="./" class="mobile-nav-link">Home</a>
+        <a href="./projects/" class="mobile-nav-link">Projects</a>
+        <a href="./blog/" class="mobile-nav-link">Blog</a>
+        <a href="./inspirations/" class="mobile-nav-link">Inspirations</a>
+        <a href="./about/" class="mobile-nav-link">About</a>
+      </nav>
+    </header>
+
+    <main class="main-content">
+      
+      <!-- 404 Content -->
+      <section class="section section--hero">
+        <div class="container">
+          
+          <div class="empty-state">
+            
+            <!-- Large 404 Display -->
+            <div class="mb-8">
+              <span style="font-size:8rem;font-weight:var(--font-weight-bold);line-height:1;color:var(--color-gray-200);">
+                404
+              </span>
+            </div>
+            
+            <h1 class="empty-state__title">Page Not Found</h1>
+            
+            <p class="empty-state__description" style="max-width:30rem;margin-left:auto;margin-right:auto;">
+              <!-- Edit: Customize your 404 message -->
+              Oops! The page you're looking for doesn't exist or has been moved. 
+              Let's get you back on track.
+            </p>
+            
+            <div class="flex flex--center gap-4">
+              <a href="./" class="btn btn--primary">Go Home</a>
+              <a href="./projects/" class="btn btn--secondary">View Projects</a>
+            </div>
+            
+          </div>
+          
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-inner">
+          <p class="footer-text">
+            &copy; <span id="current-year"></span> Your Name. All rights reserved.
+          </p>
+          <nav class="flex gap-6">
+            <a href="./about/" class="footer-text">About</a>
+            <a href="mailto:your@email.com" class="footer-text">Contact</a>
+          </nav>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="./assets/js/navigation.js"></script>
+  <script src="./assets/js/main.js"></script>
+  <script>document.getElementById('current-year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

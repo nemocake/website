@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Personal website showcasing projects, blog posts, and inspirations.">
+  
+  <title>Home | Your Name</title>
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="./assets/css/variables.css">
+  <link rel="stylesheet" href="./assets/css/reset.css">
+  <link rel="stylesheet" href="./assets/css/base.css">
+  <link rel="stylesheet" href="./assets/css/layout.css">
+  <link rel="stylesheet" href="./assets/css/components.css">
+  <link rel="stylesheet" href="./assets/css/slider.css">
+  <link rel="stylesheet" href="./assets/css/utilities.css">
+  
+  <!-- Favicon - Add your favicon files -->
+  <!-- <link rel="icon" href="./assets/images/favicon.ico"> -->
+</head>
+<body>
+  <div class="page-wrapper">
+    
+    <!-- ====================================================================
+         HEADER
+         Edit: Update site logo text and navigation links as needed
+         ==================================================================== -->
+    <header class="site-header">
+      <div class="container">
+        <div class="header-inner">
+          
+          <!-- Site Logo / Name -->
+          <a href="./" class="site-logo">Your Name</a>
+          
+          <!-- Desktop Navigation -->
+          <nav class="main-nav" aria-label="Main navigation">
+            <a href="./" class="nav-link">Home</a>
+            <a href="./projects/" class="nav-link">Projects</a>
+            <a href="./blog/" class="nav-link">Blog</a>
+            <a href="./inspirations/" class="nav-link">Inspirations</a>
+            <a href="./about/" class="nav-link">About</a>
+          </nav>
+          
+          <!-- Mobile Navigation Toggle -->
+          <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+            <span class="nav-toggle-icon"></span>
+          </button>
+          
+        </div>
+      </div>
+      
+      <!-- Mobile Navigation Menu -->
+      <nav class="mobile-nav" aria-label="Mobile navigation">
+        <a href="./" class="mobile-nav-link">Home</a>
+        <a href="./projects/" class="mobile-nav-link">Projects</a>
+        <a href="./blog/" class="mobile-nav-link">Blog</a>
+        <a href="./inspirations/" class="mobile-nav-link">Inspirations</a>
+        <a href="./about/" class="mobile-nav-link">About</a>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      
+      <!-- ==================================================================
+           HERO SECTION
+           Edit: Update headline, subtitle, and call-to-action button
+           ================================================================== -->
+      <section class="section section--hero">
+        <div class="container">
+          <div class="text-center">
+            
+            <!-- Hero Headline -->
+            <h1 class="mb-4">
+              <!-- Edit: Your main headline -->
+              Welcome to My Space
+            </h1>
+            
+            <!-- Hero Subtitle -->
+            <p class="lead mb-8" style="max-width: 40rem; margin-left: auto; margin-right: auto;">
+              <!-- Edit: Brief introduction about yourself or your site -->
+              Designer, developer, and creative thinker. I build digital experiences 
+              that blend form and function.
+            </p>
+            
+            <!-- Call to Action Buttons -->
+            <div class="flex flex--center gap-4">
+              <a href="./projects/" class="btn btn--primary">View Projects</a>
+              <a href="./about/" class="btn btn--secondary">About Me</a>
+            </div>
+            
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================================
+           FEATURED PROJECTS SECTION
+           Edit: Add your project cards using the widget-card component
+           ================================================================== -->
+      <section class="section section--alt">
+        <div class="container">
+          
+          <!-- Section Header -->
+          <div class="section-header">
+            <h2 class="section-title">Featured Projects</h2>
+            <p class="section-subtitle">
+              <!-- Edit: Brief description of your projects section -->
+              A selection of recent work spanning design, development, and creative direction.
+            </p>
+          </div>
+          
+          <!-- Projects Grid -->
+          <div class="grid grid--cols-3">
+            
+            <!-- ============================================================
+                 PROJECT CARD 1
+                 Edit: Update image, title, description, and link
+                 ============================================================ -->
+            <article class="widget-card" data-variant="default">
+              <div class="widget-card__image">
+                <!-- Edit: Add your project image -->
+                <!-- <img src="./assets/images/projects/project-1.jpg" alt="Project 1" loading="lazy"> -->
+                <div style="width:100%;height:100%;background:var(--color-gray-200);display:flex;align-items:center;justify-content:center;">
+                  <span class="text-secondary">Project Image</span>
+                </div>
+              </div>
+              <div class="widget-card__content">
+                <span class="widget-card__tag">Design</span>
+                <h3 class="widget-card__title">
+                  <a href="./projects/">Project Title One</a>
+                </h3>
+                <p class="widget-card__description">
+                  <!-- Edit: Brief project description -->
+                  A brief description of this project and what makes it interesting or unique.
+                </p>
+                <div class="widget-card__meta">
+                  <span>2024</span>
+                </div>
+              </div>
+            </article>
+            
+            <!-- ============================================================
+                 PROJECT CARD 2
+                 Edit: Update image, title, description, and link
+                 ============================================================ -->
+            <article class="widget-card" data-variant="default">
+              <div class="widget-card__image">
+                <!-- Edit: Add your project image -->
+                <div style="width:100%;height:100%;background:var(--color-gray-200);display:flex;align-items:center;justify-content:center;">
+                  <span class="text-secondary">Project Image</span>
+                </div>
+              </div>
+              <div class="widget-card__content">
+                <span class="widget-card__tag">Development</span>
+                <h3 class="widget-card__title">
+                  <a href="./projects/">Project Title Two</a>
+                </h3>
+                <p class="widget-card__description">
+                  <!-- Edit: Brief project description -->
+                  A brief description of this project and what makes it interesting or unique.
+                </p>
+                <div class="widget-card__meta">
+                  <span>2024</span>
+                </div>
+              </div>
+            </article>
+            
+            <!-- ============================================================
+                 PROJECT CARD 3
+                 Edit: Update image, title, description, and link
+                 ============================================================ -->
+            <article class="widget-card" data-variant="default">
+              <div class="widget-card__image">
+                <!-- Edit: Add your project image -->
+                <div style="width:100%;height:100%;background:var(--color-gray-200);display:flex;align-items:center;justify-content:center;">
+                  <span class="text-secondary">Project Image</span>
+                </div>
+              </div>
+              <div class="widget-card__content">
+                <span class="widget-card__tag">Creative</span>
+                <h3 class="widget-card__title">
+                  <a href="./projects/">Project Title Three</a>
+                </h3>
+                <p class="widget-card__description">
+                  <!-- Edit: Brief project description -->
+                  A brief description of this project and what makes it interesting or unique.
+                </p>
+                <div class="widget-card__meta">
+                  <span>2024</span>
+                </div>
+              </div>
+            </article>
+            
+          </div>
+          
+          <!-- View All Link -->
+          <div class="text-center mt-12">
+            <a href="./projects/" class="btn btn--secondary">View All Projects</a>
+          </div>
+          
+        </div>
+      </section>
+
+      <!-- ==================================================================
+           BLOG SECTION
+           Edit: Add your latest blog post cards
+           ================================================================== -->
+      <section class="section">
+        <div class="container">
+          
+          <!-- Section Header -->
+          <div class="section-header">
+            <h2 class="section-title">Latest Posts</h2>
+            <p class="section-subtitle">
+              <!-- Edit: Brief description of your blog -->
+              Thoughts on design, technology, and the creative process.
+            </p>
+          </div>
+          
+          <!-- Blog Posts Grid -->
+          <div class="grid grid--cols-2">
+            
+            <!-- ============================================================
+                 BLOG POST 1
+                 Edit: Update image, title, excerpt, date, and link
+                 ============================================================ -->
+            <article class="widget-card" data-variant="horizontal">
+              <div class="widget-card__image">
+                <!-- Edit: Add your blog post image -->
+                <div style="width:100%;height:100%;background:var(--color-gray-200);display:flex;align-items:center;justify-content:center;">
+                  <span class="text-secondary">Post Image</span>
+                </div>
+              </div>
+              <div class="widget-card__content">
+                <h3 class="widget-card__title">
+                  <a href="./blog/">Blog Post Title One</a>
+                </h3>
+                <p class="widget-card__description">
+                  <!-- Edit: Post excerpt -->
+                  A preview of the blog post content that gives readers an idea of what to expect...
+                </p>
+                <div class="widget-card__meta">
+                  <!-- Edit: Post date -->
+                  <time datetime="2024-01-15">January 15, 2024</time>
+                </div>
+              </div>
+            </article>
+            
+            <!-- ============================================================
+                 BLOG POST 2
+                 Edit: Update image, title, excerpt, date, and link
+                 ============================================================ -->
+            <article class="widget-card" data-variant="horizontal">
+              <div class="widget-card__image">
+                <!-- Edit: Add your blog post image -->
+                <div style="width:100%;height:100%;background:var(--color-gray-200);display:flex;align-items:center;justify-content:center;">
+                  <span class="text-secondary">Post Image</span>
+                </div>
+              </div>
+              <div class="widget-card__content">
+                <h3 class="widget-card__title">
+                  <a href="./blog/">Blog Post Title Two</a>
+                </h3>
+                <p class="widget-card__description">
+                  <!-- Edit: Post excerpt -->
+                  A preview of the blog post content that gives readers an idea of what to expect...
+                </p>
+                <div class="widget-card__meta">
+                  <!-- Edit: Post date -->
+                  <time datetime="2024-01-10">January 10, 2024</time>
+                </div>
+              </div>
+            </article>
+            
+          </div>
+          
+          <!-- View All Link -->
+          <div class="text-center mt-12">
+            <a href="./blog/" class="btn btn--secondary">Read More Posts</a>
+          </div>
+          
+        </div>
+      </section>
+
+      <!-- ==================================================================
+           SLIDER DEMO SECTION
+           Demonstrates the slider component with autoplay
+           Edit: Replace demo slides with your actual content
+           ================================================================== -->
+      <section class="section section--alt">
+        <div class="container">
+          
+          <!-- Section Header -->
+          <div class="section-header">
+            <h2 class="section-title">Gallery</h2>
+            <p class="section-subtitle">
+              A rotating showcase of work and inspirations.
+            </p>
+          </div>
+          
+          <!-- Slider Component -->
+          <!-- data-autoplay: Enable automatic sliding -->
+          <!-- data-interval: Time between slides in milliseconds -->
+          <div class="slider" data-autoplay="true" data-interval="5000">
+            <div class="slider__track">
+              
+              <!-- ============================================================
+                   SLIDE 1
+                   Edit: Replace with your content
+                   ============================================================ -->
+              <div class="slider__slide">
+                <div style="aspect-ratio:16/9;background:var(--color-gray-200);border-radius:var(--radius-xl);display:flex;align-items:center;justify-content:center;">
+                  <span class="text-2xl text-secondary">Slide 1</span>
+                </div>
+              </div>
+              
+              <!-- ============================================================
+                   SLIDE 2
+                   Edit: Replace with your content
+                   ============================================================ -->
+              <div class="slider__slide">
+                <div style="aspect-ratio:16/9;background:var(--color-gray-300);border-radius:var(--radius-xl);display:flex;align-items:center;justify-content:center;">
+                  <span class="text-2xl text-secondary">Slide 2</span>
+                </div>
+              </div>
+              
+              <!-- ============================================================
+                   SLIDE 3
+                   Edit: Replace with your content
+                   ============================================================ -->
+              <div class="slider__slide">
+                <div style="aspect-ratio:16/9;background:var(--color-gray-200);border-radius:var(--radius-xl);display:flex;align-items:center;justify-content:center;">
+                  <span class="text-2xl text-secondary">Slide 3</span>
+                </div>
+              </div>
+              
+              <!-- ============================================================
+                   SLIDE 4
+                   Edit: Replace with your content
+                   ============================================================ -->
+              <div class="slider__slide">
+                <div style="aspect-ratio:16/9;background:var(--color-gray-300);border-radius:var(--radius-xl);display:flex;align-items:center;justify-content:center;">
+                  <span class="text-2xl text-secondary">Slide 4</span>
+                </div>
+              </div>
+              
+            </div>
+            <!-- Navigation and dots are auto-generated by slider.js -->
+          </div>
+          
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ====================================================================
+         FOOTER
+         Edit: Update copyright text and add social links as needed
+         ==================================================================== -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-inner">
+          
+          <!-- Copyright -->
+          <p class="footer-text">
+            <!-- Edit: Your copyright text -->
+            &copy; <span id="current-year"></span> Your Name. All rights reserved.
+          </p>
+          
+          <!-- Footer Links (optional) -->
+          <nav class="flex gap-6">
+            <a href="./about/" class="footer-text">About</a>
+            <a href="mailto:your@email.com" class="footer-text">Contact</a>
+          </nav>
+          
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="./assets/js/slider.js"></script>
+  <script src="./assets/js/navigation.js"></script>
+  <script src="./assets/js/main.js"></script>
+  
+  <!-- Update copyright year automatically -->
+  <script>
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+  </script>
+  
+</body>
+</html>

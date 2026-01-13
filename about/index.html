@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="About me - learn more about my background, skills, and interests.">
+  
+  <title>About | Your Name</title>
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../assets/css/variables.css">
+  <link rel="stylesheet" href="../assets/css/reset.css">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/layout.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/slider.css">
+  <link rel="stylesheet" href="../assets/css/utilities.css">
+</head>
+<body>
+  <div class="page-wrapper">
+    
+    <!-- Header -->
+    <header class="site-header">
+      <div class="container">
+        <div class="header-inner">
+          <a href="../" class="site-logo">Your Name</a>
+          
+          <nav class="main-nav" aria-label="Main navigation">
+            <a href="../" class="nav-link">Home</a>
+            <a href="../projects/" class="nav-link">Projects</a>
+            <a href="../blog/" class="nav-link">Blog</a>
+            <a href="../inspirations/" class="nav-link">Inspirations</a>
+            <a href="../about/" class="nav-link">About</a>
+          </nav>
+          
+          <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+            <span class="nav-toggle-icon"></span>
+          </button>
+        </div>
+      </div>
+      
+      <nav class="mobile-nav" aria-label="Mobile navigation">
+        <a href="../" class="mobile-nav-link">Home</a>
+        <a href="../projects/" class="mobile-nav-link">Projects</a>
+        <a href="../blog/" class="mobile-nav-link">Blog</a>
+        <a href="../inspirations/" class="mobile-nav-link">Inspirations</a>
+        <a href="../about/" class="mobile-nav-link">About</a>
+      </nav>
+    </header>
+
+    <main class="main-content">
+      
+      <!-- Page Header -->
+      <section class="section section--sm">
+        <div class="container">
+          
+          <nav class="breadcrumb mb-6" aria-label="Breadcrumb">
+            <span class="breadcrumb__item">
+              <a href="../" class="breadcrumb__link">Home</a>
+            </span>
+            <span class="breadcrumb__item">
+              <span class="breadcrumb__current">About</span>
+            </span>
+          </nav>
+          
+        </div>
+      </section>
+
+      <!-- ==================================================================
+           ABOUT INTRO
+           Edit: Add your photo and introduction
+           ================================================================== -->
+      <section class="section section--sm">
+        <div class="container">
+          
+          <div class="grid grid--cols-2" style="align-items: center;">
+            
+            <!-- Profile Image -->
+            <div>
+              <!-- Edit: Add your profile photo -->
+              <!-- <img src="../assets/images/profile.jpg" alt="Your Name" class="rounded-xl" loading="lazy"> -->
+              <div style="aspect-ratio:1/1;max-width:400px;background:var(--color-gray-200);border-radius:var(--radius-xl);display:flex;align-items:center;justify-content:center;">
+                <span class="text-secondary text-xl">Your Photo</span>
+              </div>
+            </div>
+            
+            <!-- Introduction Text -->
+            <div>
+              <h1 class="mb-6">About Me</h1>
+              
+              <!-- Edit: Your introduction - tell your story -->
+              <p class="lead mb-6">
+                Hello! I'm [Your Name], a designer and developer based in [Location].
+              </p>
+              
+              <p class="mb-4">
+                <!-- Edit: More about yourself -->
+                I specialize in creating digital experiences that blend thoughtful design 
+                with technical excellence. With a background in [your background], I bring 
+                a unique perspective to every project.
+              </p>
+              
+              <p class="mb-6">
+                <!-- Edit: Your philosophy or approach -->
+                I believe in [your design/work philosophy]. When I'm not designing or coding, 
+                you can find me [your hobbies/interests].
+              </p>
+              
+              <!-- Social/Contact Links -->
+              <div class="flex flex--wrap gap-4">
+                <a href="mailto:your@email.com" class="btn btn--primary">Get in Touch</a>
+                <a href="#" class="btn btn--secondary" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <a href="#" class="btn btn--secondary" target="_blank" rel="noopener noreferrer">GitHub</a>
+              </div>
+              
+            </div>
+            
+          </div>
+          
+        </div>
+      </section>
+
+      <!-- ==================================================================
+           SKILLS & EXPERTISE
+           Edit: List your skills and areas of expertise
+           ================================================================== -->
+      <section class="section section--alt">
+        <div class="container">
+          
+          <h2 class="text-center mb-12">Skills & Expertise</h2>
+          
+          <div class="grid grid--cols-3">
+            
+            <!-- Skill Category 1 -->
+            <div class="text-center">
+              <h3 class="mb-4">Design</h3>
+              <!-- Edit: List your design skills -->
+              <ul style="list-style:none;padding:0;">
+                <li class="mb-2 text-secondary">UI/UX Design</li>
+                <li class="mb-2 text-secondary">Visual Design</li>
+                <li class="mb-2 text-secondary">Prototyping</li>
+                <li class="mb-2 text-secondary">Design Systems</li>
+                <li class="mb-2 text-secondary">Brand Identity</li>
+              </ul>
+            </div>
+            
+            <!-- Skill Category 2 -->
+            <div class="text-center">
+              <h3 class="mb-4">Development</h3>
+              <!-- Edit: List your development skills -->
+              <ul style="list-style:none;padding:0;">
+                <li class="mb-2 text-secondary">HTML/CSS</li>
+                <li class="mb-2 text-secondary">JavaScript</li>
+                <li class="mb-2 text-secondary">React</li>
+                <li class="mb-2 text-secondary">Node.js</li>
+                <li class="mb-2 text-secondary">Git</li>
+              </ul>
+            </div>
+            
+            <!-- Skill Category 3 -->
+            <div class="text-center">
+              <h3 class="mb-4">Tools</h3>
+              <!-- Edit: List your tools -->
+              <ul style="list-style:none;padding:0;">
+                <li class="mb-2 text-secondary">Figma</li>
+                <li class="mb-2 text-secondary">Adobe Creative Suite</li>
+                <li class="mb-2 text-secondary">VS Code</li>
+                <li class="mb-2 text-secondary">Notion</li>
+                <li class="mb-2 text-secondary">Webflow</li>
+              </ul>
+            </div>
+            
+          </div>
+          
+        </div>
+      </section>
+
+      <!-- ==================================================================
+           EXPERIENCE / TIMELINE (Optional)
+           Edit: Add your work experience or education
+           ================================================================== -->
+      <section class="section">
+        <div class="container container--narrow">
+          
+          <h2 class="text-center mb-12">Experience</h2>
+          
+          <!-- Timeline Items -->
+          <div>
+            
+            <!-- Experience Item 1 -->
+            <div class="mb-8 pb-8 border-b">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="text-xl">Job Title</h3>
+                <span class="text-secondary text-sm">2022 - Present</span>
+              </div>
+              <p class="text-accent font-medium mb-2">Company Name</p>
+              <p class="text-secondary">
+                <!-- Edit: Brief description of your role -->
+                Description of your responsibilities and achievements in this role.
+              </p>
+            </div>
+            
+            <!-- Experience Item 2 -->
+            <div class="mb-8 pb-8 border-b">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="text-xl">Previous Role</h3>
+                <span class="text-secondary text-sm">2020 - 2022</span>
+              </div>
+              <p class="text-accent font-medium mb-2">Previous Company</p>
+              <p class="text-secondary">
+                Description of your responsibilities and achievements in this role.
+              </p>
+            </div>
+            
+            <!-- Experience Item 3 -->
+            <div class="mb-8 pb-8 border-b">
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="text-xl">Earlier Position</h3>
+                <span class="text-secondary text-sm">2018 - 2020</span>
+              </div>
+              <p class="text-accent font-medium mb-2">Another Company</p>
+              <p class="text-secondary">
+                Description of your responsibilities and achievements in this role.
+              </p>
+            </div>
+            
+            <!-- Education -->
+            <div>
+              <div class="flex justify-between items-start mb-2">
+                <h3 class="text-xl">Degree / Certification</h3>
+                <span class="text-secondary text-sm">Year</span>
+              </div>
+              <p class="text-accent font-medium mb-2">University / Institution</p>
+              <p class="text-secondary">
+                Brief description or notable achievements.
+              </p>
+            </div>
+            
+          </div>
+          
+        </div>
+      </section>
+
+      <!-- ==================================================================
+           CONTACT CTA
+           ================================================================== -->
+      <section class="section section--alt">
+        <div class="container text-center">
+          
+          <h2 class="mb-4">Let's Work Together</h2>
+          <p class="lead mb-8" style="max-width:40rem;margin-left:auto;margin-right:auto;">
+            <!-- Edit: Your call to action text -->
+            I'm currently available for freelance projects and full-time opportunities. 
+            If you have a project in mind or just want to chat, feel free to reach out.
+          </p>
+          
+          <div class="flex flex--center gap-4">
+            <a href="mailto:your@email.com" class="btn btn--primary">Email Me</a>
+            <a href="../projects/" class="btn btn--secondary">View My Work</a>
+          </div>
+          
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-inner">
+          <p class="footer-text">
+            &copy; <span id="current-year"></span> Your Name. All rights reserved.
+          </p>
+          <nav class="flex gap-6">
+            <a href="../about/" class="footer-text">About</a>
+            <a href="mailto:your@email.com" class="footer-text">Contact</a>
+          </nav>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="../assets/js/slider.js"></script>
+  <script src="../assets/js/navigation.js"></script>
+  <script src="../assets/js/main.js"></script>
+  <script>document.getElementById('current-year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

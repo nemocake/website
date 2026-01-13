@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Blog posts about design, development, and creative thinking.">
+  
+  <title>Blog | Your Name</title>
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../assets/css/variables.css">
+  <link rel="stylesheet" href="../assets/css/reset.css">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/layout.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/slider.css">
+  <link rel="stylesheet" href="../assets/css/utilities.css">
+</head>
+<body>
+  <div class="page-wrapper">
+    
+    <!-- ====================================================================
+         HEADER
+         ==================================================================== -->
+    <header class="site-header">
+      <div class="container">
+        <div class="header-inner">
+          <a href="../" class="site-logo">Your Name</a>
+          
+          <nav class="main-nav" aria-label="Main navigation">
+            <a href="../" class="nav-link">Home</a>
+            <a href="../projects/" class="nav-link">Projects</a>
+            <a href="../blog/" class="nav-link">Blog</a>
+            <a href="../inspirations/" class="nav-link">Inspirations</a>
+            <a href="../about/" class="nav-link">About</a>
+          </nav>
+          
+          <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+            <span class="nav-toggle-icon"></span>
+          </button>
+        </div>
+      </div>
+      
+      <nav class="mobile-nav" aria-label="Mobile navigation">
+        <a href="../" class="mobile-nav-link">Home</a>
+        <a href="../projects/" class="mobile-nav-link">Projects</a>
+        <a href="../blog/" class="mobile-nav-link">Blog</a>
+        <a href="../inspirations/" class="mobile-nav-link">Inspirations</a>
+        <a href="../about/" class="mobile-nav-link">About</a>
+      </nav>
+    </header>
+
+    <main class="main-content">
+      
+      <!-- ==================================================================
+           PAGE HEADER
+           ================================================================== -->
+      <section class="section section--sm">
+        <div class="container">
+          
+          <!-- Breadcrumb -->
+          <nav class="breadcrumb mb-6" aria-label="Breadcrumb">
+            <span class="breadcrumb__item">
+              <a href="../" class="breadcrumb__link">Home</a>
+            </span>
+            <span class="breadcrumb__item">
+              <span class="breadcrumb__current">Blog</span>
+            </span>
+          </nav>
+          
+          <div class="text-center">
+            <h1>Blog</h1>
+            <p class="lead mt-4">
+              <!-- Edit: Your blog description -->
+              Thoughts, ideas, and explorations on design, technology, and creativity.
+            </p>
+          </div>
+          
+        </div>
+      </section>
+
+      <!-- ==================================================================
+           FEATURED POST
+           Edit: Highlight your most recent or important post
+           ================================================================== -->
+      <section class="section section--sm">
+        <div class="container container--wide">
+          
+          <article class="widget-card" data-variant="featured">
+            <div class="widget-card__image">
+              <!-- Edit: Featured post image -->
+              <div style="width:100%;height:100%;background:var(--color-gray-200);display:flex;align-items:center;justify-content:center;">
+                <span class="text-secondary text-xl">Featured Post Image</span>
+              </div>
+            </div>
+            <div class="widget-card__content">
+              <span class="widget-card__tag">Featured</span>
+              <h2 class="widget-card__title">
+                <a href="./posts/">Featured Blog Post Title</a>
+              </h2>
+              <p class="widget-card__description">
+                <!-- Edit: Featured post excerpt -->
+                This is the excerpt for your featured blog post. Make it compelling 
+                to encourage readers to click through and read the full article.
+              </p>
+              <div class="widget-card__meta">
+                <time datetime="2024-01-20">January 20, 2024</time>
+                <span>8 min read</span>
+              </div>
+            </div>
+          </article>
+          
+        </div>
+      </section>
+
+      <!-- ==================================================================
+           BLOG POSTS LISTING
+           Edit: Add your blog post cards
+           ================================================================== -->
+      <section class="section">
+        <div class="container">
+          
+          <h2 class="mb-8">All Posts</h2>
+          
+          <div class="grid grid--cols-3">
+            
+            <!-- ============================================================
+                 BLOG POST CARD TEMPLATE
+                 Copy this block for each new post
+                 ============================================================ -->
+            <article class="widget-card" data-variant="default">
+              <div class="widget-card__image">
+                <!-- Edit: Post image -->
+                <div style="width:100%;height:100%;background:var(--color-gray-200);display:flex;align-items:center;justify-content:center;">
+                  <span class="text-secondary">Post Image</span>
+                </div>
+              </div>
+              <div class="widget-card__content">
+                <h3 class="widget-card__title">
+                  <a href="./posts/">Post Title Here</a>
+                </h3>
+                <p class="widget-card__description">
+                  <!-- Edit: Post excerpt -->
+                  A brief excerpt from the blog post that gives readers a preview of the content...
+                </p>
+                <div class="widget-card__meta">
+                  <time datetime="2024-01-15">January 15, 2024</time>
+                </div>
+              </div>
+            </article>
+            
+            <!-- Post 2 -->
+            <article class="widget-card" data-variant="default">
+              <div class="widget-card__image">
+                <div style="width:100%;height:100%;background:var(--color-gray-200);display:flex;align-items:center;justify-content:center;">
+                  <span class="text-secondary">Post Image</span>
+                </div>
+              </div>
+              <div class="widget-card__content">
+                <h3 class="widget-card__title">
+                  <a href="./posts/">Another Post Title</a>
+                </h3>
+                <p class="widget-card__description">
+                  A brief excerpt from the blog post that gives readers a preview of the content...
+                </p>
+                <div class="widget-card__meta">
+                  <time datetime="2024-01-10">January 10, 2024</time>
+                </div>
+              </div>
+            </article>
+            
+            <!-- Post 3 -->
+            <article class="widget-card" data-variant="default">
+              <div class="widget-card__image">
+                <div style="width:100%;height:100%;background:var(--color-gray-200);display:flex;align-items:center;justify-content:center;">
+                  <span class="text-secondary">Post Image</span>
+                </div>
+              </div>
+              <div class="widget-card__content">
+                <h3 class="widget-card__title">
+                  <a href="./posts/">Third Post Title</a>
+                </h3>
+                <p class="widget-card__description">
+                  A brief excerpt from the blog post that gives readers a preview of the content...
+                </p>
+                <div class="widget-card__meta">
+                  <time datetime="2024-01-05">January 5, 2024</time>
+                </div>
+              </div>
+            </article>
+            
+            <!-- Post 4 -->
+            <article class="widget-card" data-variant="default">
+              <div class="widget-card__image">
+                <div style="width:100%;height:100%;background:var(--color-gray-200);display:flex;align-items:center;justify-content:center;">
+                  <span class="text-secondary">Post Image</span>
+                </div>
+              </div>
+              <div class="widget-card__content">
+                <h3 class="widget-card__title">
+                  <a href="./posts/">Fourth Post Title</a>
+                </h3>
+                <p class="widget-card__description">
+                  A brief excerpt from the blog post that gives readers a preview of the content...
+                </p>
+                <div class="widget-card__meta">
+                  <time datetime="2024-01-01">January 1, 2024</time>
+                </div>
+              </div>
+            </article>
+            
+            <!-- Post 5 -->
+            <article class="widget-card" data-variant="default">
+              <div class="widget-card__image">
+                <div style="width:100%;height:100%;background:var(--color-gray-200);display:flex;align-items:center;justify-content:center;">
+                  <span class="text-secondary">Post Image</span>
+                </div>
+              </div>
+              <div class="widget-card__content">
+                <h3 class="widget-card__title">
+                  <a href="./posts/">Fifth Post Title</a>
+                </h3>
+                <p class="widget-card__description">
+                  A brief excerpt from the blog post that gives readers a preview of the content...
+                </p>
+                <div class="widget-card__meta">
+                  <time datetime="2023-12-20">December 20, 2023</time>
+                </div>
+              </div>
+            </article>
+            
+            <!-- Post 6 -->
+            <article class="widget-card" data-variant="default">
+              <div class="widget-card__image">
+                <div style="width:100%;height:100%;background:var(--color-gray-200);display:flex;align-items:center;justify-content:center;">
+                  <span class="text-secondary">Post Image</span>
+                </div>
+              </div>
+              <div class="widget-card__content">
+                <h3 class="widget-card__title">
+                  <a href="./posts/">Sixth Post Title</a>
+                </h3>
+                <p class="widget-card__description">
+                  A brief excerpt from the blog post that gives readers a preview of the content...
+                </p>
+                <div class="widget-card__meta">
+                  <time datetime="2023-12-15">December 15, 2023</time>
+                </div>
+              </div>
+            </article>
+            
+          </div>
+          
+          <!-- Pagination -->
+          <nav class="pagination" aria-label="Blog pagination">
+            <button class="pagination__item" disabled aria-label="Previous page">&larr;</button>
+            <button class="pagination__item is-active">1</button>
+            <button class="pagination__item">2</button>
+            <button class="pagination__item">3</button>
+            <button class="pagination__item" aria-label="Next page">&rarr;</button>
+          </nav>
+          
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-inner">
+          <p class="footer-text">
+            &copy; <span id="current-year"></span> Your Name. All rights reserved.
+          </p>
+          <nav class="flex gap-6">
+            <a href="../about/" class="footer-text">About</a>
+            <a href="mailto:your@email.com" class="footer-text">Contact</a>
+          </nav>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="../assets/js/slider.js"></script>
+  <script src="../assets/js/navigation.js"></script>
+  <script src="../assets/js/main.js"></script>
+  <script>document.getElementById('current-year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

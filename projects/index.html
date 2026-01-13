@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portfolio of projects showcasing design, development, and creative work.">
+  
+  <title>Projects | Your Name</title>
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../assets/css/variables.css">
+  <link rel="stylesheet" href="../assets/css/reset.css">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/layout.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/slider.css">
+  <link rel="stylesheet" href="../assets/css/utilities.css">
+</head>
+<body>
+  <div class="page-wrapper">
+    
+    <!-- Header -->
+    <header class="site-header">
+      <div class="container">
+        <div class="header-inner">
+          <a href="../" class="site-logo">Your Name</a>
+          
+          <nav class="main-nav" aria-label="Main navigation">
+            <a href="../" class="nav-link">Home</a>
+            <a href="../projects/" class="nav-link">Projects</a>
+            <a href="../blog/" class="nav-link">Blog</a>
+            <a href="../inspirations/" class="nav-link">Inspirations</a>
+            <a href="../about/" class="nav-link">About</a>
+          </nav>
+          
+          <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+            <span class="nav-toggle-icon"></span>
+          </button>
+        </div>
+      </div>
+      
+      <nav class="mobile-nav" aria-label="Mobile navigation">
+        <a href="../" class="mobile-nav-link">Home</a>
+        <a href="../projects/" class="mobile-nav-link">Projects</a>
+        <a href="../blog/" class="mobile-nav-link">Blog</a>
+        <a href="../inspirations/" class="mobile-nav-link">Inspirations</a>
+        <a href="../about/" class="mobile-nav-link">About</a>
+      </nav>
+    </header>
+
+    <main class="main-content">
+      
+      <!-- Page Header -->
+      <section class="section section--sm">
+        <div class="container">
+          
+          <nav class="breadcrumb mb-6" aria-label="Breadcrumb">
+            <span class="breadcrumb__item">
+              <a href="../" class="breadcrumb__link">Home</a>
+            </span>
+            <span class="breadcrumb__item">
+              <span class="breadcrumb__current">Projects</span>
+            </span>
+          </nav>
+          
+          <div class="text-center">
+            <h1>Projects</h1>
+            <p class="lead mt-4">
+              <!-- Edit: Your projects description -->
+              A curated collection of work spanning design, development, and creative direction.
+            </p>
+          </div>
+          
+        </div>
+      </section>
+
+      <!-- ==================================================================
+           FILTER TAGS (Optional)
+           Edit: Add or remove filter categories
+           ================================================================== -->
+      <section class="section--sm pb-0">
+        <div class="container">
+          <div class="flex flex--center flex--wrap gap-3">
+            <button class="tag" data-filter="all">All</button>
+            <button class="tag" data-filter="design">Design</button>
+            <button class="tag" data-filter="development">Development</button>
+            <button class="tag" data-filter="creative">Creative</button>
+            <button class="tag" data-filter="branding">Branding</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================================================================
+           PROJECTS GRID
+           Edit: Add your project cards
+           ================================================================== -->
+      <section class="section">
+        <div class="container">
+          
+          <div class="grid grid--cols-2">
+            
+            <!-- ============================================================
+                 PROJECT CARD TEMPLATE
+                 Edit: Update each project's details
+                 data-variant options: default, featured, minimal
+                 ============================================================ -->
+            <article class="widget-card" data-variant="default">
+              <div class="widget-card__image">
+                <!-- Edit: Project image -->
+                <!-- <img src="../assets/images/projects/project-1.jpg" alt="Project 1" loading="lazy"> -->
+                <div style="width:100%;height:100%;background:var(--color-gray-200);display:flex;align-items:center;justify-content:center;">
+                  <span class="text-secondary text-lg">Project Image</span>
+                </div>
+              </div>
+              <div class="widget-card__content">
+                <span class="widget-card__tag">Design</span>
+                <h3 class="widget-card__title">
+                  <a href="#">Project Title One</a>
+                </h3>
+                <p class="widget-card__description">
+                  <!-- Edit: Project description -->
+                  A detailed description of the project, including the challenge, 
+                  approach, and outcome. Keep it concise but informative.
+                </p>
+                <div class="widget-card__footer">
+                  <div class="widget-card__meta">
+                    <span>2024</span>
+                  </div>
+                  <a href="#" class="btn btn--sm btn--ghost">View Project &rarr;</a>
+                </div>
+              </div>
+            </article>
+            
+            <!-- Project 2 -->
+            <article class="widget-card" data-variant="default">
+              <div class="widget-card__image">
+                <div style="width:100%;height:100%;background:var(--color-gray-200);display:flex;align-items:center;justify-content:center;">
+                  <span class="text-secondary text-lg">Project Image</span>
+                </div>
+              </div>
+              <div class="widget-card__content">
+                <span class="widget-card__tag">Development</span>
+                <h3 class="widget-card__title">
+                  <a href="#">Project Title Two</a>
+                </h3>
+                <p class="widget-card__description">
+                  A detailed description of the project, including the challenge, 
+                  approach, and outcome. Keep it concise but informative.
+                </p>
+                <div class="widget-card__footer">
+                  <div class="widget-card__meta">
+                    <span>2024</span>
+                  </div>
+                  <a href="#" class="btn btn--sm btn--ghost">View Project &rarr;</a>
+                </div>
+              </div>
+            </article>
+            
+            <!-- Project 3 -->
+            <article class="widget-card" data-variant="default">
+              <div class="widget-card__image">
+                <div style="width:100%;height:100%;background:var(--color-gray-200);display:flex;align-items:center;justify-content:center;">
+                  <span class="text-secondary text-lg">Project Image</span>
+                </div>
+              </div>
+              <div class="widget-card__content">
+                <span class="widget-card__tag">Creative</span>
+                <h3 class="widget-card__title">
+                  <a href="#">Project Title Three</a>
+                </h3>
+                <p class="widget-card__description">
+                  A detailed description of the project, including the challenge, 
+                  approach, and outcome. Keep it concise but informative.
+                </p>
+                <div class="widget-card__footer">
+                  <div class="widget-card__meta">
+                    <span>2023</span>
+                  </div>
+                  <a href="#" class="btn btn--sm btn--ghost">View Project &rarr;</a>
+                </div>
+              </div>
+            </article>
+            
+            <!-- Project 4 -->
+            <article class="widget-card" data-variant="default">
+              <div class="widget-card__image">
+                <div style="width:100%;height:100%;background:var(--color-gray-200);display:flex;align-items:center;justify-content:center;">
+                  <span class="text-secondary text-lg">Project Image</span>
+                </div>
+              </div>
+              <div class="widget-card__content">
+                <span class="widget-card__tag">Branding</span>
+                <h3 class="widget-card__title">
+                  <a href="#">Project Title Four</a>
+                </h3>
+                <p class="widget-card__description">
+                  A detailed description of the project, including the challenge, 
+                  approach, and outcome. Keep it concise but informative.
+                </p>
+                <div class="widget-card__footer">
+                  <div class="widget-card__meta">
+                    <span>2023</span>
+                  </div>
+                  <a href="#" class="btn btn--sm btn--ghost">View Project &rarr;</a>
+                </div>
+              </div>
+            </article>
+            
+            <!-- Project 5 -->
+            <article class="widget-card" data-variant="default">
+              <div class="widget-card__image">
+                <div style="width:100%;height:100%;background:var(--color-gray-200);display:flex;align-items:center;justify-content:center;">
+                  <span class="text-secondary text-lg">Project Image</span>
+                </div>
+              </div>
+              <div class="widget-card__content">
+                <span class="widget-card__tag">Design</span>
+                <h3 class="widget-card__title">
+                  <a href="#">Project Title Five</a>
+                </h3>
+                <p class="widget-card__description">
+                  A detailed description of the project, including the challenge, 
+                  approach, and outcome. Keep it concise but informative.
+                </p>
+                <div class="widget-card__footer">
+                  <div class="widget-card__meta">
+                    <span>2023</span>
+                  </div>
+                  <a href="#" class="btn btn--sm btn--ghost">View Project &rarr;</a>
+                </div>
+              </div>
+            </article>
+            
+            <!-- Project 6 -->
+            <article class="widget-card" data-variant="default">
+              <div class="widget-card__image">
+                <div style="width:100%;height:100%;background:var(--color-gray-200);display:flex;align-items:center;justify-content:center;">
+                  <span class="text-secondary text-lg">Project Image</span>
+                </div>
+              </div>
+              <div class="widget-card__content">
+                <span class="widget-card__tag">Development</span>
+                <h3 class="widget-card__title">
+                  <a href="#">Project Title Six</a>
+                </h3>
+                <p class="widget-card__description">
+                  A detailed description of the project, including the challenge, 
+                  approach, and outcome. Keep it concise but informative.
+                </p>
+                <div class="widget-card__footer">
+                  <div class="widget-card__meta">
+                    <span>2022</span>
+                  </div>
+                  <a href="#" class="btn btn--sm btn--ghost">View Project &rarr;</a>
+                </div>
+              </div>
+            </article>
+            
+          </div>
+          
+        </div>
+      </section>
+
+      <!-- ==================================================================
+           CALL TO ACTION
+           ================================================================== -->
+      <section class="section section--alt">
+        <div class="container text-center">
+          <h2 class="mb-4">Have a project in mind?</h2>
+          <p class="lead mb-8">
+            I'm always open to discussing new projects and creative ideas.
+          </p>
+          <a href="../about/" class="btn btn--primary">Get in Touch</a>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-inner">
+          <p class="footer-text">
+            &copy; <span id="current-year"></span> Your Name. All rights reserved.
+          </p>
+          <nav class="flex gap-6">
+            <a href="../about/" class="footer-text">About</a>
+            <a href="mailto:your@email.com" class="footer-text">Contact</a>
+          </nav>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="../assets/js/slider.js"></script>
+  <script src="../assets/js/navigation.js"></script>
+  <script src="../assets/js/main.js"></script>
+  <script>document.getElementById('current-year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

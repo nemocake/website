@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A gallery of inspirations, references, and things that spark creativity.">
+  
+  <title>Inspirations | Your Name</title>
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../assets/css/variables.css">
+  <link rel="stylesheet" href="../assets/css/reset.css">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/layout.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/slider.css">
+  <link rel="stylesheet" href="../assets/css/utilities.css">
+  
+  <style>
+    /* Gallery-specific masonry layout */
+    .gallery-grid {
+      column-count: 2;
+      column-gap: var(--space-4);
+    }
+    
+    @media (min-width: 768px) {
+      .gallery-grid {
+        column-count: 3;
+        column-gap: var(--space-6);
+      }
+    }
+    
+    @media (min-width: 1024px) {
+      .gallery-grid {
+        column-count: 4;
+      }
+    }
+    
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: var(--space-4);
+    }
+    
+    @media (min-width: 768px) {
+      .gallery-item {
+        margin-bottom: var(--space-6);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    
+    <!-- Header -->
+    <header class="site-header">
+      <div class="container">
+        <div class="header-inner">
+          <a href="../" class="site-logo">Your Name</a>
+          
+          <nav class="main-nav" aria-label="Main navigation">
+            <a href="../" class="nav-link">Home</a>
+            <a href="../projects/" class="nav-link">Projects</a>
+            <a href="../blog/" class="nav-link">Blog</a>
+            <a href="../inspirations/" class="nav-link">Inspirations</a>
+            <a href="../about/" class="nav-link">About</a>
+          </nav>
+          
+          <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+            <span class="nav-toggle-icon"></span>
+          </button>
+        </div>
+      </div>
+      
+      <nav class="mobile-nav" aria-label="Mobile navigation">
+        <a href="../" class="mobile-nav-link">Home</a>
+        <a href="../projects/" class="mobile-nav-link">Projects</a>
+        <a href="../blog/" class="mobile-nav-link">Blog</a>
+        <a href="../inspirations/" class="mobile-nav-link">Inspirations</a>
+        <a href="../about/" class="mobile-nav-link">About</a>
+      </nav>
+    </header>
+
+    <main class="main-content">
+      
+      <!-- Page Header -->
+      <section class="section section--sm">
+        <div class="container">
+          
+          <nav class="breadcrumb mb-6" aria-label="Breadcrumb">
+            <span class="breadcrumb__item">
+              <a href="../" class="breadcrumb__link">Home</a>
+            </span>
+            <span class="breadcrumb__item">
+              <span class="breadcrumb__current">Inspirations</span>
+            </span>
+          </nav>
+          
+          <div class="text-center">
+            <h1>Inspirations</h1>
+            <p class="lead mt-4">
+              <!-- Edit: Your inspirations description -->
+              A visual collection of things that inspire me - design, art, photography, 
+              and everything that sparks creativity.
+            </p>
+          </div>
+          
+        </div>
+      </section>
+
+      <!-- ==================================================================
+           GALLERY GRID
+           Edit: Add your inspiration items using the masonry layout
+           ================================================================== -->
+      <section class="section">
+        <div class="container container--wide">
+          
+          <div class="gallery-grid">
+            
+            <!-- ============================================================
+                 GALLERY ITEM TEMPLATE
+                 Copy this block for each inspiration
+                 Vary the aspect ratios for visual interest
+                 ============================================================ -->
+            
+            <!-- Item 1 - Tall -->
+            <article class="gallery-item">
+              <div class="widget-card" data-variant="minimal">
+                <div class="widget-card__image" style="aspect-ratio: 3/4;">
+                  <!-- Edit: Add inspiration image -->
+                  <!-- <img src="../assets/images/inspirations/item-1.jpg" alt="Description" loading="lazy"> -->
+                  <div style="width:100%;height:100%;background:var(--color-gray-200);display:flex;align-items:center;justify-content:center;">
+                    <span class="text-secondary">Image</span>
+                  </div>
+                </div>
+                <div class="widget-card__content">
+                  <h3 class="widget-card__title text-base">
+                    <!-- Edit: Title or caption -->
+                    Inspiration Title
+                  </h3>
+                  <p class="widget-card__meta text-sm">
+                    <!-- Edit: Source or artist credit -->
+                    Source / Artist
+                  </p>
+                </div>
+              </div>
+            </article>
+            
+            <!-- Item 2 - Square -->
+            <article class="gallery-item">
+              <div class="widget-card" data-variant="minimal">
+                <div class="widget-card__image" style="aspect-ratio: 1/1;">
+                  <div style="width:100%;height:100%;background:var(--color-gray-300);display:flex;align-items:center;justify-content:center;">
+                    <span class="text-secondary">Image</span>
+                  </div>
+                </div>
+                <div class="widget-card__content">
+                  <h3 class="widget-card__title text-base">Design Reference</h3>
+                  <p class="widget-card__meta text-sm">Designer Name</p>
+                </div>
+              </div>
+            </article>
+            
+            <!-- Item 3 - Wide -->
+            <article class="gallery-item">
+              <div class="widget-card" data-variant="minimal">
+                <div class="widget-card__image" style="aspect-ratio: 16/9;">
+                  <div style="width:100%;height:100%;background:var(--color-gray-200);display:flex;align-items:center;justify-content:center;">
+                    <span class="text-secondary">Image</span>
+                  </div>
+                </div>
+                <div class="widget-card__content">
+                  <h3 class="widget-card__title text-base">Photography</h3>
+                  <p class="widget-card__meta text-sm">Photographer</p>
+                </div>
+              </div>
+            </article>
+            
+            <!-- Item 4 - Portrait -->
+            <article class="gallery-item">
+              <div class="widget-card" data-variant="minimal">
+                <div class="widget-card__image" style="aspect-ratio: 2/3;">
+                  <div style="width:100%;height:100%;background:var(--color-gray-300);display:flex;align-items:center;justify-content:center;">
+                    <span class="text-secondary">Image</span>
+                  </div>
+                </div>
+                <div class="widget-card__content">
+                  <h3 class="widget-card__title text-base">Art Piece</h3>
+                  <p class="widget-card__meta text-sm">Artist Name</p>
+                </div>
+              </div>
+            </article>
+            
+            <!-- Item 5 - Square -->
+            <article class="gallery-item">
+              <div class="widget-card" data-variant="minimal">
+                <div class="widget-card__image" style="aspect-ratio: 1/1;">
+                  <div style="width:100%;height:100%;background:var(--color-gray-200);display:flex;align-items:center;justify-content:center;">
+                    <span class="text-secondary">Image</span>
+                  </div>
+                </div>
+                <div class="widget-card__content">
+                  <h3 class="widget-card__title text-base">Typography</h3>
+                  <p class="widget-card__meta text-sm">Type Foundry</p>
+                </div>
+              </div>
+            </article>
+            
+            <!-- Item 6 - Tall -->
+            <article class="gallery-item">
+              <div class="widget-card" data-variant="minimal">
+                <div class="widget-card__image" style="aspect-ratio: 3/4;">
+                  <div style="width:100%;height:100%;background:var(--color-gray-300);display:flex;align-items:center;justify-content:center;">
+                    <span class="text-secondary">Image</span>
+                  </div>
+                </div>
+                <div class="widget-card__content">
+                  <h3 class="widget-card__title text-base">Architecture</h3>
+                  <p class="widget-card__meta text-sm">Architect</p>
+                </div>
+              </div>
+            </article>
+            
+            <!-- Item 7 - Wide -->
+            <article class="gallery-item">
+              <div class="widget-card" data-variant="minimal">
+                <div class="widget-card__image" style="aspect-ratio: 4/3;">
+                  <div style="width:100%;height:100%;background:var(--color-gray-200);display:flex;align-items:center;justify-content:center;">
+                    <span class="text-secondary">Image</span>
+                  </div>
+                </div>
+                <div class="widget-card__content">
+                  <h3 class="widget-card__title text-base">Product Design</h3>
+                  <p class="widget-card__meta text-sm">Designer</p>
+                </div>
+              </div>
+            </article>
+            
+            <!-- Item 8 - Portrait -->
+            <article class="gallery-item">
+              <div class="widget-card" data-variant="minimal">
+                <div class="widget-card__image" style="aspect-ratio: 9/16;">
+                  <div style="width:100%;height:100%;background:var(--color-gray-300);display:flex;align-items:center;justify-content:center;">
+                    <span class="text-secondary">Image</span>
+                  </div>
+                </div>
+                <div class="widget-card__content">
+                  <h3 class="widget-card__title text-base">Mobile UI</h3>
+                  <p class="widget-card__meta text-sm">App Name</p>
+                </div>
+              </div>
+            </article>
+            
+            <!-- Item 9 - Square -->
+            <article class="gallery-item">
+              <div class="widget-card" data-variant="minimal">
+                <div class="widget-card__image" style="aspect-ratio: 1/1;">
+                  <div style="width:100%;height:100%;background:var(--color-gray-200);display:flex;align-items:center;justify-content:center;">
+                    <span class="text-secondary">Image</span>
+                  </div>
+                </div>
+                <div class="widget-card__content">
+                  <h3 class="widget-card__title text-base">Illustration</h3>
+                  <p class="widget-card__meta text-sm">Illustrator</p>
+                </div>
+              </div>
+            </article>
+            
+            <!-- Item 10 - Wide -->
+            <article class="gallery-item">
+              <div class="widget-card" data-variant="minimal">
+                <div class="widget-card__image" style="aspect-ratio: 16/9;">
+                  <div style="width:100%;height:100%;background:var(--color-gray-300);display:flex;align-items:center;justify-content:center;">
+                    <span class="text-secondary">Image</span>
+                  </div>
+                </div>
+                <div class="widget-card__content">
+                  <h3 class="widget-card__title text-base">Brand Identity</h3>
+                  <p class="widget-card__meta text-sm">Agency</p>
+                </div>
+              </div>
+            </article>
+            
+            <!-- Item 11 - Tall -->
+            <article class="gallery-item">
+              <div class="widget-card" data-variant="minimal">
+                <div class="widget-card__image" style="aspect-ratio: 2/3;">
+                  <div style="width:100%;height:100%;background:var(--color-gray-200);display:flex;align-items:center;justify-content:center;">
+                    <span class="text-secondary">Image</span>
+                  </div>
+                </div>
+                <div class="widget-card__content">
+                  <h3 class="widget-card__title text-base">Editorial</h3>
+                  <p class="widget-card__meta text-sm">Publication</p>
+                </div>
+              </div>
+            </article>
+            
+            <!-- Item 12 - Square -->
+            <article class="gallery-item">
+              <div class="widget-card" data-variant="minimal">
+                <div class="widget-card__image" style="aspect-ratio: 1/1;">
+                  <div style="width:100%;height:100%;background:var(--color-gray-300);display:flex;align-items:center;justify-content:center;">
+                    <span class="text-secondary">Image</span>
+                  </div>
+                </div>
+                <div class="widget-card__content">
+                  <h3 class="widget-card__title text-base">Packaging</h3>
+                  <p class="widget-card__meta text-sm">Studio</p>
+                </div>
+              </div>
+            </article>
+            
+          </div>
+          
+          <!-- Load More Button -->
+          <div class="text-center mt-12">
+            <button class="btn btn--secondary">Load More</button>
+          </div>
+          
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-inner">
+          <p class="footer-text">
+            &copy; <span id="current-year"></span> Your Name. All rights reserved.
+          </p>
+          <nav class="flex gap-6">
+            <a href="../about/" class="footer-text">About</a>
+            <a href="mailto:your@email.com" class="footer-text">Contact</a>
+          </nav>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="../assets/js/slider.js"></script>
+  <script src="../assets/js/navigation.js"></script>
+  <script src="../assets/js/main.js"></script>
+  <script>document.getElementById('current-year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

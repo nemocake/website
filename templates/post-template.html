@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Edit: Update the description for SEO -->
+  <meta name="description" content="Blog post description goes here - make it compelling for search results.">
+  
+  <!-- Edit: Update the title -->
+  <title>Post Title | Your Name</title>
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../assets/css/variables.css">
+  <link rel="stylesheet" href="../assets/css/reset.css">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/layout.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/slider.css">
+  <link rel="stylesheet" href="../assets/css/utilities.css">
+  
+  <!-- Open Graph / Social Sharing (Optional) -->
+  <!-- Edit: Update for social media previews
+  <meta property="og:title" content="Post Title">
+  <meta property="og:description" content="Post description">
+  <meta property="og:image" content="URL to image">
+  <meta property="og:url" content="URL to this post">
+  <meta property="og:type" content="article">
+  -->
+</head>
+<body>
+  <div class="page-wrapper">
+    
+    <!-- Header -->
+    <header class="site-header">
+      <div class="container">
+        <div class="header-inner">
+          <a href="../../" class="site-logo">Your Name</a>
+          
+          <nav class="main-nav" aria-label="Main navigation">
+            <a href="../../" class="nav-link">Home</a>
+            <a href="../../projects/" class="nav-link">Projects</a>
+            <a href="../../blog/" class="nav-link">Blog</a>
+            <a href="../../inspirations/" class="nav-link">Inspirations</a>
+            <a href="../../about/" class="nav-link">About</a>
+          </nav>
+          
+          <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+            <span class="nav-toggle-icon"></span>
+          </button>
+        </div>
+      </div>
+      
+      <nav class="mobile-nav" aria-label="Mobile navigation">
+        <a href="../../" class="mobile-nav-link">Home</a>
+        <a href="../../projects/" class="mobile-nav-link">Projects</a>
+        <a href="../../blog/" class="mobile-nav-link">Blog</a>
+        <a href="../../inspirations/" class="mobile-nav-link">Inspirations</a>
+        <a href="../../about/" class="mobile-nav-link">About</a>
+      </nav>
+    </header>
+
+    <main class="main-content">
+      
+      <!-- ==================================================================
+           ARTICLE HEADER
+           Edit: Update title, date, and reading time
+           ================================================================== -->
+      <article>
+        <header class="section section--sm">
+          <div class="container container--narrow">
+            
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb mb-6" aria-label="Breadcrumb">
+              <span class="breadcrumb__item">
+                <a href="../../" class="breadcrumb__link">Home</a>
+              </span>
+              <span class="breadcrumb__item">
+                <a href="../" class="breadcrumb__link">Blog</a>
+              </span>
+              <span class="breadcrumb__item">
+                <span class="breadcrumb__current">Post Title</span>
+              </span>
+            </nav>
+            
+            <!-- Post Title -->
+            <h1 class="mb-4">
+              <!-- Edit: Your post title -->
+              Your Blog Post Title Goes Here
+            </h1>
+            
+            <!-- Post Meta -->
+            <div class="flex flex--wrap items-center gap-4 text-secondary mb-8">
+              <!-- Edit: Update the date -->
+              <time datetime="2024-01-15">January 15, 2024</time>
+              <span>&bull;</span>
+              <!-- Edit: Update reading time -->
+              <span>5 min read</span>
+              <span>&bull;</span>
+              <!-- Edit: Add tags/categories -->
+              <div class="tag-list">
+                <span class="tag">Design</span>
+                <span class="tag">Process</span>
+              </div>
+            </div>
+            
+          </div>
+        </header>
+
+        <!-- ==================================================================
+             FEATURED IMAGE (Optional)
+             Edit: Add your post's featured image
+             ================================================================== -->
+        <div class="container container--wide mb-12">
+          <!-- Edit: Add featured image -->
+          <!-- <img src="../../assets/images/blog/post-image.jpg" alt="Post featured image" class="rounded-xl w-full" loading="lazy"> -->
+          <div style="aspect-ratio:21/9;background:var(--color-gray-200);border-radius:var(--radius-xl);display:flex;align-items:center;justify-content:center;">
+            <span class="text-secondary text-xl">Featured Image</span>
+          </div>
+        </div>
+
+        <!-- ==================================================================
+             ARTICLE CONTENT
+             Edit: Write your blog post content below
+             Use standard HTML elements for formatting
+             ================================================================== -->
+        <div class="section section--sm">
+          <div class="container container--narrow">
+            <div class="content">
+              
+              <!-- INTRODUCTION
+                   Start with a compelling introduction that hooks the reader -->
+              <p class="lead">
+                <!-- Edit: Opening paragraph - make it engaging -->
+                This is the lead paragraph of your blog post. Use it to hook your 
+                reader and give them a preview of what they'll learn or discover.
+              </p>
+              
+              <!-- MAIN CONTENT
+                   Organize your content with clear headings -->
+              
+              <h2>First Major Section</h2>
+              
+              <p>
+                <!-- Edit: Your content -->
+                Write your main content here. Break it up into logical sections 
+                with headings to make it easy to scan and read. Use short paragraphs 
+                for better readability.
+              </p>
+              
+              <p>
+                You can include <a href="#">links to other resources</a>, 
+                <strong>bold text for emphasis</strong>, and <em>italics for 
+                subtle emphasis</em>.
+              </p>
+              
+              <!-- IMAGE IN CONTENT
+                   Add images to break up text and illustrate points -->
+              <figure class="my-8">
+                <!-- Edit: Add content image -->
+                <!-- <img src="../../assets/images/blog/content-image.jpg" alt="Description" class="rounded-lg" loading="lazy"> -->
+                <div style="aspect-ratio:16/9;background:var(--color-gray-200);border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;">
+                  <span class="text-secondary">Content Image</span>
+                </div>
+                <figcaption>
+                  <!-- Edit: Image caption -->
+                  Caption describing the image above.
+                </figcaption>
+              </figure>
+              
+              <h2>Second Major Section</h2>
+              
+              <p>
+                Continue with more content. Remember to keep paragraphs focused 
+                on a single idea for clarity.
+              </p>
+              
+              <!-- LISTS
+                   Use lists to organize information -->
+              <h3>Key Points</h3>
+              
+              <ul>
+                <li>First important point with supporting details</li>
+                <li>Second point that builds on your argument</li>
+                <li>Third point that adds value for the reader</li>
+                <li>Final point that wraps up this section</li>
+              </ul>
+              
+              <!-- BLOCKQUOTE
+                   Use for quotes or highlighted text -->
+              <blockquote>
+                <p>
+                  "Include relevant quotes that support your points or provide 
+                  additional perspective from experts in the field."
+                </p>
+                <cite>- Author Name, Source</cite>
+              </blockquote>
+              
+              <!-- CODE BLOCKS
+                   For technical posts -->
+              <h3>Code Example</h3>
+              
+              <p>
+                If you're writing about technical topics, include code snippets:
+              </p>
+              
+              <pre><code>// Example code block
+function example() {
+  return 'Hello, World!';
+}</code></pre>
+              
+              <h2>Third Major Section</h2>
+              
+              <p>
+                Add more sections as needed. A good blog post typically has 
+                3-5 major sections that build upon each other.
+              </p>
+              
+              <!-- NUMBERED LIST
+                   For sequential steps or ranked items -->
+              <h3>Step-by-Step Process</h3>
+              
+              <ol>
+                <li>First step in the process</li>
+                <li>Second step with more details</li>
+                <li>Third step that follows logically</li>
+                <li>Final step and conclusion</li>
+              </ol>
+              
+              <!-- CONCLUSION
+                   Wrap up your post with a strong conclusion -->
+              <h2>Conclusion</h2>
+              
+              <p>
+                Summarize the key takeaways from your post. Remind readers of 
+                the main points and encourage them to take action or continue 
+                exploring the topic.
+              </p>
+              
+              <p>
+                End with a call to action - invite comments, suggest related 
+                posts, or encourage social sharing.
+              </p>
+              
+            </div>
+          </div>
+        </div>
+
+        <!-- ==================================================================
+             POST FOOTER
+             Edit: Author info and related posts
+             ================================================================== -->
+        <footer class="section section--sm section--alt">
+          <div class="container container--narrow">
+            
+            <!-- Author Box -->
+            <div class="flex items-center gap-4 mb-12 p-6 bg-primary rounded-xl">
+              <div class="avatar avatar--xl">
+                <!-- Edit: Author photo -->
+                <div style="width:100%;height:100%;background:var(--color-gray-300);display:flex;align-items:center;justify-content:center;font-size:var(--font-size-sm);">
+                  You
+                </div>
+              </div>
+              <div>
+                <p class="font-semibold mb-1">Written by Your Name</p>
+                <p class="text-secondary text-sm">
+                  <!-- Edit: Short author bio -->
+                  Designer, developer, and creative thinker sharing thoughts on design and technology.
+                </p>
+              </div>
+            </div>
+            
+            <!-- Share Links (Optional) -->
+            <div class="text-center mb-12">
+              <p class="text-secondary mb-4">Share this post</p>
+              <div class="flex flex--center gap-4">
+                <a href="#" class="btn btn--sm btn--secondary">Twitter</a>
+                <a href="#" class="btn btn--sm btn--secondary">LinkedIn</a>
+                <a href="#" class="btn btn--sm btn--secondary">Copy Link</a>
+              </div>
+            </div>
+            
+            <!-- Related Posts -->
+            <div>
+              <h3 class="text-center mb-8">Related Posts</h3>
+              <div class="grid grid--cols-2">
+                
+                <!-- Related Post 1 -->
+                <article class="widget-card" data-variant="minimal">
+                  <div class="widget-card__image">
+                    <div style="width:100%;height:100%;background:var(--color-gray-200);display:flex;align-items:center;justify-content:center;">
+                      <span class="text-secondary text-sm">Image</span>
+                    </div>
+                  </div>
+                  <div class="widget-card__content">
+                    <h4 class="widget-card__title">
+                      <a href="#">Related Post Title</a>
+                    </h4>
+                  </div>
+                </article>
+                
+                <!-- Related Post 2 -->
+                <article class="widget-card" data-variant="minimal">
+                  <div class="widget-card__image">
+                    <div style="width:100%;height:100%;background:var(--color-gray-200);display:flex;align-items:center;justify-content:center;">
+                      <span class="text-secondary text-sm">Image</span>
+                    </div>
+                  </div>
+                  <div class="widget-card__content">
+                    <h4 class="widget-card__title">
+                      <a href="#">Another Related Post</a>
+                    </h4>
+                  </div>
+                </article>
+                
+              </div>
+            </div>
+            
+          </div>
+        </footer>
+        
+      </article>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-inner">
+          <p class="footer-text">
+            &copy; <span id="current-year"></span> Your Name. All rights reserved.
+          </p>
+          <nav class="flex gap-6">
+            <a href="../../about/" class="footer-text">About</a>
+            <a href="mailto:your@email.com" class="footer-text">Contact</a>
+          </nav>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="../../assets/js/navigation.js"></script>
+  <script src="../../assets/js/main.js"></script>
+  <script>document.getElementById('current-year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
