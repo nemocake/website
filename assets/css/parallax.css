@@ -1,0 +1,464 @@
+/* ==========================================================================
+   PARALLAX EFFECTS (parallax.css)
+   Scroll-driven animations and depth effects
+   ========================================================================== */
+
+/* -------------------------------------------------------------------------
+   CSS VARIABLES FOR PARALLAX
+   ------------------------------------------------------------------------- */
+:root {
+  --parallax-speed-slow: 0.3;
+  --parallax-speed-medium: 0.5;
+  --parallax-speed-fast: 0.7;
+  --parallax-reveal-distance: 40px;
+  --parallax-reveal-duration: 0.7s;
+  --parallax-stagger-delay: 100ms;
+  --parallax-slide-distance: 120px;
+  --parallax-slide-duration: 0.9s;
+}
+
+/* -------------------------------------------------------------------------
+   BASE PARALLAX CLASSES
+   ------------------------------------------------------------------------- */
+
+/* Prepare elements for GPU acceleration */
+[data-parallax],
+[data-parallax-reveal],
+[data-parallax-float],
+[data-parallax-depth] {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* -------------------------------------------------------------------------
+   SECTION REVEAL ANIMATIONS
+   Sections fade in and slide up as they enter viewport
+   ------------------------------------------------------------------------- */
+
+[data-parallax-reveal] {
+  opacity: 0;
+  transform: translateY(var(--parallax-reveal-distance));
+  transition:
+    opacity var(--parallax-reveal-duration) var(--ease-out),
+    transform var(--parallax-reveal-duration) var(--ease-out);
+}
+
+[data-parallax-reveal].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* -------------------------------------------------------------------------
+   STAGGERED CARD ANIMATIONS
+   Cards in grids animate in sequence
+   ------------------------------------------------------------------------- */
+
+[data-parallax-stagger] > * {
+  opacity: 0;
+  transform: translateY(25px);
+  transition:
+    opacity 0.5s var(--ease-out),
+    transform 0.5s var(--ease-out);
+}
+
+[data-parallax-stagger].is-visible > *:nth-child(1) { transition-delay: 0ms; }
+[data-parallax-stagger].is-visible > *:nth-child(2) { transition-delay: 100ms; }
+[data-parallax-stagger].is-visible > *:nth-child(3) { transition-delay: 200ms; }
+[data-parallax-stagger].is-visible > *:nth-child(4) { transition-delay: 300ms; }
+[data-parallax-stagger].is-visible > *:nth-child(5) { transition-delay: 400ms; }
+[data-parallax-stagger].is-visible > *:nth-child(6) { transition-delay: 500ms; }
+[data-parallax-stagger].is-visible > *:nth-child(7) { transition-delay: 600ms; }
+[data-parallax-stagger].is-visible > *:nth-child(8) { transition-delay: 700ms; }
+
+[data-parallax-stagger].is-visible > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* -------------------------------------------------------------------------
+   SLIDE-IN FROM SIDES
+   Cards slide in from left or right as they enter viewport
+   ------------------------------------------------------------------------- */
+
+[data-parallax-slide-left] {
+  opacity: 0;
+  transform: translateX(calc(var(--parallax-slide-distance) * -1));
+  transition:
+    opacity var(--parallax-slide-duration) var(--ease-out),
+    transform var(--parallax-slide-duration) cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-parallax-slide-left].is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+[data-parallax-slide-right] {
+  opacity: 0;
+  transform: translateX(var(--parallax-slide-distance));
+  transition:
+    opacity var(--parallax-slide-duration) var(--ease-out),
+    transform var(--parallax-slide-duration) cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-parallax-slide-right].is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Staggered slide-in for multiple cards */
+[data-parallax-slide-stagger] > *:nth-child(odd) {
+  opacity: 0;
+  transform: translateX(calc(var(--parallax-slide-distance) * -1));
+  transition:
+    opacity var(--parallax-slide-duration) var(--ease-out),
+    transform var(--parallax-slide-duration) cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-parallax-slide-stagger] > *:nth-child(even) {
+  opacity: 0;
+  transform: translateX(var(--parallax-slide-distance));
+  transition:
+    opacity var(--parallax-slide-duration) var(--ease-out),
+    transform var(--parallax-slide-duration) cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-parallax-slide-stagger].is-visible > *:nth-child(1) { transition-delay: 0ms; }
+[data-parallax-slide-stagger].is-visible > *:nth-child(2) { transition-delay: 150ms; }
+[data-parallax-slide-stagger].is-visible > *:nth-child(3) { transition-delay: 300ms; }
+[data-parallax-slide-stagger].is-visible > *:nth-child(4) { transition-delay: 450ms; }
+[data-parallax-slide-stagger].is-visible > *:nth-child(5) { transition-delay: 600ms; }
+[data-parallax-slide-stagger].is-visible > *:nth-child(6) { transition-delay: 750ms; }
+[data-parallax-slide-stagger].is-visible > *:nth-child(7) { transition-delay: 900ms; }
+[data-parallax-slide-stagger].is-visible > *:nth-child(8) { transition-delay: 1050ms; }
+
+[data-parallax-slide-stagger].is-visible > * {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* -------------------------------------------------------------------------
+   FREE-FLOATING CARDS
+   Cards with shadows that appear to float above the background
+   ------------------------------------------------------------------------- */
+
+.floating-card {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(16px);
+  border-radius: var(--radius-lg, 16px);
+  box-shadow:
+    0 15px 50px -12px rgba(0, 0, 0, 0.25),
+    0 8px 20px rgba(0, 0, 0, 0.1);
+  transition:
+    box-shadow 0.4s var(--ease-out);
+  position: relative;
+}
+
+.floating-card:hover {
+  box-shadow:
+    0 25px 70px -15px rgba(0, 0, 0, 0.3),
+    0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* -------------------------------------------------------------------------
+   CONTINUOUS SCROLL PARALLAX
+   Elements move continuously as user scrolls
+   ------------------------------------------------------------------------- */
+
+[data-parallax-scroll] {
+  will-change: transform;
+  transform: translateY(var(--scroll-y, 0));
+  transition: transform 0.1s linear;
+}
+
+/* Different scroll speeds for variety */
+[data-parallax-scroll="slow"] {
+  --parallax-multiplier: 0.05;
+}
+
+[data-parallax-scroll="medium"] {
+  --parallax-multiplier: 0.1;
+}
+
+[data-parallax-scroll="fast"] {
+  --parallax-multiplier: 0.15;
+}
+
+/* Alternate directions for visual interest */
+[data-parallax-scroll][data-parallax-direction="up"] {
+  --parallax-direction: -1;
+}
+
+[data-parallax-scroll][data-parallax-direction="down"] {
+  --parallax-direction: 1;
+}
+
+/* -------------------------------------------------------------------------
+   SCROLL-DRIVEN CARDS
+   Cards slide in/out based on scroll position relative to viewport center
+   ------------------------------------------------------------------------- */
+
+[data-scroll-drive] {
+  will-change: transform, opacity;
+  transform: translateX(var(--drive-x, 0)) rotate(var(--drive-rotate, 0deg));
+  opacity: var(--drive-opacity, 1);
+  transition:
+    transform 0.1s ease-out,
+    opacity 0.1s ease-out;
+}
+
+/* -------------------------------------------------------------------------
+   CHARACTER SCROLL-DRIVEN ANIMATIONS
+   Section titles animate character by character based on scroll position
+   ------------------------------------------------------------------------- */
+
+[data-parallax-chars] {
+  overflow: visible;
+  display: inline-block;
+  perspective: 1000px;
+}
+
+[data-parallax-chars] .parallax-char {
+  display: inline-block;
+  transform-origin: center center;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+  /* Initial state - JS will override these */
+  opacity: 0;
+  transform: translateX(-150%) rotateY(-25deg) scale(0.7);
+}
+
+[data-parallax-chars] .parallax-char--space {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Subtle text shadow for readability */
+[data-parallax-chars] .parallax-char {
+  text-shadow:
+    0 2px 20px rgba(0, 0, 0, 0.4),
+    0 0 40px rgba(0, 0, 0, 0.2);
+}
+
+/* -------------------------------------------------------------------------
+   LARGE SECTION HEADERS
+   Prominent, bold section titles
+   ------------------------------------------------------------------------- */
+
+.section-title--large {
+  font-size: clamp(3rem, 10vw, 6rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: var(--space-8, 2rem);
+  color: rgba(255, 255, 255, 0.95);
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Subtle text outline for readability on artwork backgrounds */
+.section-title--large[data-parallax-words] .parallax-word {
+  text-shadow:
+    0 2px 20px rgba(0, 0, 0, 0.4),
+    0 0 40px rgba(0, 0, 0, 0.2);
+}
+
+/* -------------------------------------------------------------------------
+   TEXT REVEAL ANIMATIONS
+   Section titles animate word-by-word
+   ------------------------------------------------------------------------- */
+
+[data-parallax-words] {
+  overflow: hidden;
+}
+
+[data-parallax-words] .parallax-word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.4s var(--ease-out),
+    transform 0.4s var(--ease-out);
+}
+
+[data-parallax-words].is-visible .parallax-word {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* -------------------------------------------------------------------------
+   FLOATING CARD EFFECTS
+   Cards lift and tilt subtly on hover
+   ------------------------------------------------------------------------- */
+
+[data-parallax-float] {
+  transition:
+    transform 0.4s var(--ease-out),
+    box-shadow 0.4s var(--ease-out);
+  transform-style: preserve-3d;
+}
+
+[data-parallax-float]:hover {
+  transform: translateY(-8px) rotateX(2deg) rotateY(-1deg);
+  box-shadow:
+    0 20px 40px -15px rgba(0, 0, 0, 0.2),
+    0 10px 20px -10px rgba(0, 0, 0, 0.1);
+}
+
+/* Subtle shine effect on hover */
+[data-parallax-float]::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    transparent 50%,
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-out);
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+[data-parallax-float]:hover::after {
+  opacity: 1;
+}
+
+/* -------------------------------------------------------------------------
+   COLLECTION GRID DEPTH
+   3D perspective on hover for collection items
+   ------------------------------------------------------------------------- */
+
+[data-parallax-depth] {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  transition: transform 0.4s var(--ease-out);
+}
+
+[data-parallax-depth]:hover {
+  transform: translateY(-4px) perspective(1000px) rotateX(3deg);
+}
+
+[data-parallax-depth] img,
+[data-parallax-depth] .collection-item__image {
+  transition: transform 0.5s var(--ease-out);
+}
+
+[data-parallax-depth]:hover img,
+[data-parallax-depth]:hover .collection-item__image {
+  transform: scale(1.05) translateZ(15px);
+}
+
+/* -------------------------------------------------------------------------
+   HERO PARALLAX
+   Profile photo and background depth effect
+   ------------------------------------------------------------------------- */
+
+.section--hero {
+  overflow: hidden;
+}
+
+/* Profile photo parallax movement */
+[data-parallax] {
+  transform: translateY(var(--parallax-y, 0));
+  transition: transform 0.1s linear;
+}
+
+/* Hero content reveal */
+.about-card[data-parallax-reveal] .about-card__content {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.6s var(--ease-out) 0.2s,
+    transform 0.6s var(--ease-out) 0.2s;
+}
+
+.about-card[data-parallax-reveal].is-visible .about-card__content {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* -------------------------------------------------------------------------
+   SCROLL SECTION TRANSITIONS
+   Smooth section transitions with depth
+   ------------------------------------------------------------------------- */
+
+.scroll-section[data-parallax-section] {
+  opacity: 0;
+  transform: translateY(60px);
+  transition:
+    opacity 0.8s var(--ease-out),
+    transform 0.8s var(--ease-out);
+}
+
+.scroll-section[data-parallax-section].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* -------------------------------------------------------------------------
+   MOBILE & ACCESSIBILITY OVERRIDES
+   Disable parallax on touch devices and reduced motion
+   ------------------------------------------------------------------------- */
+
+@media (hover: none), (max-width: 768px) {
+  [data-parallax],
+  [data-parallax-reveal],
+  [data-parallax-float],
+  [data-parallax-depth],
+  [data-parallax-section],
+  [data-parallax-slide-left],
+  [data-parallax-slide-right],
+  [data-scroll-drive] {
+    transform: none !important;
+    opacity: 1 !important;
+    will-change: auto;
+  }
+
+  [data-parallax-stagger] > *,
+  [data-parallax-slide-stagger] > * {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  [data-parallax-words] .parallax-word,
+  [data-parallax-chars] .parallax-char {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  [data-parallax-float]:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  [data-parallax-float]::after {
+    display: none;
+  }
+
+  .section-title--large {
+    font-size: clamp(2rem, 8vw, 3rem);
+  }
+}
+
+/* Reduced motion preference - no animations */
+@media (prefers-reduced-motion: reduce) {
+  [data-parallax],
+  [data-parallax-reveal],
+  [data-parallax-float],
+  [data-parallax-depth],
+  [data-parallax-section],
+  [data-parallax-slide-left],
+  [data-parallax-slide-right],
+  [data-parallax-stagger] > *,
+  [data-parallax-slide-stagger] > *,
+  [data-parallax-words] .parallax-word,
+  [data-parallax-chars] .parallax-char,
+  [data-scroll-drive] {
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    animation: none !important;
+  }
+}
