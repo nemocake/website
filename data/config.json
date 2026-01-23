@@ -1,0 +1,161 @@
+{
+  "backgroundArt": {
+    "src": "https://cdn.feralfileassets.com/previews/500ccc6e-d7ad-443f-a9df-0bf709b3b3c9/1645052262/index.html",
+    "title": "36 Points",
+    "artist": "Sage Jenson",
+    "year": "2022"
+  },
+
+  "artworks": [
+    {
+      "title": "36 Points",
+      "artist": "Sage Jenson",
+      "year": "2022",
+      "url": "https://cdn.feralfileassets.com/previews/500ccc6e-d7ad-443f-a9df-0bf709b3b3c9/1645052262/index.html"
+    },
+    {
+      "title": "monogrid 1.1 CE #34",
+      "artist": "Kim Asendorf",
+      "year": "2022",
+      "url": "https://ipfs.io/ipfs/QmQtaLb8fC7DUebFLTbkj3p7ByVVDxtRu7Na56dyo5BgM9/?fxhash=onteKmUycJyeWGjdavoVrqn74XQHsjVFfmMSBtocPigg7a7TryE"
+    },
+    {
+      "title": "Spiders",
+      "artist": "Piter Pasma",
+      "year": "2021",
+      "url": "https://ipfs.io/ipfs/QmSbrCo52wPrcLUQwGdtbcLFQjjrhnR4M8wdcXtpbYtNFb/"
+    },
+    {
+      "title": "Reading a book #873",
+      "artist": "Kim Asendorf",
+      "year": "2021",
+      "url": "https://ipfs.io/ipfs/QmUtfp5tvPwVefWQrhjTMEt9Xy3J4VooMjbR29qSPCvz6F/"
+    },
+    {
+      "title": "C-SCAPE #36",
+      "artist": "Toxi",
+      "year": "2022",
+      "url": "https://ipfs.io/ipfs/QmdHhcTBEUUNZ68gWHUsSRfjFrHYXStvgMvB6HwS1bVbMG/?fxhash=oo9ANVZwtvSGktuEZiVxN9oDWyfL7W9L71c5e6WZnMHNWTSfSka"
+    }
+  ],
+
+  "collection": [
+    {
+      "thumbnail": "https://ipfs.io/ipfs/QmQV57honsnKiWnsgRikU43WL5h4tk2eSi9QcsaphBiSsJ",
+      "render": "https://ipfs.io/ipfs/QmQV57honsnKiWnsgRikU43WL5h4tk2eSi9QcsaphBiSsJ",
+      "title": "CSRSNT-ZAAI-45-of-64.png",
+      "artist": "Caesuras (Casey Reas)",
+      "medium": "Digital Art",
+      "type": "image",
+      "description": "always been enamored by casey's work. the depth and intricacies of his pieces from seemingly simple diagonal lines and dashes. takes a special eye to be able to imagine, create and express these aesthetics, casey's eye has always been a favorite of mine."
+    },
+    {
+      "thumbnail": "https://ipfs.io/ipfs/QmTdTi3ctvT1Npcp6eKDuN1notyZoVJuTYK6iRivcKpW8V",
+      "render": "https://ipfs.io/ipfs/QmTdTi3ctvT1Npcp6eKDuN1notyZoVJuTYK6iRivcKpW8V",
+      "title": "The Starry Night: Not Van Gogh, Not Sorry",
+      "artist": "Helena Sarin",
+      "medium": "Digital Art",
+      "type": "image",
+      "description": "gans have always been my favorite sub-genre of AI, machine-learning, generative, or 'whatever u want to call it' art. fondness for simpler, more personalized systems. early gan outputs allowed more room for contemplation, emotions, and freedom for the machines to dream. there's a rawness to gans, an aesthetic that feels refreshing and incomparable to other artistic explorations. helena's work with gans is the perfect representation of this.... her style, emotions, story and so much more is expressed through her systems, digitally and physically."
+    },
+    {
+      "thumbnail": "https://ipfs.io/ipfs/QmSRtLFUF39tsj639EsAk1uZKRCDvYMGHcCQwsqdqpiXMs",
+      "render": "https://ipfs.io/ipfs/QmSRtLFUF39tsj639EsAk1uZKRCDvYMGHcCQwsqdqpiXMs",
+      "title": "Lushtemples — landscape in dark tones",
+      "artist": "Zancan",
+      "medium": "Digital Art",
+      "type": "image",
+      "description": "say what you want about how skeuomorphic or not digital art should or shouldnt be. zancan crafted something special with his early tezos forestry. an artist that captured an entire chain and is a big reason for helping pushing our niche art nerd scene forward just a little more."
+    },
+    {
+      "thumbnail": "https://assets.objkt.media/file/assets-003/KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton/124016/thumb288",
+      "render": "https://ipfs.io/ipfs/QmbsDwhx7saoCcAUsqrEfRZwa4iEm6KBgQZQFsNp885mFB",
+      "title": "Window Still Life 064",
+      "artist": "John Karel",
+      "medium": "Digital Art",
+      "type": "video",
+      "description": "my partner first recognized john's work from early tumblr days, we became active collectors of his daily windows throughout the early hicetnunc days. fond memories of auto-refreshing tzkt pages, waiting for a mint operations to come through… this one has always been a personal favorite, reminds me of my brother and the countless hours we'd share in front of split-screen tvs."
+    }
+  ],
+
+  "writings": [
+    {
+      "id": "on-collecting",
+      "title": "On Collecting",
+      "description": "There's something deeply human about the act of collecting. We gather objects, images, sounds, and ideas not just to possess them, but to create a mirror of ourselves.",
+      "date": "2026-01-15",
+      "body": [
+        "There's something deeply human about the act of collecting. We gather objects, images, sounds, and ideas not just to possess them, but to create a mirror of ourselves—a curated reflection of who we are and who we aspire to be.",
+        "In the digital age, collecting has transformed. We no longer need physical space to house our treasures. Instead, we bookmark, save, pin, and archive. The constraints have shifted from shelf space to attention span.",
+        "I've been thinking about what it means to collect art in this new landscape—where ownership is fluid, provenance is cryptographic, and the gallery is everywhere."
+      ],
+      "quote": "The things we collect tell stories we might not yet know how to tell ourselves."
+    },
+    {
+      "id": "digital-gardens",
+      "title": "Digital Gardens",
+      "description": "A website doesn't have to be a publication. It can be a garden—a place where ideas grow, evolve, and sometimes wither.",
+      "date": "2026-01-10",
+      "body": [
+        "A website doesn't have to be a publication. It can be a garden—a place where ideas grow, evolve, and sometimes wither. Unlike the polished permanence of traditional publishing, a digital garden embraces imperfection and change.",
+        "The metaphor matters. Gardens require tending. They're never \"done.\" You plant seeds without knowing exactly what will bloom. Some ideas need years to mature; others burst forth unexpectedly.",
+        "This space is my garden. Some pages are carefully cultivated; others are wild patches where I've scattered seeds and walked away. Both have their place."
+      ]
+    },
+    {
+      "id": "the-space-between",
+      "title": "The Space Between",
+      "description": "The most interesting things happen at the edges—where art meets technology, where structure meets chaos.",
+      "date": "2025-12-20",
+      "body": [
+        "The most interesting things happen at the edges—where art meets technology, where structure meets chaos, where the familiar dissolves into the unknown. I've always been drawn to these liminal spaces.",
+        "Working in technology while caring deeply about aesthetics creates a productive tension. Code is precise; art is ambiguous. Logic demands consistency; creativity thrives on contradiction. Living in both worlds means constantly translating between them.",
+        "Maybe that's what this whole project is about—finding ways to hold these contradictions together, to build bridges across the gaps."
+      ]
+    },
+    {
+      "id": "tools-for-thought",
+      "title": "Tools for Thought",
+      "description": "The tools we use shape how we think. A notebook invites linearity; a canvas suggests space.",
+      "date": "2025-12-15",
+      "body": [
+        "The tools we use shape how we think. A notebook invites linearity; a canvas suggests space. Software, despite its flexibility, carries its own biases—the assumptions of its creators encoded in every menu and shortcut.",
+        "I've been experimenting with building my own tools. Not because existing ones are inadequate, but because the act of building reveals something about how I actually think. Each design decision forces clarity about what matters.",
+        "The best tools disappear in use. They become extensions of intention rather than obstacles to it. That's the aspiration, anyway."
+      ]
+    },
+    {
+      "id": "learning-in-public",
+      "title": "Learning in Public",
+      "description": "There's vulnerability in sharing work before it's ready. Learning in public is an antidote to perfectionism.",
+      "date": "2025-11-28",
+      "body": [
+        "There's vulnerability in sharing work before it's ready. The temptation to wait—until the idea is fully formed, until the code is clean, until you really understand what you're doing—can become a permanent delay.",
+        "Learning in public is an antidote to that perfectionism. It means showing the messy middle, the wrong turns, the half-formed thoughts. It means being okay with being wrong in front of others.",
+        "The unexpected benefit: when you learn in public, you often find others on the same journey. The loneliness of figuring things out dissolves into something more like conversation."
+      ]
+    }
+  ],
+
+  "inspirations": {
+    "channel": "visually-intriguing",
+    "channelUrl": "https://www.are.na/conrad-house/visually-intriguing",
+    "itemCount": 12
+  },
+
+  "profile": {
+    "name": "",
+    "title": "",
+    "bio": "",
+    "photo": ""
+  },
+
+  "social": {
+    "twitter": "",
+    "instagram": "",
+    "github": "",
+    "linkedin": "",
+    "arena": "",
+    "email": ""
+  }
+}

@@ -6,6 +6,11 @@
   <meta name="description" content="Collection | con.rad">
   <title>Collection | con.rad</title>
 
+  <!-- Google Fonts for Font Testing Tool -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600;700&family=Lato:ital,wght@0,400;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Open+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Oswald:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Roboto:ital,wght@0,400;0,500;0,700;1,400&family=Source+Serif+4:ital,wght@0,400;0,500;0,600;1,400&family=Space+Grotesk:wght@400;500;600;700&family=Work+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
   <!-- Stylesheets -->
   <link rel="stylesheet" href="../assets/css/variables.css">
   <link rel="stylesheet" href="../assets/css/reset.css">
@@ -13,6 +18,62 @@
   <link rel="stylesheet" href="../assets/css/layout.css">
   <link rel="stylesheet" href="../assets/css/components.css">
   <link rel="stylesheet" href="../assets/css/utilities.css">
+
+  <!-- Config Loader -->
+  <script src="../assets/js/config-loader.js"></script>
+
+  <!-- Fallback config for file:// protocol or stale data -->
+  <script>
+    // Check if config exists and has the 'type' field (not stale data)
+    const hasValidConfig = window.SITE_CONFIG &&
+                           window.SITE_CONFIG.collection &&
+                           window.SITE_CONFIG.collection.length > 0 &&
+                           window.SITE_CONFIG.collection[0].type;
+    if (!hasValidConfig) {
+      console.log('[Collection] Using embedded fallback config (missing or stale data)');
+      window.SITE_CONFIG = window.SITE_CONFIG || {};
+      window.SITE_CONFIG.collection = [
+        {
+          "thumbnail": "https://ipfs.io/ipfs/QmQV57honsnKiWnsgRikU43WL5h4tk2eSi9QcsaphBiSsJ",
+          "render": "https://ipfs.io/ipfs/QmQV57honsnKiWnsgRikU43WL5h4tk2eSi9QcsaphBiSsJ",
+          "title": "CSRSNT-ZAAI-45-of-64.png",
+          "artist": "Caesuras (Casey Reas)",
+          "medium": "Digital Art",
+          "type": "image",
+          "description": "always been enamored by casey's work. the depth and intricacies of his pieces from seemingly simple diagonal lines and dashes. takes a special eye to be able to imagine, create and express these aesthetics, casey's eye has always been a favorite of mine."
+        },
+        {
+          "thumbnail": "https://ipfs.io/ipfs/QmTdTi3ctvT1Npcp6eKDuN1notyZoVJuTYK6iRivcKpW8V",
+          "render": "https://ipfs.io/ipfs/QmTdTi3ctvT1Npcp6eKDuN1notyZoVJuTYK6iRivcKpW8V",
+          "title": "The Starry Night: Not Van Gogh, Not Sorry",
+          "artist": "Helena Sarin",
+          "medium": "Digital Art",
+          "type": "image",
+          "description": "gans have always been my favorite sub-genre of AI, machine-learning, generative, or 'whatever u want to call it' art. fondness for simpler, more personalized systems. early gan outputs allowed more room for contemplation, emotions, and freedom for the machines to dream. there's a rawness to gans, an aesthetic that feels refreshing and incomparable to other artistic explorations. helena's work with gans is the perfect representation of this.... her style, emotions, story and so much more is expressed through her systems, digitally and physically."
+        },
+        {
+          "thumbnail": "https://ipfs.io/ipfs/QmSRtLFUF39tsj639EsAk1uZKRCDvYMGHcCQwsqdqpiXMs",
+          "render": "https://ipfs.io/ipfs/QmSRtLFUF39tsj639EsAk1uZKRCDvYMGHcCQwsqdqpiXMs",
+          "title": "Lushtemples — landscape in dark tones",
+          "artist": "Zancan",
+          "medium": "Digital Art",
+          "type": "image",
+          "description": "say what you want about how skeuomorphic or not digital art should or shouldnt be. zancan crafted something special with his early tezos forestry. an artist that captured an entire chain and is a big reason for helping pushing our niche art nerd scene forward just a little more."
+        },
+        {
+          "thumbnail": "https://assets.objkt.media/file/assets-003/KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton/124016/thumb288",
+          "render": "https://ipfs.io/ipfs/QmbsDwhx7saoCcAUsqrEfRZwa4iEm6KBgQZQFsNp885mFB",
+          "title": "Window Still Life 064",
+          "artist": "John Karel",
+          "medium": "Digital Art",
+          "type": "video",
+          "description": "my partner first recognized john's work from early tumblr days, we became active collectors of his daily windows throughout the early hicetnunc days. fond memories of auto-refreshing tzkt pages, waiting for a mint operations to come through… this one has always been a personal favorite, reminds me of my brother and the countless hours we'd share in front of split-screen tvs."
+        }
+      ];
+      // Update localStorage with correct data
+      try { localStorage.setItem('conradCollection', JSON.stringify(window.SITE_CONFIG.collection)); } catch(e) {}
+    }
+  </script>
 
   <style>
     /* ==========================================================================
@@ -32,16 +93,18 @@
       --plaque-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
     }
 
-    /* Page Layout */
+    /* Page Layout - Fixed view, no scroll */
     body {
       background: var(--gallery-bg);
-      min-height: 100vh;
+      height: 100vh;
+      overflow: hidden;
     }
 
     .gallery-page {
       display: flex;
       flex-direction: column;
-      min-height: 100vh;
+      height: 100vh;
+      overflow: hidden;
     }
 
     /* Header - Minimal */
@@ -97,7 +160,12 @@
 
     /* Main Gallery Area */
     .gallery-main {
-      padding: calc(80px + var(--space-8)) var(--space-6) var(--space-8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      padding: 0;
+      overflow: hidden;
     }
 
     /* Artwork Container */
@@ -105,7 +173,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: var(--space-8);
+      justify-content: center;
     }
 
     /* Simple frame - just adds shadow */
@@ -125,7 +193,7 @@
     .artwork-inner img {
       display: block;
       max-width: 90vw;
-      max-height: 80vh;
+      max-height: 90vh;
       width: auto;
       height: auto;
       object-fit: contain;
@@ -146,6 +214,18 @@
       width: 100%;
       height: 100%;
       border: none;
+    }
+
+    /* Video: fit within viewport like images */
+    .artwork-inner video {
+      display: block;
+      max-width: min(90vw, calc(100vw - 160px)); /* Leave room for side navigation */
+      max-height: 80vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      background: #000;
+      border-radius: 2px;
     }
 
     /* Loading State - only shows for iframes */
@@ -176,50 +256,107 @@
       50% { opacity: 1; }
     }
 
-    /* Museum Plaque */
+    /* Museum Plaque - fixed bottom left, floating text */
     .artwork-plaque {
-      max-width: 400px;
-      width: 100%;
-      padding: var(--space-5) var(--space-6);
-      background: var(--plaque-bg);
-      border: 1px solid var(--plaque-border);
-      border-radius: 1px;
-      box-shadow: var(--plaque-shadow);
+      position: fixed;
+      bottom: var(--space-8);
+      left: var(--space-8);
+      max-width: 300px;
+      padding: 0;
+      background: transparent;
       text-align: left;
+      z-index: 50;
+    }
+
+    /* Artwork Description - dynamically positioned by JS */
+    .artwork-sidebar {
+      position: fixed;
+      top: 50%;
+      right: 60px; /* Fallback, JS will override */
+      transform: translateY(-50%);
+      max-width: 220px;
+      max-height: 50vh;
+      overflow-y: auto;
+      padding: 0;
+      background: transparent;
+      z-index: 50;
+      transition: right 0.3s ease, max-width 0.3s ease;
+    }
+
+    .artwork-sidebar:empty,
+    .artwork-sidebar[data-empty="true"] {
+      display: none;
+    }
+
+    .sidebar-label {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 11px;
+      font-weight: 400;
+      color: #1a1a1a;
+      text-transform: lowercase;
+      letter-spacing: 0.02em;
+      margin: 0 0 var(--space-4) 0;
+      opacity: 0.5;
+    }
+
+    .sidebar-text {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 13px;
+      line-height: 1.8;
+      color: #1a1a1a;
+      margin: 0;
+      font-weight: 400;
+      letter-spacing: 0.015em;
+    }
+
+    .sidebar-text p {
+      margin: 0 0 var(--space-4) 0;
+    }
+
+    .sidebar-text p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Subtle scrollbar for sidebar */
+    .artwork-sidebar::-webkit-scrollbar {
+      width: 2px;
+    }
+
+    .artwork-sidebar::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .artwork-sidebar::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 1px;
+    }
+
+    .artwork-sidebar::-webkit-scrollbar-thumb:hover {
+      background: rgba(0, 0, 0, 0.2);
     }
 
     .plaque-title {
-      font-size: var(--font-size-base);
-      font-weight: var(--font-weight-medium);
-      color: var(--text-primary);
-      margin: 0 0 var(--space-1) 0;
-      line-height: 1.3;
+      font-family: 'Libre Baskerville', serif;
+      font-size: 15px;
+      font-weight: 400;
+      font-style: italic;
+      color: #1a1a1a;
+      margin: 0 0 var(--space-2) 0;
+      line-height: 1.4;
+      letter-spacing: 0.01em;
     }
 
     .plaque-artist {
-      font-size: var(--font-size-sm);
-      color: var(--text-secondary);
-      margin: 0 0 var(--space-3) 0;
+      font-family: 'Libre Baskerville', serif;
+      font-size: 13px;
+      font-weight: 400;
+      color: #1a1a1a;
+      margin: 0;
+      letter-spacing: 0.015em;
     }
 
     .plaque-details {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-2) var(--space-4);
-      padding-top: var(--space-3);
-      border-top: 1px solid var(--plaque-border);
-    }
-
-    .plaque-detail {
-      font-size: var(--font-size-xs);
-      color: var(--text-tertiary);
-      letter-spacing: 0.02em;
-    }
-
-    .plaque-detail-label {
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-right: var(--space-1);
+      display: none;
     }
 
     /* Writing/Description Section */
@@ -245,54 +382,65 @@
       margin-bottom: 0;
     }
 
-    /* Navigation Between Pieces */
-    .gallery-pagination {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: var(--space-8);
-      margin-top: var(--space-12);
-      padding-top: var(--space-6);
+    /* Side Navigation */
+    .side-nav {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 100;
+      pointer-events: auto;
     }
 
-    .pagination-btn {
+    .side-nav--prev {
+      left: var(--space-6);
+    }
+
+    .side-nav--next {
+      right: var(--space-6);
+    }
+
+    .side-nav-btn {
       display: flex;
       align-items: center;
-      gap: var(--space-2);
-      padding: var(--space-3) var(--space-4);
+      justify-content: center;
+      width: 48px;
+      height: 48px;
       background: transparent;
-      border: 1px solid var(--plaque-border);
-      border-radius: 2px;
-      color: var(--text-secondary);
-      font-size: var(--font-size-xs);
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      text-decoration: none;
+      border: none;
+      color: #1a1a1a;
       cursor: pointer;
       transition: all 0.2s ease;
-    }
-
-    .pagination-btn:hover {
-      background: var(--gallery-wall);
-      color: var(--text-primary);
-      border-color: var(--text-tertiary);
-    }
-
-    .pagination-btn:disabled {
       opacity: 0.3;
+      pointer-events: auto;
+      position: relative;
+      z-index: 101;
+    }
+
+    .side-nav-btn:hover {
+      opacity: 0.8;
+    }
+
+    .side-nav-btn:disabled {
+      opacity: 0.1;
       cursor: not-allowed;
     }
 
-    .pagination-btn:disabled:hover {
-      background: transparent;
-      color: var(--text-secondary);
-      border-color: var(--plaque-border);
+    .side-nav-btn svg {
+      width: 24px;
+      height: 24px;
     }
 
-    .pagination-counter {
-      font-size: var(--font-size-xs);
-      color: var(--text-tertiary);
+    /* Counter at bottom center */
+    .gallery-counter {
+      position: fixed;
+      bottom: var(--space-6);
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 11px;
+      color: #1a1a1a;
+      opacity: 0.4;
       letter-spacing: 0.1em;
+      z-index: 50;
     }
 
     /* View Controls */
@@ -334,8 +482,10 @@
     /* Fullscreen Mode */
     body.fullscreen-mode .gallery-header,
     body.fullscreen-mode .artwork-plaque,
+    body.fullscreen-mode .artwork-sidebar,
     body.fullscreen-mode .artwork-description,
-    body.fullscreen-mode .gallery-pagination {
+    body.fullscreen-mode .side-nav,
+    body.fullscreen-mode .gallery-counter {
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.3s ease;
@@ -499,28 +649,157 @@
       text-transform: uppercase;
     }
 
+    /* ==========================================================================
+       FONT TESTING TOOL
+       ========================================================================== */
+    .font-tool {
+      position: fixed;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+      z-index: 200;
+      display: none; /* Hidden for now - change to 'flex' to re-enable */
+      align-items: center;
+    }
+
+    .font-tool__toggle {
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(8px);
+      border: none;
+      border-radius: 0 6px 6px 0;
+      padding: 0.5rem 0.35rem;
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.65rem;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .font-tool__toggle:hover {
+      background: rgba(0, 0, 0, 0.6);
+      color: #fff;
+    }
+
+    .font-tool__panel {
+      background: rgba(20, 20, 20, 0.95);
+      backdrop-filter: blur(12px);
+      border-radius: 0 8px 8px 0;
+      padding: 1rem;
+      width: 220px;
+      transform: translateX(-100%);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .font-tool.is-open .font-tool__panel {
+      transform: translateX(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .font-tool.is-open .font-tool__toggle {
+      border-radius: 0;
+    }
+
+    .font-tool__title {
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.75rem;
+    }
+
+    .font-tool__group {
+      margin-bottom: 1rem;
+    }
+
+    .font-tool__label {
+      font-size: 0.65rem;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 0.35rem;
+      display: block;
+    }
+
+    .font-tool__select {
+      width: 100%;
+      background: #2a2a2a;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
+      padding: 0.4rem 0.5rem;
+      color: #fff;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+
+    .font-tool__select option {
+      background: #2a2a2a;
+      color: #fff;
+    }
+
+    .font-tool__select:focus {
+      outline: none;
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .font-tool__reset {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      padding: 0.4rem;
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.7rem;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .font-tool__reset:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
     /* Responsive */
     @media (max-width: 768px) {
       .gallery-main {
-        padding: calc(70px + var(--space-4)) var(--space-4) var(--space-6);
-      }
-
-      .artwork-container {
-        gap: var(--space-6);
+        height: 100vh;
+        padding: 0;
       }
 
       .artwork-plaque {
-        max-width: 100%;
+        max-width: calc(100% - var(--space-8));
+        bottom: var(--space-4);
+        left: var(--space-4);
       }
 
-      .artwork-description {
-        margin-top: var(--space-8);
-        padding-top: var(--space-6);
+      /* Sidebar hidden on mobile */
+      .artwork-sidebar {
+        display: none;
       }
 
-      .gallery-pagination {
-        gap: var(--space-4);
-        margin-top: var(--space-8);
+      /* Side nav smaller on mobile */
+      .side-nav--prev {
+        left: var(--space-2);
+      }
+
+      .side-nav--next {
+        right: var(--space-2);
+      }
+
+      .side-nav-btn {
+        width: 40px;
+        height: 40px;
+      }
+
+      .side-nav-btn svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      .gallery-counter {
+        bottom: var(--space-4);
       }
 
       .gallery-nav {
@@ -564,15 +843,123 @@
   <!-- Password Protection -->
   <script src="../assets/js/auth.js"></script>
 
+  <!-- Font Testing Tool -->
+  <div class="font-tool" id="font-tool">
+    <button class="font-tool__toggle" id="font-tool-toggle">Fonts</button>
+    <div class="font-tool__panel">
+      <div class="font-tool__title">Font Testing</div>
+
+      <div class="font-tool__group">
+        <label class="font-tool__label">Title Font</label>
+        <select class="font-tool__select" id="font-title">
+          <option value="">Default</option>
+          <optgroup label="Sans Serif">
+            <option value="'Inter', sans-serif">Inter</option>
+            <option value="'Helvetica Neue', Helvetica, sans-serif">Helvetica Neue</option>
+            <option value="'SF Pro Display', sans-serif">SF Pro Display</option>
+            <option value="'Roboto', sans-serif">Roboto</option>
+            <option value="'Open Sans', sans-serif">Open Sans</option>
+            <option value="'Montserrat', sans-serif">Montserrat</option>
+            <option value="'Poppins', sans-serif">Poppins</option>
+            <option value="'DM Sans', sans-serif">DM Sans</option>
+            <option value="'Space Grotesk', sans-serif">Space Grotesk</option>
+          </optgroup>
+          <optgroup label="Serif">
+            <option value="'Georgia', serif">Georgia</option>
+            <option value="'Playfair Display', serif">Playfair Display</option>
+            <option value="'Cormorant Garamond', serif">Cormorant Garamond</option>
+            <option value="'Libre Baskerville', serif">Libre Baskerville</option>
+            <option value="'Source Serif 4', serif">Source Serif Pro</option>
+            <option value="'EB Garamond', serif">EB Garamond</option>
+            <option value="'Crimson Text', serif">Crimson Text</option>
+          </optgroup>
+          <optgroup label="Display">
+            <option value="'Bebas Neue', sans-serif">Bebas Neue</option>
+            <option value="'Oswald', sans-serif">Oswald</option>
+            <option value="'Anton', sans-serif">Anton</option>
+          </optgroup>
+        </select>
+      </div>
+
+      <div class="font-tool__group">
+        <label class="font-tool__label">Artist/Info Font</label>
+        <select class="font-tool__select" id="font-artist">
+          <option value="">Default</option>
+          <optgroup label="Sans Serif">
+            <option value="'Inter', sans-serif">Inter</option>
+            <option value="'Helvetica Neue', Helvetica, sans-serif">Helvetica Neue</option>
+            <option value="'Roboto', sans-serif">Roboto</option>
+            <option value="'Open Sans', sans-serif">Open Sans</option>
+            <option value="'Lato', sans-serif">Lato</option>
+            <option value="'Work Sans', sans-serif">Work Sans</option>
+            <option value="'IBM Plex Sans', sans-serif">IBM Plex Sans</option>
+          </optgroup>
+          <optgroup label="Serif">
+            <option value="'Georgia', serif">Georgia</option>
+            <option value="'Merriweather', serif">Merriweather</option>
+            <option value="'Lora', serif">Lora</option>
+            <option value="'Source Serif 4', serif">Source Serif Pro</option>
+          </optgroup>
+        </select>
+      </div>
+
+      <div class="font-tool__group">
+        <label class="font-tool__label">Description Font</label>
+        <select class="font-tool__select" id="font-description">
+          <option value="">Default</option>
+          <optgroup label="Sans Serif">
+            <option value="'Inter', sans-serif">Inter</option>
+            <option value="'Helvetica Neue', Helvetica, sans-serif">Helvetica Neue</option>
+            <option value="'Roboto', sans-serif">Roboto</option>
+            <option value="'Open Sans', sans-serif">Open Sans</option>
+            <option value="'Lato', sans-serif">Lato</option>
+            <option value="'IBM Plex Sans', sans-serif">IBM Plex Sans</option>
+            <option value="'DM Sans', sans-serif">DM Sans</option>
+          </optgroup>
+          <optgroup label="Serif">
+            <option value="'Georgia', serif">Georgia</option>
+            <option value="'Merriweather', serif">Merriweather</option>
+            <option value="'Lora', serif">Lora</option>
+            <option value="'Source Serif 4', serif">Source Serif Pro</option>
+            <option value="'Crimson Text', serif">Crimson Text</option>
+            <option value="'Libre Baskerville', serif">Libre Baskerville</option>
+          </optgroup>
+        </select>
+      </div>
+
+      <button class="font-tool__reset" id="font-reset">Reset All</button>
+    </div>
+  </div>
+
   <div class="gallery-page">
+
+    <!-- Side Navigation -->
+    <nav class="side-nav side-nav--prev">
+      <button class="side-nav-btn" id="side-prev-btn" disabled title="Previous">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M15 19l-7-7 7-7"/>
+        </svg>
+      </button>
+    </nav>
+
+    <nav class="side-nav side-nav--next">
+      <button class="side-nav-btn" id="side-next-btn" disabled title="Next">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M9 5l7 7-7 7"/>
+        </svg>
+      </button>
+    </nav>
+
+    <!-- Counter -->
+    <div class="gallery-counter" id="gallery-counter">1 / 1</div>
 
     <!-- Minimal Header -->
     <header class="gallery-header" id="gallery-header">
-      <a href="../" class="gallery-logo">con.rad</a>
+      <a href="../index.html" class="gallery-logo">con.rad</a>
       <nav class="gallery-nav">
-        <a href="../" class="gallery-nav-link">Home</a>
-        <a href="../blog/" class="gallery-nav-link">Blog</a>
-        <a href="../projects/" class="gallery-nav-link">Projects</a>
+        <a href="../index.html" class="gallery-nav-link">Home</a>
+        <a href="../writings/index.html" class="gallery-nav-link">Writings</a>
+        <a href="../projects/index.html" class="gallery-nav-link">Projects</a>
       </nav>
     </header>
 
@@ -601,28 +988,18 @@
           </div>
         </div>
 
+        <!-- Sidebar Description -->
+        <aside class="artwork-sidebar" id="artwork-sidebar" data-empty="true">
+          <p class="sidebar-label">thoughts.</p>
+          <div class="sidebar-text" id="sidebar-text"></div>
+        </aside>
+
         <!-- Description/Writing Section -->
         <section class="artwork-description" id="artwork-description" style="display: none;">
           <div class="description-content" id="description-content">
           </div>
         </section>
 
-        <!-- Navigation -->
-        <nav class="gallery-pagination" id="gallery-pagination">
-          <button class="pagination-btn" id="prev-btn" disabled>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M15 19l-7-7 7-7"/>
-            </svg>
-            Previous
-          </button>
-          <span class="pagination-counter" id="pagination-counter">1 / 1</span>
-          <button class="pagination-btn" id="next-btn" disabled>
-            Next
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M9 5l7 7-7 7"/>
-            </svg>
-          </button>
-        </nav>
 
       </div>
 
@@ -697,9 +1074,6 @@
       const plaqueDetails = document.getElementById('plaque-details');
       const artworkDescription = document.getElementById('artwork-description');
       const descriptionContent = document.getElementById('description-content');
-      const prevBtn = document.getElementById('prev-btn');
-      const nextBtn = document.getElementById('next-btn');
-      const paginationCounter = document.getElementById('pagination-counter');
       const fullscreenBtn = document.getElementById('fullscreen-btn');
       const externalBtn = document.getElementById('external-btn');
       const galleryEmpty = document.getElementById('gallery-empty');
@@ -707,20 +1081,32 @@
       const gridBtn = document.getElementById('grid-btn');
       const gridInner = document.getElementById('gallery-grid-inner');
       const gridCount = document.getElementById('grid-count');
+      const artworkSidebar = document.getElementById('artwork-sidebar');
+      const sidebarText = document.getElementById('sidebar-text');
+      const sidePrevBtn = document.getElementById('side-prev-btn');
+      const sideNextBtn = document.getElementById('side-next-btn');
+      const galleryCounter = document.getElementById('gallery-counter');
 
       // Initialize
       function init() {
-        // Try to get collection from parent site config
-        if (window.opener && window.opener.SITE_CONFIG) {
-          collection = window.opener.SITE_CONFIG.collection || [];
-        } else if (window.parent && window.parent.SITE_CONFIG) {
-          collection = window.parent.SITE_CONFIG.collection || [];
-        } else {
-          // Fallback: try to load from localStorage or use demo data
+        // Priority 1: Use SITE_CONFIG from config-loader (includes fallback config)
+        if (window.SITE_CONFIG && window.SITE_CONFIG.collection && window.SITE_CONFIG.collection.length > 0) {
+          collection = window.SITE_CONFIG.collection;
+          console.log('[Gallery] Using SITE_CONFIG collection:', collection.length, 'items');
+        }
+        // Priority 2: Try parent window's config (if opened from homepage)
+        else if (window.opener && window.opener.SITE_CONFIG && window.opener.SITE_CONFIG.collection) {
+          collection = window.opener.SITE_CONFIG.collection;
+        } else if (window.parent && window.parent.SITE_CONFIG && window.parent.SITE_CONFIG.collection) {
+          collection = window.parent.SITE_CONFIG.collection;
+        }
+        // Priority 3: Fallback to localStorage
+        else {
           const stored = localStorage.getItem('conradCollection');
           if (stored) {
             try {
               collection = JSON.parse(stored);
+              console.log('[Gallery] Using localStorage collection');
             } catch (e) {
               console.warn('Failed to parse stored collection');
             }
@@ -733,8 +1119,8 @@
         // Direct piece URL
         if (params.has('url')) {
           collection = [{
-            image: params.get('url'),
-            link: params.get('url'),
+            thumbnail: params.get('url'),
+            render: params.get('url'),
             title: params.get('title') || 'Untitled',
             artist: params.get('artist') || '',
             medium: params.get('medium') || 'Digital Art',
@@ -777,8 +1163,8 @@
         updateNavigation();
 
         // Event listeners
-        prevBtn.addEventListener('click', () => navigate(-1));
-        nextBtn.addEventListener('click', () => navigate(1));
+        sidePrevBtn.addEventListener('click', () => navigate(-1));
+        sideNextBtn.addEventListener('click', () => navigate(1));
         fullscreenBtn.addEventListener('click', toggleFullscreen);
         gridBtn.addEventListener('click', toggleGridMode);
 
@@ -787,6 +1173,9 @@
 
         // Scroll header effect
         window.addEventListener('scroll', handleScroll);
+
+        // Resize handler for sidebar positioning
+        window.addEventListener('resize', handleResize);
       }
 
       function showEmptyState() {
@@ -801,30 +1190,70 @@
         // Show loading
         artworkLoading.style.display = 'flex';
 
-        // Determine if this is an interactive piece (iframe) or static image
-        const url = item.link || item.image;
+        // Use render URL for the collection page display (fallback to thumbnail for backwards compatibility)
+        const url = item.render || item.thumbnail || item.link || item.image;
 
-        // Check if URL points to an image file
-        const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg', '.bmp'];
-        const isImageUrl = imageExtensions.some(ext => url.toLowerCase().includes(ext));
+        // Determine content type - prioritize explicit type field from config
+        let isVideoUrl = false;
+        let isInteractive = false;
 
-        // Only use iframe if explicitly marked as interactive OR ends with .html
-        // (and is NOT an image file)
-        const isInteractive = !isImageUrl && (
-                             item.interactive === true ||
-                             url.endsWith('.html') ||
-                             url.includes('/index.html')
-                             );
+        if (item.type) {
+          // Use explicit type from config.json
+          isVideoUrl = item.type === 'video';
+          isInteractive = item.type === 'iframe';
+        } else {
+          // Fallback to extension-based detection for backwards compatibility
+          const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg', '.bmp'];
+          const isImageUrl = imageExtensions.some(ext => url.toLowerCase().includes(ext));
+
+          const videoExtensions = ['.mp4', '.webm', '.mov', '.ogg', '.avi', '.m4v'];
+          isVideoUrl = videoExtensions.some(ext => url.toLowerCase().includes(ext)) || item.video === true;
+
+          // Only use iframe if explicitly marked as interactive OR ends with .html
+          // (and is NOT an image or video file)
+          isInteractive = !isImageUrl && !isVideoUrl && (
+                               item.interactive === true ||
+                               url.endsWith('.html') ||
+                               url.includes('/index.html')
+                               );
+        }
 
         // Clear previous content and reset frame classes
-        const existingMedia = artworkInner.querySelector('iframe, img');
+        const existingMedia = artworkInner.querySelector('iframe, img, video');
         if (existingMedia) {
           existingMedia.remove();
         }
         artworkFrame.classList.remove('artwork-frame--iframe');
+        artworkFrame.classList.remove('artwork-frame--video');
         artworkInner.style.removeProperty('--artwork-aspect-ratio');
 
-        if (isInteractive) {
+        if (isVideoUrl) {
+          // Create video element for video pieces
+          artworkFrame.classList.add('artwork-frame--video');
+
+          const video = document.createElement('video');
+          video.src = url;
+          video.title = item.title || 'Artwork';
+          video.controls = true;
+          video.loop = true;
+          video.muted = item.muted !== false; // Default to muted, can set muted: false in item
+          video.playsInline = true;
+          video.preload = 'metadata';
+
+          video.onloadeddata = () => {
+            artworkLoading.style.display = 'none';
+            // Position sidebar after video loads
+            setTimeout(positionSidebar, 50);
+            // Auto-play if desired
+            if (item.autoplay !== false) {
+              video.play().catch(() => {}); // Catch autoplay failures silently
+            }
+          };
+          video.onerror = () => {
+            artworkLoading.textContent = 'Failed to load video';
+          };
+          artworkInner.appendChild(video);
+        } else if (isInteractive) {
           // Create iframe for interactive/generative pieces
           artworkFrame.classList.add('artwork-frame--iframe');
 
@@ -841,15 +1270,19 @@
           iframe.style.overflow = 'hidden';
           iframe.onload = () => {
             artworkLoading.style.display = 'none';
+            // Position sidebar after iframe loads
+            setTimeout(positionSidebar, 50);
           };
           artworkInner.appendChild(iframe);
         } else {
           // Create image for static pieces
           const img = document.createElement('img');
-          img.src = item.image || url;
+          img.src = url;
           img.alt = item.title || 'Artwork';
           img.onload = () => {
             artworkLoading.style.display = 'none';
+            // Position sidebar after image loads and dimensions are known
+            setTimeout(positionSidebar, 50);
           };
           img.onerror = () => {
             artworkLoading.textContent = 'Failed to load';
@@ -872,26 +1305,81 @@
         // Update external link
         externalBtn.href = url;
 
-        // Update description if provided
+        // Update sidebar description if provided
         if (item.description) {
-          descriptionContent.innerHTML = '<p>' + item.description.replace(/\n\n/g, '</p><p>') + '</p>';
-          artworkDescription.style.display = 'block';
+          sidebarText.innerHTML = '<p>' + item.description.replace(/\n\n/g, '</p><p>') + '</p>';
+          artworkSidebar.setAttribute('data-empty', 'false');
         } else {
-          artworkDescription.style.display = 'none';
+          sidebarText.innerHTML = '';
+          artworkSidebar.setAttribute('data-empty', 'true');
         }
+
+        // Hide the old description section (now using sidebar)
+        artworkDescription.style.display = 'none';
 
         // Update page title
         document.title = (item.title || 'Artwork') + ' | Collection | con.rad';
       }
 
       function updateNavigation() {
-        prevBtn.disabled = currentIndex === 0;
-        nextBtn.disabled = currentIndex === collection.length - 1;
-        paginationCounter.textContent = (currentIndex + 1) + ' / ' + collection.length;
+        sidePrevBtn.disabled = currentIndex === 0;
+        sideNextBtn.disabled = currentIndex === collection.length - 1;
+        galleryCounter.textContent = (currentIndex + 1) + ' / ' + collection.length;
 
-        // Hide pagination if only one item
-        document.getElementById('gallery-pagination').style.display =
-          collection.length > 1 ? 'flex' : 'none';
+        // Hide nav if only one item
+        const showNav = collection.length > 1;
+        document.querySelector('.side-nav--prev').style.display = showNav ? 'block' : 'none';
+        document.querySelector('.side-nav--next').style.display = showNav ? 'block' : 'none';
+        galleryCounter.style.display = showNav ? 'block' : 'none';
+      }
+
+      // Dynamically position sidebar based on artwork position
+      function positionSidebar() {
+        if (!artworkSidebar || artworkSidebar.dataset.empty === 'true') return;
+
+        const frame = artworkFrame.querySelector('img') || artworkFrame.querySelector('iframe') || artworkFrame.querySelector('video');
+        if (!frame) return;
+
+        const frameRect = frame.getBoundingClientRect();
+        const viewportWidth = window.innerWidth;
+        const navButtonWidth = 60; // Space for the side nav button
+
+        // Calculate available space between artwork right edge and viewport right edge
+        const artworkRightEdge = frameRect.right;
+        const availableSpace = viewportWidth - artworkRightEdge - navButtonWidth;
+
+        // Minimum space needed to show sidebar
+        const minSpace = 150;
+
+        if (availableSpace < minSpace) {
+          // Not enough space, hide sidebar
+          artworkSidebar.style.display = 'none';
+          return;
+        }
+
+        artworkSidebar.style.display = 'block';
+
+        // Calculate sidebar width (use most of available space, with constraints)
+        const padding = 40; // Padding on each side within the available space
+        const maxSidebarWidth = 280;
+        const minSidebarWidth = 120;
+        const sidebarWidth = Math.min(maxSidebarWidth, Math.max(minSidebarWidth, availableSpace - padding * 2));
+
+        // Center the sidebar in the available space
+        const centerPoint = artworkRightEdge + (availableSpace / 2);
+        const sidebarLeft = centerPoint - (sidebarWidth / 2);
+        const rightPosition = viewportWidth - sidebarLeft - sidebarWidth;
+
+        // Apply styles
+        artworkSidebar.style.right = rightPosition + 'px';
+        artworkSidebar.style.maxWidth = sidebarWidth + 'px';
+      }
+
+      // Debounced resize handler
+      let resizeTimeout;
+      function handleResize() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(positionSidebar, 100);
       }
 
       function navigate(direction) {
@@ -916,10 +1404,10 @@
         // Update count
         gridCount.textContent = collection.length + ' piece' + (collection.length !== 1 ? 's' : '');
 
-        // Build grid items
+        // Build grid items using thumbnail for grid view
         gridInner.innerHTML = collection.map((item, index) => `
           <div class="gallery-grid-item" data-index="${index}">
-            <img src="${item.image}" alt="${item.title || 'Artwork'}" loading="lazy">
+            <img src="${item.thumbnail || item.image}" alt="${item.title || 'Artwork'}" loading="lazy">
             <div class="gallery-grid-item__overlay">
               <h3 class="gallery-grid-item__title">${item.title || 'Untitled'}</h3>
               ${item.artist ? `<p class="gallery-grid-item__artist">${item.artist}</p>` : ''}
@@ -1008,6 +1496,75 @@
 
       // Start
       init();
+    })();
+
+    // ==========================================================================
+    // FONT TESTING TOOL
+    // ==========================================================================
+    (function() {
+      const fontTool = document.getElementById('font-tool');
+      const fontToggle = document.getElementById('font-tool-toggle');
+      const fontTitle = document.getElementById('font-title');
+      const fontArtist = document.getElementById('font-artist');
+      const fontDescription = document.getElementById('font-description');
+      const fontReset = document.getElementById('font-reset');
+
+      // Elements to apply fonts to
+      const plaqueTitle = document.getElementById('plaque-title');
+      const plaqueArtist = document.getElementById('plaque-artist');
+      const sidebarLabel = document.querySelector('.sidebar-label');
+      const sidebarText = document.getElementById('sidebar-text');
+
+      // Toggle panel
+      fontToggle.addEventListener('click', () => {
+        fontTool.classList.toggle('is-open');
+      });
+
+      // Close panel when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!fontTool.contains(e.target) && fontTool.classList.contains('is-open')) {
+          fontTool.classList.remove('is-open');
+        }
+      });
+
+      // Apply title font
+      fontTitle.addEventListener('change', () => {
+        const font = fontTitle.value;
+        if (plaqueTitle) {
+          plaqueTitle.style.fontFamily = font || '';
+        }
+      });
+
+      // Apply artist font
+      fontArtist.addEventListener('change', () => {
+        const font = fontArtist.value;
+        if (plaqueArtist) {
+          plaqueArtist.style.fontFamily = font || '';
+        }
+        if (sidebarLabel) {
+          sidebarLabel.style.fontFamily = font || '';
+        }
+      });
+
+      // Apply description font
+      fontDescription.addEventListener('change', () => {
+        const font = fontDescription.value;
+        if (sidebarText) {
+          sidebarText.style.fontFamily = font || '';
+        }
+      });
+
+      // Reset all fonts
+      fontReset.addEventListener('click', () => {
+        fontTitle.value = '';
+        fontArtist.value = '';
+        fontDescription.value = '';
+
+        if (plaqueTitle) plaqueTitle.style.fontFamily = '';
+        if (plaqueArtist) plaqueArtist.style.fontFamily = '';
+        if (sidebarLabel) sidebarLabel.style.fontFamily = '';
+        if (sidebarText) sidebarText.style.fontFamily = '';
+      });
     })();
   </script>
 
