@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Personal website showcasing projects, blog posts, and inspirations.">
+  <meta name="description" content="Personal website showcasing projects, writings, and inspirations.">
   
   <title>Home | con.rad</title>
   
@@ -19,6 +19,73 @@
 
   <!-- Favicon - Add your favicon files -->
   <!-- <link rel="icon" href="./assets/images/favicon.ico"> -->
+
+  <!-- Site Configuration Loader - loads from /data/config.json -->
+  <script src="./assets/js/config-loader.js"></script>
+
+  <!-- Fallback config for when fetch fails (e.g., file:// protocol) -->
+  <!-- Structure matches /data/config.json exactly -->
+  <script>
+    // If config-loader couldn't load data (fetch failed, localStorage empty),
+    // or if cached data is missing the 'type' field (stale data), use fallback
+    const needsFallback = !window.SITE_CONFIG ||
+                          Object.keys(window.SITE_CONFIG).length === 0 ||
+                          (window.SITE_CONFIG.collection &&
+                           window.SITE_CONFIG.collection.length > 0 &&
+                           !window.SITE_CONFIG.collection[0].type);
+    if (needsFallback) {
+      console.log('[Config Fallback] Using embedded fallback config (stale or missing data)');
+      window.SITE_CONFIG = {
+        "backgroundArt": {
+          "src": "https://cdn.feralfileassets.com/previews/500ccc6e-d7ad-443f-a9df-0bf709b3b3c9/1645052262/index.html",
+          "title": "36 Points",
+          "artist": "Sage Jenson",
+          "year": "2022"
+        },
+        "artworks": [
+          {"title": "36 Points", "artist": "Sage Jenson", "year": "2022", "url": "https://cdn.feralfileassets.com/previews/500ccc6e-d7ad-443f-a9df-0bf709b3b3c9/1645052262/index.html"},
+          {"title": "monogrid 1.1 CE #34", "artist": "Kim Asendorf", "year": "2022", "url": "https://ipfs.io/ipfs/QmQtaLb8fC7DUebFLTbkj3p7ByVVDxtRu7Na56dyo5BgM9/?fxhash=onteKmUycJyeWGjdavoVrqn74XQHsjVFfmMSBtocPigg7a7TryE"},
+          {"title": "Spiders", "artist": "Piter Pasma", "year": "2021", "url": "https://ipfs.io/ipfs/QmSbrCo52wPrcLUQwGdtbcLFQjjrhnR4M8wdcXtpbYtNFb/"},
+          {"title": "Reading a book #873", "artist": "Kim Asendorf", "year": "2021", "url": "https://ipfs.io/ipfs/QmUtfp5tvPwVefWQrhjTMEt9Xy3J4VooMjbR29qSPCvz6F/"},
+          {"title": "C-SCAPE #36", "artist": "Toxi", "year": "2022", "url": "https://ipfs.io/ipfs/QmdHhcTBEUUNZ68gWHUsSRfjFrHYXStvgMvB6HwS1bVbMG/?fxhash=oo9ANVZwtvSGktuEZiVxN9oDWyfL7W9L71c5e6WZnMHNWTSfSka"}
+        ],
+        "collection": [
+          {"thumbnail": "https://ipfs.io/ipfs/QmQV57honsnKiWnsgRikU43WL5h4tk2eSi9QcsaphBiSsJ", "render": "https://ipfs.io/ipfs/QmQV57honsnKiWnsgRikU43WL5h4tk2eSi9QcsaphBiSsJ", "title": "CSRSNT-ZAAI-45-of-64.png", "artist": "Caesuras (Casey Reas)", "medium": "Digital Art", "type": "image", "description": "always been enamored by casey's work. the depth and intricacies of his pieces from seemingly simple diagonal lines and dashes. takes a special eye to be able to imagine, create and express these aesthetics, casey's eye has always been a favorite of mine."},
+          {"thumbnail": "https://ipfs.io/ipfs/QmTdTi3ctvT1Npcp6eKDuN1notyZoVJuTYK6iRivcKpW8V", "render": "https://ipfs.io/ipfs/QmTdTi3ctvT1Npcp6eKDuN1notyZoVJuTYK6iRivcKpW8V", "title": "The Starry Night: Not Van Gogh, Not Sorry", "artist": "Helena Sarin", "medium": "Digital Art", "type": "image", "description": "gans have always been my favorite sub-genre of AI, machine-learning, generative, or 'whatever u want to call it' art. fondness for simpler, more personalized systems. early gan outputs allowed more room for contemplation, emotions, and freedom for the machines to dream. there's a rawness to gans, an aesthetic that feels refreshing and incomparable to other artistic explorations. helena's work with gans is the perfect representation of this.... her style, emotions, story and so much more is expressed through her systems, digitally and physically."},
+          {"thumbnail": "https://ipfs.io/ipfs/QmSRtLFUF39tsj639EsAk1uZKRCDvYMGHcCQwsqdqpiXMs", "render": "https://ipfs.io/ipfs/QmSRtLFUF39tsj639EsAk1uZKRCDvYMGHcCQwsqdqpiXMs", "title": "Lushtemples — landscape in dark tones", "artist": "Zancan", "medium": "Digital Art", "type": "image", "description": "say what you want about how skeuomorphic or not digital art should or shouldnt be. zancan crafted something special with his early tezos forestry. an artist that captured an entire chain and is a big reason for helping pushing our niche art nerd scene forward just a little more."},
+          {"thumbnail": "https://assets.objkt.media/file/assets-003/KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton/124016/thumb288", "render": "https://ipfs.io/ipfs/QmbsDwhx7saoCcAUsqrEfRZwa4iEm6KBgQZQFsNp885mFB", "title": "Window Still Life 064", "artist": "John Karel", "medium": "Digital Art", "type": "video", "description": "my partner first recognized john's work from early tumblr days, we became active collectors of his daily windows throughout the early hicetnunc days. fond memories of auto-refreshing tzkt pages, waiting for a mint operations to come through… this one has always been a personal favorite, reminds me of my brother and the countless hours we'd share in front of split-screen tvs."}
+        ],
+        "writings": [
+          {"id": "on-collecting", "title": "On Collecting", "description": "There's something deeply human about the act of collecting. We gather objects, images, sounds, and ideas not just to possess them, but to create a mirror of ourselves.", "date": "2026-01-15", "body": ["There's something deeply human about the act of collecting. We gather objects, images, sounds, and ideas not just to possess them, but to create a mirror of ourselves—a curated reflection of who we are and who we aspire to be.", "In the digital age, collecting has transformed. We no longer need physical space to house our treasures. Instead, we bookmark, save, pin, and archive. The constraints have shifted from shelf space to attention span.", "I've been thinking about what it means to collect art in this new landscape—where ownership is fluid, provenance is cryptographic, and the gallery is everywhere."], "quote": "The things we collect tell stories we might not yet know how to tell ourselves."},
+          {"id": "digital-gardens", "title": "Digital Gardens", "description": "A website doesn't have to be a publication. It can be a garden—a place where ideas grow, evolve, and sometimes wither.", "date": "2026-01-10", "body": ["A website doesn't have to be a publication. It can be a garden—a place where ideas grow, evolve, and sometimes wither. Unlike the polished permanence of traditional publishing, a digital garden embraces imperfection and change.", "The metaphor matters. Gardens require tending. They're never \"done.\" You plant seeds without knowing exactly what will bloom. Some ideas need years to mature; others burst forth unexpectedly.", "This space is my garden. Some pages are carefully cultivated; others are wild patches where I've scattered seeds and walked away. Both have their place."]},
+          {"id": "the-space-between", "title": "The Space Between", "description": "The most interesting things happen at the edges—where art meets technology, where structure meets chaos.", "date": "2025-12-20", "body": ["The most interesting things happen at the edges—where art meets technology, where structure meets chaos, where the familiar dissolves into the unknown. I've always been drawn to these liminal spaces.", "Working in technology while caring deeply about aesthetics creates a productive tension. Code is precise; art is ambiguous. Logic demands consistency; creativity thrives on contradiction. Living in both worlds means constantly translating between them.", "Maybe that's what this whole project is about—finding ways to hold these contradictions together, to build bridges across the gaps."]},
+          {"id": "tools-for-thought", "title": "Tools for Thought", "description": "The tools we use shape how we think. A notebook invites linearity; a canvas suggests space.", "date": "2025-12-15", "body": ["The tools we use shape how we think. A notebook invites linearity; a canvas suggests space. Software, despite its flexibility, carries its own biases—the assumptions of its creators encoded in every menu and shortcut.", "I've been experimenting with building my own tools. Not because existing ones are inadequate, but because the act of building reveals something about how I actually think. Each design decision forces clarity about what matters.", "The best tools disappear in use. They become extensions of intention rather than obstacles to it. That's the aspiration, anyway."]},
+          {"id": "learning-in-public", "title": "Learning in Public", "description": "There's vulnerability in sharing work before it's ready. Learning in public is an antidote to perfectionism.", "date": "2025-11-28", "body": ["There's vulnerability in sharing work before it's ready. The temptation to wait—until the idea is fully formed, until the code is clean, until you really understand what you're doing—can become a permanent delay.", "Learning in public is an antidote to that perfectionism. It means showing the messy middle, the wrong turns, the half-formed thoughts. It means being okay with being wrong in front of others.", "The unexpected benefit: when you learn in public, you often find others on the same journey. The loneliness of figuring things out dissolves into something more like conversation."]}
+        ],
+        "inspirations": {
+          "channel": "visually-intriguing",
+          "channelUrl": "https://www.are.na/conrad-house/visually-intriguing",
+          "itemCount": 12
+        },
+        "profile": {
+          "name": "",
+          "title": "",
+          "bio": "",
+          "photo": ""
+        },
+        "social": {
+          "twitter": "",
+          "instagram": "",
+          "github": "",
+          "linkedin": "",
+          "arena": "",
+          "email": ""
+        }
+      };
+      // Cache it for next time
+      try { localStorage.setItem('conradSiteConfig', JSON.stringify(window.SITE_CONFIG)); } catch(e) {}
+    }
+  </script>
 
   <!-- Google Fonts - Free fonts for testing -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -373,7 +440,7 @@
 
     .art-description__title {
       font-size: 0.75rem;
-      color: #D94F3D;
+      color: #1a1a1a;
       font-weight: 400;
       font-style: italic;
       margin-bottom: 0.05rem;
@@ -2591,90 +2658,42 @@
 
   <!-- ==========================================================================
        CMS CONFIG - Edit your content here
+       Or use the CMS admin page at /admin/ to edit via UI
        ========================================================================== -->
   <script>
-    window.SITE_CONFIG = {
-      // -------------------------------------------------------------------------
-      // BACKGROUND ARTWORK
-      // -------------------------------------------------------------------------
-      backgroundArt: {
-        src: 'https://cdn.feralfileassets.com/previews/500ccc6e-d7ad-443f-a9df-0bf709b3b3c9/1645052262/index.html',
-        title: '36 Points',
-        artist: 'Sage Jenson',
-        year: '2022'
-      },
-
-      // -------------------------------------------------------------------------
-      // REAL-TIME ARTWORKS LIBRARY
-      // Add artwork options here. Users can switch between them via the selector.
-      // -------------------------------------------------------------------------
-      artworks: [
-        {
-          title: '36 Points',
-          artist: 'Sage Jenson',
-          year: '2022',
-          url: 'https://cdn.feralfileassets.com/previews/500ccc6e-d7ad-443f-a9df-0bf709b3b3c9/1645052262/index.html'
-        },
-        {
-          title: 'monogrid 1.1 CE #34',
-          artist: 'Kim Asendorf',
-          year: '2022',
-          url: 'https://ipfs.io/ipfs/QmQtaLb8fC7DUebFLTbkj3p7ByVVDxtRu7Na56dyo5BgM9/?fxhash=onteKmUycJyeWGjdavoVrqn74XQHsjVFfmMSBtocPigg7a7TryE'
-        },
-        {
-          title: 'Spiders',
-          artist: 'Piter Pasma',
-          year: '2021',
-          url: 'https://ipfs.io/ipfs/QmSbrCo52wPrcLUQwGdtbcLFQjjrhnR4M8wdcXtpbYtNFb/'
-        },
-        {
-          title: 'Reading a book #873',
-          artist: 'Kim Asendorf',
-          year: '2021',
-          url: 'https://ipfs.io/ipfs/QmUtfp5tvPwVefWQrhjTMEt9Xy3J4VooMjbR29qSPCvz6F/'
-        },
-        {
-          title: 'C-SCAPE #36',
-          artist: 'Toxi',
-          year: '2022',
-          url: 'https://ipfs.io/ipfs/QmdHhcTBEUUNZ68gWHUsSRfjFrHYXStvgMvB6HwS1bVbMG/?fxhash=oo9ANVZwtvSGktuEZiVxN9oDWyfL7W9L71c5e6WZnMHNWTSfSka'
-        }
-      ],
-
-      // -------------------------------------------------------------------------
-      // COLLECTION SHOWCASE
-      // Add/remove items here. Each item needs: image, link, title, artist
-      // -------------------------------------------------------------------------
-      collection: [
-        {
-          image: 'https://ipfs.io/ipfs/QmQV57honsnKiWnsgRikU43WL5h4tk2eSi9QcsaphBiSsJ',
-          link: 'https://ipfs.io/ipfs/QmQV57honsnKiWnsgRikU43WL5h4tk2eSi9QcsaphBiSsJ',
-          title: 'Untitled',
-          artist: ''
-        },
-        {
-          image: 'https://ipfs.io/ipfs/QmTdTi3ctvT1Npcp6eKDuN1notyZoVJuTYK6iRivcKpW8V',
-          link: 'https://ipfs.io/ipfs/QmTdTi3ctvT1Npcp6eKDuN1notyZoVJuTYK6iRivcKpW8V',
-          title: 'Untitled',
-          artist: ''
-        },
-        {
-          image: 'https://ipfs.io/ipfs/QmSRtLFUF39tsj639EsAk1uZKRCDvYMGHcCQwsqdqpiXMs',
-          link: 'https://ipfs.io/ipfs/QmSRtLFUF39tsj639EsAk1uZKRCDvYMGHcCQwsqdqpiXMs',
-          title: 'Untitled',
-          artist: ''
-        }
-      ],
-
-      // -------------------------------------------------------------------------
-      // INSPIRATIONS (Are.na)
-      // -------------------------------------------------------------------------
-      inspirations: {
-        channel: 'visually-intriguing',
-        channelUrl: 'https://www.are.na/conrad-house/visually-intriguing',
-        itemCount: 12
+    // Check for CMS admin config in localStorage (from /admin/ page)
+    (function() {
+      const cmsConfig = localStorage.getItem('conradCMSConfig');
+      if (cmsConfig) {
+        try {
+          window.CMS_CONFIG = JSON.parse(cmsConfig);
+        } catch (e) {}
       }
-    };
+    })();
+
+    // =========================================================================
+    // SITE CONFIGURATION
+    // Configuration is loaded from /data/config.json via config-loader.js
+    // To edit site content, modify /data/config.json or use the CMS at /admin/
+    // =========================================================================
+
+    // Wait for config to be loaded, then initialize CMS storage
+    (window.configLoadPromise || Promise.resolve({})).then(function(config) {
+      // Initialize CMS storage with config data
+      try {
+        const cmsConfig = {
+          profile: config.profile || {},
+          collection: config.collection || [],
+          writings: config.writings || [],
+          artworks: config.artworks || [],
+          socialLinks: config.socialLinks || [],
+          inspirations: config.inspirations || {}
+        };
+        localStorage.setItem('conradCMSConfig', JSON.stringify(cmsConfig));
+      } catch (e) {
+        console.warn('Could not initialize CMS storage:', e);
+      }
+    });
   </script>
 
   <!-- Font Testing Tool -->
@@ -3045,20 +3064,20 @@
 
           <!-- Left Navigation -->
           <nav class="nav-left" aria-label="Left navigation">
-            <a href="./blog/" class="nav-link">writings</a>
-            <a href="./inspirations/" class="nav-link">inspirations</a>
+            <a href="./writings/index.html" class="nav-link">writings</a>
+            <a href="./inspirations/index.html" class="nav-link">inspirations</a>
           </nav>
 
           <!-- Site Logo / Name (Centered) -->
-          <a href="./" class="site-logo">
+          <a href="./index.html" class="site-logo">
             <span class="logo-name">con.rad</span>
             <span class="logo-tagline">building curiosity...</span>
           </a>
 
           <!-- Right Navigation -->
           <nav class="nav-right" aria-label="Right navigation">
-            <a href="./projects/" class="nav-link">projects</a>
-            <a href="./about/" class="nav-link">about</a>
+            <a href="./projects/index.html" class="nav-link">projects</a>
+            <a href="./about/index.html" class="nav-link">about</a>
           </nav>
 
           <!-- Mobile Navigation Toggle -->
@@ -3071,10 +3090,10 @@
 
       <!-- Mobile Navigation Menu -->
       <nav class="mobile-nav" aria-label="Mobile navigation">
-        <a href="./blog/" class="mobile-nav-link">writings</a>
-        <a href="./inspirations/" class="mobile-nav-link">inspirations</a>
-        <a href="./projects/" class="mobile-nav-link">projects</a>
-        <a href="./about/" class="mobile-nav-link">about</a>
+        <a href="./writings/index.html" class="mobile-nav-link">writings</a>
+        <a href="./inspirations/index.html" class="mobile-nav-link">inspirations</a>
+        <a href="./projects/index.html" class="mobile-nav-link">projects</a>
+        <a href="./about/index.html" class="mobile-nav-link">about</a>
       </nav>
     </header>
 
@@ -3112,8 +3131,8 @@
 
                 <!-- Edit: Quick links -->
                 <div class="about-card__links">
-                  <a href="./projects/" class="about-card__link">projects</a>
-                  <a href="./blog/" class="about-card__link">writings</a>
+                  <a href="./projects/index.html" class="about-card__link">projects</a>
+                  <a href="./writings/index.html" class="about-card__link">writings</a>
                   <a href="https://github.com/nemocake" target="_blank" class="about-card__link">github</a>
                 </div>
               </div>
@@ -3123,10 +3142,10 @@
       </section>
 
       <!-- ==================================================================
-           BLOG SECTION
-           Edit: Add your latest blog post cards
+           WRITINGS SECTION
+           Dynamically rendered from SITE_CONFIG.writings
            ================================================================== -->
-      <section class="section scroll-section snap-section" data-scroll-section="blog">
+      <section class="section scroll-section snap-section" data-scroll-section="writings">
         <div class="container">
 
           <!-- Section Header -->
@@ -3135,135 +3154,14 @@
             <p class="section-description">thoughts, experiments, and things I'm learning</p>
           </div>
 
-          <!-- Blog Posts Grid -->
-          <div class="grid grid--cols-2">
-
-            <!-- BLOG POST 1 -->
-            <article class="widget-card widget-card--clickable floating-card" data-variant="horizontal" data-scroll-drive="left">
-              <div class="widget-card__image">
-                <div style="width:100%;height:100%;background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);display:flex;align-items:center;justify-content:center;">
-                  <span style="color:white;font-size:0.75rem;">Post Image</span>
-                </div>
-              </div>
-              <div class="widget-card__content">
-                <h3 class="widget-card__title">
-                  <a href="./blog/posts/2026-01-14-test.html">Exploring Creative Coding</a>
-                </h3>
-                <p class="widget-card__description">
-                  A deep dive into generative art and creative programming techniques.
-                </p>
-                <div class="widget-card__meta">
-                  <time datetime="2026-01-22">January 22, 2026</time>
-                </div>
-              </div>
-            </article>
-
-            <!-- BLOG POST 2 -->
-            <article class="widget-card widget-card--clickable floating-card" data-variant="horizontal" data-scroll-drive="right">
-              <div class="widget-card__image">
-                <div style="width:100%;height:100%;background:linear-gradient(135deg, #f093fb 0%, #f5576c 100%);display:flex;align-items:center;justify-content:center;">
-                  <span style="color:white;font-size:0.75rem;">Post Image</span>
-                </div>
-              </div>
-              <div class="widget-card__content">
-                <h3 class="widget-card__title">
-                  <a href="#">Design Systems in Practice</a>
-                </h3>
-                <p class="widget-card__description">
-                  Building scalable and maintainable design systems from scratch.
-                </p>
-                <div class="widget-card__meta">
-                  <time datetime="2026-01-20">January 20, 2026</time>
-                </div>
-              </div>
-            </article>
-
-            <!-- BLOG POST 3 -->
-            <article class="widget-card widget-card--clickable floating-card" data-variant="horizontal" data-scroll-drive="left">
-              <div class="widget-card__image">
-                <div style="width:100%;height:100%;background:linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);display:flex;align-items:center;justify-content:center;">
-                  <span style="color:white;font-size:0.75rem;">Post Image</span>
-                </div>
-              </div>
-              <div class="widget-card__content">
-                <h3 class="widget-card__title">
-                  <a href="#">The Future of Web Animation</a>
-                </h3>
-                <p class="widget-card__description">
-                  Exploring scroll-driven animations and modern CSS techniques.
-                </p>
-                <div class="widget-card__meta">
-                  <time datetime="2026-01-18">January 18, 2026</time>
-                </div>
-              </div>
-            </article>
-
-            <!-- BLOG POST 4 -->
-            <article class="widget-card widget-card--clickable floating-card" data-variant="horizontal" data-scroll-drive="right">
-              <div class="widget-card__image">
-                <div style="width:100%;height:100%;background:linear-gradient(135deg, #fa709a 0%, #fee140 100%);display:flex;align-items:center;justify-content:center;">
-                  <span style="color:white;font-size:0.75rem;">Post Image</span>
-                </div>
-              </div>
-              <div class="widget-card__content">
-                <h3 class="widget-card__title">
-                  <a href="#">Music and Technology</a>
-                </h3>
-                <p class="widget-card__description">
-                  How digital tools are reshaping music production and discovery.
-                </p>
-                <div class="widget-card__meta">
-                  <time datetime="2026-01-15">January 15, 2026</time>
-                </div>
-              </div>
-            </article>
-
-            <!-- BLOG POST 5 -->
-            <article class="widget-card widget-card--clickable floating-card" data-variant="horizontal" data-scroll-drive="left">
-              <div class="widget-card__image">
-                <div style="width:100%;height:100%;background:linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);display:flex;align-items:center;justify-content:center;">
-                  <span style="color:#333;font-size:0.75rem;">Post Image</span>
-                </div>
-              </div>
-              <div class="widget-card__content">
-                <h3 class="widget-card__title">
-                  <a href="#">Minimalism in Digital Design</a>
-                </h3>
-                <p class="widget-card__description">
-                  Less is more: creating impactful experiences through simplicity.
-                </p>
-                <div class="widget-card__meta">
-                  <time datetime="2026-01-12">January 12, 2026</time>
-                </div>
-              </div>
-            </article>
-
-            <!-- BLOG POST 6 -->
-            <article class="widget-card widget-card--clickable floating-card" data-variant="horizontal" data-scroll-drive="right">
-              <div class="widget-card__image">
-                <div style="width:100%;height:100%;background:linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);display:flex;align-items:center;justify-content:center;">
-                  <span style="color:#333;font-size:0.75rem;">Post Image</span>
-                </div>
-              </div>
-              <div class="widget-card__content">
-                <h3 class="widget-card__title">
-                  <a href="#">Learning in Public</a>
-                </h3>
-                <p class="widget-card__description">
-                  Why sharing your journey accelerates growth and builds community.
-                </p>
-                <div class="widget-card__meta">
-                  <time datetime="2026-01-10">January 10, 2026</time>
-                </div>
-              </div>
-            </article>
-
+          <!-- Writings Grid - Dynamically populated -->
+          <div class="grid grid--cols-2" id="writings-grid">
+            <!-- Writings will be rendered here by JavaScript -->
           </div>
-          
+
           <!-- View All Link -->
           <div class="section-links">
-            <a href="./blog/" class="section-explore-link">read more posts...</a>
-            <a href="./blog/write.html" class="section-explore-link">write...</a>
+            <a href="./writings/index.html" class="section-explore-link">read more writings...</a>
           </div>
 
         </div>
@@ -3510,6 +3408,7 @@
           <nav class="flex gap-6">
             <a href="./about/" class="footer-text">About</a>
             <a href="mailto:your@email.com" class="footer-text">Contact</a>
+            <a href="./admin/" class="footer-text" style="opacity: 0.5;">CMS</a>
           </nav>
           
         </div>
@@ -4273,7 +4172,7 @@
       const grid = document.getElementById('arena-grid');
       if (!grid) return;
 
-      // Get config from CMS
+      // Get config from CMS (fallback config ensures this is always available)
       const config = window.SITE_CONFIG?.inspirations || {};
       const channelSlug = config.channel || 'visually-intriguing';
       const channelUrl = config.channelUrl || `https://www.are.na/conrad-house/${channelSlug}`;
@@ -4331,20 +4230,30 @@
   <script>
     (function initCollectionGrid() {
       const grid = document.getElementById('collection-grid');
+      if (!grid) return;
+
+      // Get config (fallback config ensures this is always available)
       const config = window.SITE_CONFIG?.collection;
+      if (!config || config.length === 0) return;
 
-      if (!grid || !config || config.length === 0) return;
-
-      // Store collection in localStorage for gallery page access
+      // Store full collection in localStorage for gallery page access
       try {
         localStorage.setItem('conradCollection', JSON.stringify(config));
       } catch (e) {
         console.warn('Could not store collection data');
       }
 
-      grid.innerHTML = config.map((item, index) => `
-        <a class="collection-item floating-card" href="./collection/index.html?index=${index}" data-parallax-depth data-scroll-drive="${index % 2 === 0 ? 'left' : 'right'}">
-          <img class="collection-item__image" src="${item.image}" alt="${item.title || 'Collection piece'}" loading="lazy">
+      // Show only the 3 most recent pieces (last 3 in array, displayed in reverse order)
+      const recentCount = 3;
+      const startIndex = Math.max(0, config.length - recentCount);
+      const recentItems = config.slice(startIndex).reverse(); // Reverse so newest appears first
+
+      grid.innerHTML = recentItems.map((item, displayIndex) => {
+        // Calculate the actual index in the full collection for the link
+        const actualIndex = config.length - 1 - displayIndex;
+        return `
+        <a class="collection-item floating-card" href="./collection/index.html?index=${actualIndex}" data-parallax-depth data-scroll-drive="${displayIndex % 2 === 0 ? 'left' : 'right'}">
+          <img class="collection-item__image" src="${item.thumbnail}" alt="${item.title || 'Collection piece'}" loading="lazy">
           ${(item.title || item.artist) ? `
             <div class="collection-item__info">
               <span class="collection-item__title">${item.title || ''}</span>
@@ -4352,7 +4261,72 @@
             </div>
           ` : ''}
         </a>
-      `).join('');
+      `}).join('');
+
+      // Refresh parallax controller to pick up new elements
+      if (window.ParallaxController) {
+        window.ParallaxController.refresh();
+      }
+    })();
+
+    // Initialize Writings Grid
+    (function initWritingsGrid() {
+      const grid = document.getElementById('writings-grid');
+      if (!grid) return;
+
+      // Get config (fallback config ensures this is always available)
+      const config = window.SITE_CONFIG?.writings;
+      if (!config || config.length === 0) return;
+
+      // Store writings in localStorage for writings page access
+      try {
+        localStorage.setItem('conradWritings', JSON.stringify(config));
+      } catch (e) {
+        console.warn('Could not store writings data');
+      }
+
+      // Gradient colors for cards
+      const gradients = [
+        'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
+        'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+        'linear-gradient(135deg, #fa709a 0%, #fee140 100%)',
+        'linear-gradient(135deg, #a8edea 0%, #fed6e3 100%)',
+        'linear-gradient(135deg, #d299c2 0%, #fef9d7 100%)'
+      ];
+
+      // Format date helper
+      const formatDate = (dateStr) => {
+        const date = new Date(dateStr);
+        return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+      };
+
+      // Show the 4 most recent writings
+      const recentCount = 4;
+      const recentItems = config.slice(0, recentCount);
+
+      grid.innerHTML = recentItems.map((item, index) => {
+        const gradient = gradients[index % gradients.length];
+        const direction = index % 2 === 0 ? 'left' : 'right';
+
+        return `
+        <article class="widget-card widget-card--clickable floating-card" data-variant="horizontal" data-scroll-drive="${direction}">
+          <a href="./writings/index.html#${item.id}" class="widget-card__link" style="display:contents;">
+            <div class="widget-card__image">
+              <div style="width:100%;height:100%;background:${gradient};display:flex;align-items:center;justify-content:center;">
+                <span style="color:white;font-size:2rem;font-family:'Libre Baskerville',serif;font-style:italic;">0${index + 1}</span>
+              </div>
+            </div>
+            <div class="widget-card__content">
+              <h3 class="widget-card__title">${item.title}</h3>
+              <p class="widget-card__description">${item.description}</p>
+              <div class="widget-card__meta">
+                <time datetime="${item.date}">${formatDate(item.date)}</time>
+              </div>
+            </div>
+          </a>
+        </article>
+      `}).join('');
 
       // Refresh parallax controller to pick up new elements
       if (window.ParallaxController) {
@@ -4364,6 +4338,7 @@
   <!-- Background Art (randomly selected from artworks array) -->
   <script>
     (function initBackgroundArt() {
+      // Get config (fallback config ensures this is always available)
       const artworks = window.SITE_CONFIG?.artworks;
 
       // If no artworks array, fall back to static backgroundArt config
@@ -4488,15 +4463,15 @@
               <button class="cms-item__remove" data-remove="${index}">Remove</button>
             </div>
             <div class="cms-item__preview">
-              ${item.image ? `<img src="${item.image}" alt="Preview">` : '<span class="cms-item__preview-placeholder">No image</span>'}
+              ${item.thumbnail ? `<img src="${item.thumbnail}" alt="Preview">` : '<span class="cms-item__preview-placeholder">No image</span>'}
             </div>
             <div class="cms-field">
-              <label class="cms-field__label">Image URL</label>
-              <input type="text" class="cms-field__input cms-collection-image" data-index="${index}" value="${item.image || ''}" placeholder="https://...">
+              <label class="cms-field__label">Thumbnail URL</label>
+              <input type="text" class="cms-field__input cms-collection-thumbnail" data-index="${index}" value="${item.thumbnail || ''}" placeholder="https://...">
             </div>
             <div class="cms-field">
-              <label class="cms-field__label">Link URL</label>
-              <input type="text" class="cms-field__input cms-collection-link" data-index="${index}" value="${item.link || ''}" placeholder="https://...">
+              <label class="cms-field__label">Render URL</label>
+              <input type="text" class="cms-field__input cms-collection-render" data-index="${index}" value="${item.render || ''}" placeholder="https://...">
             </div>
             <div class="cms-field">
               <label class="cms-field__label">Title</label>
@@ -4518,8 +4493,8 @@
           });
         });
 
-        // Update preview on image URL change
-        collectionContainer.querySelectorAll('.cms-collection-image').forEach(input => {
+        // Update preview on thumbnail URL change
+        collectionContainer.querySelectorAll('.cms-collection-thumbnail').forEach(input => {
           input.addEventListener('change', (e) => {
             const index = parseInt(e.target.dataset.index);
             const preview = e.target.closest('.cms-item').querySelector('.cms-item__preview');
@@ -4537,8 +4512,8 @@
       addCollectionBtn.addEventListener('click', () => {
         if (!workingConfig.collection) workingConfig.collection = [];
         workingConfig.collection.push({
-          image: '',
-          link: '',
+          thumbnail: '',
+          render: '',
           title: '',
           artist: ''
         });
@@ -4567,8 +4542,8 @@
         workingConfig.collection = [];
         collectionContainer.querySelectorAll('.cms-item').forEach((item, index) => {
           workingConfig.collection.push({
-            image: item.querySelector('.cms-collection-image').value,
-            link: item.querySelector('.cms-collection-link').value,
+            thumbnail: item.querySelector('.cms-collection-thumbnail').value,
+            render: item.querySelector('.cms-collection-render').value,
             title: item.querySelector('.cms-collection-title').value,
             artist: item.querySelector('.cms-collection-artist').value
           });
@@ -4606,14 +4581,21 @@
         // Update collection grid
         const grid = document.getElementById('collection-grid');
         if (grid && config.collection) {
-          // Store collection for gallery page
+          // Store full collection for gallery page
           try {
             localStorage.setItem('conradCollection', JSON.stringify(config.collection));
           } catch (e) {}
 
-          grid.innerHTML = config.collection.map((item, index) => `
-            <a class="collection-item floating-card" href="./collection/index.html?index=${index}" data-parallax-depth data-scroll-drive="${index % 2 === 0 ? 'left' : 'right'}">
-              <img class="collection-item__image" src="${item.image}" alt="${item.title || 'Collection piece'}" loading="lazy">
+          // Show only the 3 most recent pieces (last 3 in array, displayed in reverse order)
+          const recentCount = 3;
+          const startIndex = Math.max(0, config.collection.length - recentCount);
+          const recentItems = config.collection.slice(startIndex).reverse();
+
+          grid.innerHTML = recentItems.map((item, displayIndex) => {
+            const actualIndex = config.collection.length - 1 - displayIndex;
+            return `
+            <a class="collection-item floating-card" href="./collection/index.html?index=${actualIndex}" data-parallax-depth data-scroll-drive="${displayIndex % 2 === 0 ? 'left' : 'right'}">
+              <img class="collection-item__image" src="${item.thumbnail}" alt="${item.title || 'Collection piece'}" loading="lazy">
               ${(item.title || item.artist) ? `
                 <div class="collection-item__info">
                   <span class="collection-item__title">${item.title || ''}</span>
@@ -4621,7 +4603,7 @@
                 </div>
               ` : ''}
             </a>
-          `).join('');
+          `}).join('');
         }
       }
 
