@@ -161,6 +161,19 @@
   color: var(--color-accent);
 }
 
+/* Clickable card - makes entire card a link */
+.widget-card--clickable {
+  position: relative;
+  cursor: pointer;
+}
+
+.widget-card--clickable .widget-card__title a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
 .widget-card__description {
   font-size: var(--font-size-base);
   color: var(--color-text-secondary);

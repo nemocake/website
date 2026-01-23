@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Write Post | con.rad</title>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../assets/css/variables.css">
+  <link rel="stylesheet" href="../assets/css/reset.css">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/layout.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/utilities.css">
+
+  <style>
+    /* Writing Tool Styles */
+    .writer {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+      min-height: calc(100vh - 200px);
+    }
+
+    .writer.writer--with-preview {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @media (max-width: 1024px) {
+      .writer.writer--with-preview {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .writer__panel {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .writer__panel-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: var(--space-3);
+      border-bottom: 1px solid var(--color-gray-200);
+    }
+
+    .writer__panel-title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--color-text-secondary);
+    }
+
+    /* Form Elements */
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .form-label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+    }
+
+    .form-input,
+    .form-textarea {
+      padding: var(--space-3);
+      border: 1px solid var(--color-gray-300);
+      border-radius: var(--radius-md);
+      font-family: inherit;
+      font-size: 1rem;
+      background: var(--color-background);
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: var(--color-gray-500);
+      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+    }
+
+    .form-input--title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      padding: var(--space-4);
+    }
+
+    .form-textarea {
+      flex: 1;
+      min-height: 400px;
+      resize: vertical;
+      font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+    }
+
+    @media (max-width: 640px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Preview Panel */
+    .preview {
+      background: var(--color-background);
+      border: 1px solid var(--color-gray-200);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      overflow-y: auto;
+      max-height: 80vh;
+    }
+
+    .preview h1 { font-size: 2rem; margin-bottom: var(--space-4); }
+    .preview__meta { color: var(--color-text-secondary); font-size: 0.9rem; margin-bottom: var(--space-6); padding-bottom: var(--space-4); border-bottom: 1px solid var(--color-gray-200); }
+    .preview__content { line-height: 1.8; }
+    .preview__content h2 { font-size: 1.5rem; margin-top: var(--space-8); margin-bottom: var(--space-3); }
+    .preview__content h3 { font-size: 1.25rem; margin-top: var(--space-6); margin-bottom: var(--space-2); }
+    .preview__content p { margin-bottom: var(--space-4); }
+    .preview__content ul, .preview__content ol { margin-bottom: var(--space-4); padding-left: var(--space-6); }
+    .preview__content li { margin-bottom: var(--space-2); }
+    .preview__content blockquote { border-left: 3px solid var(--color-gray-300); padding-left: var(--space-4); margin: var(--space-4) 0; font-style: italic; color: var(--color-text-secondary); }
+    .preview__content code { background: var(--color-gray-100); padding: 0.2em 0.4em; border-radius: 3px; font-size: 0.9em; font-family: 'SFMono-Regular', Consolas, monospace; }
+    .preview__content pre { background: var(--color-gray-100); padding: var(--space-4); border-radius: var(--radius-md); overflow-x: auto; margin-bottom: var(--space-4); }
+    .preview__content pre code { background: none; padding: 0; }
+    .preview__content strong { font-weight: 600; }
+    .preview__content em { font-style: italic; }
+    .preview__content a { color: var(--color-text-primary); text-decoration: underline; }
+    .preview__content hr { border: none; border-top: 1px solid var(--color-gray-200); margin: var(--space-6) 0; }
+    .preview__content img { max-width: 100%; border-radius: var(--radius-md); margin: var(--space-4) 0; }
+    .preview__tags { display: flex; gap: var(--space-2); flex-wrap: wrap; margin-top: var(--space-6); padding-top: var(--space-4); border-top: 1px solid var(--color-gray-200); }
+    .preview__tag { background: var(--color-gray-100); padding: var(--space-1) var(--space-3); border-radius: var(--radius-full); font-size: 0.8rem; color: var(--color-text-secondary); }
+
+    /* Toolbar */
+    .toolbar {
+      display: flex;
+      gap: var(--space-2);
+      flex-wrap: wrap;
+      padding: var(--space-2);
+      background: var(--color-gray-50);
+      border: 1px solid var(--color-gray-200);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-2);
+    }
+
+    .toolbar__btn {
+      padding: var(--space-2) var(--space-3);
+      border: 1px solid var(--color-gray-300);
+      border-radius: var(--radius-sm);
+      background: var(--color-background);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .toolbar__btn:hover { background: var(--color-gray-100); }
+    .toolbar__btn:active { background: var(--color-gray-200); }
+    .toolbar__sep { width: 1px; background: var(--color-gray-300); margin: 0 var(--space-2); }
+
+    /* Actions */
+    .actions {
+      display: flex;
+      gap: var(--space-3);
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--color-gray-200);
+      margin-top: var(--space-4);
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: var(--space-3) var(--space-5);
+      border-radius: var(--radius-md);
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+      font-size: 0.9rem;
+    }
+
+    .btn--primary { background: var(--color-text-primary); color: var(--color-background); }
+    .btn--primary:hover { opacity: 0.9; }
+    .btn--secondary { background: var(--color-gray-100); color: var(--color-text-primary); border: 1px solid var(--color-gray-300); }
+    .btn--secondary:hover { background: var(--color-gray-200); }
+    .btn--success { background: #38a169; color: white; }
+    .btn--success:hover { background: #2f855a; }
+    .btn--success:disabled { background: #a0aec0; cursor: not-allowed; }
+
+    /* Status Messages */
+    .status {
+      padding: var(--space-3);
+      border-radius: var(--radius-md);
+      font-size: 0.85rem;
+      margin-top: var(--space-3);
+    }
+
+    .status--success { background: #c6f6d5; color: #276749; }
+    .status--error { background: #fed7d7; color: #c53030; }
+    .status--info { background: #bee3f8; color: #2b6cb0; }
+
+    /* Settings Panel */
+    .settings-panel {
+      background: var(--color-gray-50);
+      border: 1px solid var(--color-gray-200);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      margin-bottom: var(--space-6);
+    }
+
+    .settings-panel__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-4);
+    }
+
+    .settings-panel__title {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .settings-panel__toggle {
+      font-size: 0.8rem;
+      color: var(--color-text-secondary);
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .settings-panel__content {
+      display: grid;
+      gap: var(--space-3);
+    }
+
+    .settings-panel__content.hidden {
+      display: none;
+    }
+
+    .settings-panel__row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-3);
+    }
+
+    @media (max-width: 640px) {
+      .settings-panel__row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .settings-panel__status {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      font-size: 0.85rem;
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-md);
+    }
+
+    .settings-panel__status--connected {
+      background: #c6f6d5;
+      color: #276749;
+    }
+
+    .settings-panel__status--disconnected {
+      background: #fed7d7;
+      color: #c53030;
+    }
+
+    .settings-panel__dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .settings-panel__dot--green { background: #38a169; }
+    .settings-panel__dot--red { background: #e53e3e; }
+
+    /* Publish Progress */
+    .publish-progress {
+      margin-top: var(--space-4);
+      padding: var(--space-4);
+      background: var(--color-gray-50);
+      border-radius: var(--radius-md);
+      display: none;
+    }
+
+    .publish-progress.visible {
+      display: block;
+    }
+
+    .publish-progress__step {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: var(--space-2) 0;
+      font-size: 0.9rem;
+      color: var(--color-text-secondary);
+    }
+
+    .publish-progress__step.active {
+      color: var(--color-text-primary);
+      font-weight: 500;
+    }
+
+    .publish-progress__step.done {
+      color: #38a169;
+    }
+
+    .publish-progress__step.error {
+      color: #e53e3e;
+    }
+
+    .publish-progress__icon {
+      width: 20px;
+      text-align: center;
+    }
+
+    /* Help Text */
+    .help-text {
+      font-size: 0.75rem;
+      color: var(--color-text-secondary);
+      margin-top: var(--space-2);
+    }
+
+    .help-text code {
+      background: var(--color-gray-100);
+      padding: 0.1em 0.3em;
+      border-radius: 2px;
+    }
+
+    /* Drafts List */
+    .drafts {
+      margin-top: var(--space-6);
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--color-gray-200);
+    }
+
+    .drafts__title {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-3);
+    }
+
+    .drafts__list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .drafts__item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-3);
+      background: var(--color-gray-50);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .drafts__item:hover { background: var(--color-gray-100); }
+    .drafts__item-title { font-size: 0.9rem; font-weight: 500; }
+    .drafts__item-date { font-size: 0.75rem; color: var(--color-text-secondary); }
+    .drafts__item-delete { padding: var(--space-1) var(--space-2); border: none; background: none; color: var(--color-text-secondary); cursor: pointer; font-size: 0.8rem; }
+    .drafts__item-delete:hover { color: #e53e3e; }
+  </style>
+</head>
+<body>
+  <!-- Password Protection -->
+  <script src="../assets/js/auth.js"></script>
+  <div class="page-wrapper">
+
+    <!-- Header -->
+    <header class="site-header">
+      <div class="container">
+        <div class="header-inner">
+          <a href="../" class="site-logo">con.rad</a>
+          <nav class="main-nav" aria-label="Main navigation">
+            <a href="../" class="nav-link">Home</a>
+            <a href="../projects/" class="nav-link">Projects</a>
+            <a href="./" class="nav-link">Blog</a>
+            <a href="../inspirations/" class="nav-link">Inspirations</a>
+            <a href="../about/" class="nav-link">About</a>
+          </nav>
+          <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+            <span class="nav-toggle-icon"></span>
+          </button>
+        </div>
+      </div>
+      <nav class="mobile-nav" aria-label="Mobile navigation">
+        <a href="../" class="mobile-nav-link">Home</a>
+        <a href="../projects/" class="mobile-nav-link">Projects</a>
+        <a href="./" class="mobile-nav-link">Blog</a>
+        <a href="../inspirations/" class="mobile-nav-link">Inspirations</a>
+        <a href="../about/" class="mobile-nav-link">About</a>
+      </nav>
+    </header>
+
+    <main class="main-content">
+      <section class="section">
+        <div class="container container--wide">
+
+          <!-- Page Header -->
+          <div class="mb-8">
+            <nav class="breadcrumb mb-4" aria-label="Breadcrumb">
+              <span class="breadcrumb__item"><a href="../" class="breadcrumb__link">Home</a></span>
+              <span class="breadcrumb__item"><a href="./" class="breadcrumb__link">Blog</a></span>
+              <span class="breadcrumb__item"><span class="breadcrumb__current">Write</span></span>
+            </nav>
+            <h1>Write Post</h1>
+          </div>
+
+          <!-- GitHub Settings Panel -->
+          <div class="settings-panel" id="settings-panel">
+            <div class="settings-panel__header">
+              <span class="settings-panel__title">GitHub Publishing Settings</span>
+              <button class="settings-panel__toggle" id="settings-toggle">Show Settings</button>
+            </div>
+            <div id="github-status"></div>
+            <div class="settings-panel__content hidden" id="settings-content">
+              <div class="settings-panel__row">
+                <div class="form-group">
+                  <label class="form-label" for="github-owner">GitHub Username</label>
+                  <input type="text" id="github-owner" class="form-input" placeholder="nemocake">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="github-repo">Repository Name</label>
+                  <input type="text" id="github-repo" class="form-input" placeholder="website">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="github-token">Personal Access Token</label>
+                <input type="password" id="github-token" class="form-input" placeholder="ghp_xxxxxxxxxxxx">
+                <p class="help-text">
+                  Create a token at <a href="https://github.com/settings/tokens/new" target="_blank">GitHub Settings</a> with <code>repo</code> scope.
+                </p>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="github-branch">Branch (optional)</label>
+                <input type="text" id="github-branch" class="form-input" placeholder="main">
+              </div>
+              <button type="button" id="btn-save-settings" class="btn btn--secondary">Save Settings</button>
+            </div>
+          </div>
+
+          <!-- Writer Interface -->
+          <div class="writer" id="writer">
+
+            <!-- Editor Panel -->
+            <div class="writer__panel">
+              <div class="writer__panel-header">
+                <span class="writer__panel-title">Editor</span>
+                <span id="autosave-status" style="font-size: 0.75rem; color: var(--color-text-secondary);"></span>
+              </div>
+
+              <div class="form-group">
+                <input type="text" id="post-title" class="form-input form-input--title" placeholder="Post title..." autocomplete="off">
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="post-tags">Tags (comma separated)</label>
+                  <input type="text" id="post-tags" class="form-input" placeholder="design, thoughts, creative">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="post-date">Date</label>
+                  <input type="date" id="post-date" class="form-input">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="post-excerpt">Excerpt (for previews)</label>
+                <input type="text" id="post-excerpt" class="form-input" placeholder="A brief summary of your post...">
+              </div>
+
+              <!-- Formatting Toolbar -->
+              <div class="toolbar">
+                <button type="button" class="toolbar__btn" data-action="bold" title="Bold">B</button>
+                <button type="button" class="toolbar__btn" data-action="italic" title="Italic"><em>I</em></button>
+                <button type="button" class="toolbar__btn" data-action="link" title="Link">Link</button>
+                <span class="toolbar__sep"></span>
+                <button type="button" class="toolbar__btn" data-action="h2" title="Heading 2">H2</button>
+                <button type="button" class="toolbar__btn" data-action="h3" title="Heading 3">H3</button>
+                <span class="toolbar__sep"></span>
+                <button type="button" class="toolbar__btn" data-action="ul" title="Bullet List">List</button>
+                <button type="button" class="toolbar__btn" data-action="quote" title="Quote">Quote</button>
+                <button type="button" class="toolbar__btn" data-action="code" title="Code">Code</button>
+                <span class="toolbar__sep"></span>
+                <button type="button" class="toolbar__btn" data-action="hr" title="Divider">---</button>
+              </div>
+
+              <div class="form-group" style="flex: 1;">
+                <textarea id="post-content" class="form-textarea" placeholder="Write your post content here...
+
+Supports Markdown:
+- **bold** or __bold__
+- *italic* or _italic_
+- [link text](url)
+- ## Heading 2
+- ### Heading 3
+- - bullet list
+- > blockquote
+- `inline code`"></textarea>
+                <p class="help-text">
+                  Markdown supported: <code>**bold**</code> <code>*italic*</code> <code>[link](url)</code> <code>## heading</code>
+                </p>
+              </div>
+
+              <!-- Actions -->
+              <div class="actions">
+                <button type="button" id="btn-publish" class="btn btn--success">Publish to GitHub</button>
+                <button type="button" id="btn-preview" class="btn btn--primary">Preview</button>
+                <button type="button" id="btn-save-draft" class="btn btn--secondary">Save Draft</button>
+                <button type="button" id="btn-download" class="btn btn--secondary">Download HTML</button>
+                <button type="button" id="btn-clear" class="btn btn--secondary">Clear</button>
+              </div>
+
+              <!-- Publish Progress -->
+              <div class="publish-progress" id="publish-progress">
+                <div class="publish-progress__step" id="step-1">
+                  <span class="publish-progress__icon">-</span>
+                  <span>Preparing post...</span>
+                </div>
+                <div class="publish-progress__step" id="step-2">
+                  <span class="publish-progress__icon">-</span>
+                  <span>Uploading to GitHub...</span>
+                </div>
+                <div class="publish-progress__step" id="step-3">
+                  <span class="publish-progress__icon">-</span>
+                  <span>Updating blog index...</span>
+                </div>
+                <div class="publish-progress__step" id="step-4">
+                  <span class="publish-progress__icon">-</span>
+                  <span>Updating homepage...</span>
+                </div>
+              </div>
+
+              <div id="status-message"></div>
+
+              <!-- Drafts List -->
+              <div class="drafts" id="drafts-section">
+                <div class="drafts__title">Saved Drafts</div>
+                <div class="drafts__list" id="drafts-list"></div>
+              </div>
+            </div>
+
+            <!-- Preview Panel -->
+            <div class="writer__panel" id="preview-panel" style="display: none;">
+              <div class="writer__panel-header">
+                <span class="writer__panel-title">Preview</span>
+                <button type="button" id="btn-close-preview" class="btn btn--secondary" style="padding: 4px 12px; font-size: 0.8rem;">Close</button>
+              </div>
+              <div class="preview">
+                <h1 id="preview-title">Post Title</h1>
+                <div class="preview__meta" id="preview-meta">
+                  <span id="preview-date">January 1, 2024</span> &middot; <span id="preview-read-time">1</span> min read
+                </div>
+                <div class="preview__content" id="preview-content">
+                  <p>Start writing to see a preview...</p>
+                </div>
+                <div class="preview__tags" id="preview-tags"></div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-inner">
+          <p class="footer-text">&copy; <span id="current-year"></span> con.rad. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="../assets/js/navigation.js"></script>
+  <script>
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+
+    // ============================================================
+    // BLOG WRITING TOOL WITH GITHUB PUBLISHING
+    // ============================================================
+    document.addEventListener('DOMContentLoaded', function() {
+
+      // Elements
+      var titleInput = document.getElementById('post-title');
+      var tagsInput = document.getElementById('post-tags');
+      var dateInput = document.getElementById('post-date');
+      var excerptInput = document.getElementById('post-excerpt');
+      var contentInput = document.getElementById('post-content');
+
+      var writerContainer = document.getElementById('writer');
+      var previewPanel = document.getElementById('preview-panel');
+      var previewTitle = document.getElementById('preview-title');
+      var previewDate = document.getElementById('preview-date');
+      var previewReadTime = document.getElementById('preview-read-time');
+      var previewContent = document.getElementById('preview-content');
+      var previewTags = document.getElementById('preview-tags');
+
+      var statusMessage = document.getElementById('status-message');
+      var autosaveStatus = document.getElementById('autosave-status');
+      var draftsList = document.getElementById('drafts-list');
+
+      // GitHub settings elements
+      var githubOwner = document.getElementById('github-owner');
+      var githubRepo = document.getElementById('github-repo');
+      var githubToken = document.getElementById('github-token');
+      var githubBranch = document.getElementById('github-branch');
+      var githubStatus = document.getElementById('github-status');
+      var settingsContent = document.getElementById('settings-content');
+      var settingsToggle = document.getElementById('settings-toggle');
+      var btnSaveSettings = document.getElementById('btn-save-settings');
+
+      // Publish progress
+      var publishProgress = document.getElementById('publish-progress');
+
+      // Buttons
+      var btnPublish = document.getElementById('btn-publish');
+      var btnPreview = document.getElementById('btn-preview');
+      var btnClosePreview = document.getElementById('btn-close-preview');
+      var btnSaveDraft = document.getElementById('btn-save-draft');
+      var btnDownload = document.getElementById('btn-download');
+      var btnClear = document.getElementById('btn-clear');
+
+      // Set default date
+      if (dateInput) {
+        dateInput.value = new Date().toISOString().split('T')[0];
+      }
+
+      // ============================================================
+      // GITHUB SETTINGS
+      // ============================================================
+      var SETTINGS_KEY = 'github_publish_settings';
+
+      function loadSettings() {
+        try {
+          var saved = JSON.parse(localStorage.getItem(SETTINGS_KEY));
+          if (saved) {
+            githubOwner.value = saved.owner || '';
+            githubRepo.value = saved.repo || '';
+            githubToken.value = saved.token || '';
+            githubBranch.value = saved.branch || 'main';
+          }
+        } catch (e) {}
+        updateGitHubStatus();
+      }
+
+      function saveSettings() {
+        var settings = {
+          owner: githubOwner.value.trim(),
+          repo: githubRepo.value.trim(),
+          token: githubToken.value.trim(),
+          branch: githubBranch.value.trim() || 'main'
+        };
+        localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+        updateGitHubStatus();
+        showStatus('Settings saved!', 'success');
+      }
+
+      function getSettings() {
+        try {
+          return JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {};
+        } catch (e) {
+          return {};
+        }
+      }
+
+      function isConfigured() {
+        var s = getSettings();
+        return s.owner && s.repo && s.token;
+      }
+
+      function updateGitHubStatus() {
+        if (isConfigured()) {
+          var s = getSettings();
+          githubStatus.innerHTML = '<div class="settings-panel__status settings-panel__status--connected">' +
+            '<span class="settings-panel__dot settings-panel__dot--green"></span>' +
+            'Connected to <strong>' + s.owner + '/' + s.repo + '</strong>' +
+            '</div>';
+          btnPublish.disabled = false;
+        } else {
+          githubStatus.innerHTML = '<div class="settings-panel__status settings-panel__status--disconnected">' +
+            '<span class="settings-panel__dot settings-panel__dot--red"></span>' +
+            'Not configured - click "Show Settings" to connect GitHub' +
+            '</div>';
+          btnPublish.disabled = true;
+        }
+      }
+
+      // Settings toggle
+      settingsToggle.addEventListener('click', function() {
+        settingsContent.classList.toggle('hidden');
+        settingsToggle.textContent = settingsContent.classList.contains('hidden') ? 'Show Settings' : 'Hide Settings';
+      });
+
+      btnSaveSettings.addEventListener('click', saveSettings);
+
+      // ============================================================
+      // GITHUB API HELPERS
+      // ============================================================
+      function githubAPI(endpoint, options) {
+        var s = getSettings();
+        options = options || {};
+        options.headers = options.headers || {};
+        options.headers['Authorization'] = 'Bearer ' + s.token;
+        options.headers['Accept'] = 'application/vnd.github.v3+json';
+        options.headers['Content-Type'] = 'application/json';
+
+        return fetch('https://api.github.com' + endpoint, options)
+          .then(function(res) {
+            if (!res.ok) {
+              return res.json().then(function(data) {
+                throw new Error(data.message || 'GitHub API error');
+              });
+            }
+            return res.status === 204 ? {} : res.json();
+          });
+      }
+
+      function getFileSHA(path) {
+        var s = getSettings();
+        return githubAPI('/repos/' + s.owner + '/' + s.repo + '/contents/' + path + '?ref=' + s.branch)
+          .then(function(data) {
+            return data.sha;
+          })
+          .catch(function() {
+            return null; // File doesn't exist
+          });
+      }
+
+      function createOrUpdateFile(path, content, message) {
+        var s = getSettings();
+        return getFileSHA(path).then(function(sha) {
+          var body = {
+            message: message,
+            content: btoa(unescape(encodeURIComponent(content))), // Base64 encode
+            branch: s.branch
+          };
+          if (sha) body.sha = sha;
+
+          return githubAPI('/repos/' + s.owner + '/' + s.repo + '/contents/' + path, {
+            method: 'PUT',
+            body: JSON.stringify(body)
+          });
+        });
+      }
+
+      function getFileContent(path) {
+        var s = getSettings();
+        return githubAPI('/repos/' + s.owner + '/' + s.repo + '/contents/' + path + '?ref=' + s.branch)
+          .then(function(data) {
+            return decodeURIComponent(escape(atob(data.content)));
+          });
+      }
+
+      // ============================================================
+      // PREVIEW
+      // ============================================================
+      function showPreview() {
+        updatePreview();
+        previewPanel.style.display = 'flex';
+        writerContainer.classList.add('writer--with-preview');
+        btnPreview.textContent = 'Hide Preview';
+      }
+
+      function hidePreview() {
+        previewPanel.style.display = 'none';
+        writerContainer.classList.remove('writer--with-preview');
+        btnPreview.textContent = 'Preview';
+      }
+
+      function togglePreview() {
+        previewPanel.style.display === 'none' ? showPreview() : hidePreview();
+      }
+
+      btnPreview.addEventListener('click', togglePreview);
+      btnClosePreview.addEventListener('click', hidePreview);
+
+      // ============================================================
+      // MARKDOWN PARSER
+      // ============================================================
+      function parseMarkdown(text) {
+        if (!text) return '';
+        return text
+          .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+          .replace(/```(\w*)\n?([\s\S]*?)```/g, '<pre><code>$2</code></pre>')
+          .replace(/`([^`]+)`/g, '<code>$1</code>')
+          .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+          .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+          .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+          .replace(/__(.+?)__/g, '<strong>$1</strong>')
+          .replace(/\*(.+?)\*/g, '<em>$1</em>')
+          .replace(/_(.+?)_/g, '<em>$1</em>')
+          .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>')
+          .replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">')
+          .replace(/^&gt; (.+)$/gm, '<blockquote>$1</blockquote>')
+          .replace(/^---$/gm, '<hr>')
+          .replace(/^- (.+)$/gm, '<li>$1</li>')
+          .split('\n\n')
+          .map(function(block) {
+            block = block.trim();
+            if (!block) return '';
+            if (block.startsWith('<h') || block.startsWith('<pre') || block.startsWith('<blockquote') || block.startsWith('<hr') || block.startsWith('<li')) {
+              return block.includes('<li>') ? '<ul>' + block + '</ul>' : block;
+            }
+            return '<p>' + block.replace(/\n/g, '<br>') + '</p>';
+          })
+          .join('\n')
+          .replace(/<\/blockquote>\n<blockquote>/g, '<br>');
+      }
+
+      function calculateReadTime(text) {
+        if (!text) return 1;
+        return Math.max(1, Math.ceil(text.trim().split(/\s+/).length / 200));
+      }
+
+      function formatDate(dateStr) {
+        if (!dateStr) return 'No date';
+        var date = new Date(dateStr + 'T00:00:00');
+        return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+      }
+
+      function updatePreview() {
+        previewTitle.textContent = titleInput.value || 'Post Title';
+        previewDate.textContent = formatDate(dateInput.value);
+        previewReadTime.textContent = calculateReadTime(contentInput.value);
+        previewContent.innerHTML = parseMarkdown(contentInput.value) || '<p>Start writing...</p>';
+
+        if (tagsInput.value) {
+          var tags = tagsInput.value.split(',').map(function(t) { return t.trim(); }).filter(Boolean);
+          previewTags.innerHTML = tags.map(function(t) { return '<span class="preview__tag">' + t + '</span>'; }).join('');
+          previewTags.style.display = 'flex';
+        } else {
+          previewTags.style.display = 'none';
+        }
+      }
+
+      // ============================================================
+      // GENERATE POST HTML
+      // ============================================================
+      function generateSlug(title) {
+        return title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').substring(0, 50);
+      }
+
+      function generatePostHTML() {
+        var title = titleInput.value || 'Untitled Post';
+        var content = contentInput.value;
+        var tags = tagsInput.value;
+        var date = dateInput.value || new Date().toISOString().split('T')[0];
+        var excerpt = excerptInput.value || content.substring(0, 160).replace(/[#*_\[\]]/g, '');
+        var htmlContent = parseMarkdown(content);
+        var readTime = calculateReadTime(content);
+        var tagsHTML = tags ? tags.split(',').map(function(t) { return '<span class="article__tag">' + t.trim() + '</span>'; }).join('\n              ') : '';
+
+        return '<!DOCTYPE html>\n<html lang="en">\n<head>\n  <meta charset="UTF-8">\n  <meta name="viewport" content="width=device-width, initial-scale=1.0">\n  <meta name="description" content="' + excerpt.replace(/"/g, '&quot;') + '">\n  <meta property="og:title" content="' + title + ' | con.rad">\n  <meta property="og:description" content="' + excerpt.replace(/"/g, '&quot;') + '">\n  <meta property="og:type" content="article">\n  <meta name="twitter:card" content="summary_large_image">\n  <title>' + title + ' | con.rad</title>\n  <link rel="stylesheet" href="../../assets/css/variables.css">\n  <link rel="stylesheet" href="../../assets/css/reset.css">\n  <link rel="stylesheet" href="../../assets/css/base.css">\n  <link rel="stylesheet" href="../../assets/css/layout.css">\n  <link rel="stylesheet" href="../../assets/css/components.css">\n  <link rel="stylesheet" href="../../assets/css/utilities.css">\n  <link rel="stylesheet" href="../../assets/css/article.css">\n</head>\n<body>\n  <div class="reading-progress" id="reading-progress"></div>\n  <script src="../../assets/js/auth.js"><\/script>\n  <div class="page-wrapper">\n    <header class="site-header">\n      <div class="container">\n        <div class="header-inner">\n          <a href="../../" class="site-logo">con.rad</a>\n          <nav class="main-nav" aria-label="Main navigation">\n            <a href="../../" class="nav-link">Home</a>\n            <a href="../../projects/" class="nav-link">Projects</a>\n            <a href="../../blog/" class="nav-link">Blog</a>\n            <a href="../../inspirations/" class="nav-link">Inspirations</a>\n            <a href="../../about/" class="nav-link">About</a>\n          </nav>\n          <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">\n            <span class="nav-toggle-icon"></span>\n          </button>\n        </div>\n      </div>\n      <nav class="mobile-nav" aria-label="Mobile navigation">\n        <a href="../../" class="mobile-nav-link">Home</a>\n        <a href="../../projects/" class="mobile-nav-link">Projects</a>\n        <a href="../../blog/" class="mobile-nav-link">Blog</a>\n        <a href="../../inspirations/" class="mobile-nav-link">Inspirations</a>\n        <a href="../../about/" class="mobile-nav-link">About</a>\n      </nav>\n    </header>\n    <main class="main-content">\n      <article class="article section">\n        <div class="article__container">\n          <nav class="breadcrumb mb-6" aria-label="Breadcrumb">\n            <span class="breadcrumb__item"><a href="../../" class="breadcrumb__link">Home</a></span>\n            <span class="breadcrumb__item"><a href="../" class="breadcrumb__link">Blog</a></span>\n            <span class="breadcrumb__item"><span class="breadcrumb__current">' + title + '</span></span>\n          </nav>\n          <header class="article__header">\n            <h1 class="article__title">' + title + '</h1>\n            <div class="article__meta">\n              <div class="article__meta-item"><time datetime="' + date + '">' + formatDate(date) + '</time></div>\n              <span class="article__meta-divider">&middot;</span>\n              <div class="article__meta-item"><span>' + readTime + ' min read</span></div>\n            </div>\n          </header>\n          <div class="article__content">\n            ' + htmlContent + '\n          </div>\n          <footer class="article__footer">\n            ' + (tagsHTML ? '<div class="article__tags">' + tagsHTML + '</div>' : '') + '\n            <nav class="article__nav">\n              <a href="../" class="article__nav-link">&larr; Back to Blog</a>\n            </nav>\n          </footer>\n        </div>\n      </article>\n    </main>\n    <footer class="site-footer">\n      <div class="container">\n        <div class="footer-inner">\n          <p class="footer-text">&copy; <span id="current-year"></span> con.rad. All rights reserved.</p>\n        </div>\n      </div>\n    </footer>\n  </div>\n  <script src="../../assets/js/navigation.js"><\/script>\n  <script>\n    document.getElementById("current-year").textContent = new Date().getFullYear();\n    (function() {\n      var progressBar = document.getElementById("reading-progress");\n      var article = document.querySelector(".article__content");\n      if (!progressBar || !article) return;\n      function updateProgress() {\n        var articleTop = article.offsetTop;\n        var articleHeight = article.offsetHeight;\n        var windowHeight = window.innerHeight;\n        var scrollY = window.scrollY;\n        var start = articleTop - windowHeight;\n        var end = articleTop + articleHeight;\n        var current = scrollY - start;\n        var total = end - start;\n        var progress = Math.max(0, Math.min(100, (current / total) * 100));\n        progressBar.style.width = progress + "%";\n      }\n      var ticking = false;\n      window.addEventListener("scroll", function() {\n        if (!ticking) {\n          window.requestAnimationFrame(function() { updateProgress(); ticking = false; });\n          ticking = true;\n        }\n      });\n      updateProgress();\n    })();\n  <\/script>\n</body>\n</html>';
+      }
+
+      // ============================================================
+      // PUBLISH TO GITHUB
+      // ============================================================
+      function updateStep(stepNum, status) {
+        var step = document.getElementById('step-' + stepNum);
+        var icon = step.querySelector('.publish-progress__icon');
+        step.className = 'publish-progress__step ' + status;
+        if (status === 'active') icon.textContent = '...';
+        else if (status === 'done') icon.textContent = '✓';
+        else if (status === 'error') icon.textContent = '✗';
+        else icon.textContent = '-';
+      }
+
+      function resetProgress() {
+        for (var i = 1; i <= 4; i++) updateStep(i, '');
+      }
+
+      async function publishToGitHub() {
+        if (!isConfigured()) {
+          showStatus('Please configure GitHub settings first', 'error');
+          return;
+        }
+
+        if (!titleInput.value.trim()) {
+          showStatus('Please enter a title', 'error');
+          return;
+        }
+
+        var title = titleInput.value;
+        var date = dateInput.value || new Date().toISOString().split('T')[0];
+        var slug = generateSlug(title);
+        var filename = date + '-' + slug + '.html';
+        var postPath = 'blog/posts/' + filename;
+        var excerpt = excerptInput.value || contentInput.value.substring(0, 120).replace(/[#*_\[\]`>]/g, '') + '...';
+        var readTime = calculateReadTime(contentInput.value);
+        var tags = tagsInput.value ? tagsInput.value.split(',').map(function(t) { return t.trim(); }) : [];
+
+        // Show progress
+        publishProgress.classList.add('visible');
+        resetProgress();
+        btnPublish.disabled = true;
+
+        try {
+          // Step 1: Prepare
+          updateStep(1, 'active');
+          var postHTML = generatePostHTML();
+          updateStep(1, 'done');
+
+          // Step 2: Upload post
+          updateStep(2, 'active');
+          await createOrUpdateFile(postPath, postHTML, 'Add blog post: ' + title);
+          updateStep(2, 'done');
+
+          // Step 3: Update posts.json
+          updateStep(3, 'active');
+          var postsJson;
+          try {
+            var postsContent = await getFileContent('blog/posts/posts.json');
+            postsJson = JSON.parse(postsContent);
+          } catch (e) {
+            postsJson = { posts: [], lastUpdated: '' };
+          }
+
+          // Add or update post in manifest
+          var existingIndex = postsJson.posts.findIndex(function(p) { return p.slug === date + '-' + slug; });
+          var postData = {
+            slug: date + '-' + slug,
+            title: title,
+            excerpt: excerpt,
+            date: date,
+            tags: tags,
+            readTime: readTime,
+            published: true
+          };
+
+          if (existingIndex >= 0) {
+            postsJson.posts[existingIndex] = postData;
+          } else {
+            postsJson.posts.unshift(postData);
+          }
+          postsJson.lastUpdated = new Date().toISOString();
+
+          await createOrUpdateFile('blog/posts/posts.json', JSON.stringify(postsJson, null, 2), 'Update posts manifest');
+          updateStep(3, 'done');
+
+          // Step 4: Update blog index
+          updateStep(4, 'active');
+          await updateBlogIndex(postsJson.posts);
+          await updateHomepage(postsJson.posts);
+          updateStep(4, 'done');
+
+          showStatus('Published successfully! Post is now live.', 'success');
+
+        } catch (error) {
+          console.error('Publish error:', error);
+          showStatus('Publish failed: ' + error.message, 'error');
+          // Mark current step as error
+          for (var i = 1; i <= 4; i++) {
+            var step = document.getElementById('step-' + i);
+            if (step.classList.contains('active')) {
+              updateStep(i, 'error');
+              break;
+            }
+          }
+        }
+
+        btnPublish.disabled = false;
+      }
+
+      async function updateBlogIndex(posts) {
+        var blogIndexContent = await getFileContent('blog/index.html');
+        var sortedPosts = posts.filter(function(p) { return p.published !== false; })
+          .sort(function(a, b) { return new Date(b.date) - new Date(a.date); });
+
+        if (sortedPosts.length === 0) return;
+
+        // Generate featured post
+        var featured = sortedPosts[0];
+        var featuredCard = generateBlogCard(featured, true);
+
+        // Generate all posts
+        var allCards = sortedPosts.map(function(p) { return generateBlogCard(p, false); }).join('\n            \n');
+
+        // Replace featured section
+        var featuredRegex = /(<!-- ==================================================================\s*FEATURED POST[\s\S]*?<section class="section section--sm">\s*<div class="container container--wide">)([\s\S]*?)(<\/div>\s*<\/section>\s*<!-- ==================================================================\s*BLOG POSTS LISTING)/;
+        if (featuredRegex.test(blogIndexContent)) {
+          blogIndexContent = blogIndexContent.replace(featuredRegex, '$1\n          \n' + featuredCard + '\n          \n        $3');
+        }
+
+        // Replace all posts grid
+        var allPostsRegex = /(<h2 class="mb-8">All Posts<\/h2>\s*<div class="grid grid--cols-3">)([\s\S]*?)(<\/div>\s*<!-- Pagination -->)/;
+        if (allPostsRegex.test(blogIndexContent)) {
+          blogIndexContent = blogIndexContent.replace(allPostsRegex, '$1\n            \n' + allCards + '\n            \n          $3');
+        }
+
+        await createOrUpdateFile('blog/index.html', blogIndexContent, 'Update blog index');
+      }
+
+      async function updateHomepage(posts) {
+        var homepageContent = await getFileContent('index.html');
+        var recentPosts = posts.filter(function(p) { return p.published !== false; })
+          .sort(function(a, b) { return new Date(b.date) - new Date(a.date); })
+          .slice(0, 2);
+
+        if (recentPosts.length === 0) return;
+
+        var homeCards = recentPosts.map(function(p) { return generateHomepageCard(p); }).join('\n            \n');
+
+        var blogSectionRegex = /(data-scroll-section="blog"[\s\S]*?<!-- Blog Posts Grid -->\s*<div class="grid grid--cols-2">)([\s\S]*?)(<\/div>\s*<!-- View All Link -->)/;
+        if (blogSectionRegex.test(homepageContent)) {
+          homepageContent = homepageContent.replace(blogSectionRegex, '$1\n            \n' + homeCards + '\n            \n          $3');
+          await createOrUpdateFile('index.html', homepageContent, 'Update homepage blog section');
+        }
+      }
+
+      function generateBlogCard(post, isFeatured) {
+        var filename = post.slug + '.html';
+        var variant = isFeatured ? 'featured' : 'default';
+        var heading = isFeatured ? 'h2' : 'h3';
+        return '            <article class="widget-card" data-variant="' + variant + '">\n' +
+          '              <div class="widget-card__image">\n' +
+          '                <div style="width:100%;height:100%;background:var(--color-gray-200);display:flex;align-items:center;justify-content:center;">\n' +
+          '                  <span class="text-secondary">' + (isFeatured ? 'Featured Post Image' : 'Post Image') + '</span>\n' +
+          '                </div>\n' +
+          '              </div>\n' +
+          '              <div class="widget-card__content">\n' +
+          (isFeatured ? '                <span class="widget-card__tag">Featured</span>\n' : '') +
+          '                <' + heading + ' class="widget-card__title">\n' +
+          '                  <a href="./posts/' + filename + '">' + post.title + '</a>\n' +
+          '                </' + heading + '>\n' +
+          '                <p class="widget-card__description">' + post.excerpt + '</p>\n' +
+          '                <div class="widget-card__meta">\n' +
+          '                  <time datetime="' + post.date + '">' + formatDate(post.date) + '</time>\n' +
+          (post.readTime ? '                  <span>' + post.readTime + ' min read</span>\n' : '') +
+          '                </div>\n' +
+          '              </div>\n' +
+          '            </article>';
+      }
+
+      function generateHomepageCard(post) {
+        var filename = post.slug + '.html';
+        return '            <article class="widget-card widget-card--clickable" data-variant="horizontal">\n' +
+          '              <div class="widget-card__image">\n' +
+          '                <div style="width:100%;height:100%;background:var(--color-gray-200);display:flex;align-items:center;justify-content:center;">\n' +
+          '                  <span class="text-secondary">Post Image</span>\n' +
+          '                </div>\n' +
+          '              </div>\n' +
+          '              <div class="widget-card__content">\n' +
+          '                <h3 class="widget-card__title">\n' +
+          '                  <a href="./blog/posts/' + filename + '">' + post.title + '</a>\n' +
+          '                </h3>\n' +
+          '                <p class="widget-card__description">' + post.excerpt + '</p>\n' +
+          '                <div class="widget-card__meta">\n' +
+          '                  <time datetime="' + post.date + '">' + formatDate(post.date) + '</time>\n' +
+          '                </div>\n' +
+          '              </div>\n' +
+          '            </article>';
+      }
+
+      btnPublish.addEventListener('click', publishToGitHub);
+
+      // ============================================================
+      // TOOLBAR
+      // ============================================================
+      function insertText(before, after) {
+        after = after || '';
+        var start = contentInput.selectionStart;
+        var end = contentInput.selectionEnd;
+        var selected = contentInput.value.substring(start, end);
+        contentInput.value = contentInput.value.substring(0, start) + before + selected + after + contentInput.value.substring(end);
+        contentInput.focus();
+        contentInput.setSelectionRange(start + before.length + selected.length, start + before.length + selected.length);
+        autosave();
+      }
+
+      document.querySelectorAll('.toolbar__btn').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+          e.preventDefault();
+          var action = btn.getAttribute('data-action');
+          switch (action) {
+            case 'bold': insertText('**', '**'); break;
+            case 'italic': insertText('*', '*'); break;
+            case 'link': insertText('[', '](url)'); break;
+            case 'h2': insertText('\n## ', '\n'); break;
+            case 'h3': insertText('\n### ', '\n'); break;
+            case 'ul': insertText('\n- ', '\n'); break;
+            case 'quote': insertText('\n> ', '\n'); break;
+            case 'code': insertText('`', '`'); break;
+            case 'hr': insertText('\n---\n', ''); break;
+          }
+        });
+      });
+
+      // ============================================================
+      // DRAFTS
+      // ============================================================
+      var DRAFTS_KEY = 'blog_drafts';
+
+      function getDrafts() {
+        try { return JSON.parse(localStorage.getItem(DRAFTS_KEY)) || []; }
+        catch (e) { return []; }
+      }
+
+      function saveDraftsToStorage(drafts) {
+        localStorage.setItem(DRAFTS_KEY, JSON.stringify(drafts));
+      }
+
+      function renderDrafts() {
+        var drafts = getDrafts();
+        if (drafts.length === 0) {
+          draftsList.innerHTML = '<p style="color: var(--color-text-secondary); font-size: 0.85rem;">No saved drafts</p>';
+          return;
+        }
+        var html = '';
+        drafts.forEach(function(draft, i) {
+          html += '<div class="drafts__item" data-index="' + i + '">' +
+            '<div><div class="drafts__item-title">' + (draft.title || 'Untitled') + '</div>' +
+            '<div class="drafts__item-date">' + new Date(draft.savedAt).toLocaleDateString() + '</div></div>' +
+            '<button class="drafts__item-delete" data-index="' + i + '">&times;</button></div>';
+        });
+        draftsList.innerHTML = html;
+
+        draftsList.querySelectorAll('.drafts__item').forEach(function(item) {
+          item.addEventListener('click', function(e) {
+            if (!e.target.classList.contains('drafts__item-delete')) {
+              loadDraft(parseInt(item.getAttribute('data-index')));
+            }
+          });
+        });
+
+        draftsList.querySelectorAll('.drafts__item-delete').forEach(function(btn) {
+          btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            deleteDraft(parseInt(btn.getAttribute('data-index')));
+          });
+        });
+      }
+
+      function saveDraft() {
+        var draft = {
+          title: titleInput.value,
+          content: contentInput.value,
+          tags: tagsInput.value,
+          date: dateInput.value,
+          excerpt: excerptInput.value,
+          savedAt: new Date().toISOString()
+        };
+        var drafts = getDrafts();
+        var existingIndex = drafts.findIndex(function(d) { return d.title === draft.title && draft.title; });
+        if (existingIndex >= 0) drafts[existingIndex] = draft;
+        else drafts.unshift(draft);
+        if (drafts.length > 10) drafts.pop();
+        saveDraftsToStorage(drafts);
+        renderDrafts();
+        showStatus('Draft saved!', 'success');
+      }
+
+      function loadDraft(index) {
+        var draft = getDrafts()[index];
+        if (draft) {
+          titleInput.value = draft.title || '';
+          contentInput.value = draft.content || '';
+          tagsInput.value = draft.tags || '';
+          dateInput.value = draft.date || '';
+          excerptInput.value = draft.excerpt || '';
+          showStatus('Draft loaded', 'success');
+        }
+      }
+
+      function deleteDraft(index) {
+        var drafts = getDrafts();
+        drafts.splice(index, 1);
+        saveDraftsToStorage(drafts);
+        renderDrafts();
+        showStatus('Draft deleted', 'success');
+      }
+
+      // ============================================================
+      // STATUS & AUTOSAVE
+      // ============================================================
+      function showStatus(message, type) {
+        statusMessage.textContent = message;
+        statusMessage.className = 'status status--' + type;
+        setTimeout(function() { statusMessage.textContent = ''; statusMessage.className = ''; }, 4000);
+      }
+
+      var autosaveTimer;
+      function autosave() {
+        clearTimeout(autosaveTimer);
+        autosaveTimer = setTimeout(function() {
+          if (titleInput.value || contentInput.value) {
+            localStorage.setItem('blog_autosave', JSON.stringify({
+              title: titleInput.value,
+              content: contentInput.value,
+              tags: tagsInput.value,
+              date: dateInput.value,
+              excerpt: excerptInput.value
+            }));
+            autosaveStatus.textContent = 'Auto-saved';
+            setTimeout(function() { autosaveStatus.textContent = ''; }, 2000);
+          }
+        }, 2000);
+      }
+
+      function loadAutosave() {
+        try {
+          var saved = JSON.parse(localStorage.getItem('blog_autosave'));
+          if (saved && (saved.title || saved.content)) {
+            titleInput.value = saved.title || '';
+            contentInput.value = saved.content || '';
+            tagsInput.value = saved.tags || '';
+            if (saved.date) dateInput.value = saved.date;
+            excerptInput.value = saved.excerpt || '';
+          }
+        } catch (e) {}
+      }
+
+      // ============================================================
+      // OTHER BUTTONS
+      // ============================================================
+      btnSaveDraft.addEventListener('click', function(e) { e.preventDefault(); saveDraft(); });
+
+      btnDownload.addEventListener('click', function(e) {
+        e.preventDefault();
+        var html = generatePostHTML();
+        var title = titleInput.value || 'untitled';
+        var date = dateInput.value || new Date().toISOString().split('T')[0];
+        var filename = date + '-' + generateSlug(title) + '.html';
+        var blob = new Blob([html], { type: 'text/html' });
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(a.href);
+        showStatus('Downloaded: ' + filename, 'success');
+      });
+
+      btnClear.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (confirm('Clear all fields?')) {
+          titleInput.value = '';
+          contentInput.value = '';
+          tagsInput.value = '';
+          excerptInput.value = '';
+          dateInput.value = new Date().toISOString().split('T')[0];
+          localStorage.removeItem('blog_autosave');
+          showStatus('Cleared', 'success');
+        }
+      });
+
+      [titleInput, contentInput, tagsInput, dateInput, excerptInput].forEach(function(input) {
+        if (input) input.addEventListener('input', autosave);
+      });
+
+      // ============================================================
+      // INIT
+      // ============================================================
+      loadSettings();
+      loadAutosave();
+      renderDrafts();
+
+    });
+  </script>
+</body>
+</html>

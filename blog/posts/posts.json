@@ -1,0 +1,14 @@
+{
+  "posts": [
+    {
+      "slug": "2026-01-14-test",
+      "title": "test",
+      "excerpt": "First test of the blog tool.",
+      "date": "2026-01-14",
+      "tags": ["art", "blockchain", "economics", "rambling"],
+      "readTime": 1,
+      "published": true
+    }
+  ],
+  "lastUpdated": "2026-01-14T00:00:00.000Z"
+}

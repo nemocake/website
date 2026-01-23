@@ -90,8 +90,13 @@
     });
   }
 
+  function getScrollTop() {
+    return window.scrollY || window.pageYOffset || 0;
+  }
+
   function collectScrollParallaxElements() {
     const elements = document.querySelectorAll('[data-parallax-scroll]');
+    const currentScroll = getScrollTop();
 
     elements.forEach(el => {
       const rect = el.getBoundingClientRect();
@@ -107,7 +112,7 @@
         element: el,
         multiplier: multiplier,
         direction: direction,
-        originalTop: rect.top + window.scrollY,
+        originalTop: rect.top + currentScroll,
         height: rect.height
       });
     });
@@ -115,6 +120,7 @@
 
   function collectScrollDriveElements() {
     const elements = document.querySelectorAll('[data-scroll-drive]');
+    const currentScroll = getScrollTop();
 
     elements.forEach((el, index) => {
       const rect = el.getBoundingClientRect();
@@ -125,7 +131,7 @@
         element: el,
         direction: direction,
         intensity: intensity,
-        originalTop: rect.top + window.scrollY,
+        originalTop: rect.top + currentScroll,
         height: rect.height,
         index: index
       });
@@ -134,6 +140,7 @@
 
   function collectScrollCharElements() {
     const elements = document.querySelectorAll('[data-parallax-chars]');
+    const currentScroll = getScrollTop();
 
     elements.forEach(el => {
       const rect = el.getBoundingClientRect();
@@ -142,7 +149,7 @@
       scrollCharElements.push({
         element: el,
         chars: Array.from(chars),
-        originalTop: rect.top + window.scrollY,
+        originalTop: rect.top + currentScroll,
         height: rect.height
       });
     });
@@ -153,7 +160,7 @@
   }
 
   function onScroll() {
-    lastScrollY = window.scrollY;
+    lastScrollY = getScrollTop();
 
     if (!isScrolling) {
       isScrolling = true;
@@ -219,36 +226,33 @@
       // Negative = above center, Positive = below center
       const distanceFromCenter = (elementCenter - viewportCenter) / (windowHeight * 0.5);
 
-      // Dead zone: cards rest in place when near center
-      // Cards only start moving when outside this zone
-      const deadZone = 0.5; // 35% of viewport from center = cards rest here
+      // Large dead zone: elements rest in place for most of the viewport
+      const deadZone = 0.8; // 80% of viewport from center = elements rest here
 
       let effectiveDistance = 0;
       if (Math.abs(distanceFromCenter) > deadZone) {
         // Calculate how far beyond the dead zone we are
-        // This creates smooth entry/exit while having a rest period
+        // Gentle curve for smooth entry/exit
         const beyondDeadZone = Math.abs(distanceFromCenter) - deadZone;
-        const maxBeyond = 1.5 - deadZone; // Maximum travel beyond dead zone
+        const maxBeyond = 2 - deadZone; // Maximum travel beyond dead zone
         effectiveDistance = Math.min(beyondDeadZone / maxBeyond, 1) * Math.sign(distanceFromCenter);
       }
 
-      // Calculate horizontal offset - cards slide from off-screen
-      const maxOffset = windowWidth * 0.8 * intensity;
+      // Calculate horizontal offset - subtle slide from off-screen
+      const maxOffset = windowWidth * 0.4 * intensity;
       let xOffset;
 
       if (direction === 'left') {
-        // Comes from left (negative X), exits to right (positive X)
         xOffset = effectiveDistance * maxOffset * -1;
       } else {
-        // Comes from right (positive X), exits to left (negative X)
         xOffset = effectiveDistance * maxOffset;
       }
 
-      // Rotation only when moving
-      const rotation = effectiveDistance * 8 * (direction === 'left' ? -1 : 1);
+      // Subtle rotation only when moving
+      const rotation = effectiveDistance * 3 * (direction === 'left' ? -1 : 1);
 
-      // Opacity: full when in dead zone, fades slightly when moving
-      const opacity = 1 - Math.abs(effectiveDistance) * 0.25;
+      // Opacity: full when in dead zone, slight fade when moving
+      const opacity = 1 - Math.abs(effectiveDistance) * 0.15;
 
       element.style.setProperty('--drive-x', `${xOffset}px`);
       element.style.setProperty('--drive-rotate', `${rotation}deg`);
@@ -267,30 +271,30 @@
       // Distance from viewport center (-1 to 1, where 0 = centered)
       const distanceFromCenter = (elementCenter - viewportCenter) / (windowHeight * 0.5);
 
-      // Same dead zone as cards (35%) - headers rest when in this zone
-      const deadZone = 0.5;
+      // Large dead zone matching cards - headers rest for most of viewport
+      const deadZone = 0.8;
 
       let effectiveDistance = 0;
       if (Math.abs(distanceFromCenter) > deadZone) {
         const beyondDeadZone = Math.abs(distanceFromCenter) - deadZone;
-        const maxBeyond = 1.5 - deadZone;
+        const maxBeyond = 2 - deadZone;
         effectiveDistance = Math.min(beyondDeadZone / maxBeyond, 1) * Math.sign(distanceFromCenter);
       }
 
-      // Animate each character with stagger - horizontal slide like cards
+      // Animate each character with stagger - subtle horizontal slide
       chars.forEach((char, i) => {
         // Stagger the animation - later chars animate slightly behind
-        const staggerOffset = i * 0.02;
+        const staggerOffset = i * 0.015;
         const charDistance = Math.max(-1, Math.min(1, effectiveDistance + (effectiveDistance !== 0 ? staggerOffset * Math.sign(effectiveDistance) : 0)));
 
-        // Horizontal movement - slide from left, exit to right (opposite of cards)
-        const translateX = charDistance * -150; // Percentage-based horizontal movement
-        const rotateY = charDistance * 25; // Rotate around Y axis for horizontal effect
-        const scale = 1 - Math.abs(charDistance) * 0.3; // Scale down when moving
-        const opacity = 1 - Math.abs(charDistance) * 0.6;
+        // Subtle horizontal movement
+        const translateX = charDistance * -80;
+        const rotateY = charDistance * 12;
+        const scale = 1 - Math.abs(charDistance) * 0.15;
+        const opacity = 1 - Math.abs(charDistance) * 0.4;
 
         char.style.transform = `translateX(${translateX}%) rotateY(${rotateY}deg) scale(${scale})`;
-        char.style.opacity = Math.max(0.2, opacity);
+        char.style.opacity = Math.max(0.3, opacity);
       });
     });
 

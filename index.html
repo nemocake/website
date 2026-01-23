@@ -140,22 +140,17 @@
     }
 
     /* ==========================================
-       SCROLL SNAP SYSTEM
+       SCROLL SYSTEM
        ========================================== */
     html {
-      scroll-behavior: auto;
+      overflow-x: hidden;
     }
 
-    body.has-artwork-bg {
-      /* Use proximity snap for smoother scrolling with parallax effects */
-      scroll-snap-type: y proximity;
-      overflow-y: scroll;
+    body {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
       scroll-behavior: smooth;
-    }
-
-    .snap-section {
-      scroll-snap-align: center;
-      scroll-snap-stop: normal;
     }
 
     /* Fullscreen Artwork Background */
@@ -182,6 +177,14 @@
     body.has-artwork-bg .page-wrapper {
       position: relative;
       z-index: 1;
+      overflow-x: hidden;
+    }
+
+    /* Sections container - clips parallax overflow */
+    .sections-container {
+      overflow-x: hidden;
+      width: 100%;
+      max-width: 100vw;
     }
 
     /* Header - stays solid */
@@ -200,12 +203,11 @@
     }
 
     /* ==========================================
-       FREE-FLOATING SECTION STYLING
+       SECTION STYLING
        ========================================== */
 
-    /* Remove section boundaries - content flows freely */
-    /* Moderate spacing for scroll-driven animations */
-    body.has-artwork-bg .scroll-section:not(.section--hero) {
+    /* All sections */
+    body.has-artwork-bg .scroll-section {
       background: transparent;
       min-height: auto;
       padding: 8vh 0;
@@ -214,7 +216,7 @@
       justify-content: center;
     }
 
-    body.has-artwork-bg .scroll-section:not(.section--hero) .container {
+    body.has-artwork-bg .scroll-section .container {
       max-width: 100%;
       padding: 0 var(--space-6);
     }
@@ -222,11 +224,10 @@
     /* Hero section - full viewport */
     body.has-artwork-bg .section--hero {
       min-height: 100vh;
+      padding: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding-top: var(--space-8);
-      padding-bottom: var(--space-8);
     }
 
     /* Hero about-card gets frosted glass effect */
@@ -338,11 +339,6 @@
       .about-card__links {
         justify-content: center;
       }
-    }
-
-    /* Regular sections - compact spacing */
-    body.has-artwork-bg .scroll-section:not(.section--hero) {
-      padding: var(--space-3) 0;
     }
 
     /* ==========================================
@@ -893,8 +889,10 @@
       pointer-events: none;
     }
 
+    /* Keep art info box visible in focus mode */
     body.art-focus-mode .art-info-box {
-      transform: translateX(150%);
+      transform: none;
+      opacity: 1;
     }
 
     body.art-focus-mode .font-tool {
@@ -3134,33 +3132,132 @@
           <!-- Section Header -->
           <div class="section-header">
             <h2 class="section-title section-title--large" data-parallax-chars>writings</h2>
+            <p class="section-description">thoughts, experiments, and things I'm learning</p>
           </div>
 
           <!-- Blog Posts Grid -->
           <div class="grid grid--cols-2">
 
-            <!-- ============================================================
-                 BLOG POST: test
-                 ============================================================ -->
-            <article class="widget-card widget-card--clickable floating-card" data-variant="horizontal" data-parallax-float data-scroll-drive="left">
+            <!-- BLOG POST 1 -->
+            <article class="widget-card widget-card--clickable floating-card" data-variant="horizontal" data-scroll-drive="left">
               <div class="widget-card__image">
-                <div style="width:100%;height:100%;background:var(--color-gray-200);display:flex;align-items:center;justify-content:center;">
-                  <span class="text-secondary">Post Image</span>
+                <div style="width:100%;height:100%;background:linear-gradient(135deg, #667eea 0%, #764ba2 100%);display:flex;align-items:center;justify-content:center;">
+                  <span style="color:white;font-size:0.75rem;">Post Image</span>
                 </div>
               </div>
               <div class="widget-card__content">
                 <h3 class="widget-card__title">
-                  <a href="./blog/posts/2026-01-14-test.html">test</a>
+                  <a href="./blog/posts/2026-01-14-test.html">Exploring Creative Coding</a>
                 </h3>
                 <p class="widget-card__description">
-                  First test of the blog tool.
+                  A deep dive into generative art and creative programming techniques.
                 </p>
                 <div class="widget-card__meta">
-                  <time datetime="2026-01-14">January 14, 2026</time>
+                  <time datetime="2026-01-22">January 22, 2026</time>
                 </div>
               </div>
             </article>
-            
+
+            <!-- BLOG POST 2 -->
+            <article class="widget-card widget-card--clickable floating-card" data-variant="horizontal" data-scroll-drive="right">
+              <div class="widget-card__image">
+                <div style="width:100%;height:100%;background:linear-gradient(135deg, #f093fb 0%, #f5576c 100%);display:flex;align-items:center;justify-content:center;">
+                  <span style="color:white;font-size:0.75rem;">Post Image</span>
+                </div>
+              </div>
+              <div class="widget-card__content">
+                <h3 class="widget-card__title">
+                  <a href="#">Design Systems in Practice</a>
+                </h3>
+                <p class="widget-card__description">
+                  Building scalable and maintainable design systems from scratch.
+                </p>
+                <div class="widget-card__meta">
+                  <time datetime="2026-01-20">January 20, 2026</time>
+                </div>
+              </div>
+            </article>
+
+            <!-- BLOG POST 3 -->
+            <article class="widget-card widget-card--clickable floating-card" data-variant="horizontal" data-scroll-drive="left">
+              <div class="widget-card__image">
+                <div style="width:100%;height:100%;background:linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);display:flex;align-items:center;justify-content:center;">
+                  <span style="color:white;font-size:0.75rem;">Post Image</span>
+                </div>
+              </div>
+              <div class="widget-card__content">
+                <h3 class="widget-card__title">
+                  <a href="#">The Future of Web Animation</a>
+                </h3>
+                <p class="widget-card__description">
+                  Exploring scroll-driven animations and modern CSS techniques.
+                </p>
+                <div class="widget-card__meta">
+                  <time datetime="2026-01-18">January 18, 2026</time>
+                </div>
+              </div>
+            </article>
+
+            <!-- BLOG POST 4 -->
+            <article class="widget-card widget-card--clickable floating-card" data-variant="horizontal" data-scroll-drive="right">
+              <div class="widget-card__image">
+                <div style="width:100%;height:100%;background:linear-gradient(135deg, #fa709a 0%, #fee140 100%);display:flex;align-items:center;justify-content:center;">
+                  <span style="color:white;font-size:0.75rem;">Post Image</span>
+                </div>
+              </div>
+              <div class="widget-card__content">
+                <h3 class="widget-card__title">
+                  <a href="#">Music and Technology</a>
+                </h3>
+                <p class="widget-card__description">
+                  How digital tools are reshaping music production and discovery.
+                </p>
+                <div class="widget-card__meta">
+                  <time datetime="2026-01-15">January 15, 2026</time>
+                </div>
+              </div>
+            </article>
+
+            <!-- BLOG POST 5 -->
+            <article class="widget-card widget-card--clickable floating-card" data-variant="horizontal" data-scroll-drive="left">
+              <div class="widget-card__image">
+                <div style="width:100%;height:100%;background:linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);display:flex;align-items:center;justify-content:center;">
+                  <span style="color:#333;font-size:0.75rem;">Post Image</span>
+                </div>
+              </div>
+              <div class="widget-card__content">
+                <h3 class="widget-card__title">
+                  <a href="#">Minimalism in Digital Design</a>
+                </h3>
+                <p class="widget-card__description">
+                  Less is more: creating impactful experiences through simplicity.
+                </p>
+                <div class="widget-card__meta">
+                  <time datetime="2026-01-12">January 12, 2026</time>
+                </div>
+              </div>
+            </article>
+
+            <!-- BLOG POST 6 -->
+            <article class="widget-card widget-card--clickable floating-card" data-variant="horizontal" data-scroll-drive="right">
+              <div class="widget-card__image">
+                <div style="width:100%;height:100%;background:linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);display:flex;align-items:center;justify-content:center;">
+                  <span style="color:#333;font-size:0.75rem;">Post Image</span>
+                </div>
+              </div>
+              <div class="widget-card__content">
+                <h3 class="widget-card__title">
+                  <a href="#">Learning in Public</a>
+                </h3>
+                <p class="widget-card__description">
+                  Why sharing your journey accelerates growth and builds community.
+                </p>
+                <div class="widget-card__meta">
+                  <time datetime="2026-01-10">January 10, 2026</time>
+                </div>
+              </div>
+            </article>
+
           </div>
           
           <!-- View All Link -->
@@ -3183,6 +3280,8 @@
           <!-- Section Header -->
           <div class="section-header">
             <h2 class="section-title section-title--large" data-parallax-chars>collection</h2>
+            <p class="section-description">art and objects that caught my eye</p>
+            <a href="./collection/index.html" class="section-link">View Gallery</a>
           </div>
 
           <!-- Collection Grid - 3 images shown at once -->
@@ -3203,6 +3302,7 @@
           <!-- Section Header -->
           <div class="section-header">
             <h2 class="section-title section-title--large" data-parallax-chars>inspirations</h2>
+            <p class="section-description">visual fuel from my are.na channel</p>
           </div>
 
           <!-- Are.na Grid - 2 rows of 3 -->
@@ -3228,6 +3328,7 @@
           <!-- Section Header -->
           <div class="section-header">
             <h2 class="section-title section-title--large" data-parallax-chars>building</h2>
+            <p class="section-description">projects and code I'm working on</p>
           </div>
 
           <!-- GitHub Repos List - populated dynamically -->
@@ -4234,8 +4335,15 @@
 
       if (!grid || !config || config.length === 0) return;
 
+      // Store collection in localStorage for gallery page access
+      try {
+        localStorage.setItem('conradCollection', JSON.stringify(config));
+      } catch (e) {
+        console.warn('Could not store collection data');
+      }
+
       grid.innerHTML = config.map((item, index) => `
-        <a class="collection-item floating-card" href="${item.link}" target="_blank" rel="noopener" data-parallax-depth data-scroll-drive="${index % 2 === 0 ? 'left' : 'right'}">
+        <a class="collection-item floating-card" href="./collection/index.html?index=${index}" data-parallax-depth data-scroll-drive="${index % 2 === 0 ? 'left' : 'right'}">
           <img class="collection-item__image" src="${item.image}" alt="${item.title || 'Collection piece'}" loading="lazy">
           ${(item.title || item.artist) ? `
             <div class="collection-item__info">
@@ -4498,8 +4606,13 @@
         // Update collection grid
         const grid = document.getElementById('collection-grid');
         if (grid && config.collection) {
+          // Store collection for gallery page
+          try {
+            localStorage.setItem('conradCollection', JSON.stringify(config.collection));
+          } catch (e) {}
+
           grid.innerHTML = config.collection.map((item, index) => `
-            <a class="collection-item floating-card" href="${item.link}" target="_blank" rel="noopener" data-parallax-depth data-scroll-drive="${index % 2 === 0 ? 'left' : 'right'}">
+            <a class="collection-item floating-card" href="./collection/index.html?index=${index}" data-parallax-depth data-scroll-drive="${index % 2 === 0 ? 'left' : 'right'}">
               <img class="collection-item__image" src="${item.image}" alt="${item.title || 'Collection piece'}" loading="lazy">
               ${(item.title || item.artist) ? `
                 <div class="collection-item__info">

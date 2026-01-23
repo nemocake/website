@@ -203,8 +203,8 @@
   transform: translateX(var(--drive-x, 0)) rotate(var(--drive-rotate, 0deg));
   opacity: var(--drive-opacity, 1);
   transition:
-    transform 0.1s ease-out,
-    opacity 0.1s ease-out;
+    transform 0.3s ease-out,
+    opacity 0.3s ease-out;
 }
 
 /* -------------------------------------------------------------------------
@@ -223,9 +223,10 @@
   transform-origin: center center;
   transform-style: preserve-3d;
   will-change: transform, opacity;
+  transition: transform 0.25s ease-out, opacity 0.25s ease-out;
   /* Initial state - JS will override these */
   opacity: 0;
-  transform: translateX(-150%) rotateY(-25deg) scale(0.7);
+  transform: translateX(-80%) rotateY(-12deg) scale(0.85);
 }
 
 [data-parallax-chars] .parallax-char--space {
@@ -250,9 +251,40 @@
   font-weight: 700;
   line-height: 1;
   letter-spacing: -0.03em;
-  margin-bottom: var(--space-8, 2rem);
+  margin-bottom: var(--space-3, 0.75rem);
   color: rgba(255, 255, 255, 0.95);
   text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+}
+
+.section-description {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 0 var(--space-6, 1.5rem) 0;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
+}
+
+.section-link {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.4em 0.8em;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  margin-top: var(--space-2, 0.5rem);
+  transition: all 0.2s ease;
+  text-shadow: none;
+}
+
+.section-link:hover {
+  color: rgba(255, 255, 255, 0.9);
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 /* Subtle text outline for readability on artwork backgrounds */

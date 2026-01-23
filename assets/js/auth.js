@@ -38,9 +38,9 @@
 
       <!-- Art Credit -->
       <div class="auth-art-credit">
-        <span class="credit-label">artwork</span>
-        <span class="credit-title">36 Points</span>
         <span class="credit-artist">Sage Jenson</span>
+        <span class="credit-title">36 Points</span>
+        <span class="credit-year">2022</span>
       </div>
     `;
 
@@ -162,7 +162,7 @@
         opacity: 1;
       }
 
-      /* Art Credit Box */
+      /* Art Credit Box - Museum Label Style */
       .auth-art-credit {
         position: absolute;
         bottom: 1.5rem;
@@ -170,31 +170,33 @@
         z-index: 1;
         display: flex;
         flex-direction: column;
-        align-items: flex-end;
-        gap: 0.25rem;
-        padding: 1rem 1.25rem;
-        background: rgba(0, 0, 0, 0.5);
+        align-items: flex-start;
+        gap: 0.1rem;
+        padding: 0.6rem 0.85rem;
+        background: rgba(255, 255, 255, 0.95);
         backdrop-filter: blur(16px);
-        border-radius: 8px;
-        text-align: right;
-      }
-
-      .credit-label {
-        font-size: 0.65rem;
-        text-transform: uppercase;
-        letter-spacing: 0.15em;
-        color: rgba(255, 255, 255, 0.4);
-      }
-
-      .credit-title {
-        font-size: 0.9rem;
-        color: rgba(255, 255, 255, 0.9);
-        font-weight: 500;
+        border-radius: 4px;
+        text-align: left;
+        line-height: 1.35;
       }
 
       .credit-artist {
+        font-size: 0.8rem;
+        color: #000;
+        font-weight: 700;
+      }
+
+      .credit-title {
         font-size: 0.75rem;
-        color: rgba(255, 255, 255, 0.6);
+        color: #D94F3D;
+        font-weight: 400;
+        font-style: italic;
+      }
+
+      .credit-year {
+        font-size: 0.7rem;
+        color: #000;
+        font-weight: 400;
       }
 
       /* Mobile adjustments */
