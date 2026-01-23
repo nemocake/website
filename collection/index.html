@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Collection | con.rad">
+  <title>Collection | con.rad</title>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../assets/css/variables.css">
+  <link rel="stylesheet" href="../assets/css/reset.css">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/layout.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/utilities.css">
+
+  <style>
+    /* ==========================================================================
+       GALLERY VIEW STYLES
+       Museum-inspired artwork viewing experience
+       ========================================================================== */
+
+    :root {
+      --gallery-bg: #f8f8f6;
+      --gallery-wall: #ffffff;
+      --plaque-bg: #fafaf8;
+      --plaque-border: #e8e8e4;
+      --text-primary: #1a1a1a;
+      --text-secondary: #666666;
+      --text-tertiary: #999999;
+      --frame-shadow: 0 8px 40px rgba(0, 0, 0, 0.12), 0 2px 12px rgba(0, 0, 0, 0.08);
+      --plaque-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    }
+
+    /* Page Layout */
+    body {
+      background: var(--gallery-bg);
+      min-height: 100vh;
+    }
+
+    .gallery-page {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Header - Minimal */
+    .gallery-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: var(--space-4) var(--space-6);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: transparent;
+      transition: background 0.3s ease;
+    }
+
+    .gallery-header.scrolled {
+      background: rgba(248, 248, 246, 0.95);
+      backdrop-filter: blur(10px);
+    }
+
+    .gallery-logo {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+      color: var(--text-secondary);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .gallery-logo:hover {
+      color: var(--text-primary);
+    }
+
+    .gallery-nav {
+      display: flex;
+      gap: var(--space-6);
+    }
+
+    .gallery-nav-link {
+      font-size: var(--font-size-xs);
+      color: var(--text-tertiary);
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      transition: color 0.2s ease;
+    }
+
+    .gallery-nav-link:hover {
+      color: var(--text-primary);
+    }
+
+    /* Main Gallery Area */
+    .gallery-main {
+      padding: calc(80px + var(--space-8)) var(--space-6) var(--space-8);
+    }
+
+    /* Artwork Container */
+    .artwork-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-8);
+    }
+
+    /* Simple frame - just adds shadow */
+    .artwork-frame {
+      background: var(--gallery-wall);
+      border-radius: 2px;
+      box-shadow: var(--frame-shadow);
+      line-height: 0;
+    }
+
+    /* Image container */
+    .artwork-inner {
+      line-height: 0;
+    }
+
+    /* Images: fit within viewport while maintaining aspect ratio */
+    .artwork-inner img {
+      display: block;
+      max-width: 90vw;
+      max-height: 80vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+    }
+
+    /* Iframes need explicit sizing */
+    .artwork-frame--iframe {
+      width: 90vw;
+      max-width: 1200px;
+    }
+
+    .artwork-frame--iframe .artwork-inner {
+      width: 100%;
+      aspect-ratio: var(--artwork-aspect-ratio, 1 / 1);
+    }
+
+    .artwork-frame--iframe .artwork-inner iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Loading State - only shows for iframes */
+    .artwork-loading {
+      display: none;
+    }
+
+    .artwork-frame--iframe .artwork-loading {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0a0a0a;
+      color: #666;
+      font-size: var(--font-size-sm);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .artwork-loading::after {
+      content: 'Loading';
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+
+    /* Museum Plaque */
+    .artwork-plaque {
+      max-width: 400px;
+      width: 100%;
+      padding: var(--space-5) var(--space-6);
+      background: var(--plaque-bg);
+      border: 1px solid var(--plaque-border);
+      border-radius: 1px;
+      box-shadow: var(--plaque-shadow);
+      text-align: left;
+    }
+
+    .plaque-title {
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-medium);
+      color: var(--text-primary);
+      margin: 0 0 var(--space-1) 0;
+      line-height: 1.3;
+    }
+
+    .plaque-artist {
+      font-size: var(--font-size-sm);
+      color: var(--text-secondary);
+      margin: 0 0 var(--space-3) 0;
+    }
+
+    .plaque-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2) var(--space-4);
+      padding-top: var(--space-3);
+      border-top: 1px solid var(--plaque-border);
+    }
+
+    .plaque-detail {
+      font-size: var(--font-size-xs);
+      color: var(--text-tertiary);
+      letter-spacing: 0.02em;
+    }
+
+    .plaque-detail-label {
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-right: var(--space-1);
+    }
+
+    /* Writing/Description Section */
+    .artwork-description {
+      max-width: 600px;
+      width: 100%;
+      margin-top: var(--space-12);
+      padding-top: var(--space-8);
+      border-top: 1px solid var(--plaque-border);
+    }
+
+    .description-content {
+      font-size: var(--font-size-base);
+      line-height: 1.8;
+      color: var(--text-secondary);
+    }
+
+    .description-content p {
+      margin: 0 0 var(--space-4) 0;
+    }
+
+    .description-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Navigation Between Pieces */
+    .gallery-pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: var(--space-8);
+      margin-top: var(--space-12);
+      padding-top: var(--space-6);
+    }
+
+    .pagination-btn {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-4);
+      background: transparent;
+      border: 1px solid var(--plaque-border);
+      border-radius: 2px;
+      color: var(--text-secondary);
+      font-size: var(--font-size-xs);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .pagination-btn:hover {
+      background: var(--gallery-wall);
+      color: var(--text-primary);
+      border-color: var(--text-tertiary);
+    }
+
+    .pagination-btn:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .pagination-btn:disabled:hover {
+      background: transparent;
+      color: var(--text-secondary);
+      border-color: var(--plaque-border);
+    }
+
+    .pagination-counter {
+      font-size: var(--font-size-xs);
+      color: var(--text-tertiary);
+      letter-spacing: 0.1em;
+    }
+
+    /* View Controls */
+    .view-controls {
+      position: fixed;
+      bottom: var(--space-6);
+      right: var(--space-6);
+      display: flex;
+      gap: var(--space-2);
+      z-index: 50;
+    }
+
+    .view-btn {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--gallery-wall);
+      border: 1px solid var(--plaque-border);
+      border-radius: 50%;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: var(--plaque-shadow);
+    }
+
+    .view-btn:hover {
+      background: var(--text-primary);
+      color: var(--gallery-wall);
+      border-color: var(--text-primary);
+    }
+
+    .view-btn svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Fullscreen Mode */
+    body.fullscreen-mode .gallery-header,
+    body.fullscreen-mode .artwork-plaque,
+    body.fullscreen-mode .artwork-description,
+    body.fullscreen-mode .gallery-pagination {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+
+    body.fullscreen-mode .gallery-main {
+      padding: 0;
+      max-width: none;
+    }
+
+    body.fullscreen-mode .artwork-frame {
+      max-width: none;
+      width: 100vw;
+      height: 100vh;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    body.fullscreen-mode .artwork-inner {
+      aspect-ratio: unset;
+      height: 100%;
+    }
+
+    body.fullscreen-mode .view-controls {
+      opacity: 0.3;
+      transition: opacity 0.3s ease;
+    }
+
+    body.fullscreen-mode .view-controls:hover {
+      opacity: 1;
+    }
+
+    /* Empty State */
+    .gallery-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      text-align: center;
+      color: var(--text-tertiary);
+    }
+
+    .gallery-empty-icon {
+      width: 64px;
+      height: 64px;
+      margin-bottom: var(--space-4);
+      opacity: 0.3;
+    }
+
+    .gallery-empty-text {
+      font-size: var(--font-size-sm);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* Grid View Mode */
+    .gallery-grid {
+      display: none;
+      padding: calc(80px + var(--space-8)) var(--space-6) var(--space-8);
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .gallery-grid-inner {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: var(--space-6);
+    }
+
+    .gallery-grid-item {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      background: var(--gallery-wall);
+      border-radius: 2px;
+      overflow: hidden;
+      box-shadow: var(--plaque-shadow);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .gallery-grid-item:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--frame-shadow);
+    }
+
+    .gallery-grid-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+
+    .gallery-grid-item:hover img {
+      transform: scale(1.05);
+    }
+
+    .gallery-grid-item__overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: var(--space-4);
+      background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+      color: #fff;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .gallery-grid-item:hover .gallery-grid-item__overlay {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .gallery-grid-item__title {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+      margin: 0 0 var(--space-1) 0;
+    }
+
+    .gallery-grid-item__artist {
+      font-size: var(--font-size-xs);
+      opacity: 0.8;
+      margin: 0;
+    }
+
+    body.grid-mode .gallery-grid {
+      display: block;
+    }
+
+    body.grid-mode .gallery-main {
+      display: none;
+    }
+
+    body.grid-mode #grid-btn {
+      background: var(--text-primary);
+      color: var(--gallery-wall);
+      border-color: var(--text-primary);
+    }
+
+    /* Grid View Header */
+    .gallery-grid-header {
+      text-align: center;
+      margin-bottom: var(--space-10);
+    }
+
+    .gallery-grid-title {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-light);
+      color: var(--text-primary);
+      margin: 0 0 var(--space-2) 0;
+      letter-spacing: -0.02em;
+    }
+
+    .gallery-grid-count {
+      font-size: var(--font-size-xs);
+      color: var(--text-tertiary);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .gallery-main {
+        padding: calc(70px + var(--space-4)) var(--space-4) var(--space-6);
+      }
+
+      .artwork-container {
+        gap: var(--space-6);
+      }
+
+      .artwork-plaque {
+        max-width: 100%;
+      }
+
+      .artwork-description {
+        margin-top: var(--space-8);
+        padding-top: var(--space-6);
+      }
+
+      .gallery-pagination {
+        gap: var(--space-4);
+        margin-top: var(--space-8);
+      }
+
+      .gallery-nav {
+        display: none;
+      }
+
+      .view-controls {
+        bottom: var(--space-4);
+        right: var(--space-4);
+      }
+
+      /* Grid responsive */
+      .gallery-grid {
+        padding: calc(70px + var(--space-4)) var(--space-4) var(--space-6);
+      }
+
+      .gallery-grid-inner {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-4);
+      }
+
+      .gallery-grid-item__overlay {
+        opacity: 1;
+        transform: none;
+        padding: var(--space-3);
+      }
+
+      .gallery-grid-title {
+        font-size: var(--font-size-xl);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .gallery-grid-inner {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Password Protection -->
+  <script src="../assets/js/auth.js"></script>
+
+  <div class="gallery-page">
+
+    <!-- Minimal Header -->
+    <header class="gallery-header" id="gallery-header">
+      <a href="../" class="gallery-logo">con.rad</a>
+      <nav class="gallery-nav">
+        <a href="../" class="gallery-nav-link">Home</a>
+        <a href="../blog/" class="gallery-nav-link">Blog</a>
+        <a href="../projects/" class="gallery-nav-link">Projects</a>
+      </nav>
+    </header>
+
+    <!-- Main Gallery Content -->
+    <main class="gallery-main" id="gallery-main">
+
+      <!-- Artwork Display -->
+      <div class="artwork-container" id="artwork-container">
+
+        <!-- Frame -->
+        <div class="artwork-frame" id="artwork-frame">
+          <div class="artwork-inner" id="artwork-inner">
+            <div class="artwork-loading" id="artwork-loading"></div>
+          </div>
+        </div>
+
+        <!-- Museum Plaque -->
+        <div class="artwork-plaque" id="artwork-plaque">
+          <h1 class="plaque-title" id="plaque-title">Untitled</h1>
+          <p class="plaque-artist" id="plaque-artist"></p>
+          <div class="plaque-details" id="plaque-details">
+            <span class="plaque-detail">
+              <span class="plaque-detail-label">Medium:</span>
+              <span id="plaque-medium">Generative Art</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Description/Writing Section -->
+        <section class="artwork-description" id="artwork-description" style="display: none;">
+          <div class="description-content" id="description-content">
+          </div>
+        </section>
+
+        <!-- Navigation -->
+        <nav class="gallery-pagination" id="gallery-pagination">
+          <button class="pagination-btn" id="prev-btn" disabled>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M15 19l-7-7 7-7"/>
+            </svg>
+            Previous
+          </button>
+          <span class="pagination-counter" id="pagination-counter">1 / 1</span>
+          <button class="pagination-btn" id="next-btn" disabled>
+            Next
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M9 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </nav>
+
+      </div>
+
+      <!-- Empty State -->
+      <div class="gallery-empty" id="gallery-empty" style="display: none;">
+        <svg class="gallery-empty-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+          <circle cx="8.5" cy="8.5" r="1.5"/>
+          <path d="M21 15l-5-5L5 21"/>
+        </svg>
+        <p class="gallery-empty-text">No artwork to display</p>
+      </div>
+
+    </main>
+
+    <!-- Grid View -->
+    <section class="gallery-grid" id="gallery-grid">
+      <header class="gallery-grid-header">
+        <h1 class="gallery-grid-title">Collection</h1>
+        <p class="gallery-grid-count" id="grid-count">0 pieces</p>
+      </header>
+      <div class="gallery-grid-inner" id="gallery-grid-inner">
+        <!-- Grid items populated by JS -->
+      </div>
+    </section>
+
+    <!-- View Controls -->
+    <div class="view-controls">
+      <button class="view-btn" id="grid-btn" title="Toggle grid view">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="3" y="3" width="7" height="7"/>
+          <rect x="14" y="3" width="7" height="7"/>
+          <rect x="3" y="14" width="7" height="7"/>
+          <rect x="14" y="14" width="7" height="7"/>
+        </svg>
+      </button>
+      <button class="view-btn" id="fullscreen-btn" title="Toggle fullscreen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/>
+        </svg>
+      </button>
+      <a class="view-btn" id="external-btn" href="#" target="_blank" rel="noopener" title="Open in new tab">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+          <polyline points="15 3 21 3 21 9"/>
+          <line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+      </a>
+    </div>
+
+  </div>
+
+  <script>
+    // ==========================================================================
+    // GALLERY CONTROLLER
+    // ==========================================================================
+
+    (function() {
+      // Collection data - populated from main site config or URL params
+      let collection = [];
+      let currentIndex = 0;
+      let isGridMode = false;
+
+      // DOM Elements
+      const artworkContainer = document.getElementById('artwork-container');
+      const artworkFrame = document.getElementById('artwork-frame');
+      const artworkInner = document.getElementById('artwork-inner');
+      const artworkLoading = document.getElementById('artwork-loading');
+      const plaqueTitle = document.getElementById('plaque-title');
+      const plaqueArtist = document.getElementById('plaque-artist');
+      const plaqueMedium = document.getElementById('plaque-medium');
+      const plaqueDetails = document.getElementById('plaque-details');
+      const artworkDescription = document.getElementById('artwork-description');
+      const descriptionContent = document.getElementById('description-content');
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+      const paginationCounter = document.getElementById('pagination-counter');
+      const fullscreenBtn = document.getElementById('fullscreen-btn');
+      const externalBtn = document.getElementById('external-btn');
+      const galleryEmpty = document.getElementById('gallery-empty');
+      const galleryHeader = document.getElementById('gallery-header');
+      const gridBtn = document.getElementById('grid-btn');
+      const gridInner = document.getElementById('gallery-grid-inner');
+      const gridCount = document.getElementById('grid-count');
+
+      // Initialize
+      function init() {
+        // Try to get collection from parent site config
+        if (window.opener && window.opener.SITE_CONFIG) {
+          collection = window.opener.SITE_CONFIG.collection || [];
+        } else if (window.parent && window.parent.SITE_CONFIG) {
+          collection = window.parent.SITE_CONFIG.collection || [];
+        } else {
+          // Fallback: try to load from localStorage or use demo data
+          const stored = localStorage.getItem('conradCollection');
+          if (stored) {
+            try {
+              collection = JSON.parse(stored);
+            } catch (e) {
+              console.warn('Failed to parse stored collection');
+            }
+          }
+        }
+
+        // Check URL params for specific piece or collection data
+        const params = new URLSearchParams(window.location.search);
+
+        // Direct piece URL
+        if (params.has('url')) {
+          collection = [{
+            image: params.get('url'),
+            link: params.get('url'),
+            title: params.get('title') || 'Untitled',
+            artist: params.get('artist') || '',
+            medium: params.get('medium') || 'Digital Art',
+            description: params.get('description') || ''
+          }];
+        }
+
+        // Index param - if present, show detail view; otherwise show grid
+        const hasIndex = params.has('index');
+        if (hasIndex) {
+          currentIndex = parseInt(params.get('index'), 10) || 0;
+        }
+
+        // View param
+        if (params.get('view') === 'grid') {
+          isGridMode = true;
+        } else if (!hasIndex && collection.length > 1) {
+          // Default to grid view when no specific piece is requested
+          isGridMode = true;
+        }
+
+        // If still no collection, show empty state
+        if (collection.length === 0) {
+          showEmptyState();
+          return;
+        }
+
+        // Clamp index
+        currentIndex = Math.max(0, Math.min(currentIndex, collection.length - 1));
+
+        // Build grid view
+        buildGrid();
+
+        // Display artwork or grid
+        if (isGridMode) {
+          document.body.classList.add('grid-mode');
+        } else {
+          displayArtwork(currentIndex);
+        }
+        updateNavigation();
+
+        // Event listeners
+        prevBtn.addEventListener('click', () => navigate(-1));
+        nextBtn.addEventListener('click', () => navigate(1));
+        fullscreenBtn.addEventListener('click', toggleFullscreen);
+        gridBtn.addEventListener('click', toggleGridMode);
+
+        // Keyboard navigation
+        document.addEventListener('keydown', handleKeyboard);
+
+        // Scroll header effect
+        window.addEventListener('scroll', handleScroll);
+      }
+
+      function showEmptyState() {
+        artworkContainer.style.display = 'none';
+        galleryEmpty.style.display = 'flex';
+      }
+
+      function displayArtwork(index) {
+        const item = collection[index];
+        if (!item) return;
+
+        // Show loading
+        artworkLoading.style.display = 'flex';
+
+        // Determine if this is an interactive piece (iframe) or static image
+        const url = item.link || item.image;
+
+        // Check if URL points to an image file
+        const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg', '.bmp'];
+        const isImageUrl = imageExtensions.some(ext => url.toLowerCase().includes(ext));
+
+        // Only use iframe if explicitly marked as interactive OR ends with .html
+        // (and is NOT an image file)
+        const isInteractive = !isImageUrl && (
+                             item.interactive === true ||
+                             url.endsWith('.html') ||
+                             url.includes('/index.html')
+                             );
+
+        // Clear previous content and reset frame classes
+        const existingMedia = artworkInner.querySelector('iframe, img');
+        if (existingMedia) {
+          existingMedia.remove();
+        }
+        artworkFrame.classList.remove('artwork-frame--iframe');
+        artworkInner.style.removeProperty('--artwork-aspect-ratio');
+
+        if (isInteractive) {
+          // Create iframe for interactive/generative pieces
+          artworkFrame.classList.add('artwork-frame--iframe');
+
+          // Set aspect ratio from item data or default to 1:1
+          const aspectRatio = item.aspectRatio || '1 / 1';
+          artworkInner.style.setProperty('--artwork-aspect-ratio', aspectRatio);
+
+          const iframe = document.createElement('iframe');
+          iframe.src = url;
+          iframe.title = item.title || 'Artwork';
+          iframe.loading = 'lazy';
+          iframe.allow = 'autoplay';
+          iframe.scrolling = 'no';
+          iframe.style.overflow = 'hidden';
+          iframe.onload = () => {
+            artworkLoading.style.display = 'none';
+          };
+          artworkInner.appendChild(iframe);
+        } else {
+          // Create image for static pieces
+          const img = document.createElement('img');
+          img.src = item.image || url;
+          img.alt = item.title || 'Artwork';
+          img.onload = () => {
+            artworkLoading.style.display = 'none';
+          };
+          img.onerror = () => {
+            artworkLoading.textContent = 'Failed to load';
+          };
+          artworkInner.appendChild(img);
+        }
+
+        // Update plaque
+        plaqueTitle.textContent = item.title || 'Untitled';
+        plaqueArtist.textContent = item.artist || '';
+        plaqueArtist.style.display = item.artist ? 'block' : 'none';
+
+        // Update medium if provided
+        if (item.medium) {
+          plaqueMedium.textContent = item.medium;
+        } else {
+          plaqueMedium.textContent = isInteractive ? 'Generative Art' : 'Digital Art';
+        }
+
+        // Update external link
+        externalBtn.href = url;
+
+        // Update description if provided
+        if (item.description) {
+          descriptionContent.innerHTML = '<p>' + item.description.replace(/\n\n/g, '</p><p>') + '</p>';
+          artworkDescription.style.display = 'block';
+        } else {
+          artworkDescription.style.display = 'none';
+        }
+
+        // Update page title
+        document.title = (item.title || 'Artwork') + ' | Collection | con.rad';
+      }
+
+      function updateNavigation() {
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.disabled = currentIndex === collection.length - 1;
+        paginationCounter.textContent = (currentIndex + 1) + ' / ' + collection.length;
+
+        // Hide pagination if only one item
+        document.getElementById('gallery-pagination').style.display =
+          collection.length > 1 ? 'flex' : 'none';
+      }
+
+      function navigate(direction) {
+        const newIndex = currentIndex + direction;
+        if (newIndex >= 0 && newIndex < collection.length) {
+          currentIndex = newIndex;
+          displayArtwork(currentIndex);
+          updateNavigation();
+
+          // Update URL without reload
+          const url = new URL(window.location);
+          url.searchParams.set('index', currentIndex);
+          history.replaceState(null, '', url);
+        }
+      }
+
+      function toggleFullscreen() {
+        document.body.classList.toggle('fullscreen-mode');
+      }
+
+      function buildGrid() {
+        // Update count
+        gridCount.textContent = collection.length + ' piece' + (collection.length !== 1 ? 's' : '');
+
+        // Build grid items
+        gridInner.innerHTML = collection.map((item, index) => `
+          <div class="gallery-grid-item" data-index="${index}">
+            <img src="${item.image}" alt="${item.title || 'Artwork'}" loading="lazy">
+            <div class="gallery-grid-item__overlay">
+              <h3 class="gallery-grid-item__title">${item.title || 'Untitled'}</h3>
+              ${item.artist ? `<p class="gallery-grid-item__artist">${item.artist}</p>` : ''}
+            </div>
+          </div>
+        `).join('');
+
+        // Add click handlers
+        gridInner.querySelectorAll('.gallery-grid-item').forEach(item => {
+          item.addEventListener('click', () => {
+            const index = parseInt(item.dataset.index, 10);
+            viewPiece(index);
+          });
+        });
+      }
+
+      function toggleGridMode() {
+        isGridMode = !isGridMode;
+        document.body.classList.toggle('grid-mode', isGridMode);
+
+        if (!isGridMode && collection.length > 0) {
+          // Switching to detail view - display current piece
+          displayArtwork(currentIndex);
+        }
+
+        // Update URL
+        const url = new URL(window.location);
+        if (isGridMode) {
+          url.searchParams.delete('index');
+          url.searchParams.set('view', 'grid');
+        } else {
+          url.searchParams.set('index', currentIndex);
+          url.searchParams.delete('view');
+        }
+        history.replaceState(null, '', url);
+      }
+
+      function viewPiece(index) {
+        currentIndex = index;
+        isGridMode = false;
+        document.body.classList.remove('grid-mode');
+        displayArtwork(currentIndex);
+        updateNavigation();
+
+        // Update URL
+        const url = new URL(window.location);
+        url.searchParams.set('index', currentIndex);
+        url.searchParams.delete('view');
+        history.replaceState(null, '', url);
+
+        // Scroll to top
+        window.scrollTo(0, 0);
+      }
+
+      function handleKeyboard(e) {
+        // Don't navigate with arrows in grid mode
+        if (!isGridMode) {
+          if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+            navigate(-1);
+          } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+            navigate(1);
+          }
+        }
+
+        if (e.key === 'Escape') {
+          if (document.body.classList.contains('fullscreen-mode')) {
+            document.body.classList.remove('fullscreen-mode');
+          } else if (!isGridMode) {
+            // Escape in detail view goes to grid
+            toggleGridMode();
+          }
+        } else if (e.key === 'f' || e.key === 'F') {
+          if (!isGridMode) toggleFullscreen();
+        } else if (e.key === 'g' || e.key === 'G') {
+          toggleGridMode();
+        }
+      }
+
+      function handleScroll() {
+        if (window.scrollY > 50) {
+          galleryHeader.classList.add('scrolled');
+        } else {
+          galleryHeader.classList.remove('scrolled');
+        }
+      }
+
+      // Start
+      init();
+    })();
+  </script>
+
+</body>
+</html>

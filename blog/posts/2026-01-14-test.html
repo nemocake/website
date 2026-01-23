@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="First test of the blog tool.">
+
+  <!-- Open Graph / Social Media Meta Tags -->
+  <meta property="og:title" content="test | con.rad">
+  <meta property="og:description" content="First test of the blog tool.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <title>test | con.rad</title>
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="../../assets/css/variables.css">
+  <link rel="stylesheet" href="../../assets/css/reset.css">
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/layout.css">
+  <link rel="stylesheet" href="../../assets/css/components.css">
+  <link rel="stylesheet" href="../../assets/css/utilities.css">
+  <link rel="stylesheet" href="../../assets/css/article.css">
+</head>
+<body>
+  <!-- Reading Progress Indicator -->
+  <div class="reading-progress" id="reading-progress"></div>
+
+  <!-- Password Protection -->
+  <script src="../../assets/js/auth.js"></script>
+  <div class="page-wrapper">
+
+    <!-- Header -->
+    <header class="site-header">
+      <div class="container">
+        <div class="header-inner">
+          <a href="../../" class="site-logo">con.rad</a>
+
+          <nav class="main-nav" aria-label="Main navigation">
+            <a href="../../" class="nav-link">Home</a>
+            <a href="../../projects/" class="nav-link">Projects</a>
+            <a href="../../blog/" class="nav-link">Blog</a>
+            <a href="../../inspirations/" class="nav-link">Inspirations</a>
+            <a href="../../about/" class="nav-link">About</a>
+          </nav>
+
+          <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+            <span class="nav-toggle-icon"></span>
+          </button>
+        </div>
+      </div>
+
+      <nav class="mobile-nav" aria-label="Mobile navigation">
+        <a href="../../" class="mobile-nav-link">Home</a>
+        <a href="../../projects/" class="mobile-nav-link">Projects</a>
+        <a href="../../blog/" class="mobile-nav-link">Blog</a>
+        <a href="../../inspirations/" class="mobile-nav-link">Inspirations</a>
+        <a href="../../about/" class="mobile-nav-link">About</a>
+      </nav>
+    </header>
+
+    <main class="main-content">
+
+      <article class="article section">
+        <div class="article__container">
+
+          <!-- Breadcrumb -->
+          <nav class="breadcrumb mb-6" aria-label="Breadcrumb">
+            <span class="breadcrumb__item">
+              <a href="../../" class="breadcrumb__link">Home</a>
+            </span>
+            <span class="breadcrumb__item">
+              <a href="../" class="breadcrumb__link">Blog</a>
+            </span>
+            <span class="breadcrumb__item">
+              <span class="breadcrumb__current">test</span>
+            </span>
+          </nav>
+
+          <!-- Article Header -->
+          <header class="article__header">
+            <h1 class="article__title">test</h1>
+            <div class="article__meta">
+              <div class="article__meta-item">
+                <time datetime="2026-01-14">January 14, 2026</time>
+              </div>
+              <span class="article__meta-divider">&middot;</span>
+              <div class="article__meta-item">
+                <span>1 min read</span>
+              </div>
+            </div>
+          </header>
+
+          <!-- Article Content -->
+          <div class="article__content">
+            <h2>Header 2</h2>
+            <h3>Header 3</h3>
+
+            <p><strong>Let's test bold.</strong></p>
+            <p><em>Let's test italics.</em></p>
+            <p><a href="https://github.com/nemocake" target="_blank">https://github.com/nemocake</a></p>
+
+            <ul>
+              <li>List item example</li>
+            </ul>
+
+            <blockquote>Quote test</blockquote>
+          </div>
+
+          <!-- Article Footer -->
+          <footer class="article__footer">
+            <!-- Tags -->
+            <div class="article__tags">
+              <span class="article__tag">art</span>
+              <span class="article__tag">blockchain</span>
+              <span class="article__tag">economics</span>
+              <span class="article__tag">rambling</span>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="article__nav">
+              <a href="../" class="article__nav-link">&larr; Back to Blog</a>
+            </nav>
+          </footer>
+
+        </div>
+      </article>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-inner">
+          <p class="footer-text">
+            &copy; <span id="current-year"></span> con.rad. All rights reserved.
+          </p>
+          <nav class="flex gap-6">
+            <a href="../../about/" class="footer-text">About</a>
+            <a href="mailto:your@email.com" class="footer-text">Contact</a>
+          </nav>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="../../assets/js/navigation.js"></script>
+  <script>
+    // Set current year in footer
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+
+    // Reading Progress Indicator
+    (function() {
+      const progressBar = document.getElementById('reading-progress');
+      const article = document.querySelector('.article__content');
+
+      if (!progressBar || !article) return;
+
+      function updateProgress() {
+        const articleRect = article.getBoundingClientRect();
+        const articleTop = article.offsetTop;
+        const articleHeight = article.offsetHeight;
+        const windowHeight = window.innerHeight;
+        const scrollY = window.scrollY;
+
+        // Calculate how much of the article has been scrolled
+        const start = articleTop - windowHeight;
+        const end = articleTop + articleHeight;
+        const current = scrollY - start;
+        const total = end - start;
+
+        let progress = (current / total) * 100;
+        progress = Math.max(0, Math.min(100, progress));
+
+        progressBar.style.width = progress + '%';
+      }
+
+      // Throttle scroll events for performance
+      let ticking = false;
+      window.addEventListener('scroll', function() {
+        if (!ticking) {
+          window.requestAnimationFrame(function() {
+            updateProgress();
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+
+      // Initial update
+      updateProgress();
+    })();
+  </script>
+</body>
+</html>
