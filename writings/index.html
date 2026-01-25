@@ -18,6 +18,19 @@
 
   <style>
     /* ==========================================================================
+       CUSTOM FONTS
+       ========================================================================== */
+    @font-face {
+      font-family: 'Kiya';
+      src: url('../assets/fonts/kiya/Kiya Handwrite.woff2') format('woff2'),
+           url('../assets/fonts/kiya/Kiya Handwrite.woff') format('woff'),
+           url('../assets/fonts/kiya/Kiya Handwrite.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    /* ==========================================================================
        WRITINGS PAGE - STICKY NAV WITH SCROLL REVEAL
        ========================================================================== */
 
@@ -48,7 +61,7 @@
     }
 
     /* ==========================================================================
-       HEADER
+       HEADER (matching homepage style)
        ========================================================================== */
 
     .writings-header {
@@ -57,45 +70,82 @@
       left: 0;
       right: 0;
       z-index: 100;
-      padding: 1.5rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(248, 248, 246, 0.9);
-      backdrop-filter: blur(10px);
-    }
-
-    .writings-logo {
-      font-family: 'Libre Baskerville', serif;
-      font-size: 0.85rem;
-      font-weight: 400;
-      color: var(--text-secondary);
-      text-decoration: none;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }
-
-    .writings-logo:hover {
-      color: var(--text-primary);
-    }
-
-    .writings-header-nav {
-      display: flex;
+      height: 5rem;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
       gap: 2rem;
+      align-items: center;
+      padding: 0 2rem;
+      background: rgba(248, 248, 246, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .writings-nav-left,
+    .writings-nav-right {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    .writings-nav-left {
+      justify-content: flex-end;
+    }
+
+    .writings-nav-right {
+      justify-content: flex-start;
     }
 
     .writings-header-link {
       font-family: 'Libre Baskerville', serif;
-      font-size: 0.75rem;
-      color: var(--text-tertiary);
+      font-size: 0.875rem;
+      color: var(--text-secondary);
       text-decoration: none;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
+      letter-spacing: 0.01em;
+      text-transform: lowercase;
       transition: color 0.2s ease;
     }
 
     .writings-header-link:hover {
       color: var(--text-primary);
+    }
+
+    .writings-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-decoration: none;
+    }
+
+    .writings-logo-name {
+      font-family: 'Kiya', sans-serif;
+      font-size: 1.5rem;
+      font-weight: normal;
+      color: var(--text-primary);
+    }
+
+    .writings-logo-tagline {
+      font-size: 0.7rem;
+      font-weight: 400;
+      color: var(--text-tertiary);
+      letter-spacing: 0.02em;
+    }
+
+    .writings-logo:hover .writings-logo-name {
+      color: var(--accent);
+    }
+
+    @media (max-width: 768px) {
+      .writings-header {
+        display: flex;
+        justify-content: center;
+        height: 4rem;
+      }
+
+      .writings-nav-left,
+      .writings-nav-right {
+        display: none;
+      }
     }
 
     /* ==========================================================================
@@ -328,14 +378,6 @@
     }
 
     @media (max-width: 600px) {
-      .writings-header {
-        padding: 1rem 1.25rem;
-      }
-
-      .writings-header-nav {
-        display: none;
-      }
-
       .writings-content {
         padding: 1.5rem 1.25rem 4rem 1.25rem;
       }
@@ -371,13 +413,21 @@
   <!-- Password Protection -->
   <script src="../assets/js/auth.js"></script>
 
-  <!-- Header -->
+  <!-- Header (matching homepage) -->
   <header class="writings-header">
-    <a href="../index.html" class="writings-logo">con.rad</a>
-    <nav class="writings-header-nav">
-      <a href="../index.html" class="writings-header-link">Home</a>
-      <a href="../collection/index.html" class="writings-header-link">Collection</a>
-      <a href="../projects/index.html" class="writings-header-link">Projects</a>
+    <nav class="writings-nav-left">
+      <a href="../writings/index.html" class="writings-header-link">writings</a>
+      <a href="../inspirations/index.html" class="writings-header-link">inspirations</a>
+    </nav>
+
+    <a href="../index.html" class="writings-logo">
+      <span class="writings-logo-name">con.rad</span>
+      <span class="writings-logo-tagline">building curiosity...</span>
+    </a>
+
+    <nav class="writings-nav-right">
+      <a href="../projects/index.html" class="writings-header-link">projects</a>
+      <a href="../collection/index.html" class="writings-header-link">collection</a>
     </nav>
   </header>
 

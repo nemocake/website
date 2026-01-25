@@ -4,6 +4,19 @@
    ========================================================================== */
 
 /* -------------------------------------------------------------------------
+   CUSTOM FONTS
+   ------------------------------------------------------------------------- */
+@font-face {
+  font-family: 'Kiya';
+  src: url('../fonts/kiya/Kiya Handwrite.woff2') format('woff2'),
+       url('../fonts/kiya/Kiya Handwrite.woff') format('woff'),
+       url('../fonts/kiya/Kiya Handwrite.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* -------------------------------------------------------------------------
    CONTAINER
    Centered content wrapper with responsive padding
    ------------------------------------------------------------------------- */
@@ -105,6 +118,23 @@
   color: var(--color-accent);
 }
 
+/* Logo name - Kiya font for brand */
+.logo-name {
+  font-family: 'Kiya', sans-serif;
+  font-size: 1.5rem;
+  font-weight: normal;
+  color: var(--color-text-primary);
+  line-height: 1.2;
+}
+
+/* Logo tagline */
+.logo-tagline {
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  letter-spacing: 0.02em;
+}
+
 /* Left Navigation */
 .nav-left {
   display: none;
@@ -134,7 +164,7 @@
 }
 
 .nav-link {
-  font-family: var(--font-family-primary);
+  font-family: 'Libre Baskerville', serif;
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-regular);
   color: var(--color-text-secondary);
@@ -231,7 +261,7 @@
 .mobile-nav-link {
   display: block;
   padding: var(--space-3) 0;
-  font-family: var(--font-family-primary);
+  font-family: 'Libre Baskerville', serif;
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-regular);
   color: var(--color-text-secondary);
