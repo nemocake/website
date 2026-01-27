@@ -85,14 +85,30 @@
   border-bottom: none;
 }
 
-/* Nav link styling for floating header */
+/* Color cycling animation for header visibility */
+@keyframes colorCycle {
+  0%, 100% { color: #1a1a1a; }
+  15% { color: #ffffff; }
+  30% { color: #e8e8e8; }
+  45% { color: #d4c4b0; }
+  60% { color: #b8c4d4; }
+  75% { color: #c4d4c4; }
+  90% { color: #2a2a2a; }
+}
+
+/* Nav link styling for floating header with color cycling */
 .site-header .nav-link {
-  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
-  transition: color 0.2s ease, text-shadow 0.2s ease;
+  animation: colorCycle 12s ease-in-out infinite;
+  text-shadow:
+    0 1px 3px rgba(255, 255, 255, 0.9),
+    0 0 15px rgba(255, 255, 255, 0.4);
+  transition: text-shadow 0.2s ease;
 }
 
 .site-header .nav-link:hover {
-  text-shadow: 0 2px 4px rgba(255, 255, 255, 0.9);
+  text-shadow:
+    0 2px 6px rgba(255, 255, 255, 1),
+    0 0 25px rgba(255, 255, 255, 0.6);
 }
 
 .header-inner {
@@ -128,19 +144,24 @@
   color: var(--color-accent);
 }
 
-/* Logo name - Kiya font for brand */
+/* Logo name - Kiya font for brand with color cycling */
 .logo-name {
   font-family: 'Kiya', sans-serif;
   font-size: 1.5rem;
   font-weight: normal;
-  color: var(--color-text-primary);
   line-height: 1.2;
+  animation: colorCycle 12s ease-in-out infinite;
+  text-shadow:
+    0 1px 3px rgba(255, 255, 255, 0.9),
+    0 0 20px rgba(255, 255, 255, 0.5);
 }
 
-/* Logo tagline */
+/* Logo tagline with color cycling */
 .logo-tagline {
   font-size: 0.7rem;
   font-weight: 400;
+  animation: colorCycle 12s ease-in-out infinite;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
   color: var(--color-text-muted);
   letter-spacing: 0.02em;
 }
