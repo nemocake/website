@@ -6,499 +6,243 @@
   <meta name="description" content="Writings | con.rad">
   <title>Writings | con.rad</title>
 
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            'mono': ['"JetBrains Mono"', 'monospace'],
+            'sans': ['"Space Grotesk"', 'sans-serif'],
+            'display': ['"Syne"', 'sans-serif'],
+          },
+          colors: {
+            'acid': '#ccff00',
+            'neon-blue': '#00f3ff',
+            'void': '#050505',
+            'glass': 'rgba(255, 255, 255, 0.05)',
+            'glass-dark': 'rgba(0, 0, 0, 0.6)',
+            'border-dim': 'rgba(255, 255, 255, 0.1)',
+          },
+          animation: {
+            'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
+          },
+          keyframes: {
+            'pulse-glow': {
+              '0%, 100%': { opacity: '1' },
+              '50%': { opacity: '0.5' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="../assets/css/variables.css">
-  <link rel="stylesheet" href="../assets/css/reset.css">
-  <link rel="stylesheet" href="../assets/css/base.css">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
 
   <style>
-    /* ==========================================================================
-       CUSTOM FONTS
-       ========================================================================== */
-    @font-face {
-      font-family: 'Kiya';
-      src: url('../assets/fonts/kiya/Kiya Handwrite.woff2') format('woff2'),
-           url('../assets/fonts/kiya/Kiya Handwrite.woff') format('woff'),
-           url('../assets/fonts/kiya/Kiya Handwrite.ttf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
-      font-display: swap;
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #050505;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #333;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #ccff00;
     }
 
-    /* ==========================================================================
-       WRITINGS PAGE - STICKY NAV WITH SCROLL REVEAL
-       ========================================================================== */
-
-    :root {
-      --writings-bg: #f8f8f6;
-      --text-primary: #1a1a1a;
-      --text-secondary: #555555;
-      --text-tertiary: #888888;
-      --text-muted: #aaaaaa;
-      --accent: #1a1a1a;
-      --border-light: rgba(0, 0, 0, 0.08);
-      --nav-width: 280px;
-      --content-max-width: 640px;
-      --section-spacing: 30vh;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Libre Baskerville', serif;
-      background: var(--writings-bg);
-      color: var(--text-primary);
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-    }
-
-    /* ==========================================================================
-       HEADER (matching homepage style)
-       ========================================================================== */
-
-    .writings-header {
+    /* Scanlines overlay */
+    .scanlines {
+      background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0),
+        rgba(255,255,255,0) 50%,
+        rgba(0,0,0,0.1) 50%,
+        rgba(0,0,0,0.1)
+      );
+      background-size: 100% 4px;
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      height: 5rem;
-      display: grid;
-      grid-template-columns: 1fr auto 1fr;
-      gap: 2rem;
-      align-items: center;
-      padding: 0 2rem;
-      background: transparent;
-      backdrop-filter: none;
-      border-bottom: none;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.6;
     }
 
-    /* Color cycling animation for header visibility */
-    @keyframes colorCycle {
-      0%, 100% { color: #1a1a1a; }
-      15% { color: #ffffff; }
-      30% { color: #e8e8e8; }
-      45% { color: #d4c4b0; }
-      60% { color: #b8c4d4; }
-      75% { color: #c4d4c4; }
-      90% { color: #2a2a2a; }
+    /* Noise overlay */
+    .noise {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 9998;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
     }
 
-    /* Floating nav link treatment with color cycling */
-    .writings-header-link {
-      animation: colorCycle 12s ease-in-out infinite;
-      text-shadow:
-        0 1px 3px rgba(255, 255, 255, 0.9),
-        0 0 15px rgba(255, 255, 255, 0.4);
+    /* Selection */
+    ::selection {
+      background: #ccff00;
+      color: #000;
     }
 
-    .writings-header-link:hover {
-      text-shadow:
-        0 2px 6px rgba(255, 255, 255, 1),
-        0 0 25px rgba(255, 255, 255, 0.6);
+    /* Glass panel */
+    .glass-panel {
+      background: rgba(10, 10, 10, 0.6);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     }
 
-    .writings-logo-name {
-      animation: colorCycle 12s ease-in-out infinite;
-      text-shadow:
-        0 1px 3px rgba(255, 255, 255, 0.9),
-        0 0 20px rgba(255, 255, 255, 0.5);
-    }
-
-    .writings-logo-tagline {
-      animation: colorCycle 12s ease-in-out infinite;
-      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
-    }
-
-    .writings-nav-left,
-    .writings-nav-right {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-    }
-
-    .writings-nav-left {
-      justify-content: flex-end;
-    }
-
-    .writings-nav-right {
-      justify-content: flex-start;
-    }
-
-    .writings-header-link {
-      font-family: 'Libre Baskerville', serif;
-      font-size: 0.875rem;
-      color: var(--text-secondary);
-      text-decoration: none;
-      letter-spacing: 0.01em;
-      text-transform: lowercase;
-      transition: color 0.2s ease;
-    }
-
-    .writings-header-link:hover {
-      color: var(--text-primary);
-    }
-
-    .writings-logo {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-decoration: none;
-    }
-
-    .writings-logo-name {
-      font-family: 'Kiya', sans-serif;
-      font-size: 1.5rem;
-      font-weight: normal;
-      color: var(--text-primary);
-    }
-
-    .writings-logo-tagline {
-      font-size: 0.7rem;
-      font-weight: 400;
-      color: var(--text-tertiary);
-      letter-spacing: 0.02em;
-    }
-
-    .writings-logo:hover .writings-logo-name {
-      color: var(--accent);
-    }
-
-    @media (max-width: 768px) {
-      .writings-header {
-        display: flex;
-        justify-content: center;
-        height: 4rem;
-      }
-
-      .writings-nav-left,
-      .writings-nav-right {
-        display: none;
-      }
-    }
-
-    /* ==========================================================================
-       MAIN LAYOUT - TWO COLUMNS
-       ========================================================================== */
-
-    .writings-layout {
-      display: flex;
-      min-height: 100vh;
-      padding-top: 80px;
-    }
-
-    /* ==========================================================================
-       STICKY SIDEBAR NAVIGATION
-       ========================================================================== */
-
-    .writings-nav {
-      position: sticky;
-      top: 80px;
-      width: var(--nav-width);
-      height: calc(100vh - 80px);
-      padding: 3rem 2rem 3rem 2.5rem;
-      flex-shrink: 0;
-      overflow-y: auto;
-    }
-
-    .writings-nav-title {
-      font-size: 0.65rem;
-      font-weight: 400;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      margin: 0 0 1.5rem 0;
-    }
-
-    .writings-nav-list {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-    }
-
-    .writings-nav-item {
-      margin-bottom: 0.25rem;
-    }
-
-    .writings-nav-link {
-      display: block;
-      font-family: 'Libre Baskerville', serif;
-      font-size: 0.9rem;
-      font-weight: 400;
-      color: var(--text-tertiary);
-      text-decoration: none;
-      padding: 0.6rem 0;
-      border-left: 2px solid transparent;
-      padding-left: 1rem;
-      margin-left: -1rem;
-      transition: all 0.3s ease;
-      line-height: 1.4;
-    }
-
-    .writings-nav-link:hover {
-      color: var(--text-secondary);
-    }
-
-    .writings-nav-link.is-active {
-      color: var(--text-primary);
-      border-left-color: var(--accent);
-    }
-
-    /* ==========================================================================
-       CONTENT AREA
-       ========================================================================== */
-
-    .writings-content {
-      flex: 1;
-      padding: 3rem 4rem 10rem 4rem;
-      max-width: calc(var(--content-max-width) + 8rem);
-    }
-
-    /* ==========================================================================
-       ARTICLE SECTIONS
-       ========================================================================== */
-
+    /* Article reveal animation */
     .writing-section {
-      padding-bottom: var(--section-spacing);
       opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
     }
-
     .writing-section.is-visible {
       opacity: 1;
       transform: translateY(0);
     }
 
-    .writing-section:last-child {
-      padding-bottom: 0;
-    }
-
-    .writing-number {
-      font-size: 0.7rem;
-      font-weight: 400;
-      color: var(--text-muted);
-      letter-spacing: 0.1em;
-      margin: 0 0 1rem 0;
-    }
-
-    .writing-title {
-      font-family: 'Libre Baskerville', serif;
-      font-size: 1.75rem;
-      font-weight: 400;
-      font-style: italic;
-      color: var(--text-primary);
-      margin: 0 0 0.5rem 0;
-      line-height: 1.3;
-      letter-spacing: -0.01em;
-    }
-
-    .writing-meta {
-      font-size: 0.8rem;
-      color: var(--text-tertiary);
-      margin: 0 0 2rem 0;
-      font-style: normal;
-    }
-
-    .writing-body {
-      font-size: 1rem;
-      color: var(--text-secondary);
-      line-height: 1.85;
-    }
-
-    .writing-body p {
-      margin: 0 0 1.5rem 0;
-    }
-
-    .writing-body p:last-child {
-      margin-bottom: 0;
-    }
-
-    .writing-body a {
-      color: var(--text-primary);
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      text-decoration-thickness: 1px;
-      transition: opacity 0.2s ease;
-    }
-
-    .writing-body a:hover {
-      opacity: 0.6;
-    }
-
-    /* Pull quotes */
-    .writing-body blockquote {
-      margin: 2rem 0;
-      padding: 0 0 0 1.5rem;
-      border-left: 2px solid var(--border-light);
-      font-style: italic;
-      color: var(--text-tertiary);
-    }
-
-    /* Divider between sections */
-    .writing-divider {
-      width: 40px;
-      height: 1px;
-      background: var(--border-light);
-      margin: 0 0 var(--section-spacing) 0;
-    }
-
-    /* ==========================================================================
-       INTRO SECTION
-       ========================================================================== */
-
+    /* Intro reveal */
     .writings-intro {
-      padding-bottom: 4rem;
-      margin-bottom: 2rem;
-      border-bottom: 1px solid var(--border-light);
       opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
     }
-
     .writings-intro.is-visible {
       opacity: 1;
       transform: translateY(0);
     }
 
-    .writings-intro-title {
-      font-family: 'Libre Baskerville', serif;
-      font-size: 2.5rem;
-      font-weight: 400;
-      font-style: italic;
-      color: var(--text-primary);
-      margin: 0 0 1rem 0;
-      letter-spacing: -0.02em;
-    }
-
-    .writings-intro-description {
-      font-size: 1.05rem;
-      color: var(--text-tertiary);
-      margin: 0;
-      max-width: 480px;
-      line-height: 1.7;
-    }
-
-    /* ==========================================================================
-       RESPONSIVE
-       ========================================================================== */
-
-    @media (max-width: 900px) {
-      .writings-nav {
-        display: none;
-      }
-
-      .writings-content {
-        padding: 2rem 1.5rem 6rem 1.5rem;
-        max-width: 100%;
-      }
-
-      .writings-intro-title {
-        font-size: 2rem;
-      }
-
-      .writing-title {
-        font-size: 1.5rem;
-      }
-
-      :root {
-        --section-spacing: 20vh;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .writings-content {
-        padding: 1.5rem 1.25rem 4rem 1.25rem;
-      }
-
-      .writings-intro-title {
-        font-size: 1.75rem;
-      }
-
-      .writing-title {
-        font-size: 1.35rem;
-      }
-
-      .writing-body {
-        font-size: 0.95rem;
-      }
-    }
-
-    /* ==========================================================================
-       REDUCED MOTION
-       ========================================================================== */
-
-    @media (prefers-reduced-motion: reduce) {
-      .writing-section,
-      .writings-intro {
-        opacity: 1;
-        transform: none;
-        transition: none;
-      }
+    /* Nav link active state */
+    .nav-link-item.is-active {
+      color: #ccff00;
+      border-left-color: #ccff00;
     }
   </style>
 </head>
-<body>
-  <!-- Password Protection -->
-  <script src="../assets/js/auth.js"></script>
+<body class="bg-void text-gray-200 antialiased overflow-x-hidden selection:bg-acid selection:text-black">
+  <!-- Password protection removed -->
 
-  <!-- Header (matching homepage) -->
-  <header class="writings-header">
-    <nav class="writings-nav-left">
-      <a href="../writings/index.html" class="writings-header-link">writings</a>
-      <a href="../inspirations/index.html" class="writings-header-link">inspirations</a>
-    </nav>
+  <!-- Overlays -->
+  <div class="scanlines"></div>
+  <div class="noise"></div>
 
-    <a href="../index.html" class="writings-logo">
-      <span class="writings-logo-name">con.rad</span>
-      <span class="writings-logo-tagline">building curiosity...</span>
+  <!-- Header -->
+  <header class="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex justify-between items-start pointer-events-none mix-blend-difference text-white">
+    <a href="../index.html" class="pointer-events-auto group cursor-pointer flex flex-col">
+      <span class="font-display font-bold text-2xl tracking-tighter leading-none group-hover:text-acid transition-colors">con.rad</span>
+      <span class="font-mono text-[10px] opacity-70 tracking-widest mt-1">BUILDING CURIOSITY...</span>
     </a>
 
-    <nav class="writings-nav-right">
-      <a href="../projects/index.html" class="writings-header-link">projects</a>
-      <a href="../collection/index.html" class="writings-header-link">collection</a>
+    <nav class="pointer-events-auto hidden md:flex items-center gap-8 font-mono text-xs tracking-wider">
+      <a href="../writings/index.html" class="hover:text-acid hover:underline underline-offset-4 decoration-acid decoration-1">[ WRITINGS ]</a>
+      <a href="../collection/index.html" class="hover:text-acid hover:underline underline-offset-4 decoration-acid decoration-1">[ COLLECTION ]</a>
+      <a href="../index.html#projects" class="hover:text-acid hover:underline underline-offset-4 decoration-acid decoration-1">[ PROJECTS ]</a>
+      <a href="../index.html#inspirations" class="hover:text-acid hover:underline underline-offset-4 decoration-acid decoration-1">[ ARE.NA ]</a>
+      <span class="w-2 h-2 rounded-full bg-acid animate-pulse-glow shadow-[0_0_10px_#ccff00]"></span>
     </nav>
+
+    <button class="md:hidden pointer-events-auto text-acid">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
   </header>
 
   <!-- Main Layout -->
-  <div class="writings-layout">
+  <main class="relative z-10 pt-32 pb-48 px-4 md:px-0 max-w-7xl mx-auto flex flex-col md:flex-row gap-8">
 
-    <!-- Sticky Sidebar Navigation -->
-    <nav class="writings-nav">
-      <p class="writings-nav-title">Writings</p>
-      <ul class="writings-nav-list" id="writings-nav-list">
-        <!-- Dynamically populated by JavaScript -->
-      </ul>
-    </nav>
+    <!-- Sidebar Navigation -->
+    <aside class="md:w-1/4 md:sticky md:top-32 h-fit">
+      <div class="glass-panel p-6 rounded-sm">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="font-mono text-acid text-sm">01.</span>
+          <h2 class="font-display text-xl font-bold uppercase">Writings</h2>
+        </div>
+
+        <div class="border-t border-dashed border-gray-700 my-4"></div>
+
+        <nav>
+          <ul id="writings-nav-list" class="space-y-1">
+            <!-- Populated by JS -->
+          </ul>
+        </nav>
+
+        <div class="border-t border-dashed border-gray-700 my-4"></div>
+
+        <div class="font-mono text-[10px] uppercase tracking-wider text-gray-500 space-y-2">
+          <div class="flex justify-between">
+            <span>Articles</span>
+            <span id="article-count" class="text-acid">0</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Last Updated</span>
+            <span id="last-updated">--</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Back to home -->
+      <a href="../index.html" class="glass-panel p-4 mt-4 flex items-center justify-center gap-2 hover:bg-acid hover:text-black transition-all group rounded-sm">
+        <span class="font-mono text-xl group-hover:-translate-x-1 transition-transform">←</span>
+        <span class="font-mono text-xs uppercase tracking-widest">Back Home</span>
+      </a>
+    </aside>
 
     <!-- Content Area -->
-    <main class="writings-content" id="writings-content">
+    <div class="md:w-3/4 space-y-16">
 
-      <!-- Intro -->
-      <div class="writings-intro" id="writings-intro">
-        <h1 class="writings-intro-title">Writings</h1>
-        <p class="writings-intro-description">
-          Thoughts on art, technology, and the spaces between.
-          Essays and reflections on what I'm learning and building.
+      <!-- Intro Section -->
+      <div class="writings-intro glass-panel p-8 rounded-sm" id="writings-intro">
+        <div class="flex items-center gap-4 mb-6">
+          <div class="h-[1px] w-12 bg-acid"></div>
+          <span class="font-mono text-acid text-xs uppercase tracking-widest">Archive</span>
+        </div>
+        <h1 class="font-display text-4xl md:text-5xl font-bold mb-4">Writings</h1>
+        <p class="font-sans text-lg text-gray-400 max-w-xl leading-relaxed">
+          Thoughts on art, technology, and the spaces between. Essays and reflections on what I'm learning and building.
         </p>
       </div>
 
-      <!-- Articles dynamically populated by JavaScript -->
-      <div id="writings-articles"></div>
+      <!-- Articles Container -->
+      <div id="writings-articles" class="space-y-12">
+        <!-- Populated by JS -->
+      </div>
 
-    </main>
-  </div>
+    </div>
+  </main>
 
-  <!-- JavaScript: Load Writings & Initialize -->
+  <!-- Footer -->
+  <footer class="relative z-10 border-t border-white/10 bg-black/80 backdrop-blur-md mt-12 py-12">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-end gap-6">
+      <div>
+        <h3 class="font-display text-2xl mb-2">con.rad</h3>
+        <p class="font-mono text-xs text-gray-500">© <span id="current-year"></span> Conrad House. Built for the web.</p>
+      </div>
+      <div class="flex gap-6 font-mono text-xs">
+        <a href="mailto:hello@conrad.house" class="hover:text-acid hover:underline">EMAIL</a>
+        <a href="#" class="hover:text-acid hover:underline">GITHUB</a>
+        <a href="#" class="hover:text-acid hover:underline">TWITTER</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
   <script>
+    // Current year
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+
     (function() {
       // Load writings from localStorage or use fallback
       let writings = [];
@@ -574,38 +318,56 @@
         ];
       }
 
+      // Update article count
+      document.getElementById('article-count').textContent = writings.length;
+
+      // Update last updated date
+      if (writings.length > 0) {
+        const latestDate = new Date(writings[0].date);
+        document.getElementById('last-updated').textContent = latestDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+      }
+
       // Format date helper
       const formatDate = (dateStr) => {
         const date = new Date(dateStr);
-        return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+        return date.toISOString().split('T')[0];
       };
 
       // Render navigation
       const navList = document.getElementById('writings-nav-list');
       navList.innerHTML = writings.map((item, index) => `
-        <li class="writings-nav-item">
-          <a href="#${item.id}" class="writings-nav-link ${index === 0 ? 'is-active' : ''}">${item.title}</a>
+        <li>
+          <a href="#${item.id}" class="nav-link-item block font-mono text-xs text-gray-400 hover:text-acid py-2 px-3 border-l-2 border-transparent hover:border-acid/50 transition-all ${index === 0 ? 'is-active' : ''}">
+            <span class="text-gray-600 mr-2">${String(index + 1).padStart(2, '0')}</span>
+            ${item.title}
+          </a>
         </li>
       `).join('');
 
       // Render articles
       const articlesContainer = document.getElementById('writings-articles');
       articlesContainer.innerHTML = writings.map((item, index) => {
-        const bodyHtml = item.body.map(p => `<p>${p}</p>`).join('');
-        const quoteHtml = item.quote ? `<blockquote>"${item.quote}"</blockquote>` : '';
-        const dividerHtml = index < writings.length - 1 ? '<div class="writing-divider"></div>' : '';
+        const bodyHtml = item.body.map(p => `<p class="mb-6 last:mb-0">${p}</p>`).join('');
+        const quoteHtml = item.quote ? `
+          <blockquote class="my-8 pl-6 border-l-2 border-acid/50 italic text-gray-400">
+            "${item.quote}"
+          </blockquote>
+        ` : '';
 
         return `
-          <article class="writing-section" id="${item.id}">
-            <p class="writing-number">${String(index + 1).padStart(2, '0')}</p>
-            <h2 class="writing-title">${item.title}</h2>
-            <p class="writing-meta">${formatDate(item.date)}</p>
-            <div class="writing-body">
+          <article class="writing-section glass-panel p-8 rounded-sm hover:border-acid/30 transition-all" id="${item.id}">
+            <div class="flex items-center gap-4 mb-4">
+              <span class="font-mono text-acid text-sm">${String(index + 1).padStart(2, '0')}.</span>
+              <span class="font-mono text-xs text-gray-500 border border-gray-700 px-2 py-0.5">TXT</span>
+              <span class="font-mono text-xs text-gray-500">${formatDate(item.date)}</span>
+            </div>
+            <h2 class="font-display text-2xl md:text-3xl font-bold mb-2 group-hover:text-acid">${item.title}</h2>
+            <p class="font-mono text-sm text-gray-500 mb-6">${item.description}</p>
+            <div class="font-sans text-gray-300 leading-relaxed">
               ${bodyHtml}
               ${quoteHtml}
             </div>
           </article>
-          ${dividerHtml}
         `;
       }).join('');
 
@@ -618,7 +380,7 @@
           const targetId = window.location.hash.substring(1);
           const target = document.getElementById(targetId);
           if (target) {
-            const headerOffset = 100;
+            const headerOffset = 120;
             const elementPosition = target.getBoundingClientRect().top;
             const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
             window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
@@ -627,7 +389,7 @@
       }
 
       function initScrollEffects() {
-        const navLinks = document.querySelectorAll('.writings-nav-link');
+        const navLinks = document.querySelectorAll('.nav-link-item');
         const sections = document.querySelectorAll('.writing-section');
         const intro = document.querySelector('.writings-intro');
 
@@ -678,7 +440,7 @@
             const target = document.getElementById(targetId);
 
             if (target) {
-              const headerOffset = 100;
+              const headerOffset = 120;
               const elementPosition = target.getBoundingClientRect().top;
               const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
@@ -702,7 +464,6 @@
             }
           }
 
-          // Also reveal any sections already in view
           sections.forEach(section => {
             const rect = section.getBoundingClientRect();
             if (rect.top < window.innerHeight) {
