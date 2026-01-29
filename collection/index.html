@@ -744,6 +744,22 @@
       }
 
       init();
+
+      // Listen for config updates from config-loader.js
+      window.addEventListener('configLoaded', (e) => {
+        const config = e.detail;
+        if (config && config.collection && config.collection.length > 0 && config.collection[0].type) {
+          console.log('[Collection] Config updated, re-initializing with', config.collection.length, 'items');
+          collection = config.collection;
+          currentIndex = Math.max(0, Math.min(currentIndex, collection.length - 1));
+          buildGrid();
+          if (isGridMode) {
+            showGridMode();
+          } else {
+            displayArtwork(currentIndex);
+          }
+        }
+      });
     })();
   </script>
 

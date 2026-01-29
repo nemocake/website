@@ -6,6 +6,9 @@
   <meta name="description" content="Writings | con.rad">
   <title>Writings | con.rad</title>
 
+  <!-- Config Loader -->
+  <script src="../assets/js/config-loader.js"></script>
+
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script>
@@ -244,20 +247,100 @@
     document.getElementById('current-year').textContent = new Date().getFullYear();
 
     (function() {
-      // Load writings from localStorage or use fallback
-      let writings = [];
+      // Function to render writings
+      function renderWritings(writings) {
+        if (!writings || writings.length === 0) return;
 
-      try {
-        const stored = localStorage.getItem('conradWritings');
-        if (stored) {
-          writings = JSON.parse(stored);
+        // Update article count
+        document.getElementById('article-count').textContent = writings.length;
+
+        // Update last updated date
+        const latestDate = new Date(writings[0].date);
+        document.getElementById('last-updated').textContent = latestDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+
+        // Format date helper
+        const formatDate = (dateStr) => {
+          const date = new Date(dateStr);
+          return date.toISOString().split('T')[0];
+        };
+
+        // Render navigation
+        const navList = document.getElementById('writings-nav-list');
+        navList.innerHTML = writings.map((item, index) => `
+          <li>
+            <a href="#${item.id}" class="nav-link-item block font-mono text-xs text-gray-400 hover:text-acid py-2 px-3 border-l-2 border-transparent hover:border-acid/50 transition-all ${index === 0 ? 'is-active' : ''}">
+              <span class="text-gray-600 mr-2">${String(index + 1).padStart(2, '0')}</span>
+              ${item.title}
+            </a>
+          </li>
+        `).join('');
+
+        // Render articles
+        const articlesContainer = document.getElementById('writings-articles');
+        articlesContainer.innerHTML = writings.map((item, index) => {
+          const bodyHtml = item.body.map(p => `<p class="mb-6 last:mb-0">${p}</p>`).join('');
+          const quoteHtml = item.quote ? `
+            <blockquote class="my-8 pl-6 border-l-2 border-acid/50 italic text-gray-400">
+              "${item.quote}"
+            </blockquote>
+          ` : '';
+
+          return `
+            <article class="writing-section glass-panel p-8 rounded-sm hover:border-acid/30 transition-all" id="${item.id}">
+              <div class="flex items-center gap-4 mb-4">
+                <span class="font-mono text-acid text-sm">${String(index + 1).padStart(2, '0')}.</span>
+                <span class="font-mono text-xs text-gray-500 border border-gray-700 px-2 py-0.5">TXT</span>
+                <span class="font-mono text-xs text-gray-500">${formatDate(item.date)}</span>
+              </div>
+              <h2 class="font-display text-2xl md:text-3xl font-bold mb-2 group-hover:text-acid">${item.title}</h2>
+              <p class="font-mono text-sm text-gray-500 mb-6">${item.description}</p>
+              <div class="font-sans text-gray-300 leading-relaxed">
+                ${bodyHtml}
+                ${quoteHtml}
+              </div>
+            </article>
+          `;
+        }).join('');
+
+        // Initialize scroll effects after content is rendered
+        initScrollEffects();
+
+        // Handle hash navigation (from homepage links)
+        if (window.location.hash) {
+          setTimeout(() => {
+            const targetId = window.location.hash.substring(1);
+            const target = document.getElementById(targetId);
+            if (target) {
+              const headerOffset = 120;
+              const elementPosition = target.getBoundingClientRect().top;
+              const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+              window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+            }
+          }, 200);
         }
-      } catch (e) {
-        console.warn('Could not load writings from localStorage');
       }
 
-      // Fallback data if localStorage is empty
+      // Try to get writings from SITE_CONFIG first (set by config-loader.js)
+      let writings = [];
+
+      if (window.SITE_CONFIG && window.SITE_CONFIG.writings && window.SITE_CONFIG.writings.length > 0) {
+        writings = window.SITE_CONFIG.writings;
+        console.log('[Writings] Loaded from SITE_CONFIG:', writings.length, 'articles');
+      } else {
+        try {
+          const stored = localStorage.getItem('conradWritings');
+          if (stored) {
+            writings = JSON.parse(stored);
+            console.log('[Writings] Loaded from localStorage:', writings.length, 'articles');
+          }
+        } catch (e) {
+          console.warn('[Writings] Could not load from localStorage');
+        }
+      }
+
+      // Fallback data if nothing loaded
       if (!writings || writings.length === 0) {
+        console.log('[Writings] Using fallback data');
         writings = [
           {
             id: 'on-collecting',
@@ -318,75 +401,17 @@
         ];
       }
 
-      // Update article count
-      document.getElementById('article-count').textContent = writings.length;
+      // Render initial data
+      renderWritings(writings);
 
-      // Update last updated date
-      if (writings.length > 0) {
-        const latestDate = new Date(writings[0].date);
-        document.getElementById('last-updated').textContent = latestDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
-      }
-
-      // Format date helper
-      const formatDate = (dateStr) => {
-        const date = new Date(dateStr);
-        return date.toISOString().split('T')[0];
-      };
-
-      // Render navigation
-      const navList = document.getElementById('writings-nav-list');
-      navList.innerHTML = writings.map((item, index) => `
-        <li>
-          <a href="#${item.id}" class="nav-link-item block font-mono text-xs text-gray-400 hover:text-acid py-2 px-3 border-l-2 border-transparent hover:border-acid/50 transition-all ${index === 0 ? 'is-active' : ''}">
-            <span class="text-gray-600 mr-2">${String(index + 1).padStart(2, '0')}</span>
-            ${item.title}
-          </a>
-        </li>
-      `).join('');
-
-      // Render articles
-      const articlesContainer = document.getElementById('writings-articles');
-      articlesContainer.innerHTML = writings.map((item, index) => {
-        const bodyHtml = item.body.map(p => `<p class="mb-6 last:mb-0">${p}</p>`).join('');
-        const quoteHtml = item.quote ? `
-          <blockquote class="my-8 pl-6 border-l-2 border-acid/50 italic text-gray-400">
-            "${item.quote}"
-          </blockquote>
-        ` : '';
-
-        return `
-          <article class="writing-section glass-panel p-8 rounded-sm hover:border-acid/30 transition-all" id="${item.id}">
-            <div class="flex items-center gap-4 mb-4">
-              <span class="font-mono text-acid text-sm">${String(index + 1).padStart(2, '0')}.</span>
-              <span class="font-mono text-xs text-gray-500 border border-gray-700 px-2 py-0.5">TXT</span>
-              <span class="font-mono text-xs text-gray-500">${formatDate(item.date)}</span>
-            </div>
-            <h2 class="font-display text-2xl md:text-3xl font-bold mb-2 group-hover:text-acid">${item.title}</h2>
-            <p class="font-mono text-sm text-gray-500 mb-6">${item.description}</p>
-            <div class="font-sans text-gray-300 leading-relaxed">
-              ${bodyHtml}
-              ${quoteHtml}
-            </div>
-          </article>
-        `;
-      }).join('');
-
-      // Initialize scroll effects after content is rendered
-      initScrollEffects();
-
-      // Handle hash navigation (from homepage links)
-      if (window.location.hash) {
-        setTimeout(() => {
-          const targetId = window.location.hash.substring(1);
-          const target = document.getElementById(targetId);
-          if (target) {
-            const headerOffset = 120;
-            const elementPosition = target.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-          }
-        }, 200);
-      }
+      // Listen for config updates from config-loader.js
+      window.addEventListener('configLoaded', (e) => {
+        const config = e.detail;
+        if (config && config.writings && config.writings.length > 0) {
+          console.log('[Writings] Config updated, re-rendering with', config.writings.length, 'articles');
+          renderWritings(config.writings);
+        }
+      });
 
       function initScrollEffects() {
         const navLinks = document.querySelectorAll('.nav-link-item');
