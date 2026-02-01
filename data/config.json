@@ -168,10 +168,11 @@
     "itemCount": 12
   },
   "profile": {
-    "name": "",
+    "name": "Conrad House",
+    "alias": "nemocake",
     "title": "",
-    "bio": "",
-    "photo": ""
+    "bio": ["chronically online.", "techno-curious.", "art and music junky."],
+    "photo": "./assets/images/misc/profilepicture.png"
   },
   "social": {
     "twitter": "",
