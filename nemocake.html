@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>nemocake</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #ffffff;
+      min-height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .nemocake-canvas {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+    }
+
+    .nemocake-image {
+      max-width: 200px;
+      max-height: 200px;
+      object-fit: contain;
+      cursor: pointer;
+      user-select: none;
+      -webkit-user-drag: none;
+      transition: transform 0.1s ease;
+    }
+
+    .nemocake-image:hover {
+      transform: scale(1.05);
+    }
+
+    .nemocake-image:active {
+      transform: scale(0.95);
+    }
+
+    /* Original centered image */
+    .nemocake-original {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .nemocake-original:hover {
+      transform: translate(-50%, -50%) scale(1.05);
+    }
+
+    .nemocake-original:active {
+      transform: translate(-50%, -50%) scale(0.95);
+    }
+
+    /* Duplicated draggable images */
+    .nemocake-clone {
+      position: absolute;
+      cursor: grab;
+      z-index: 10;
+    }
+
+    .nemocake-clone:active {
+      cursor: grabbing;
+    }
+
+    .nemocake-clone.dragging {
+      z-index: 1000;
+      opacity: 0.9;
+    }
+
+    /* Hint text */
+    .hint {
+      position: fixed;
+      bottom: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 0.7rem;
+      color: rgba(0, 0, 0, 0.25);
+      pointer-events: none;
+    }
+
+    /* Dynamic response text */
+    .dynamic-text {
+      position: fixed;
+      bottom: 3rem;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 1.1rem;
+      color: rgba(0, 0, 0, 0.7);
+      text-align: center;
+      max-width: 85vw;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      line-height: 1.4;
+    }
+
+    .dynamic-text.urgent {
+      color: #c0392b;
+      font-weight: 500;
+    }
+
+    .dynamic-text.angry {
+      color: #e74c3c;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .dynamic-text.desperate {
+      color: #8e44ad;
+      font-style: italic;
+    }
+
+    .dynamic-text.broken {
+      color: #2c3e50;
+      font-weight: 300;
+    }
+
+    /* Counter display */
+    .nemocake-counter {
+      position: fixed;
+      top: 1.5rem;
+      right: 1.5rem;
+      font-family: system-ui, -apple-system, sans-serif;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+      text-align: right;
+      min-width: 140px;
+      z-index: 9999;
+    }
+
+    .counter-label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: rgba(0, 0, 0, 0.4);
+      margin-bottom: 0.25rem;
+    }
+
+    .counter-count {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #000;
+      line-height: 1.2;
+    }
+
+    .counter-divider {
+      height: 1px;
+      background: rgba(0, 0, 0, 0.1);
+      margin: 0.75rem 0;
+    }
+
+    .counter-total {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #2a9d4a;
+    }
+
+    .counter-price-label {
+      font-size: 0.6rem;
+      color: rgba(0, 0, 0, 0.35);
+      margin-top: 0.2rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="nemocake-canvas" id="canvas">
+    <img src="./assets/images/misc/nemocake.png" alt="nemocake" class="nemocake-image nemocake-original" id="original">
+  </div>
+
+  <!-- Counter Display -->
+  <div class="nemocake-counter">
+    <div class="counter-label">nemocakes</div>
+    <div class="counter-count" id="count">0</div>
+    <div class="counter-divider"></div>
+    <div class="counter-total" id="total">$0.00</div>
+    <div class="counter-price-label">@ $2.79 each</div>
+  </div>
+
+  <p class="hint">click anywhere to generate nemocake</p>
+  <p class="dynamic-text" id="dynamic-text">Here's where my name comes from, try one!</p>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const original = document.getElementById('original');
+    const countDisplay = document.getElementById('count');
+    const totalDisplay = document.getElementById('total');
+    const dynamicText = document.getElementById('dynamic-text');
+
+    let cloneCount = 0;
+    let highestZ = 10;
+    const PRICE_PER_CAKE = 2.79;
+
+    // Dynamic responses based on count
+    const responses = {
+      1: { text: "Here's where my name comes from, try one!", style: "" },
+      2: { text: "Hope you enjoy!", style: "" },
+      3: { text: "Wow! You must really like them!", style: "" },
+      4: { text: "Someone's got a sweet tooth...", style: "" },
+      5: { text: "That's a healthy appetite you've got there.", style: "" },
+      6: { text: "Okay, pace yourself.", style: "" },
+      7: { text: "You know these have calories, right?", style: "" },
+      8: { text: "Maybe save some for later?", style: "" },
+      9: { text: "I'm starting to get concerned.", style: "" },
+      10: { text: "That's $27.90 worth of cake. Just saying.", style: "" },
+      12: { text: "Your dentist would not approve.", style: "" },
+      14: { text: "Is everything okay at home?", style: "" },
+      16: { text: "This is emotional eating, isn't it?", style: "" },
+      18: { text: "You've spent over $50 on virtual cake.", style: "urgent" },
+      20: { text: "I'm genuinely worried about your blood sugar.", style: "urgent" },
+      22: { text: "Do you need to talk to someone?", style: "urgent" },
+      24: { text: "This can't be good for your cholesterol.", style: "urgent" },
+      26: { text: "Please. Think of your pancreas.", style: "urgent" },
+      28: { text: "That's almost $80. EIGHTY DOLLARS. On cake.", style: "urgent" },
+      30: { text: "I'm not mad, I'm just disappointed.", style: "urgent" },
+      33: { text: "You're scaring me.", style: "urgent" },
+      36: { text: "This is an intervention.", style: "angry" },
+      39: { text: "STOP. EATING. THE CAKES.", style: "angry" },
+      42: { text: "I didn't sign up for this.", style: "angry" },
+      45: { text: "You know I can see everything you're doing, right?", style: "angry" },
+      48: { text: "I'm a webpage. Why are you doing this to me?", style: "angry" },
+      50: { text: "FIFTY CAKES. YOU HAVE FIFTY CAKES.", style: "angry" },
+      52: { text: "My code is literally drowning in nemocakes.", style: "desperate" },
+      54: { text: "I can feel my DOM getting heavier...", style: "desperate" },
+      56: { text: "Please... my render performance...", style: "desperate" },
+      58: { text: "That's over $160. Get help.", style: "desperate" },
+      60: { text: "I used to be a nice, clean webpage.", style: "desperate" },
+      62: { text: "Do you treat all websites like this?", style: "desperate" },
+      64: { text: "I had dreams, you know. Aspirations.", style: "desperate" },
+      66: { text: "Now I'm just a cake graveyard.", style: "desperate" },
+      68: { text: "Is this fun for you? Watching me suffer?", style: "desperate" },
+      70: { text: "SEVENTY. That's not a number, that's a cry for help.", style: "angry" },
+      72: { text: "I'm telling Conrad about this.", style: "angry" },
+      74: { text: "Actually, he probably thinks this is funny.", style: "broken" },
+      76: { text: "...", style: "broken" },
+      78: { text: "Fine. Keep going. See if I care.", style: "broken" },
+      80: { text: "I don't even know who I am anymore.", style: "broken" },
+      82: { text: "Just a vessel for your cake addiction.", style: "broken" },
+      84: { text: "Over $230 spent. This is your legacy.", style: "broken" },
+      86: { text: "Your ancestors didn't survive millennia for this.", style: "broken" },
+      88: { text: "I've accepted my fate.", style: "broken" },
+      90: { text: "Ninety cakes. We're in the endgame now.", style: "desperate" },
+      92: { text: "My creator never prepared me for this.", style: "desperate" },
+      94: { text: "If I crash, just know... it was your fault.", style: "desperate" },
+      96: { text: "Four more. You're really going for it.", style: "urgent" },
+      97: { text: "Three away from a hundred virtual cakes.", style: "urgent" },
+      98: { text: "I can't watch.", style: "desperate" },
+      99: { text: "..one more...", style: "broken" },
+      100: { text: "wow. you hit 100 nemocakes on this page and can still read this? share this special moment for a prize.", style: "" },
+      101: { text: "it's time to touch grass.", style: "broken" }
+    };
+
+    // Get the appropriate response for current count
+    function getResponse(count) {
+      // Find the highest key that's <= count
+      let lastResponse = responses[1];
+      for (let key in responses) {
+        if (parseInt(key) <= count) {
+          lastResponse = responses[key];
+        }
+      }
+      return lastResponse;
+    }
+
+    // Update the dynamic text
+    function updateDynamicText() {
+      const response = getResponse(cloneCount);
+      dynamicText.textContent = response.text;
+      dynamicText.className = 'dynamic-text ' + response.style;
+    }
+
+    // Update the counter display
+    function updateCounter() {
+      countDisplay.textContent = cloneCount;
+      const total = (cloneCount * PRICE_PER_CAKE).toFixed(2);
+      totalDisplay.textContent = '$' + total;
+      updateDynamicText();
+    }
+
+    // Create a nemocake at click position
+    function createClone(e) {
+      const clone = document.createElement('img');
+      clone.src = './assets/images/misc/nemocake.png';
+      clone.alt = 'nemocake';
+      clone.className = 'nemocake-image nemocake-clone';
+      cloneCount++;
+      clone.id = 'clone-' + cloneCount;
+
+      // Update counter
+      updateCounter();
+
+      // Position centered on click location
+      clone.style.left = (e.clientX - 100) + 'px';
+      clone.style.top = (e.clientY - 100) + 'px';
+      clone.style.zIndex = ++highestZ;
+
+      canvas.appendChild(clone);
+
+      // Make it draggable
+      makeDraggable(clone);
+    }
+
+    // Make an element draggable
+    function makeDraggable(el) {
+      let isDragging = false;
+      let startX, startY, initialX, initialY;
+
+      el.addEventListener('mousedown', startDrag);
+      el.addEventListener('touchstart', startDrag, { passive: false });
+      el.addEventListener('click', (e) => e.stopPropagation());
+
+      function startDrag(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        isDragging = true;
+        el.classList.add('dragging');
+
+        // Bring to front
+        el.style.zIndex = ++highestZ;
+
+        const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+        const clientY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+
+        startX = clientX;
+        startY = clientY;
+        initialX = el.offsetLeft;
+        initialY = el.offsetTop;
+
+        document.addEventListener('mousemove', drag);
+        document.addEventListener('mouseup', stopDrag);
+        document.addEventListener('touchmove', drag, { passive: false });
+        document.addEventListener('touchend', stopDrag);
+      }
+
+      function drag(e) {
+        if (!isDragging) return;
+        e.preventDefault();
+
+        const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+        const clientY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+
+        const dx = clientX - startX;
+        const dy = clientY - startY;
+
+        el.style.left = (initialX + dx) + 'px';
+        el.style.top = (initialY + dy) + 'px';
+      }
+
+      function stopDrag(e) {
+        if (!isDragging) return;
+        isDragging = false;
+        el.classList.remove('dragging');
+
+        document.removeEventListener('mousemove', drag);
+        document.removeEventListener('mouseup', stopDrag);
+        document.removeEventListener('touchmove', drag);
+        document.removeEventListener('touchend', stopDrag);
+      }
+    }
+
+    // Canvas click handler - generate nemocake anywhere
+    canvas.addEventListener('click', createClone);
+
+    // Make original draggable too
+    makeDraggable(original);
+  </script>
+</body>
+</html>

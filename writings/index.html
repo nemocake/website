@@ -334,98 +334,38 @@
         }
       }
 
-      // Try to get writings from SITE_CONFIG first (set by config-loader.js)
-      let writings = [];
-
-      if (window.SITE_CONFIG && window.SITE_CONFIG.writings && window.SITE_CONFIG.writings.length > 0) {
-        writings = window.SITE_CONFIG.writings;
-        console.log('[Writings] Loaded from SITE_CONFIG:', writings.length, 'articles');
-      } else {
-        try {
-          const stored = localStorage.getItem('conradWritings');
-          if (stored) {
-            writings = JSON.parse(stored);
-            console.log('[Writings] Loaded from localStorage:', writings.length, 'articles');
-          }
-        } catch (e) {
-          console.warn('[Writings] Could not load from localStorage');
+      // Load writings from config.json - no fallbacks, no localStorage nonsense
+      function loadWritings() {
+        // If config already loaded, use it
+        if (window.SITE_CONFIG && window.SITE_CONFIG.writings && window.SITE_CONFIG.writings.length > 0) {
+          console.log('[Writings] Loaded from SITE_CONFIG:', window.SITE_CONFIG.writings.length, 'articles');
+          renderWritings(window.SITE_CONFIG.writings);
+          return;
         }
+
+        // Otherwise wait for config to load
+        console.log('[Writings] Waiting for config...');
+        window.addEventListener('configLoaded', (e) => {
+          const config = e.detail;
+          if (config && config.writings && config.writings.length > 0) {
+            console.log('[Writings] Config loaded:', config.writings.length, 'articles');
+            renderWritings(config.writings);
+          } else {
+            console.error('[Writings] Config loaded but no writings found');
+            document.getElementById('writings-articles').innerHTML = '<p class="text-gray-500 font-mono">Failed to load writings from config.json</p>';
+          }
+        });
+
+        // Timeout - if config doesn't load in 5 seconds, show error
+        setTimeout(() => {
+          if (!window.SITE_CONFIG || !window.SITE_CONFIG.writings) {
+            console.error('[Writings] Config failed to load');
+            document.getElementById('writings-articles').innerHTML = '<p class="text-gray-500 font-mono">Failed to load writings from config.json</p>';
+          }
+        }, 5000);
       }
 
-      // Fallback data if nothing loaded
-      if (!writings || writings.length === 0) {
-        console.log('[Writings] Using fallback data');
-        writings = [
-          {
-            id: 'on-collecting',
-            title: 'On Collecting',
-            description: "There's something deeply human about the act of collecting.",
-            date: '2026-01-15',
-            body: [
-              "There's something deeply human about the act of collecting. We gather objects, images, sounds, and ideas not just to possess them, but to create a mirror of ourselves—a curated reflection of who we are and who we aspire to be.",
-              "In the digital age, collecting has transformed. We no longer need physical space to house our treasures. Instead, we bookmark, save, pin, and archive. The constraints have shifted from shelf space to attention span.",
-              "I've been thinking about what it means to collect art in this new landscape—where ownership is fluid, provenance is cryptographic, and the gallery is everywhere."
-            ],
-            quote: "The things we collect tell stories we might not yet know how to tell ourselves."
-          },
-          {
-            id: 'digital-gardens',
-            title: 'Digital Gardens',
-            description: "A website doesn't have to be a publication. It can be a garden.",
-            date: '2026-01-10',
-            body: [
-              "A website doesn't have to be a publication. It can be a garden—a place where ideas grow, evolve, and sometimes wither. Unlike the polished permanence of traditional publishing, a digital garden embraces imperfection and change.",
-              "The metaphor matters. Gardens require tending. They're never \"done.\" You plant seeds without knowing exactly what will bloom. Some ideas need years to mature; others burst forth unexpectedly.",
-              "This space is my garden. Some pages are carefully cultivated; others are wild patches where I've scattered seeds and walked away. Both have their place."
-            ]
-          },
-          {
-            id: 'the-space-between',
-            title: 'The Space Between',
-            description: "The most interesting things happen at the edges.",
-            date: '2025-12-20',
-            body: [
-              "The most interesting things happen at the edges—where art meets technology, where structure meets chaos, where the familiar dissolves into the unknown. I've always been drawn to these liminal spaces.",
-              "Working in technology while caring deeply about aesthetics creates a productive tension. Code is precise; art is ambiguous. Logic demands consistency; creativity thrives on contradiction. Living in both worlds means constantly translating between them.",
-              "Maybe that's what this whole project is about—finding ways to hold these contradictions together, to build bridges across the gaps."
-            ]
-          },
-          {
-            id: 'tools-for-thought',
-            title: 'Tools for Thought',
-            description: "The tools we use shape how we think.",
-            date: '2025-12-15',
-            body: [
-              "The tools we use shape how we think. A notebook invites linearity; a canvas suggests space. Software, despite its flexibility, carries its own biases—the assumptions of its creators encoded in every menu and shortcut.",
-              "I've been experimenting with building my own tools. Not because existing ones are inadequate, but because the act of building reveals something about how I actually think. Each design decision forces clarity about what matters.",
-              "The best tools disappear in use. They become extensions of intention rather than obstacles to it. That's the aspiration, anyway."
-            ]
-          },
-          {
-            id: 'learning-in-public',
-            title: 'Learning in Public',
-            description: "There's vulnerability in sharing work before it's ready.",
-            date: '2025-11-28',
-            body: [
-              "There's vulnerability in sharing work before it's ready. The temptation to wait—until the idea is fully formed, until the code is clean, until you really understand what you're doing—can become a permanent delay.",
-              "Learning in public is an antidote to that perfectionism. It means showing the messy middle, the wrong turns, the half-formed thoughts. It means being okay with being wrong in front of others.",
-              "The unexpected benefit: when you learn in public, you often find others on the same journey. The loneliness of figuring things out dissolves into something more like conversation."
-            ]
-          }
-        ];
-      }
-
-      // Render initial data
-      renderWritings(writings);
-
-      // Listen for config updates from config-loader.js
-      window.addEventListener('configLoaded', (e) => {
-        const config = e.detail;
-        if (config && config.writings && config.writings.length > 0) {
-          console.log('[Writings] Config updated, re-rendering with', config.writings.length, 'articles');
-          renderWritings(config.writings);
-        }
-      });
+      loadWritings();
 
       function initScrollEffects() {
         const navLinks = document.querySelectorAll('.nav-link-item');

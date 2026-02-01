@@ -1,0 +1,628 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>con.rad | v3.0</title>
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Space+Grotesk:wght@300..700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'mono': ['"JetBrains Mono"', 'monospace'],
+                        'sans': ['"Space Grotesk"', 'sans-serif'],
+                        'display': ['"Syne"', 'sans-serif'],
+                    },
+                    colors: {
+                        'acid': '#ccff00',
+                        'neon-blue': '#00f3ff',
+                        'void': '#050505',
+                        'glass': 'rgba(255, 255, 255, 0.05)',
+                        'glass-dark': 'rgba(0, 0, 0, 0.6)',
+                        'border-dim': 'rgba(255, 255, 255, 0.1)',
+                    },
+                    animation: {
+                        'spin-slow': 'spin 12s linear infinite',
+                        'blink': 'blink 1s step-end infinite',
+                        'marquee': 'marquee 25s linear infinite',
+                        'glitch': 'glitch 1s linear infinite',
+                    },
+                    keyframes: {
+                        blink: {
+                            '0%, 100%': { opacity: '1' },
+                            '50%': { opacity: '0' },
+                        },
+                        marquee: {
+                            '0%': { transform: 'translateX(0%)' },
+                            '100%': { transform: 'translateX(-100%)' },
+                        },
+                        glitch: {
+                            '2%, 64%': { transform: 'translate(2px,0) skew(0deg)' },
+                            '4%, 60%': { transform: 'translate(-2px,0) skew(0deg)' },
+                            '62%': { transform: 'translate(0,0) skew(5deg)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ccff00;
+        }
+
+        
+        .scanlines {
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.1) 50%,
+                rgba(0,0,0,0.1)
+            );
+            background-size: 100% 4px;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.6;
+        }
+
+        
+        .noise {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        
+        ::selection {
+            background: #ccff00;
+            color: #000;
+        }
+
+        
+        .glass-panel {
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .text-outline {
+            -webkit-text-stroke: 1px rgba(255,255,255,0.2);
+            color: transparent;
+        }
+        
+        .hover-glitch:hover {
+            animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
+            color: #ccff00;
+        }
+
+        
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-void text-gray-200 antialiased overflow-x-hidden selection:bg-acid selection:text-black">
+
+    
+    <div class="fixed inset-0 z-0">
+        
+        <iframe 
+            id="art-frame"
+            src="https://cdn.feralfileassets.com/previews/500ccc6e-d7ad-443f-a9df-0bf709b3b3c9/1645052262/index.html" 
+            class="w-full h-full border-none opacity-60 grayscale-[20%] transition-opacity duration-700 ease-in-out"
+            allow="autoplay">
+        </iframe>
+        <div class="absolute inset-0 bg-void/30 pointer-events-none"></div>
+    </div>
+
+    
+    <div class="scanlines"></div>
+    <div class="noise"></div>
+
+    
+    <div id="intro" class="fixed inset-0 z-[100] bg-void flex flex-col items-center justify-center transition-opacity duration-1000 pointer-events-none">
+        <div class="text-acid font-mono text-xs mb-2 animate-pulse">SYSTEM_BOOT_SEQUENCE</div>
+        <div class="text-6xl font-display font-bold tracking-tighter mix-blend-difference text-white mb-4">CON.RAD</div>
+        <div class="w-64 h-1 bg-gray-900 rounded overflow-hidden">
+            <div id="loader" class="h-full bg-acid w-0 transition-all duration-[1500ms] ease-out"></div>
+        </div>
+    </div>
+
+    
+    <header class="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex justify-between items-start pointer-events-none mix-blend-difference text-white">
+        <div class="pointer-events-auto group cursor-pointer">
+            <h1 class="font-display font-bold text-2xl tracking-tighter leading-none group-hover:text-acid transition-colors">con.rad</h1>
+            <p class="font-mono text-[10px] opacity-70 tracking-widest mt-1">BUILDING CURIOSITY...</p>
+        </div>
+
+        <nav class="pointer-events-auto hidden md:flex items-center gap-8 font-mono text-xs tracking-wider">
+            <a href="#writings" class="hover:text-acid hover:underline underline-offset-4 decoration-acid decoration-1">[ WRITINGS ]</a>
+            <a href="#collection" class="hover:text-acid hover:underline underline-offset-4 decoration-acid decoration-1">[ COLLECTION ]</a>
+            <a href="#projects" class="hover:text-acid hover:underline underline-offset-4 decoration-acid decoration-1">[ PROJECTS ]</a>
+            <a href="#inspirations" class="hover:text-acid hover:underline underline-offset-4 decoration-acid decoration-1">[ ARE.NA ]</a>
+            <span class="w-2 h-2 rounded-full bg-acid animate-pulse shadow-[0_0_10px_#ccff00]"></span>
+        </nav>
+
+        
+        <button class="md:hidden pointer-events-auto text-acid">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </button>
+    </header>
+
+    
+    <main class="relative z-10 pt-32 pb-48 px-4 md:px-0 max-w-7xl mx-auto flex flex-col md:flex-row gap-8">
+        
+        
+        <aside class="md:w-1/4 md:sticky md:top-32 h-fit space-y-6">
+            <div class="glass-panel p-6 rounded-sm">
+                <div class="relative w-full aspect-square mb-4 overflow-hidden border border-border-dim group">
+                    <img src="https://i.pravatar.cc/300?img=11" alt="Profile" class="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 transition-all duration-500">
+                    <div class="absolute inset-0 bg-acid/10 mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    
+                    <div class="absolute top-2 right-2 text-[10px] font-mono bg-black text-white px-1">IMG_001</div>
+                </div>
+                
+                <h2 class="font-display font-bold text-xl mb-2">Conrad House</h2>
+                <div class="font-mono text-xs text-gray-400 mb-4 leading-relaxed">
+                    <span class="text-acid">></span> Chronically online.<br>
+                    <span class="text-acid">></span> Techno-curious.<br>
+                    <span class="text-acid">></span> Art junky.
+                </div>
+
+                <div class="border-t border-dashed border-gray-700 my-4"></div>
+
+                <div class="font-mono text-[10px] uppercase tracking-wider text-gray-500 space-y-2">
+                    <div class="flex justify-between">
+                        <span>Status</span>
+                        <span class="text-green-400">● Online</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Location</span>
+                        <span>Cyberspace</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Local Time</span>
+                        <span id="clock">00:00:00</span>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="glass-panel p-4 md:hidden">
+                <div class="grid grid-cols-2 gap-2 text-center font-mono text-xs">
+                    <a href="#writings" class="p-2 border border-border-dim hover:bg-white/10">Writings</a>
+                    <a href="#collection" class="p-2 border border-border-dim hover:bg-white/10">Collection</a>
+                    <a href="#projects" class="p-2 border border-border-dim hover:bg-white/10">Projects</a>
+                    <a href="#inspirations" class="p-2 border border-border-dim hover:bg-white/10">Inspirations</a>
+                </div>
+            </div>
+        </aside>
+
+        
+        <div class="md:w-3/4 space-y-24">
+
+            
+            <section id="writings" class="relative group">
+                <div class="flex items-center gap-4 mb-8">
+                    <span class="font-mono text-acid text-sm">01.</span>
+                    <h2 class="font-display text-4xl font-bold uppercase">Writings</h2>
+                    <div class="h-[1px] flex-grow bg-gradient-to-r from-acid to-transparent opacity-50"></div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-4">
+                    
+                    <article class="glass-panel p-6 hover:bg-white/5 transition-all group/card cursor-pointer border-l-2 border-l-transparent hover:border-l-acid">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="font-mono text-xs text-gray-500 border border-gray-800 px-2 py-0.5">TXT</span>
+                            <span class="font-mono text-xs text-gray-500">2026-01-15</span>
+                        </div>
+                        <h3 class="font-display text-xl mb-2 group-hover/card:text-acid transition-colors">On Collecting</h3>
+                        <p class="font-mono text-xs text-gray-400 leading-relaxed line-clamp-3">
+                            There's something deeply human about the act of collecting. We gather objects, images, sounds, and ideas not just to possess them, but to create a mirror of ourselves.
+                        </p>
+                    </article>
+
+                    
+                    <article class="glass-panel p-6 hover:bg-white/5 transition-all group/card cursor-pointer border-l-2 border-l-transparent hover:border-l-acid">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="font-mono text-xs text-gray-500 border border-gray-800 px-2 py-0.5">TXT</span>
+                            <span class="font-mono text-xs text-gray-500">2026-01-10</span>
+                        </div>
+                        <h3 class="font-display text-xl mb-2 group-hover/card:text-acid transition-colors">Digital Gardens</h3>
+                        <p class="font-mono text-xs text-gray-400 leading-relaxed line-clamp-3">
+                            A website doesn't have to be a publication. It can be a garden—a place where ideas grow, evolve, and sometimes wither. Unlike the polished permanence...
+                        </p>
+                    </article>
+
+                     
+                     <article class="glass-panel p-6 hover:bg-white/5 transition-all group/card cursor-pointer border-l-2 border-l-transparent hover:border-l-acid">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="font-mono text-xs text-gray-500 border border-gray-800 px-2 py-0.5">TXT</span>
+                            <span class="font-mono text-xs text-gray-500">2025-12-20</span>
+                        </div>
+                        <h3 class="font-display text-xl mb-2 group-hover/card:text-acid transition-colors">The Space Between</h3>
+                        <p class="font-mono text-xs text-gray-400 leading-relaxed line-clamp-3">
+                            The most interesting things happen at the edges—where art meets technology, where structure meets chaos. I've always been drawn to these liminal spaces.
+                        </p>
+                    </article>
+
+                    
+                    <a href="#" class="glass-panel p-6 flex flex-col items-center justify-center gap-2 hover:bg-acid hover:text-black transition-all group/all">
+                        <span class="font-mono text-4xl group-hover/all:rotate-90 transition-transform">→</span>
+                        <span class="font-mono text-xs uppercase tracking-widest">Archive.zip</span>
+                    </a>
+                </div>
+            </section>
+
+            
+            <section id="collection">
+                <div class="flex items-center gap-4 mb-8">
+                    <span class="font-mono text-acid text-sm">02.</span>
+                    <h2 class="font-display text-4xl font-bold uppercase">Collection</h2>
+                    <div class="h-[1px] flex-grow bg-gradient-to-r from-acid to-transparent opacity-50"></div>
+                </div>
+
+                
+                <div class="relative w-full overflow-hidden glass-panel p-1">
+                    <div class="flex overflow-x-auto gap-4 p-4 no-scrollbar scroll-smooth">
+                        
+                        
+                        <div class="flex-none w-64 aspect-[4/5] relative group cursor-pointer overflow-hidden border border-border-dim">
+                            <img src="https://ipfs.io/ipfs/QmTdTi3ctvT1Npcp6eKDuN1notyZoVJuTYK6iRivcKpW8V" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
+                            <div class="absolute bottom-0 left-0 w-full p-4 transform translate-y-2 group-hover:translate-y-0 transition-transform">
+                                <div class="font-mono text-[10px] text-acid mb-1">DIGITAL ART</div>
+                                <h4 class="font-display text-lg leading-tight text-white">The Starry Night</h4>
+                                <p class="font-mono text-[10px] text-gray-400">Helena Sarin</p>
+                            </div>
+                        </div>
+
+                         
+                         <div class="flex-none w-64 aspect-[4/5] relative group cursor-pointer overflow-hidden border border-border-dim">
+                            <img src="https://ipfs.io/ipfs/QmQV57honsnKiWnsgRikU43WL5h4tk2eSi9QcsaphBiSsJ" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
+                            <div class="absolute bottom-0 left-0 w-full p-4 transform translate-y-2 group-hover:translate-y-0 transition-transform">
+                                <div class="font-mono text-[10px] text-acid mb-1">DIGITAL ART</div>
+                                <h4 class="font-display text-lg leading-tight text-white">CSRSNT-ZAAI</h4>
+                                <p class="font-mono text-[10px] text-gray-400">Casey Reas</p>
+                            </div>
+                        </div>
+
+                         
+                         <div class="flex-none w-64 aspect-[4/5] relative group cursor-pointer overflow-hidden border border-border-dim">
+                            <img src="https://ipfs.io/ipfs/QmSRtLFUF39tsj639EsAk1uZKRCDvYMGHcCQwsqdqpiXMs" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
+                            <div class="absolute bottom-0 left-0 w-full p-4 transform translate-y-2 group-hover:translate-y-0 transition-transform">
+                                <div class="font-mono text-[10px] text-acid mb-1">DIGITAL ART</div>
+                                <h4 class="font-display text-lg leading-tight text-white">Lushtemples</h4>
+                                <p class="font-mono text-[10px] text-gray-400">Zancan</p>
+                            </div>
+                        </div>
+
+                        
+                        <div class="flex-none w-64 aspect-[4/5] border border-dashed border-gray-700 flex items-center justify-center group hover:border-acid transition-colors cursor-pointer">
+                            <div class="text-center">
+                                <span class="font-display text-2xl group-hover:text-acid">+</span>
+                                <div class="font-mono text-xs mt-2">View Full Collection</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            
+            <section id="projects">
+                <div class="flex items-center gap-4 mb-8">
+                    <span class="font-mono text-acid text-sm">03.</span>
+                    <h2 class="font-display text-4xl font-bold uppercase">Building</h2>
+                    <div class="h-[1px] flex-grow bg-gradient-to-r from-acid to-transparent opacity-50"></div>
+                </div>
+
+                <div class="space-y-4">
+                    
+                    <div class="glass-panel p-5 flex flex-col md:flex-row md:items-center justify-between group hover:border-white/30 transition-all">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-3 mb-2">
+                                <h3 class="font-mono font-bold text-lg group-hover:text-acid">generative-art-boilerplate</h3>
+                                <span class="text-[10px] font-mono border border-gray-700 px-1.5 py-0.5 rounded text-gray-400">TypeScript</span>
+                            </div>
+                            <p class="font-sans text-sm text-gray-400 max-w-xl">A minimal template for creating canvas-based generative art with hot-reloading.</p>
+                        </div>
+                        <div class="flex items-center gap-4 mt-4 md:mt-0 font-mono text-xs text-gray-500">
+                            <div class="flex items-center gap-1">★ 124</div>
+                            <div class="flex items-center gap-1">⑂ 23</div>
+                            <a href="#" class="text-white hover:text-acid hover:underline">::git_clone</a>
+                        </div>
+                    </div>
+
+                    
+                    <div class="glass-panel p-5 flex flex-col md:flex-row md:items-center justify-between group hover:border-white/30 transition-all">
+                        <div class="flex-1">
+                            <div class="flex items-center gap-3 mb-2">
+                                <h3 class="font-mono font-bold text-lg group-hover:text-acid">fxhash-params</h3>
+                                <span class="text-[10px] font-mono border border-gray-700 px-1.5 py-0.5 rounded text-gray-400">JavaScript</span>
+                            </div>
+                            <p class="font-sans text-sm text-gray-400 max-w-xl">Helper library to manage URL parameters for generative tokens on Tezos.</p>
+                        </div>
+                        <div class="flex items-center gap-4 mt-4 md:mt-0 font-mono text-xs text-gray-500">
+                            <div class="flex items-center gap-1">★ 89</div>
+                            <div class="flex items-center gap-1">⑂ 12</div>
+                            <a href="#" class="text-white hover:text-acid hover:underline">::git_clone</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+             
+             <section id="inspirations">
+                <div class="flex items-center gap-4 mb-8">
+                    <span class="font-mono text-acid text-sm">04.</span>
+                    <h2 class="font-display text-4xl font-bold uppercase">Visually Intriguing</h2>
+                    <div class="h-[1px] flex-grow bg-gradient-to-r from-acid to-transparent opacity-50"></div>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+                    
+                    <div class="aspect-square bg-white/5 border border-white/5 p-2 hover:bg-white/10 transition-colors">
+                        <div class="w-full h-full bg-gray-800 relative overflow-hidden group">
+                            <img src="https://assets.objkt.media/file/assets-003/KT1RJ6PbjHpwc3M5rw5s2Nbmefwbuwbdxton/124016/thumb288" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                        </div>
+                    </div>
+                    <div class="aspect-square bg-white/5 border border-white/5 p-2 hover:bg-white/10 transition-colors">
+                        <div class="w-full h-full bg-gray-800 relative overflow-hidden group">
+                            <img src="https://i2c.seadn.io/shape/0xbb8f2711bd4bc98223990267f771e97d2d9bc167/e1f7e0b99bfceb22880207a3b9c8b9/b0e1f7e0b99bfceb22880207a3b9c8b9.png?w=350" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                        </div>
+                    </div>
+                    <div class="aspect-square bg-white/5 border border-white/5 p-2 hover:bg-white/10 transition-colors">
+                        <div class="w-full h-full bg-gray-800 relative overflow-hidden group">
+                            <img src="https://assets.objkt.media/file/assets-003/KT1ADXimsk468U1kZfuxiSQuncDsRftPFKrk/24/thumb288" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity">
+                        </div>
+                    </div>
+                    <a href="https://www.are.na/conrad-house/visually-intriguing" target="_blank" class="aspect-square border border-dashed border-gray-600 flex flex-col items-center justify-center hover:bg-acid hover:text-black hover:border-solid transition-all">
+                        <span class="font-display font-bold">are.na/channel</span>
+                        <span class="font-mono text-xs">-> connect</span>
+                    </a>
+                </div>
+             </section>
+
+        </div>
+    </main>
+
+    
+    <footer class="relative z-10 border-t border-white/10 bg-black/80 backdrop-blur-md mt-12 py-12">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-end gap-6">
+            <div>
+                <h3 class="font-display text-2xl mb-2">con.rad</h3>
+                <p class="font-mono text-xs text-gray-500">© 2026 Conrad House. Built for the web.</p>
+            </div>
+            <div class="flex gap-6 font-mono text-xs">
+                <a href="mailto:hello@conrad.house" class="hover:text-acid hover:underline">EMAIL</a>
+                <a href="#" class="hover:text-acid hover:underline">GITHUB</a>
+                <a href="#" class="hover:text-acid hover:underline">TWITTER</a>
+            </div>
+        </div>
+    </footer>
+
+
+    
+
+    
+    <div id="y2k-player" class="fixed bottom-6 left-6 z-50 w-72 glass-panel border-t-2 border-t-white/20 shadow-2xl transition-transform duration-300 transform translate-y-0 md:translate-y-0">
+        
+        <div class="bg-gradient-to-r from-gray-800 to-gray-900 p-1 flex justify-between items-center cursor-move border-b border-black">
+            <div class="flex gap-1 ml-1">
+                <div class="w-2 h-2 rounded-full bg-red-500"></div>
+                <div class="w-2 h-2 rounded-full bg-yellow-500"></div>
+                <div class="w-2 h-2 rounded-full bg-green-500"></div>
+            </div>
+            <div class="font-mono text-[9px] uppercase tracking-widest text-gray-400 mr-2">Winamp_v2.9</div>
+        </div>
+        
+        
+        <div class="p-4 bg-void/90">
+            <div class="bg-black border-2 border-gray-700 rounded-sm p-2 mb-3 shadow-[inset_0_0_10px_rgba(0,0,0,1)]">
+                <div class="font-mono text-acid text-xs whitespace-nowrap overflow-hidden">
+                    <div class="animate-marquee inline-block">
+                         *** NOW PLAYING: Aphex Twin - Windowlicker *** [03:45] *** 
+                    </div>
+                </div>
+                <div class="flex justify-between font-mono text-[10px] text-acid mt-1">
+                    <span>128kbps</span>
+                    <span class="animate-pulse">STEREO</span>
+                </div>
+            </div>
+
+            
+            <div class="flex items-end h-8 gap-[2px] mb-3 opacity-80">
+                <div class="w-full bg-acid/20 h-full relative overflow-hidden">
+                    <div class="absolute bottom-0 w-[10%] left-[0%] bg-acid h-[40%] animate-pulse"></div>
+                    <div class="absolute bottom-0 w-[10%] left-[12%] bg-acid h-[70%] animate-pulse" style="animation-delay: 0.1s"></div>
+                    <div class="absolute bottom-0 w-[10%] left-[24%] bg-acid h-[30%] animate-pulse" style="animation-delay: 0.3s"></div>
+                    <div class="absolute bottom-0 w-[10%] left-[36%] bg-acid h-[90%] animate-pulse" style="animation-delay: 0.05s"></div>
+                    <div class="absolute bottom-0 w-[10%] left-[48%] bg-acid h-[50%] animate-pulse" style="animation-delay: 0.2s"></div>
+                    <div class="absolute bottom-0 w-[10%] left-[60%] bg-acid h-[80%] animate-pulse" style="animation-delay: 0.4s"></div>
+                    <div class="absolute bottom-0 w-[10%] left-[72%] bg-acid h-[20%] animate-pulse" style="animation-delay: 0.15s"></div>
+                    <div class="absolute bottom-0 w-[10%] left-[84%] bg-acid h-[60%] animate-pulse" style="animation-delay: 0.25s"></div>
+                </div>
+            </div>
+
+            
+            <div class="flex justify-between items-center">
+                <div class="flex gap-2">
+                    <button class="text-gray-400 hover:text-white text-xs">⏮</button>
+                    <button class="text-acid hover:text-white text-base">▶</button>
+                    <button class="text-gray-400 hover:text-white text-xs">⏭</button>
+                    <button class="text-gray-400 hover:text-white text-xs">⏹</button>
+                </div>
+                
+                <div class="w-16 h-1 bg-gray-700 rounded-full">
+                    <div class="w-3/4 h-full bg-acid rounded-full"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="y2k-yt-player" class="hidden"></div>
+    </div>
+
+    
+    <div class="fixed bottom-6 right-6 z-50 text-right pointer-events-none mix-blend-difference text-white hidden md:block">
+        <div class="font-mono text-[9px] uppercase tracking-widest opacity-70 mb-1">Background Asset</div>
+        <div class="font-display font-bold text-lg">36 Points</div>
+        <div class="font-mono text-xs opacity-80">Sage Jenson, 2022</div>
+        <div class="mt-2 pointer-events-auto">
+             <button class="text-[10px] border border-white/40 px-2 py-1 hover:bg-white hover:text-black transition-colors" onclick="changeArt()">
+                [ REFRESH_ASSET ]
+             </button>
+        </div>
+    </div>
+
+    
+    <div class="fixed top-1/2 right-0 -translate-y-1/2 z-50 translate-x-[calc(100%-24px)] hover:translate-x-0 transition-transform duration-300">
+        <button class="glass-panel p-3 flex items-center gap-3 rounded-l-md group">
+            <span class="writing-vertical-lr font-mono text-[10px] tracking-widest text-gray-500 group-hover:text-acid rotate-180">ADMIN_PANEL</span>
+            <div class="w-64 p-2 text-left">
+                <h4 class="font-mono text-acid text-xs border-b border-gray-700 pb-2 mb-2">CMS CONFIG</h4>
+                <div class="space-y-2">
+                    <input type="text" placeholder="Title..." class="w-full bg-black/50 border border-gray-700 p-1 text-xs text-white font-mono">
+                    <button class="w-full bg-white/10 text-xs py-1 hover:bg-acid hover:text-black font-mono">SAVE_CHANGES</button>
+                </div>
+            </div>
+        </button>
+    </div>
+
+    
+    <div class="fixed top-1/2 left-0 -translate-y-1/2 z-50 -translate-x-[calc(100%-4px)] hover:translate-x-0 transition-transform duration-300">
+         <div class="glass-panel p-2 rounded-r-md">
+             <div class="w-1 h-12 bg-gray-600 rounded-full mx-auto mb-2"></div>
+         </div>
+    </div>
+
+    
+    <script>
+        
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            const intro = document.getElementById('intro');
+            
+            
+            setTimeout(() => {
+                loader.classList.remove('w-0');
+                loader.classList.add('w-full');
+            }, 100);
+
+            
+            setTimeout(() => {
+                intro.style.opacity = '0';
+                setTimeout(() => {
+                    intro.style.display = 'none';
+                }, 1000);
+            }, 1800);
+        });
+
+        
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', { 
+                hour12: false, 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit' 
+            });
+            document.getElementById('clock').textContent = timeString;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        
+        const artworks = [
+            "https://cdn.feralfileassets.com/previews/500ccc6e-d7ad-443f-a9df-0bf709b3b3c9/1645052262/index.html",
+            "https://ipfs.io/ipfs/QmQV57honsnKiWnsgRikU43WL5h4tk2eSi9QcsaphBiSsJ" 
+        ];
+        
+        function changeArt() {
+            const frame = document.getElementById('art-frame');
+            frame.style.opacity = '0';
+            
+            setTimeout(() => {
+                
+                
+                frame.style.opacity = '0.6';
+            }, 500);
+        }
+
+        
+        const player = document.getElementById('y2k-player');
+        let isDragging = false;
+        let currentX;
+        let currentY;
+        let initialX;
+        let initialY;
+        let xOffset = 0;
+        let yOffset = 0;
+
+        player.addEventListener("mousedown", dragStart);
+        document.addEventListener("mouseup", dragEnd);
+        document.addEventListener("mousemove", drag);
+
+        function dragStart(e) {
+            initialX = e.clientX - xOffset;
+            initialY = e.clientY - yOffset;
+            if (e.target.closest('.cursor-move')) {
+                isDragging = true;
+            }
+        }
+
+        function dragEnd(e) {
+            initialX = currentX;
+            initialY = currentY;
+            isDragging = false;
+        }
+
+        function drag(e) {
+            if (isDragging) {
+                e.preventDefault();
+                currentX = e.clientX - initialX;
+                currentY = e.clientY - initialY;
+                xOffset = currentX;
+                yOffset = currentY;
+                setTranslate(currentX, currentY, player);
+            }
+        }
+
+        function setTranslate(xPos, yPos, el) {
+            el.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
+        }
+    </script>
+</body>
+</html>
