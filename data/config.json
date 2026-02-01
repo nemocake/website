@@ -162,6 +162,42 @@
       ]
     }
   ],
+  "projects": {
+    "website": {
+      "description": "my personal corner of the web",
+      "details": [
+        "a vanilla html/css/js site with tailwind for styling. designed around a single config.json that powers all content across pages.",
+        "features a collection gallery for art, a writings section with inline quotes, github integration for projects, and are.na pulls for inspiration. dark mode, scanlines, glass panels - the whole aesthetic."
+      ],
+      "featured": true
+    },
+    "pantry-planner": {
+      "description": "meal planning and grocery management",
+      "details": [
+        "a project born from the dread of maintaining healthy eating habits. i wanted a simple tool that could take a list of available ingredients in house and recommend dishes i could instantly make.",
+        "this expanded into working with recipes i was partially missing ingredients for, to help build shopping lists quick without having to rack your brain on what's missing only to get back from the grocery store realizing you needed three other things.",
+        "eventually built in a meal planning section that allows you to catalogue meals you want to eat for the week, generates a shopping list of ingredients you need to fulfill those weekly meals. added specific diet restriction filters to help maintain allergy, calorie or other nutritional needs."
+      ]
+    },
+    "Sketch-to-site": {
+      "description": "browser-based wireframe to website builder",
+      "details": [
+        "draw layouts and components in a sketch interface, then export to clean html/css. a tool for rapid prototyping without leaving the browser."
+      ]
+    },
+    "latent-sync": {
+      "private": true,
+      "title": "Better Persistent Memory System",
+      "description": "transforming claude from a temporary contractor into a long-term partner",
+      "details": [
+        "traditional coding sessions are ephemeral; once the context window fills up or the chat resets, the \"intellectual momentum\" is lost. latent sync transforms claude from a temporary contractor into a long-term partner by creating a feedback loop between active development (NOW.md) and core project rules (CLAUDE.md).",
+        "the machine's \"memory\" is a living asset you curate, better manage your Claude.md file."
+      ],
+      "tags": ["claude", "memory", "productivity"],
+      "status": "in development",
+      "featured": true
+    }
+  },
   "inspirations": {
     "channel": "visually-intriguing",
     "channelUrl": "https://www.are.na/conrad-house/visually-intriguing",
