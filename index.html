@@ -270,11 +270,11 @@
                     </div>
                     <div class="flex justify-between">
                         <span>Location</span>
-                        <span>Cyberspace</span>
+                        <span>LATENTSPACE</span>
                     </div>
                     <div class="flex justify-between">
                         <span>Local Time</span>
-                        <span id="clock">00:00:00</span>
+                        <span id="clock">00:00:00 PST</span>
                     </div>
                 </div>
             </div>
@@ -478,16 +478,17 @@
             }, 1800);
         });
 
-        // Clock
+        // Clock - always PST
         function updateClock() {
             const now = new Date();
             const timeString = now.toLocaleTimeString('en-US', {
                 hour12: false,
                 hour: '2-digit',
                 minute: '2-digit',
-                second: '2-digit'
+                second: '2-digit',
+                timeZone: 'America/Los_Angeles'
             });
-            document.getElementById('clock').textContent = timeString;
+            document.getElementById('clock').textContent = timeString + ' PST';
         }
         setInterval(updateClock, 1000);
         updateClock();
