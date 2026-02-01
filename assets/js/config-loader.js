@@ -21,28 +21,26 @@
     window.SITE_CONFIG = {};
   }
 
-  // Determine the base path based on current page location
-  function getBasePath() {
-    const path = window.location.pathname;
-
-    // Handle Windows file paths and various server configurations
-    // Normalize path separators
-    const normalizedPath = path.replace(/\\/g, '/');
-
-    // Check if we're at the root (index.html or just /)
-    if (normalizedPath === '/' ||
-        normalizedPath.endsWith('/index.html') && normalizedPath.split('/').filter(Boolean).length <= 1) {
-      return './';
+  // Get the base URL for the site (handles GitHub Pages repo paths)
+  function getConfigUrl() {
+    // Get the script's own URL to determine the site root
+    const scripts = document.getElementsByTagName('script');
+    for (let script of scripts) {
+      if (script.src && script.src.includes('config-loader.js')) {
+        // Script is at /assets/js/config-loader.js, so go up 2 levels for site root
+        const scriptUrl = new URL(script.src);
+        const pathParts = scriptUrl.pathname.split('/');
+        // Remove 'assets', 'js', 'config-loader.js' (3 parts) to get site root
+        const siteRoot = pathParts.slice(0, -3).join('/') || '/';
+        return siteRoot + '/data/config.json';
+      }
     }
 
-    // Count directory segments after the domain root
-    // Remove trailing filename if present
-    const pathWithoutFile = normalizedPath.replace(/\/[^\/]*\.[^\/]*$/, '');
-    const segments = pathWithoutFile.split('/').filter(Boolean);
-
-    // For paths like /writings/index.html, we need to go up one level
-    if (segments.length === 0) return './';
-    return '../'.repeat(segments.length);
+    // Fallback: try relative from current page
+    const path = window.location.pathname;
+    const depth = (path.match(/\//g) || []).length - 1;
+    if (depth <= 1) return './data/config.json';
+    return '../'.repeat(depth - 1) + 'data/config.json';
   }
 
   // Load config from JSON file (updates the existing SITE_CONFIG)
@@ -55,9 +53,7 @@
       return window.SITE_CONFIG;
     }
 
-    const basePath = getBasePath();
-    const configUrl = basePath + 'data/config.json';
-
+    const configUrl = getConfigUrl();
     console.log('[Config Loader] Fetching from:', configUrl);
 
     try {
