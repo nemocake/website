@@ -254,14 +254,19 @@
         // Update article count
         document.getElementById('article-count').textContent = writings.length;
 
-        // Update last updated date
-        const latestDate = new Date(writings[0].date);
+        // Update last updated date - find most recent and parse as local time
+        const dates = writings.map(w => {
+          const [year, month, day] = w.date.split('-').map(Number);
+          return new Date(year, month - 1, day);
+        });
+        const latestDate = new Date(Math.max(...dates));
         document.getElementById('last-updated').textContent = latestDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
 
-        // Format date helper
+        // Format date helper (Month Day, Year) - parse as local to avoid timezone shift
         const formatDate = (dateStr) => {
-          const date = new Date(dateStr);
-          return date.toISOString().split('T')[0];
+          const [year, month, day] = dateStr.split('-').map(Number);
+          const date = new Date(year, month - 1, day);
+          return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
         };
 
         // Render navigation
@@ -278,7 +283,16 @@
         // Render articles
         const articlesContainer = document.getElementById('writings-articles');
         articlesContainer.innerHTML = writings.map((item, index) => {
-          const bodyHtml = item.body.map(p => `<p class="mb-6 last:mb-0">${p}</p>`).join('');
+          // Support mixed content: strings become paragraphs, objects render by type
+          const bodyHtml = item.body.map(p => {
+            if (typeof p === 'string') {
+              return `<p class="mb-6 last:mb-0">${p}</p>`;
+            } else if (p.type === 'quote') {
+              return `<blockquote class="my-8 pl-6 border-l-2 border-acid/50 italic text-gray-400">"${p.text}"</blockquote>`;
+            }
+            return '';
+          }).join('');
+          // Legacy quote field (renders at end if present)
           const quoteHtml = item.quote ? `
             <blockquote class="my-8 pl-6 border-l-2 border-acid/50 italic text-gray-400">
               "${item.quote}"

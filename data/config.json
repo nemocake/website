@@ -122,59 +122,43 @@
   ],
   "writings": [
     {
-      "id": "on-collecting",
-      "title": "On Collecting",
-      "description": "There's something deeply human about the act of collecting. We gather objects, images, sounds, and ideas not just to possess them, but to create a mirror of ourselves.",
-      "date": "2026-01-15",
+      "id": "changing-tools",
+      "title": "changing tools",
+      "description": "The evolution of the syntax labor to intent engineering.",
+      "date": "2026-01-28",
       "body": [
-        "There's something deeply human about the act of collecting. We gather objects, images, sounds, and ideas not just to possess them, but to create a mirror of ourselves—a curated reflection of who we are and who we aspire to be.",
-        "In the digital age, collecting has transformed. We no longer need physical space to house our treasures. Instead, we bookmark, save, pin, and archive. The constraints have shifted from shelf space to attention span.",
-        "I've been thinking about what it means to collect art in this new landscape—where ownership is fluid, provenance is cryptographic, and the gallery is everywhere."
-      ],
-      "quote": "The things we collect tell stories we might not yet know how to tell ourselves."
-    },
-    {
-      "id": "digital-gardens",
-      "title": "Digital Gardens",
-      "description": "A website doesn't have to be a publication. It can be a garden—a place where ideas grow, evolve, and sometimes wither.",
-      "date": "2026-01-10",
-      "body": [
-        "A website doesn't have to be a publication. It can be a garden—a place where ideas grow, evolve, and sometimes wither. Unlike the polished permanence of traditional publishing, a digital garden embraces imperfection and change.",
-        "The metaphor matters. Gardens require tending. They're never \"done.\" You plant seeds without knowing exactly what will bloom. Some ideas need years to mature; others burst forth unexpectedly.",
-        "This space is my garden. Some pages are carefully cultivated; others are wild patches where I've scattered seeds and walked away. Both have their place."
+        "we're hitting a strange crossroads as accessible tools evolve. it's the difference between a carpenter who spends all day perfecting a single dovetail joint by hand versus someone using a CNC machine to have 100x the production rate. the end product might look identical, but the mental task model of the person making it is completely different.",
+        "for the traditional developer, the manual dexterity of syntax and debugging is where the physical craft lives. but as tools evolve, that skill set starts to feel like a constraint. we're shifting toward intent engineering, where the value isn't in how well you can type, but how clearly you can envision the integration of complex systems. it's a shift from being the worker on the floor to being the one who understands the entire production pipeline.",
+        "i see people asking...",
+        {"type": "quote", "text": "if anyone can make software, why do we need developers?"},
+        "...well, anyone CAN make a sandwich, but we still have thousands of sandwich shops. vibe coders are throwing together a midnight grilled cheese with half-stale bread—it gets the job done (maybe). it still takes an educated figure to understand how to scale this process or refine it."
       ]
     },
     {
-      "id": "the-space-between",
-      "title": "The Space Between",
-      "description": "The most interesting things happen at the edges—where art meets technology, where structure meets chaos.",
-      "date": "2025-12-20",
+      "id": "software-becoming-softer",
+      "title": "software becoming softer",
+      "description": "malleability of systems ensures for more fluid workflows",
+      "date": "2026-01-30",
       "body": [
-        "The most interesting things happen at the edges—where art meets technology, where structure meets chaos, where the familiar dissolves into the unknown. I've always been drawn to these liminal spaces.",
-        "Working in technology while caring deeply about aesthetics creates a productive tension. Code is precise; art is ambiguous. Logic demands consistency; creativity thrives on contradiction. Living in both worlds means constantly translating between them.",
-        "Maybe that's what this whole project is about—finding ways to hold these contradictions together, to build bridges across the gaps."
+        "in traditional computer science, \"spaghetti code\" is an ultimate sin because a human eventually has to go back in and fix it or build on top if it. but if an ai can refactor or entirely rewrite ten thousand lines of messy code in a few seconds, does the \"cleanliness\" even matter anymore? does claude even need to refactor code, or can it just live and work through an entangled mess of sloppy code?",
+        "traditional software systems are built to last, but they're rigid. once the concrete sets, you're locked in emotionally and financially. programmers who've spent years building softwares, databases and connected workflows through specific stacks are constrained to their foundational creations. transitioning is a possibility but realistically ill-advised in most scenarios.",
+        "this is where the disposability of code takes on a new role. in the physical world, throwing things away is a tragedy of waste. but in code, \"permanence\" is often just a fancy word for legacy debt…a time sink fallacy that creates bias in intentions and ambitions.",
+        "\"vibe coding\" (or whatever we want to call this ephemeral style) helps move away from the rigid structures. new frameworks, new uis, new themes, new ideas, new everything can be tried, tested and implemented without the risk of having to start from ground up again.",
+        "it raises a real question: is it better to spend six months building a \"robust\" monument thats meant to stand the test of time, or one weekend building a tool that you're totally fine with deleting on monday?",
+        "is this a wasteful thought process? an efficient one? how does disposability and waste in the digital world effect us. \"soft\"ware is meant to be soft…its meant to be malleable, does ai coding make software even softer?"
       ]
     },
     {
-      "id": "tools-for-thought",
-      "title": "Tools for Thought",
-      "description": "The tools we use shape how we think. A notebook invites linearity; a canvas suggests space.",
-      "date": "2025-12-15",
+      "id": "machine-literacy",
+      "title": "machine literacy",
+      "description": "the gap between owning a device and understanding its potential",
+      "date": "2026-02-01",
       "body": [
-        "The tools we use shape how we think. A notebook invites linearity; a canvas suggests space. Software, despite its flexibility, carries its own biases—the assumptions of its creators encoded in every menu and shortcut.",
-        "I've been experimenting with building my own tools. Not because existing ones are inadequate, but because the act of building reveals something about how I actually think. Each design decision forces clarity about what matters.",
-        "The best tools disappear in use. They become extensions of intention rather than obstacles to it. That's the aspiration, anyway."
-      ]
-    },
-    {
-      "id": "learning-in-public",
-      "title": "Learning in Public",
-      "description": "There's vulnerability in sharing work before it's ready. Learning in public is an antidote to perfectionism.",
-      "date": "2025-11-28",
-      "body": [
-        "There's vulnerability in sharing work before it's ready. The temptation to wait—until the idea is fully formed, until the code is clean, until you really understand what you're doing—can become a permanent delay.",
-        "Learning in public is an antidote to that perfectionism. It means showing the messy middle, the wrong turns, the half-formed thoughts. It means being okay with being wrong in front of others.",
-        "The unexpected benefit: when you learn in public, you often find others on the same journey. The loneliness of figuring things out dissolves into something more like conversation."
+        "it is a wild realization that we've taken literal rocks and transformed them into computational super-machines capable of global communication. it becomes an even wilder realization when you consider how early we are in this digital timeline of human history. every year, these devices become more advanced and more intertwined with our existence, yet most of us are locked out of their true potential.",
+        "we're limited to experiencing a machine's power through the narrow lens of corporate software, private applications and patented hardwares. you can't tap into a computer's raw mathematical strength without a specific calculator app, and you can't touch its rendering capabilities without a pre-built video game. your phone is packed with lidar, accelerometers and neural engines, but they're basically paperweights unless you're using an app that actually USES these capabilities. it's like owning a high-end laboratory but only being allowed to use the magnifying glass because you dont know how to work with anything else.",
+        "but if ai-assisted coding allows the average person to build their own interaction layers to these built in capabilities, the gate collapses. the machine's full capability moves from being a restricted service to a personal utility, making the true power of the \"rock\" accessible to anyone with an intent and ability to convey it.",
+        "it isn't just about \"knowing how to code\", it's about having the conceptual map to know what is EVEN possible. if you don't realize your phone has a lidar sensor that can map a room in 3d, you'll never think to ask an ai to help you build a tool that measures your furniture. if you don't understand that your gpu is a parallel-processing monster, you'll continue to let it sit idle while you struggle with manual data entry.",
+        "the machine stops being a collection of icons and starts being a raw utility. it's about reclaiming the agency to use the laboratory, not just the magnifying glass"
       ]
     }
   ],
