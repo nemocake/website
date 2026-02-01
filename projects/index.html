@@ -3,312 +3,374 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Portfolio of projects showcasing design, development, and creative work.">
-  
+  <meta name="description" content="Projects | con.rad">
   <title>Projects | con.rad</title>
-  
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="../assets/css/variables.css">
-  <link rel="stylesheet" href="../assets/css/reset.css">
-  <link rel="stylesheet" href="../assets/css/base.css">
-  <link rel="stylesheet" href="../assets/css/layout.css">
-  <link rel="stylesheet" href="../assets/css/components.css">
-  <link rel="stylesheet" href="../assets/css/slider.css">
-  <link rel="stylesheet" href="../assets/css/utilities.css">
+
+  <!-- Config Loader -->
+  <script src="../assets/js/config-loader.js"></script>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            'mono': ['"JetBrains Mono"', 'monospace'],
+            'sans': ['"Space Grotesk"', 'sans-serif'],
+            'display': ['"Syne"', 'sans-serif'],
+          },
+          colors: {
+            'acid': '#ccff00',
+            'neon-blue': '#00f3ff',
+            'void': '#050505',
+            'glass': 'rgba(255, 255, 255, 0.05)',
+            'glass-dark': 'rgba(0, 0, 0, 0.6)',
+            'border-dim': 'rgba(255, 255, 255, 0.1)',
+          },
+          animation: {
+            'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
+          },
+          keyframes: {
+            'pulse-glow': {
+              '0%, 100%': { opacity: '1' },
+              '50%': { opacity: '0.5' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #050505; }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #ccff00; }
+
+    /* Scanlines overlay */
+    .scanlines {
+      background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
+      background-size: 100% 4px;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.6;
+    }
+
+    /* Noise overlay */
+    .noise {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 9998;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    /* Selection */
+    ::selection { background: #ccff00; color: #000; }
+
+    /* Glass panel */
+    .glass-panel {
+      background: rgba(10, 10, 10, 0.6);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Project card reveal animation */
+    .project-card {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .project-card.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Intro reveal */
+    .projects-intro {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .projects-intro.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Nav link active state */
+    .nav-link-item.is-active {
+      color: #ccff00;
+      border-left-color: #ccff00;
+    }
+  </style>
 </head>
-<body>
-  <!-- Password Protection -->
-  <script src="../assets/js/auth.js"></script>
-  <div class="page-wrapper">
-    
-    <!-- Header (matching homepage) -->
-    <header class="site-header">
-      <div class="container">
-        <div class="header-inner">
+<body class="bg-void text-gray-200 antialiased overflow-x-hidden selection:bg-acid selection:text-black">
 
-          <!-- Left Navigation -->
-          <nav class="nav-left" aria-label="Left navigation">
-            <a href="../writings/index.html" class="nav-link">writings</a>
-            <a href="../inspirations/index.html" class="nav-link">inspirations</a>
-          </nav>
+  <!-- Overlays -->
+  <div class="scanlines"></div>
+  <div class="noise"></div>
 
-          <!-- Site Logo / Name (Centered) -->
-          <a href="../index.html" class="site-logo">
-            <span class="logo-name">con.rad</span>
-            <span class="logo-tagline">building curiosity...</span>
-          </a>
+  <!-- Header -->
+  <header class="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex justify-between items-start pointer-events-none mix-blend-difference text-white">
+    <a href="../index.html" class="pointer-events-auto group cursor-pointer flex flex-col">
+      <span class="font-display font-bold text-2xl tracking-tighter leading-none group-hover:text-acid transition-colors">con.rad</span>
+      <span class="font-mono text-[10px] opacity-70 tracking-widest mt-1">BUILDING CURIOSITY...</span>
+    </a>
 
-          <!-- Right Navigation -->
-          <nav class="nav-right" aria-label="Right navigation">
-            <a href="../projects/index.html" class="nav-link">projects</a>
-            <a href="../collection/index.html" class="nav-link">collection</a>
-          </nav>
+    <nav class="pointer-events-auto hidden md:flex items-center gap-8 font-mono text-xs tracking-wider">
+      <a href="../writings/index.html" class="hover:text-acid hover:underline underline-offset-4 decoration-acid decoration-1">[ WRITINGS ]</a>
+      <a href="../collection/index.html" class="hover:text-acid hover:underline underline-offset-4 decoration-acid decoration-1">[ COLLECTION ]</a>
+      <a href="../projects/index.html" class="hover:text-acid hover:underline underline-offset-4 decoration-acid decoration-1">[ PROJECTS ]</a>
+      <a href="https://www.are.na/conrad-house/visually-intriguing" target="_blank" class="hover:text-acid hover:underline underline-offset-4 decoration-acid decoration-1">[ ARE.NA ]</a>
+      <span class="w-2 h-2 rounded-full bg-acid animate-pulse-glow shadow-[0_0_10px_#ccff00]"></span>
+    </nav>
 
-          <!-- Mobile Navigation Toggle -->
-          <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
-            <span class="nav-toggle-icon"></span>
-          </button>
+    <button class="md:hidden pointer-events-auto text-acid">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+      </svg>
+    </button>
+  </header>
 
+  <!-- Main Layout -->
+  <main class="relative z-10 pt-32 pb-48 px-4 md:px-0 max-w-7xl mx-auto flex flex-col md:flex-row gap-8">
+
+    <!-- Sidebar Navigation -->
+    <aside class="md:w-1/4 md:sticky md:top-32 h-fit">
+      <div class="glass-panel p-6 rounded-sm">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="font-mono text-acid text-sm">03.</span>
+          <h2 class="font-display text-xl font-bold uppercase">Projects</h2>
+        </div>
+
+        <div class="border-t border-dashed border-gray-700 my-4"></div>
+
+        <nav>
+          <ul id="projects-nav-list" class="space-y-1">
+            <!-- Populated by JS -->
+          </ul>
+        </nav>
+
+        <div class="border-t border-dashed border-gray-700 my-4"></div>
+
+        <div class="font-mono text-[10px] uppercase tracking-wider text-gray-500 space-y-2">
+          <div class="flex justify-between">
+            <span>Projects</span>
+            <span id="project-count" class="text-acid">0</span>
+          </div>
+          <div class="flex justify-between">
+            <span>Status</span>
+            <span class="text-acid">ACTIVE</span>
+          </div>
         </div>
       </div>
 
-      <!-- Mobile Navigation Menu -->
-      <nav class="mobile-nav" aria-label="Mobile navigation">
-        <a href="../writings/index.html" class="mobile-nav-link">writings</a>
-        <a href="../inspirations/index.html" class="mobile-nav-link">inspirations</a>
-        <a href="../projects/index.html" class="mobile-nav-link">projects</a>
-        <a href="../collection/index.html" class="mobile-nav-link">collection</a>
-      </nav>
-    </header>
+      <!-- Back to home -->
+      <a href="../index.html" class="glass-panel p-4 mt-4 flex items-center justify-center gap-2 hover:bg-acid hover:text-black transition-all group rounded-sm">
+        <span class="font-mono text-xl group-hover:-translate-x-1 transition-transform">←</span>
+        <span class="font-mono text-xs uppercase tracking-widest">Back Home</span>
+      </a>
+    </aside>
 
-    <main class="main-content">
-      
-      <!-- Page Header -->
-      <section class="section section--sm">
-        <div class="container">
-          
-          <nav class="breadcrumb mb-6" aria-label="Breadcrumb">
-            <span class="breadcrumb__item">
-              <a href="../" class="breadcrumb__link">Home</a>
-            </span>
-            <span class="breadcrumb__item">
-              <span class="breadcrumb__current">Projects</span>
-            </span>
-          </nav>
-          
-          <div class="text-center">
-            <h1>Projects</h1>
-            <p class="lead mt-4">
-              <!-- Edit: Your projects description -->
-              A curated collection of work spanning design, development, and creative direction.
-            </p>
-          </div>
-          
+    <!-- Content Area -->
+    <div class="md:w-3/4 space-y-16">
+
+      <!-- Intro Section -->
+      <div class="projects-intro glass-panel p-8 rounded-sm" id="projects-intro">
+        <div class="flex items-center gap-4 mb-6">
+          <div class="h-[1px] w-12 bg-acid"></div>
+          <span class="font-mono text-acid text-xs uppercase tracking-widest">Portfolio</span>
         </div>
-      </section>
-
-      <!-- ==================================================================
-           FILTER TAGS (Optional)
-           Edit: Add or remove filter categories
-           ================================================================== -->
-      <section class="section--sm pb-0">
-        <div class="container">
-          <div class="flex flex--center flex--wrap gap-3">
-            <button class="tag" data-filter="all">All</button>
-            <button class="tag" data-filter="design">Design</button>
-            <button class="tag" data-filter="development">Development</button>
-            <button class="tag" data-filter="creative">Creative</button>
-            <button class="tag" data-filter="branding">Branding</button>
-          </div>
-        </div>
-      </section>
-
-      <!-- ==================================================================
-           PROJECTS GRID
-           Edit: Add your project cards
-           ================================================================== -->
-      <section class="section">
-        <div class="container">
-          
-          <div class="grid grid--cols-2">
-            
-            <!-- ============================================================
-                 PROJECT CARD TEMPLATE
-                 Edit: Update each project's details
-                 data-variant options: default, featured, minimal
-                 ============================================================ -->
-            <article class="widget-card" data-variant="default">
-              <div class="widget-card__image">
-                <!-- Edit: Project image -->
-                <!-- <img src="../assets/images/projects/project-1.jpg" alt="Project 1" loading="lazy"> -->
-                <div style="width:100%;height:100%;background:var(--color-gray-200);display:flex;align-items:center;justify-content:center;">
-                  <span class="text-secondary text-lg">Project Image</span>
-                </div>
-              </div>
-              <div class="widget-card__content">
-                <span class="widget-card__tag">Design</span>
-                <h3 class="widget-card__title">
-                  <a href="#">Project Title One</a>
-                </h3>
-                <p class="widget-card__description">
-                  <!-- Edit: Project description -->
-                  A detailed description of the project, including the challenge, 
-                  approach, and outcome. Keep it concise but informative.
-                </p>
-                <div class="widget-card__footer">
-                  <div class="widget-card__meta">
-                    <span>2024</span>
-                  </div>
-                  <a href="#" class="btn btn--sm btn--ghost">View Project &rarr;</a>
-                </div>
-              </div>
-            </article>
-            
-            <!-- Project 2 -->
-            <article class="widget-card" data-variant="default">
-              <div class="widget-card__image">
-                <div style="width:100%;height:100%;background:var(--color-gray-200);display:flex;align-items:center;justify-content:center;">
-                  <span class="text-secondary text-lg">Project Image</span>
-                </div>
-              </div>
-              <div class="widget-card__content">
-                <span class="widget-card__tag">Development</span>
-                <h3 class="widget-card__title">
-                  <a href="#">Project Title Two</a>
-                </h3>
-                <p class="widget-card__description">
-                  A detailed description of the project, including the challenge, 
-                  approach, and outcome. Keep it concise but informative.
-                </p>
-                <div class="widget-card__footer">
-                  <div class="widget-card__meta">
-                    <span>2024</span>
-                  </div>
-                  <a href="#" class="btn btn--sm btn--ghost">View Project &rarr;</a>
-                </div>
-              </div>
-            </article>
-            
-            <!-- Project 3 -->
-            <article class="widget-card" data-variant="default">
-              <div class="widget-card__image">
-                <div style="width:100%;height:100%;background:var(--color-gray-200);display:flex;align-items:center;justify-content:center;">
-                  <span class="text-secondary text-lg">Project Image</span>
-                </div>
-              </div>
-              <div class="widget-card__content">
-                <span class="widget-card__tag">Creative</span>
-                <h3 class="widget-card__title">
-                  <a href="#">Project Title Three</a>
-                </h3>
-                <p class="widget-card__description">
-                  A detailed description of the project, including the challenge, 
-                  approach, and outcome. Keep it concise but informative.
-                </p>
-                <div class="widget-card__footer">
-                  <div class="widget-card__meta">
-                    <span>2023</span>
-                  </div>
-                  <a href="#" class="btn btn--sm btn--ghost">View Project &rarr;</a>
-                </div>
-              </div>
-            </article>
-            
-            <!-- Project 4 -->
-            <article class="widget-card" data-variant="default">
-              <div class="widget-card__image">
-                <div style="width:100%;height:100%;background:var(--color-gray-200);display:flex;align-items:center;justify-content:center;">
-                  <span class="text-secondary text-lg">Project Image</span>
-                </div>
-              </div>
-              <div class="widget-card__content">
-                <span class="widget-card__tag">Branding</span>
-                <h3 class="widget-card__title">
-                  <a href="#">Project Title Four</a>
-                </h3>
-                <p class="widget-card__description">
-                  A detailed description of the project, including the challenge, 
-                  approach, and outcome. Keep it concise but informative.
-                </p>
-                <div class="widget-card__footer">
-                  <div class="widget-card__meta">
-                    <span>2023</span>
-                  </div>
-                  <a href="#" class="btn btn--sm btn--ghost">View Project &rarr;</a>
-                </div>
-              </div>
-            </article>
-            
-            <!-- Project 5 -->
-            <article class="widget-card" data-variant="default">
-              <div class="widget-card__image">
-                <div style="width:100%;height:100%;background:var(--color-gray-200);display:flex;align-items:center;justify-content:center;">
-                  <span class="text-secondary text-lg">Project Image</span>
-                </div>
-              </div>
-              <div class="widget-card__content">
-                <span class="widget-card__tag">Design</span>
-                <h3 class="widget-card__title">
-                  <a href="#">Project Title Five</a>
-                </h3>
-                <p class="widget-card__description">
-                  A detailed description of the project, including the challenge, 
-                  approach, and outcome. Keep it concise but informative.
-                </p>
-                <div class="widget-card__footer">
-                  <div class="widget-card__meta">
-                    <span>2023</span>
-                  </div>
-                  <a href="#" class="btn btn--sm btn--ghost">View Project &rarr;</a>
-                </div>
-              </div>
-            </article>
-            
-            <!-- Project 6 -->
-            <article class="widget-card" data-variant="default">
-              <div class="widget-card__image">
-                <div style="width:100%;height:100%;background:var(--color-gray-200);display:flex;align-items:center;justify-content:center;">
-                  <span class="text-secondary text-lg">Project Image</span>
-                </div>
-              </div>
-              <div class="widget-card__content">
-                <span class="widget-card__tag">Development</span>
-                <h3 class="widget-card__title">
-                  <a href="#">Project Title Six</a>
-                </h3>
-                <p class="widget-card__description">
-                  A detailed description of the project, including the challenge, 
-                  approach, and outcome. Keep it concise but informative.
-                </p>
-                <div class="widget-card__footer">
-                  <div class="widget-card__meta">
-                    <span>2022</span>
-                  </div>
-                  <a href="#" class="btn btn--sm btn--ghost">View Project &rarr;</a>
-                </div>
-              </div>
-            </article>
-            
-          </div>
-          
-        </div>
-      </section>
-
-      <!-- ==================================================================
-           CALL TO ACTION
-           ================================================================== -->
-      <section class="section section--alt">
-        <div class="container text-center">
-          <h2 class="mb-4">Have a project in mind?</h2>
-          <p class="lead mb-8">
-            I'm always open to discussing new projects and creative ideas.
-          </p>
-          <a href="../about/" class="btn btn--primary">Get in Touch</a>
-        </div>
-      </section>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="site-footer">
-      <div class="container">
-        <div class="footer-inner">
-          <p class="footer-text">
-            &copy; <span id="current-year"></span> con.rad. All rights reserved.
-          </p>
-          <nav class="flex gap-6">
-            <a href="../about/" class="footer-text">About</a>
-            <a href="mailto:your@email.com" class="footer-text">Contact</a>
-          </nav>
-        </div>
+        <h1 class="font-display text-4xl md:text-5xl font-bold mb-4">Projects</h1>
+        <p class="font-sans text-lg text-gray-400 max-w-xl leading-relaxed">
+          things i'm building, experimenting with, or contributing to. a mix of personal tools, creative experiments, and open source work.
+        </p>
       </div>
-    </footer>
 
-  </div>
+      <!-- Projects Container -->
+      <div id="projects-grid" class="space-y-8">
+        <!-- Populated by JS -->
+      </div>
 
-  <script src="../assets/js/slider.js"></script>
-  <script src="../assets/js/navigation.js"></script>
-  <script src="../assets/js/main.js"></script>
-  <script>document.getElementById('current-year').textContent = new Date().getFullYear();</script>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="relative z-10 border-t border-white/10 bg-black/80 backdrop-blur-md mt-12 py-12">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-end gap-6">
+      <div>
+        <h3 class="font-display text-2xl mb-2">con.rad</h3>
+        <p class="font-mono text-xs text-gray-500">© <span id="current-year"></span> Conrad House. Built for the web.</p>
+      </div>
+      <div class="flex gap-6 font-mono text-xs">
+        <a href="mailto:hello@conrad.house" class="hover:text-acid hover:underline">EMAIL</a>
+        <a href="https://github.com/nemocake" target="_blank" class="hover:text-acid hover:underline">GITHUB</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // Current year
+    document.getElementById('current-year').textContent = new Date().getFullYear();
+
+    (function() {
+      const GITHUB_USERNAME = 'nemocake';
+
+      // Format date helper
+      function formatDate(dateStr) {
+        const date = new Date(dateStr);
+        return date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+      }
+
+      // Function to render projects
+      function renderProjects(repos) {
+        if (!repos || repos.length === 0) {
+          document.getElementById('projects-grid').innerHTML = '<p class="text-gray-500 font-mono">No repositories found.</p>';
+          return;
+        }
+
+        // Update project count
+        document.getElementById('project-count').textContent = repos.length;
+
+        // Render navigation
+        const navList = document.getElementById('projects-nav-list');
+        navList.innerHTML = repos.map((repo, index) => `
+          <li>
+            <a href="#${repo.name}" class="nav-link-item block font-mono text-xs text-gray-400 hover:text-acid py-2 px-3 border-l-2 border-transparent hover:border-acid/50 transition-all ${index === 0 ? 'is-active' : ''}">
+              <span class="text-gray-600 mr-2">${String(index + 1).padStart(2, '0')}</span>
+              ${repo.name}
+            </a>
+          </li>
+        `).join('');
+
+        // Render project cards
+        const grid = document.getElementById('projects-grid');
+        grid.innerHTML = repos.map((repo, index) => {
+          const languageTag = repo.language
+            ? `<span class="text-[10px] font-mono border border-gray-700 px-2 py-0.5 text-gray-400">${repo.language}</span>`
+            : '';
+
+          return `
+            <article class="project-card glass-panel p-8 rounded-sm hover:border-acid/30 transition-all" id="${repo.name}">
+              <div class="flex items-center gap-4 mb-4">
+                <span class="font-mono text-acid text-sm">${String(index + 1).padStart(2, '0')}.</span>
+                <span class="font-mono text-xs text-gray-500 border border-gray-700 px-2 py-0.5">REPO</span>
+                <span class="font-mono text-xs text-gray-500">${formatDate(repo.updated_at)}</span>
+              </div>
+              <h2 class="font-display text-2xl md:text-3xl font-bold mb-2 group-hover:text-acid">${repo.name}</h2>
+              <p class="font-sans text-gray-400 mb-6 leading-relaxed">${repo.description || 'no description provided.'}</p>
+
+              <div class="flex flex-wrap items-center gap-4">
+                ${languageTag}
+                <div class="flex items-center gap-4 font-mono text-xs text-gray-500">
+                  <span>★ ${repo.stargazers_count}</span>
+                  <span>⑂ ${repo.forks_count}</span>
+                </div>
+                <a href="${repo.html_url}" target="_blank" class="font-mono text-xs text-acid hover:underline ml-auto">::git_clone</a>
+                ${repo.homepage ? `<a href="${repo.homepage}" target="_blank" class="font-mono text-xs text-gray-400 hover:text-acid hover:underline">→ live</a>` : ''}
+              </div>
+            </article>
+          `;
+        }).join('');
+
+        // Init scroll effects after render
+        initScrollEffects();
+
+        // Handle hash navigation
+        if (window.location.hash) {
+          setTimeout(() => {
+            const targetId = window.location.hash.substring(1);
+            const target = document.getElementById(targetId);
+            if (target) {
+              const headerOffset = 120;
+              const elementPosition = target.getBoundingClientRect().top;
+              const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+              window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+            }
+          }, 200);
+        }
+      }
+
+      function initScrollEffects() {
+        const navLinks = document.querySelectorAll('.nav-link-item');
+        const sections = document.querySelectorAll('.project-card');
+        const intro = document.querySelector('.projects-intro');
+
+        // Reveal on scroll using Intersection Observer
+        const revealObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+            }
+          });
+        }, {
+          threshold: 0.1,
+          rootMargin: '0px 0px -10% 0px'
+        });
+
+        // Observe intro and sections
+        if (intro) revealObserver.observe(intro);
+        sections.forEach(section => revealObserver.observe(section));
+
+        // Scroll spy - highlight active nav item
+        const spyObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              const id = entry.target.getAttribute('id');
+              navLinks.forEach(link => {
+                link.classList.remove('is-active');
+                if (link.getAttribute('href') === `#${id}`) {
+                  link.classList.add('is-active');
+                }
+              });
+            }
+          });
+        }, {
+          threshold: 0.3,
+          rootMargin: '-20% 0px -60% 0px'
+        });
+
+        sections.forEach(section => spyObserver.observe(section));
+      }
+
+      // Load projects from GitHub API
+      async function loadProjects() {
+        const grid = document.getElementById('projects-grid');
+        grid.innerHTML = '<p class="text-gray-500 font-mono">loading repositories...</p>';
+
+        try {
+          const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=20`);
+          if (!response.ok) throw new Error('Failed to fetch');
+
+          const repos = await response.json();
+
+          // Filter out forked repos if desired, keep only source repos
+          const sourceRepos = repos.filter(repo => !repo.fork);
+
+          console.log('[Projects] Loaded', sourceRepos.length, 'repositories from GitHub');
+          renderProjects(sourceRepos);
+
+        } catch (error) {
+          console.error('[Projects] Failed to load from GitHub:', error);
+          grid.innerHTML = '<p class="text-gray-500 font-mono">could not load repositories from github.</p>';
+        }
+      }
+
+      loadProjects();
+    })();
+  </script>
 </body>
 </html>

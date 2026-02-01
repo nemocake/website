@@ -50,7 +50,7 @@
           "profile": {
             "name": "Conrad House",
             "title": "",
-            "bio": ["Chronically online.", "Techno-curious.", "Art junky."],
+            "bio": ["chronically online.", "techno-curious.", "art and music junky."],
             "photo": "./assets/images/misc/profilepicture.png"
           },
           "social": {
@@ -229,7 +229,7 @@
         <nav class="pointer-events-auto hidden md:flex items-center gap-8 font-mono text-xs tracking-wider">
             <a href="./writings/index.html" class="hover:text-acid hover:underline underline-offset-4 decoration-acid decoration-1">[ WRITINGS ]</a>
             <a href="./collection/index.html" class="hover:text-acid hover:underline underline-offset-4 decoration-acid decoration-1">[ COLLECTION ]</a>
-            <a href="#projects" class="hover:text-acid hover:underline underline-offset-4 decoration-acid decoration-1">[ PROJECTS ]</a>
+            <a href="./projects/index.html" class="hover:text-acid hover:underline underline-offset-4 decoration-acid decoration-1">[ PROJECTS ]</a>
             <a href="https://www.are.na/conrad-house/visually-intriguing" target="_blank" class="hover:text-acid hover:underline underline-offset-4 decoration-acid decoration-1">[ ARE.NA ]</a>
             <span class="w-2 h-2 rounded-full bg-acid animate-pulse shadow-[0_0_10px_#ccff00]"></span>
         </nav>
@@ -253,11 +253,12 @@
                     <div class="absolute top-2 right-2 text-[10px] font-mono bg-black text-white px-1">IMG_001</div>
                 </div>
 
-                <h2 id="profile-name" class="font-display font-bold text-xl mb-2">Conrad House</h2>
+                <h2 id="profile-name" class="font-display font-bold text-xl mb-1">Conrad House</h2>
+                <p class="font-mono text-xs text-gray-500 mb-3">aka nemocake</p>
                 <div id="profile-bio" class="font-mono text-xs text-gray-400 mb-4 leading-relaxed">
-                    <span class="text-acid">></span> Chronically online.<br>
-                    <span class="text-acid">></span> Techno-curious.<br>
-                    <span class="text-acid">></span> Art junky.
+                    <span class="text-acid">></span> chronically online.<br>
+                    <span class="text-acid">></span> techno-curious.<br>
+                    <span class="text-acid">></span> art and music junky.
                 </div>
 
                 <div class="border-t border-dashed border-gray-700 my-4"></div>
@@ -283,7 +284,7 @@
                 <div class="grid grid-cols-2 gap-2 text-center font-mono text-xs">
                     <a href="./writings/index.html" class="p-2 border border-border-dim hover:bg-white/10">Writings</a>
                     <a href="./collection/index.html" class="p-2 border border-border-dim hover:bg-white/10">Collection</a>
-                    <a href="#projects" class="p-2 border border-border-dim hover:bg-white/10">Projects</a>
+                    <a href="./projects/index.html" class="p-2 border border-border-dim hover:bg-white/10">Projects</a>
                     <a href="https://www.are.na/conrad-house/visually-intriguing" target="_blank" class="p-2 border border-border-dim hover:bg-white/10">Are.na</a>
                 </div>
             </div>
@@ -734,12 +735,13 @@
 
                 grid.innerHTML = blocks.map(block => {
                     const imageUrl = block.image?.display?.url || block.image?.thumb?.url || '';
+                    const blockUrl = `https://www.are.na/block/${block.id}`;
                     return `
-                        <div class="aspect-square bg-white/5 border border-white/5 p-2 hover:bg-white/10 transition-colors">
+                        <a href="${blockUrl}" target="_blank" class="aspect-square bg-white/5 border border-white/5 p-2 hover:bg-white/10 transition-colors">
                             <div class="w-full h-full bg-gray-800 relative overflow-hidden group">
                                 ${imageUrl ? `<img src="${imageUrl}" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" alt="${block.title || ''}">` : ''}
                             </div>
-                        </div>
+                        </a>
                     `;
                 }).join('');
 
