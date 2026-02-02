@@ -342,6 +342,10 @@
                     <span class="font-mono text-acid text-sm">04.</span>
                     <h2 class="font-display text-4xl font-bold uppercase">Visually Intriguing</h2>
                     <div class="h-[1px] flex-grow bg-gradient-to-r from-acid to-transparent opacity-50"></div>
+                    <div class="flex items-center gap-2">
+                        <button id="arena-prev" class="font-mono text-xs border border-gray-700 px-2 py-1 hover:border-acid hover:text-acid transition-colors disabled:opacity-30 disabled:cursor-not-allowed">←</button>
+                        <button id="arena-next" class="font-mono text-xs border border-gray-700 px-2 py-1 hover:border-acid hover:text-acid transition-colors disabled:opacity-30 disabled:cursor-not-allowed">→</button>
+                    </div>
                     <a href="https://www.are.na/conrad-house/visually-intriguing" target="_blank" class="font-mono text-xs border border-gray-700 px-3 py-1.5 hover:border-acid hover:text-acid transition-colors">ARE.NA →</a>
                 </div>
 
@@ -768,25 +772,23 @@
     <script>
         (async function initArenaGrid() {
             const grid = document.getElementById('arena-grid');
+            const prevBtn = document.getElementById('arena-prev');
+            const nextBtn = document.getElementById('arena-next');
             if (!grid) return;
 
             const inspirations = window.SITE_CONFIG?.inspirations;
             const channelUrl = inspirations?.channelUrl || 'https://www.are.na/conrad-house/visually-intriguing';
             const channelSlug = inspirations?.channel || 'visually-intriguing';
 
+            let allBlocks = [];
+            let currentPage = 0;
+            const perPage = 3;
+
             grid.innerHTML = '<div class="col-span-3 font-mono text-xs text-gray-500">Loading inspirations...</div>';
 
-            try {
-                const response = await fetch(`https://api.are.na/v2/channels/${channelSlug}?per=20`);
-                if (!response.ok) throw new Error('Failed to fetch');
-
-                const data = await response.json();
-                // Sort by created_at descending (newest first) then take 3
-                const allBlocks = data.contents || [];
-                const blocks = allBlocks
-                    .filter(b => b.image) // only blocks with images
-                    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
-                    .slice(0, 3);
+            function renderBlocks() {
+                const start = currentPage * perPage;
+                const blocks = allBlocks.slice(start, start + perPage);
 
                 grid.innerHTML = blocks.map(block => {
                     const imageUrl = block.image?.display?.url || block.image?.thumb?.url || '';
@@ -805,6 +807,43 @@
                         </a>
                     `;
                 }).join('');
+
+                // Update button states
+                const maxPage = Math.ceil(allBlocks.length / perPage) - 1;
+                if (prevBtn) prevBtn.disabled = currentPage === 0;
+                if (nextBtn) nextBtn.disabled = currentPage >= maxPage;
+            }
+
+            try {
+                const response = await fetch(`https://api.are.na/v2/channels/${channelSlug}?per=30`);
+                if (!response.ok) throw new Error('Failed to fetch');
+
+                const data = await response.json();
+                // Sort by connected_at descending (most recently added to channel first)
+                allBlocks = (data.contents || [])
+                    .filter(b => b.image)
+                    .sort((a, b) => new Date(b.connected_at) - new Date(a.connected_at));
+
+                renderBlocks();
+
+                // Navigation handlers
+                if (prevBtn) {
+                    prevBtn.addEventListener('click', () => {
+                        if (currentPage > 0) {
+                            currentPage--;
+                            renderBlocks();
+                        }
+                    });
+                }
+                if (nextBtn) {
+                    nextBtn.addEventListener('click', () => {
+                        const maxPage = Math.ceil(allBlocks.length / perPage) - 1;
+                        if (currentPage < maxPage) {
+                            currentPage++;
+                            renderBlocks();
+                        }
+                    });
+                }
             } catch (error) {
                 grid.innerHTML = `
                     <div class="col-span-3 font-mono text-xs text-gray-500">Could not load inspirations. <a href="${channelUrl}" target="_blank" class="text-acid hover:underline">Visit channel →</a></div>
