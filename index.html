@@ -193,8 +193,6 @@
         }
     </style>
 
-    <!-- Tally.so Popup Embed -->
-    <script async src="https://tally.so/widgets/embed.js"></script>
 </head>
 <body class="bg-void text-gray-200 antialiased overflow-x-hidden selection:bg-acid selection:text-black">
 
@@ -361,7 +359,7 @@
                 <p class="font-mono text-xs text-gray-500">© <span id="current-year"></span> conrad house. curiously tinkering and breaking things.</p>
             </div>
             <div class="flex gap-6 font-mono text-xs">
-                <a href="#tally-open=KY10X8&tally-hide-title=1&tally-emoji-text=👋&tally-emoji-animation=none&tally-auto-close=2000" class="hover:text-acid hover:underline">CONTACT</a>
+                <a href="#" onclick="openContactModal(); return false;" class="hover:text-acid hover:underline">CONTACT</a>
                 <a href="https://github.com/nemocake" target="_blank" class="hover:text-acid hover:underline">GITHUB</a>
                 <a href="https://x.com/DlSPUTED" target="_blank" class="hover:text-acid hover:underline">TWITTER/X</a>
             </div>
@@ -426,7 +424,7 @@
                 </div>
 
                 <div class="flex items-center gap-2">
-                    <button id="y2k-shuffle" class="text-gray-400 hover:text-acid text-[10px] font-mono transition-colors" title="Shuffle">SHF</button>
+                    <button id="y2k-shuffle" class="text-acid hover:text-acid text-[10px] font-mono transition-colors" title="Shuffle">SHF</button>
                     <button id="y2k-playlist-toggle" class="text-gray-400 hover:text-acid text-[10px] font-mono transition-colors" title="Playlist">LST</button>
                     <div id="y2k-volume" class="w-12 h-1 bg-gray-700 rounded-full cursor-pointer">
                         <div id="y2k-volume-bar" class="w-3/4 h-full bg-acid rounded-full"></div>
@@ -825,7 +823,7 @@
             let ytPlayer = null;
             let progressInterval = null;
             let isReady = false;
-            let isShuffled = false;
+            let isShuffled = true;
             let trackTitles = {};
             let titlesFetched = false;
 
@@ -902,6 +900,7 @@
                 ytPlayer.setVolume(70);
                 volumeBar.style.width = '70%';
                 try { ytPlayer.setLoop(true); } catch (e) {}
+                try { ytPlayer.setShuffle(true); } catch (e) {}
                 setTimeout(updateTrackInfo, 1000);
             }
 
@@ -1146,6 +1145,88 @@
                 }
             }
         })();
+    </script>
+
+    <!-- Custom Contact Modal -->
+    <div id="contact-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center p-4">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeContactModal()"></div>
+
+        <!-- Scanlines overlay for modal -->
+        <div class="absolute inset-0 pointer-events-none opacity-40" style="background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.15) 50%, rgba(0,0,0,0.15)); background-size: 100% 4px;"></div>
+
+        <!-- Modal Content -->
+        <div class="relative w-full max-w-md glass-panel border border-acid/30 shadow-[0_0_40px_rgba(204,255,0,0.15)]">
+            <!-- Title Bar (like Winamp) -->
+            <div class="bg-gradient-to-r from-gray-900 to-black p-3 flex justify-between items-center border-b border-acid/20">
+                <div class="flex items-center gap-3">
+                    <div class="flex gap-1.5">
+                        <div class="w-3 h-3 rounded-full bg-red-500 cursor-pointer hover:bg-red-400" onclick="closeContactModal()"></div>
+                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                    </div>
+                    <span class="font-mono text-xs text-acid uppercase tracking-widest">Contact_v1.0</span>
+                </div>
+                <button onclick="closeContactModal()" class="font-mono text-gray-500 hover:text-acid text-lg leading-none">&times;</button>
+            </div>
+
+            <!-- Header -->
+            <div class="p-6 pb-4 border-b border-white/5">
+                <div class="flex items-center gap-3 mb-2">
+                    <span class="font-mono text-acid text-xl">:)</span>
+                    <h3 class="font-display text-xl font-bold text-white">Get in touch</h3>
+                </div>
+                <p class="font-mono text-xs text-gray-500">messages go directly to my inbox</p>
+            </div>
+
+            <!-- Tally Form Embed -->
+            <div class="p-6">
+                <iframe
+                    data-tally-src="https://tally.so/embed/KY10X8?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
+                    loading="lazy"
+                    width="100%"
+                    height="300"
+                    frameborder="0"
+                    marginheight="0"
+                    marginwidth="0"
+                    title="Contact Form"
+                    style="background: transparent;"
+                ></iframe>
+            </div>
+
+            <!-- Footer -->
+            <div class="px-6 py-3 border-t border-white/5 bg-black/30">
+                <p class="font-mono text-[10px] text-gray-600 text-center">powered by tally.so • responses are private</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Modal Script -->
+    <script>
+        function openContactModal() {
+            const modal = document.getElementById('contact-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+
+            // Load Tally iframe when modal opens
+            const iframe = modal.querySelector('iframe[data-tally-src]');
+            if (iframe && !iframe.src) {
+                iframe.src = iframe.dataset.tallySrc;
+            }
+        }
+
+        function closeContactModal() {
+            const modal = document.getElementById('contact-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeContactModal();
+        });
     </script>
 
 </body>
