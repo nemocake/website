@@ -182,7 +182,19 @@
   <script async src="https://tally.so/widgets/embed.js"></script>
 </head>
 <body class="bg-void text-gray-200 antialiased overflow-x-hidden selection:bg-acid selection:text-black grid-mode">
-  <!-- Password protection removed -->
+
+  <!-- Collection Loader -->
+  <div id="collection-loader" class="fixed inset-0 z-[100] bg-void flex flex-col items-center justify-center transition-opacity duration-700">
+    <div class="text-center mb-8">
+      <div class="text-acid font-mono text-xs mb-2 animate-pulse">COLLECTION_LOAD_SEQUENCE</div>
+      <div class="text-4xl font-display font-bold tracking-tighter text-white mb-2">GALLERY.exe</div>
+      <div id="loader-message" class="font-mono text-xs text-gray-500 h-4">initializing...</div>
+    </div>
+    <div class="w-64 h-1 bg-gray-900 overflow-hidden">
+      <div id="loader-bar" class="h-full bg-acid w-0 transition-all duration-300 ease-out"></div>
+    </div>
+    <div class="font-mono text-[10px] text-gray-600 mt-3"><span id="loader-percent">0</span>%</div>
+  </div>
 
   <!-- Overlays -->
   <div class="scanlines"></div>
@@ -1058,6 +1070,80 @@
           }
         }
       }
+    })();
+  </script>
+
+  <!-- Collection Loader Animation -->
+  <script>
+    (function() {
+      const messages = [
+        "initializing...",
+        "right-click saving the sickest jpgs...",
+        "mass downloading pngs...",
+        "contemplating pixels...",
+        "arguing with ipfs gateways...",
+        "pretending to understand art...",
+        "gathering thoughts...",
+        "converting vibes to data...",
+        "stealing color palettes...",
+        "negotiating with cloudflare...",
+        "almost there...",
+        "final touches..."
+      ];
+
+      const loader = document.getElementById('collection-loader');
+      const bar = document.getElementById('loader-bar');
+      const msgEl = document.getElementById('loader-message');
+      const percentEl = document.getElementById('loader-percent');
+
+      if (!loader) return;
+
+      let progress = 0;
+      let msgIndex = 0;
+
+      // Update message every 400ms
+      const msgInterval = setInterval(() => {
+        msgEl.textContent = messages[msgIndex % messages.length];
+        msgIndex++;
+      }, 400);
+
+      // Animate progress bar
+      const progressInterval = setInterval(() => {
+        progress += Math.random() * 15 + 5;
+        if (progress > 100) progress = 100;
+
+        bar.style.width = progress + '%';
+        percentEl.textContent = Math.floor(progress);
+
+        if (progress >= 100) {
+          clearInterval(progressInterval);
+          clearInterval(msgInterval);
+          msgEl.textContent = "welcome to the gallery";
+
+          setTimeout(() => {
+            loader.style.opacity = '0';
+            setTimeout(() => {
+              loader.style.display = 'none';
+            }, 700);
+          }, 500);
+        }
+      }, 150);
+
+      // Fallback: hide loader after 4 seconds max
+      setTimeout(() => {
+        clearInterval(progressInterval);
+        clearInterval(msgInterval);
+        bar.style.width = '100%';
+        percentEl.textContent = '100';
+        msgEl.textContent = "welcome to the gallery";
+
+        setTimeout(() => {
+          loader.style.opacity = '0';
+          setTimeout(() => {
+            loader.style.display = 'none';
+          }, 700);
+        }, 300);
+      }, 4000);
     })();
   </script>
 </body>

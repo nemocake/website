@@ -166,8 +166,10 @@
     "website": {
       "description": "my personal corner of the web",
       "details": [
-        "a vanilla html/css/js site with tailwind for styling. designed around a single config.json that powers all content across pages.",
-        "features a collection gallery for art, a writings section with inline quotes, github integration for projects, and are.na pulls for inspiration. dark mode, scanlines, glass panels - the whole aesthetic."
+        "been chronically online my entire life. garnered an affinity for cool personal websites ever since early runescape forum days. never had the ability to really craft what ive imagined….theres a lyric from a band i loved…. \"youre an artist and your mind wont work the way you want it to.\" i could never get the computer to work the way i wanted bc we communicated in different languages.",
+        "contemporary tools have allowed me to voice the vision ive always had to create my own personal hub in the infinite universe we call the internet. my runescape house, my club penguin igloo, my website.",
+        "vanilla html/css/js",
+        "a collection gallery for art and thoughts around it, a writings section for ramblings, projects to see what im tinkering with, and are.na pulls for what inspires me the most. who knows what ill wanna add next"
       ],
       "featured": true
     },
