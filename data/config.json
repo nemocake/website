@@ -198,6 +198,19 @@
       "tags": ["claude", "memory", "productivity"],
       "status": "in development",
       "featured": true
+    },
+    "cyberclaude": {
+      "private": true,
+      "title": "cyberClaude",
+      "description": "personal dashboard monitor specialized for claude",
+      "details": [
+        "cyberclaude is basically a cyberpunk skin for the claude cli, built so it feels like a native desktop app rather than just another terminal window. it's designed to turn the standard command-line experience into something more immersive and functional.",
+        "the project handles everything from session management, usage tracking, custom agent manager, better skill/plugin explorer. it's moving the cli away from being a \"boring\" text prompt and making it a more centralized command center for your projects.",
+        "the dashboard acts as a central hub where you can browse old sessions to quickly resume your most recent project. tab-based terminal for running multiple claude instances at once in an organized fashion, and a dedicated agents view where you can see all your custom tools and launch them with a single click, drag them into sessions, and edit. built in a usage tracker that estimates token consumption and gives you a visual timeline of your activity."
+      ],
+      "tags": ["claude", "dashboard", "cli", "electron"],
+      "status": "in development",
+      "featured": true
     }
   },
   "inspirations": {
