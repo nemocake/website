@@ -815,14 +815,25 @@
             }
 
             try {
-                const response = await fetch(`https://api.are.na/v2/channels/${channelSlug}?per=30`);
+                // First get channel info to find total count
+                const infoResponse = await fetch(`https://api.are.na/v2/channels/${channelSlug}?per=1`);
+                if (!infoResponse.ok) throw new Error('Failed to fetch');
+                const info = await infoResponse.json();
+                const totalBlocks = info.length || 0;
+
+                // Calculate last page (newest blocks are at the end)
+                const perFetch = 30;
+                const lastPage = Math.max(1, Math.ceil(totalBlocks / perFetch));
+
+                // Fetch last page to get newest blocks
+                const response = await fetch(`https://api.are.na/v2/channels/${channelSlug}?per=${perFetch}&page=${lastPage}`);
                 if (!response.ok) throw new Error('Failed to fetch');
 
                 const data = await response.json();
-                // Sort by connected_at descending (most recently added to channel first)
+                // Reverse to show newest first (last items in array are newest)
                 allBlocks = (data.contents || [])
                     .filter(b => b.image)
-                    .sort((a, b) => new Date(b.connected_at) - new Date(a.connected_at));
+                    .reverse();
 
                 renderBlocks();
 
