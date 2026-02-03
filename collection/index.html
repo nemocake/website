@@ -104,19 +104,30 @@
       background: #0a0a0a;
       border: 1px solid rgba(255, 255, 255, 0.1);
       box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .artwork-frame img,
     .artwork-frame video {
-      max-width: 90vw;
+      max-width: min(90vw, calc(100vw - 400px)); /* Leave room for sidebar */
       max-height: 80vh;
+      min-width: min(50vw, 500px); /* Scale up small content */
+      min-height: min(50vh, 400px);
       width: auto;
       height: auto;
       object-fit: contain;
     }
 
+    /* For truly small source media, allow upscaling */
+    .artwork-frame video {
+      min-width: min(60vw, 600px);
+      min-height: min(60vh, 500px);
+    }
+
     .artwork-frame--iframe {
-      width: 90vw;
+      width: min(90vw, calc(100vw - 400px));
       max-width: 1200px;
       height: 80vh;
     }
@@ -258,9 +269,9 @@
       </div>
 
       <!-- Sidebar Description -->
-      <aside class="fixed top-1/2 right-16 -translate-y-1/2 max-w-[220px] max-h-[50vh] overflow-y-auto z-40 hidden" id="artwork-sidebar">
-        <div class="glass-panel p-4">
-          <p class="font-mono text-[10px] text-acid uppercase tracking-widest mb-2">thoughts.</p>
+      <aside class="fixed top-1/2 right-8 -translate-y-1/2 w-[320px] max-h-[60vh] overflow-y-auto z-40 hidden" id="artwork-sidebar">
+        <div class="glass-panel p-6">
+          <p class="font-mono text-[10px] text-acid uppercase tracking-widest mb-3">thoughts.</p>
           <p class="font-sans text-sm text-gray-300 leading-relaxed" id="sidebar-text"></p>
         </div>
       </aside>
