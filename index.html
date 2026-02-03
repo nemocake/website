@@ -475,7 +475,7 @@
         </div>
 
         <!-- Hidden YouTube player -->
-        <div id="y2k-yt-container" style="position:absolute;left:-9999px;top:0;width:200px;height:200px;overflow:hidden;pointer-events:none;">
+        <div id="y2k-yt-container" style="position:absolute;top:0;left:0;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;">
             <div id="y2k-yt-player"></div>
         </div>
     </div>
@@ -995,7 +995,7 @@
                         fs: 0,
                         modestbranding: 1,
                         rel: 0,
-                        origin: window.location.origin,
+                        enablejsapi: 1,
                         listType: 'playlist',
                         list: PLAYLIST_ID
                     },
