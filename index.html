@@ -677,13 +677,11 @@
                 localStorage.setItem('conradCollection', JSON.stringify(config));
             } catch (e) {}
 
-            // Show 3 most recent items (last 3 by index)
-            const recentCount = 3;
-            const startIndex = Math.max(0, config.length - recentCount);
-            const recentItems = config.slice(startIndex).reverse();
+            // Show 3 most recent items (first 3 in array - newest additions are at index 0)
+            const recentItems = config.slice(0, 3);
 
             grid.innerHTML = recentItems.map((item, index) => {
-                const actualIndex = config.length - 1 - index;
+                const actualIndex = index;
                 return `
                 <a href="./collection/index.html?index=${actualIndex}" class="aspect-[4/5] relative group cursor-pointer overflow-hidden border border-border-dim hover:border-acid/30 transition-all">
                     <img src="${item.thumbnail}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0" alt="${item.title}">
