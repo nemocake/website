@@ -193,13 +193,6 @@
         }
     </style>
 
-    <!-- Suppress cross-origin postMessage errors from background art iframe -->
-    <script>
-        window.addEventListener('message', function(e) {
-            // Silently ignore messages from cross-origin iframes (generative art)
-        }, false);
-    </script>
-
 </head>
 <body class="bg-void text-gray-200 antialiased overflow-x-hidden selection:bg-acid selection:text-black">
 
@@ -209,8 +202,7 @@
             id="art-frame"
             src=""
             class="w-full h-full border-none opacity-60 grayscale-[20%] transition-opacity duration-700 ease-in-out"
-            allow="autoplay"
-            sandbox="allow-scripts">
+            allow="autoplay">
         </iframe>
         <div class="absolute inset-0 bg-void/30 pointer-events-none"></div>
     </div>
