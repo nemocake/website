@@ -234,16 +234,16 @@
   </header>
 
   <!-- Side Navigation (Gallery View) -->
-  <nav class="side-nav fixed left-6 top-1/2 -translate-y-1/2 z-40 hidden" id="side-nav-prev">
-    <button id="side-prev-btn" class="w-12 h-12 flex items-center justify-center text-white/30 hover:text-acid transition-colors">
-      <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+  <nav class="side-nav fixed left-6 top-1/2 -translate-y-1/2 z-50 hidden" id="side-nav-prev">
+    <button id="side-prev-btn" class="w-12 h-12 flex items-center justify-center text-white/50 hover:text-acid transition-colors bg-black/30 backdrop-blur-sm rounded-full">
+      <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <polyline points="15 18 9 12 15 6"/>
       </svg>
     </button>
   </nav>
-  <nav class="side-nav fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden" id="side-nav-next">
-    <button id="side-next-btn" class="w-12 h-12 flex items-center justify-center text-white/30 hover:text-acid transition-colors">
-      <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+  <nav class="side-nav fixed right-[350px] top-1/2 -translate-y-1/2 z-50 hidden" id="side-nav-next">
+    <button id="side-next-btn" class="w-12 h-12 flex items-center justify-center text-white/50 hover:text-acid transition-colors bg-black/30 backdrop-blur-sm rounded-full">
+      <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <polyline points="9 18 15 12 9 6"/>
       </svg>
     </button>
@@ -262,18 +262,16 @@
       </div>
 
       <!-- Plaque -->
-      <div class="glass-panel fixed bottom-8 left-8 max-w-xs p-4 z-40" id="artwork-plaque">
-        <h1 class="font-display text-lg font-bold mb-1" id="plaque-title">Untitled</h1>
+      <div class="fixed bottom-8 left-8 max-w-sm z-40" id="artwork-plaque">
+        <h1 class="font-display text-xl font-bold mb-1 text-white" id="plaque-title">Untitled</h1>
         <p class="font-mono text-xs text-gray-400" id="plaque-artist"></p>
         <p class="font-mono text-[10px] text-gray-500 mt-2" id="plaque-medium">Digital Art</p>
       </div>
 
       <!-- Sidebar Description -->
       <aside class="fixed top-1/2 right-8 -translate-y-1/2 w-[320px] max-h-[60vh] overflow-y-auto z-40 hidden" id="artwork-sidebar">
-        <div class="glass-panel p-6">
-          <p class="font-mono text-[10px] text-acid uppercase tracking-widest mb-3">thoughts.</p>
-          <p class="font-sans text-sm text-gray-300 leading-relaxed" id="sidebar-text"></p>
-        </div>
+        <p class="font-mono text-[10px] text-acid tracking-widest mb-3">thoughts.</p>
+        <p class="font-sans text-sm text-gray-300 leading-relaxed" id="sidebar-text"></p>
       </aside>
     </div>
 
