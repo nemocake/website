@@ -316,6 +316,12 @@
               return `<p class="mb-6 last:mb-0">${p}</p>`;
             } else if (p.type === 'quote') {
               return `<blockquote class="my-8 pl-6 border-l-2 border-acid/50 italic text-gray-400">"${p.text}"</blockquote>`;
+            } else if (p.type === 'image') {
+              const captionHtml = p.caption ? `<figcaption class="mt-2 font-mono text-xs text-gray-500 text-center">${p.caption}</figcaption>` : '';
+              return `<figure class="my-8">
+                <img src="${p.src}" alt="${p.alt || ''}" class="w-full max-w-2xl mx-auto" loading="lazy" style="display:block;">
+                ${captionHtml}
+              </figure>`;
             }
             return '';
           }).join('');
