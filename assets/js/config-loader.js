@@ -21,13 +21,22 @@
     window.SITE_CONFIG = {};
   }
 
-  // Get the base URL for the site (handles GitHub Pages repo paths)
+  // Get the base URL for the site (handles GitHub Pages repo paths and localhost)
   function getConfigUrl() {
-    // Get the script's own URL to determine the site root
+    const origin = window.location.origin;
+    const path = window.location.pathname;
+
+    // On localhost or same-origin, use relative paths
+    if (origin.includes('localhost') || origin.includes('127.0.0.1')) {
+      const depth = (path.match(/\//g) || []).length - 1;
+      if (depth <= 1) return './data/config.json';
+      return '../'.repeat(depth - 1) + 'data/config.json';
+    }
+
+    // Get the script's own URL to determine the site root (for GitHub Pages etc.)
     const scripts = document.getElementsByTagName('script');
     for (let script of scripts) {
       if (script.src && script.src.includes('config-loader.js')) {
-        // Script is at /assets/js/config-loader.js, so go up 2 levels for site root
         const scriptUrl = new URL(script.src);
         const pathParts = scriptUrl.pathname.split('/');
         // Remove 'assets', 'js', 'config-loader.js' (3 parts) to get site root
@@ -37,7 +46,6 @@
     }
 
     // Fallback: try relative from current page
-    const path = window.location.pathname;
     const depth = (path.match(/\//g) || []).length - 1;
     if (depth <= 1) return './data/config.json';
     return '../'.repeat(depth - 1) + 'data/config.json';

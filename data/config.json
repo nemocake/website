@@ -268,6 +268,20 @@
       "status": "in development",
       "featured": true
     },
+    "arena-graph": {
+      "description": "a visual explorer for your are.na channels",
+      "details": [
+        "i spend a lot of time on are.na saving things that catch my eye but never had a good way to see how everything connects. this pulls all your channels and blocks from the api and renders them as an interactive graph using cytoscape.js. channels become hubs, blocks become nodes, and you can finally see the web of references you've been building.",
+        "the fetch script auto tags everything at build time, pulling artist names, mediums, themes and source domains from block metadata. no ml, just pattern matching. from there you get search, a gallery view, path finding between any two blocks, constellation mode that draws connections between blocks sharing tags, category and channel filters, age heatmaps, and a stats panel. one html file, no build step."
+      ]
+    },
+    "claude-obsidian-assistant": {
+      "description": "a starter obsidian vault wired for claude code",
+      "details": [
+        "wanted a structured place where claude could actually manage my notes alongside me. fork the repo, open it as a vault, and claude gets context on the whole system through a root CLAUDE.md file. comes with a johnny decimal folder structure, a /obsidian skill that syncs project info from any working directory, and architecture canvas generation that maps out your codebase visually.",
+        "the main thing is the /obsidian skill. run it from any project and claude reads your codebase, matches it to a vault file, and gives you options to update project docs, write dev logs, or generate full architecture diagrams as native obsidian canvas files. it's a template meant to be adjusted, just a starting point to get claude oriented faster."
+      ]
+    },
     "cyberclaude": {
       "private": true,
       "title": "cyberClaude",
