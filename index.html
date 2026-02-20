@@ -639,7 +639,7 @@
                 return date.toISOString().split('T')[0];
             };
 
-            const recentItems = config.slice(0, 3);
+            const recentItems = config.slice(-3).reverse();
 
             grid.innerHTML = recentItems.map((item) => `
                 <article class="glass-panel p-6 hover:bg-white/5 transition-all group/card cursor-pointer border-l-2 border-l-transparent hover:border-l-acid">
@@ -729,6 +729,8 @@
                         url: repo.html_url,
                         isPrivate: false,
                         featured: cfg.featured || false,
+                        status: cfg.status,
+                        tags: cfg.tags || [],
                         updated: new Date(repo.updated_at)
                     };
                 });
@@ -772,6 +774,11 @@
                                 ${project.isPrivate ? '<span class="text-[10px] font-mono border border-gray-700 px-1.5 py-0.5 text-gray-500">PRIVATE</span>' : ''}
                                 ${project.language ? `<span class="text-[10px] font-mono border border-gray-700 px-1.5 py-0.5 text-gray-400">${project.language}</span>` : ''}
                                 ${project.status ? `<span class="text-[10px] font-mono text-neon-blue">${project.status.toUpperCase()}</span>` : ''}
+                                ${(project.tags || []).map(tag =>
+                                    tag.toLowerCase() === 'tinkering'
+                                        ? `<span class="text-[10px] font-mono border border-red-500/50 px-1.5 py-0.5 text-red-400">${tag.toUpperCase()}</span>`
+                                        : `<span class="text-[10px] font-mono border border-gray-700 px-1.5 py-0.5 text-gray-400">${tag.toUpperCase()}</span>`
+                                ).join('')}
                             </div>
                             <p class="font-sans text-sm text-gray-400 max-w-xl">${project.description}</p>
                         </div>
