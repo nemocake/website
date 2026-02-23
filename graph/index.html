@@ -56,8 +56,8 @@
         }
     </script>
 
-  <script type="module" crossorigin src="/website/graph/assets/index-Dbfa6U-l.js"></script>
-  <link rel="stylesheet" crossorigin href="/website/graph/assets/index-ExFFWoBY.css">
+  <script type="module" crossorigin src="/website/graph/assets/index-B-72Bv5s.js"></script>
+  <link rel="stylesheet" crossorigin href="/website/graph/assets/index-C8oX0uoG.css">
 </head>
 
 <body class="bg-void text-gray-200 antialiased overflow-hidden selection:bg-acid selection:text-black">
@@ -153,10 +153,18 @@
                 </div>
                 <button class="ctrl-btn" id="btn-fit" title="Fit to view">FIT</button>
                 <button class="ctrl-btn" id="btn-reset" title="Reset view">RST</button>
-                <button class="ctrl-btn" id="btn-spiral" title="Spiral layout">SPIRAL</button>
-                <button class="ctrl-btn" id="btn-galaxy" title="Galaxy layout">GALAXY</button>
-                <button class="ctrl-btn" id="btn-sphere" title="Sphere layout">SPHERE</button>
-                <button class="ctrl-btn" id="btn-head" title="Head layout">HEAD</button>
+                <div class="relative" id="shape-wrapper">
+                    <button class="ctrl-btn flex items-center gap-1.5" id="shape-trigger">
+                        <span id="shape-label">SPIRAL</span>
+                        <svg width="8" height="8" viewBox="0 0 8 8" class="opacity-40"><path d="M0 2l4 4 4-4" fill="currentColor"/></svg>
+                    </button>
+                    <div id="shape-dropdown" class="glass-panel" style="position:absolute; top:calc(100% + 4px); left:0; width:120px; z-index:50; display:none; flex-direction:column;">
+                        <button class="shape-option active" data-shape="spiral">SPIRAL</button>
+                        <button class="shape-option" data-shape="galaxy">GALAXY</button>
+                        <button class="shape-option" data-shape="sphere">SPHERE</button>
+                        <button class="shape-option" data-shape="head">HEAD</button>
+                    </div>
+                </div>
                 <span id="head-mesh-toggles" class="inline-flex items-center gap-1 ml-0" style="display: none;">
                     <button class="ctrl-btn active text-[8px] px-1.5 py-0.5" id="btn-toggle-head-mesh" title="Toggle head wireframe" style="font-size:8px; padding: 2px 5px; color: #00ff88;">SKULL</button>
                     <button class="ctrl-btn active text-[8px] px-1.5 py-0.5" id="btn-toggle-brain-mesh" title="Toggle brain wireframe" style="font-size:8px; padding: 2px 5px; color: #ff6688;">BRAIN</button>
