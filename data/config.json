@@ -229,9 +229,50 @@
         "What can go wrong? Well maybe a lot. LLMs in general love to hallucinate, and even occasionally, take shortcuts to skip things. If Claude begins give lessons built around false information, the idea is kind of ruined BUT I'm hopeful most information it'll give will still better my understanding in totality.",
         "My long goal? To continue being ambitious about learning new things, systems and ideas."
       ]
+    },
+    {
+      "id": "the-new-wicker-basket",
+      "title": "the new wicker basket",
+      "description": "on tinkering with material that doesn't run out",
+      "date": "2026-05-11",
+      "body": [
+        "All my life I have loved to tinker with things. I never grew up with a lot materialistically, but I fondly remember my small wicker toy basket full of a jumbled mess of plastic, cheap metal, and wooden trinkets, an assortment of materials I could take apart, mess around with, and tinker with.",
+        "As I have grown older, the urge to tinker has only grown as ideas are never fleeting. The problem is these tinker ideas become bigger throughout the imagination; you go from wanting to mess with little plastic springs and toy car wheels to wanting to mess with a dirt bike or build some type of real-life physical structure like a fort. Obviously, growing up in a very low income environment, you don't have access to the materials to explore these ambitious tinkerings, especially in experimental or wasteful ways. This is obviously an issue that sadly plagues people worldwide, everyone would be a lot more creative if they had access to the time and needs for their creative endeavors. We would see a lot more chefs if kids had access to a full pantry and kitchen, or more sculptors if every kid had access to a kiln and clay. Everybody has a creative heart, but many don't get to express it due to a culture of capitalism where we are forced to do things that may not be of our most passionate interests. It would be cool to live in a society where everyone got to fully dive into whatever they wanted to the deepest degree with nothing limiting them.",
+        "Growing up and being introduced to the computer felt like a big breakthrough. You realize all these incredible things you can do with a computer essentially require no material to create. Somebody with Blender doesn't require a limited amount of \"Blender clay\" to create whatever they want; they can just make an infinite amount of shapes. There's a freedom to fail in these environments. There is still some limit to software costs and subscriptions, but the advancements of large language models and the interpretability between natural human language and computers have become so advanced. These machines become ever more important and useful to everyone's lives. This probably sounds like some crazy person that is just in love with machines, but I think it is warranted for how incredible these things are and the access we have now.",
+        "The idea of personal software is becoming even more important. Ideally, this conglomerate capitalistic monopoly we have had over the utility of these machines collapses and goes more into the hands of the people. We have seen this with the open source community and the incredible contributions they have made to create the digital nature of the world we live in today. The malleability of the material we get to play with now is so strong. The analogy that it's no longer just the world-class sculptors who get access to the King's marble. That gatekept barrier has collapsed, and everybody can work within it to some degree.",
+        "I am always reminded of a topic discussed by the artist Jan Robert Leegte, who uses computer visual elements and web UI elements within his work. He references things like the scroll bar, the \"X\" close window, tab interfaces, or Apple checkboxes as his sculptural material. He does not see himself as any different than a traditional sculptor. Looking at UI as material you can sculpt in new ways so fast is even more fascinating because it is not limited to any physical constraints whether that's material accessibility, weight, quality, etc.",
+        {"type": "quote", "text": "Feels like for anyone whose art practice involves systems or software at all, now is the time to dream ridiculously big. not only in scale, but in weirdness, depth or scope.", "attribution": "0xDEAFBEEF"}
+      ]
     }
   ],
   "projects": {
+    "le-random-explorer": {
+      "private": true,
+      "title": "Le Random Explorer",
+      "description": "An interactive 3D knowledge graph mapping Le Random's generative art ecosystem.",
+      "details": [
+        "Le Random Explorer is an interactive knowledge graph for Le Random, a curatorial platform built around generative and computer art. The full archive lives inside it: 160 artists, 1,100 artworks, 1,000 historical moments stretching across 70,000 years of creative computation, and 150 editorial pieces. Every artwork is linked to the moments and movements it grew out of, and every article is tied back to the artists and works it discusses. The result is a single map of an ecosystem that's usually scattered across a dozen separate pages.",
+        "The graph can be explored three ways. The default Ecosystem view shows the whole archive at once as a 3D formation you can rotate, filter, and reshape. The Tree view starts from a single node and lets you follow connections outward, building your own path through the collection. The Curated view groups nodes into thematic shows, some shaped by hand and others assembled procedurally. The standout feature is Ecosystem Journeys: twenty eight Le Random podcast episodes have been annotated so that when you press play, the graph lights up alongside the conversation in real time. It's the closest I've come to making a podcast feel like a living document.",
+        "Built with Next.js and Three.js, the whole project runs in the browser with no backend or database. This is the last thing I made during my time at Le Random, and the one I'll miss most."
+      ],
+      "tags": ["three.js", "next.js", "webgl", "knowledge-graph", "generative-art"],
+      "status": "released",
+      "featured": true,
+      "liveUrl": "https://explorer.lerandom.art/"
+    },
+    "nft-preservation-tool": {
+      "description": "local-first archive for your nft collection",
+      "details": [
+        "started as a personal need. i'd been collecting on-chain art for years and realized i had no real way of knowing what would actually survive if a hosting service went down. centralized token_uris, ipfs pieces no one was pinning, generative html files dependent on cdn scripts that could vanish tomorrow. wanted a tool that gave me an honest answer for every piece i owned and the means to actually fix the broken ones.",
+        "open source and free to use, now public on github. need python 3.10+ and a free alchemy api key. clone the repo, run setup, double-click the launcher next time and the dashboard opens at localhost:5000 with no terminal needed. it scans your eth (erc-721 + erc-1155) and tezos (fa2) wallets, pulls every inbound nft transfer, hydrates metadata, and downloads the actual artwork files to disk.",
+        "the interesting part is the generative pipeline. for html-based pieces it walks the dependency tree, pulls down every external js/css/font reference (p5.js, three.js, cdn scripts), and rewrites the tags to local paths so the art runs offline. on fxhash pieces it injects the on-chain iteration hash so the piece regenerates identically with no internet connection. for cids that public ipfs gateways won't serve, you can spin up a local kubo node and use it as a rescue path. five public gateway fallbacks before that.",
+        "every piece gets a 0–100 preservation score based on five factors: storage durability (on-chain > arweave > ipfs > https, with weakest-link penalties), local backup status, metadata completeness, media accessibility, and custody. a score in the 90s means on-chain or arweave storage plus a full local backup plus the piece is sitting in a vault address you control. a score in the 20s means the piece could be gone overnight.",
+        "everything runs at localhost on your machine. no cloud, no telemetry, no accounts. read-only — never asks for private keys or seed phrases. the dashboard ships with a backup tester for side-by-side review of rendered art vs source files, a report button that auto-fills a github issue with the on-chain context when a piece fetches wrong, and a self-updater that pulls new fixes without touching your collection database. if you collect on-chain art and want to actually own it, this is the tool i wish existed years ago."
+      ],
+      "status": "released",
+      "status2": "open source",
+      "featured": true
+    },
     "website": {
       "description": "my personal corner of the web",
       "details": [
@@ -286,7 +327,8 @@
         "the main thing is the /obsidian skill. run it from any project and claude reads your codebase, matches it to a vault file, and gives you options to update project docs, write dev logs, or generate full architecture diagrams as native obsidian canvas files. it's a template meant to be adjusted, just a starting point to get claude oriented faster."
       ],
       "tags": ["claude", "obsidian", "productivity"],
-      "status": "in development",
+      "status": "released",
+      "status2": "open source",
       "featured": true
     },
     "cyberclaude": {

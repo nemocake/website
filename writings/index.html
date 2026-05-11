@@ -315,7 +315,8 @@
             if (typeof p === 'string') {
               return `<p class="mb-6 last:mb-0">${p}</p>`;
             } else if (p.type === 'quote') {
-              return `<blockquote class="my-8 pl-6 border-l-2 border-acid/50 italic text-gray-400">"${p.text}"</blockquote>`;
+              const attr = p.attribution ? `<footer class="not-italic mt-2 text-xs text-gray-500 tracking-wider">— ${p.attribution}</footer>` : '';
+              return `<blockquote class="my-8 pl-6 border-l-2 border-acid/50 italic text-gray-400">"${p.text}"${attr}</blockquote>`;
             } else if (p.type === 'image') {
               const captionHtml = p.caption ? `<figcaption class="mt-2 font-mono text-xs text-gray-500 text-center">${p.caption}</figcaption>` : '';
               return `<figure class="my-8">

@@ -278,6 +278,7 @@
             images: config.images || [],
             tags: config.tags || [],
             status: config.status,
+            status2: config.status2,
             featured: config.featured || false
           };
         });
@@ -295,7 +296,10 @@
             images: config.images || [],
             tags: config.tags || [],
             status: config.status,
+            status2: config.status2,
             featured: config.featured || false,
+            liveUrl: config.liveUrl,
+            repoUrl: config.repoUrl,
             updated_at: new Date().toISOString() // Use current date for private projects
           }));
 
@@ -359,14 +363,21 @@
             ? '<span class="font-mono text-xs text-gray-500 border border-gray-700 px-2 py-0.5">PRIVATE</span>'
             : '<span class="font-mono text-xs text-gray-500 border border-gray-700 px-2 py-0.5">REPO</span>';
 
-          // Status badge for private projects
+          // Status badges (primary + optional secondary)
           const statusBadge = repo.status
             ? `<span class="font-mono text-xs text-neon-blue">${repo.status.toUpperCase()}</span>`
             : '';
+          const status2Badge = repo.status2
+            ? `<span class="font-mono text-xs text-neon-blue">${repo.status2.toUpperCase()}</span>`
+            : '';
 
-          // Footer: GitHub stats for public, just tags for private
+          // Footer: GitHub stats for public, tags + optional custom links for private
           const footerContent = repo.isPrivate
-            ? `${tagsHtml}`
+            ? `
+              ${tagsHtml}
+              ${repo.repoUrl ? `<a href="${repo.repoUrl}" target="_blank" class="font-mono text-xs text-acid hover:underline ml-auto">::git_clone</a>` : ''}
+              ${repo.liveUrl ? `<a href="${repo.liveUrl}" target="_blank" class="font-mono text-xs ${repo.repoUrl ? 'text-gray-400' : 'ml-auto text-gray-400'} hover:text-acid hover:underline">→ live</a>` : ''}
+            `
             : `
               ${tagsHtml}
               <div class="flex items-center gap-4 font-mono text-xs text-gray-500">
@@ -384,6 +395,7 @@
                 ${typeBadge}
                 ${repo.featured ? '<span class="font-mono text-xs text-acid">FEATURED</span>' : ''}
                 ${statusBadge}
+                ${status2Badge}
               </div>
               <h2 class="font-display text-2xl md:text-3xl font-bold mb-2">${displayTitle}</h2>
               <p class="font-mono text-sm text-gray-500 mb-6">${description}</p>

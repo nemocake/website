@@ -29,8 +29,8 @@
     // On localhost or same-origin, use relative paths
     if (origin.includes('localhost') || origin.includes('127.0.0.1')) {
       const depth = (path.match(/\//g) || []).length - 1;
-      if (depth <= 1) return './data/config.json';
-      return '../'.repeat(depth - 1) + 'data/config.json';
+      if (depth <= 0) return './data/config.json';
+      return '../'.repeat(depth) + 'data/config.json';
     }
 
     // Get the script's own URL to determine the site root (for GitHub Pages etc.)
