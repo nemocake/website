@@ -607,6 +607,15 @@
       #mobile-save-bar button .ico { font-size: 13px; opacity: 0.85; }
       #mobile-save-bar button .lbl { font-weight: 500; }
       #mobile-save-bar button:disabled { opacity: 0.4; pointer-events: none; }
+      /* Dice button — same shape as PNG/GIF but tinted in the Fluxus
+         red so the primary action stands out from the save group. */
+      #mobile-save-bar button.dice {
+        background: rgba(212, 40, 42, 0.78);
+        border-color: rgba(212, 40, 42, 0.95);
+        color: #fafaf6;
+      }
+      #mobile-save-bar button.dice .ico { font-size: 16px; opacity: 1; }
+      #mobile-save-bar button.dice:active { background: #d4282a; }
 
       /* --- Mobile export confirm sheet ---
          Bottom sheet that previews the current export options before the
@@ -769,8 +778,8 @@
         #mobile-intro { display: flex; }
       }
     </style>
-    <script type="module" crossorigin src="./assets/main-C56CFvf8.js"></script>
-    <link rel="modulepreload" crossorigin href="./assets/score-Co1Yh-yA.js">
+    <script type="module" crossorigin src="./assets/main-CQFoTri2.js"></script>
+    <link rel="modulepreload" crossorigin href="./assets/score-tjiIcQn1.js">
   </head>
   <body>
     <div id="title">
@@ -974,6 +983,9 @@
          button opens a confirm sheet first so users can verify aspect /
          resolution (otherwise hidden inside the panel they may not have seen). -->
     <div id="mobile-save-bar" aria-hidden="true">
+      <button id="mobile-randomize" type="button" aria-label="randomize all" class="dice">
+        <span class="ico">&#x2680;&#xFE0E;</span><span class="lbl">ROLL</span>
+      </button>
       <button id="mobile-save-png" type="button" aria-label="save png">
         <span class="ico">&#x2193;&#xFE0E;</span><span class="lbl">PNG</span>
       </button>
