@@ -243,9 +243,47 @@
         "I am always reminded of a topic discussed by the artist Jan Robert Leegte, who uses computer visual elements and web UI elements within his work. He references things like the scroll bar, the \"X\" close window, tab interfaces, or Apple checkboxes as his sculptural material. He does not see himself as any different than a traditional sculptor. Looking at UI as material you can sculpt in new ways so fast is even more fascinating because it is not limited to any physical constraints whether that's material accessibility, weight, quality, etc.",
         {"type": "quote", "text": "Feels like for anyone whose art practice involves systems or software at all, now is the time to dream ridiculously big. not only in scale, but in weirdness, depth or scope.", "attribution": "0xDEAFBEEF"}
       ]
+    },
+    {
+      "id": "schematic-scores",
+      "title": "Schematic Scores",
+      "description": "a homage to score-as-image — cage, penderecki, de cesare, lepold, and the beauty in emergence.",
+      "date": "2026-05-13",
+      "body": [
+        "If anyone's browsed my <a href=\"https://www.are.na/conrad-house/visually-intriguing\" target=\"_blank\" class=\"text-acid hover:underline\">visually intriguing channel</a> on <a href=\"https://www.are.na\" target=\"_blank\" class=\"text-acid hover:underline\">are.na</a> they'd probably become aware of my fascination with the visualization of data in any schematic form. Whether its musical scores, geometric representations, drafted architectural papers, or simply anything with values as the underlying material.",
+        "Often I find myself enjoying works that I don't always understand.",
+        {"type": "quote", "text": "I really like things I don't understand: when I read a thing I don't understand I feel a sweet and abysmal vertigo.", "attribution": "Clarice Lispector"},
+        "I like data visualization for the aesthetics alone rather than necessarily always caring what it represents (i know, shame on me right?). The idea that the formation of the composition is derived from some data in itself is more than enough to tickle my number-orientated brain. I love the idea that the most mundane data can represent some visual value, same applies to random data, the beauty in emergence.",
+        "This piece is a homage to some of my favorite visualizations of music. There's 5 main \"vocabularies\" to the composition, three of them directly related to the artists John Cage, Krzysztof Penderecki, and John De Cesare.",
+        "The other two vocabularies are general forms of music notation and mathematical equations ranging from basic geometry, to differential equations, to stress/failure structural engineering calculations from ASCE guidelines. These five forms come together to generate each composition as a representation of what my eyes have always loved. A way to keep me visually intrigued forever.",
+        {"type": "triptych", "images": [
+          {"src": "../assets/images/writings/schematic-scores/cage.png", "alt": "John Cage score", "caption": "John Cage"},
+          {"src": "../assets/images/writings/schematic-scores/penderecki.jpeg", "alt": "Krzysztof Penderecki score", "caption": "Krzysztof Penderecki"},
+          {"src": "../assets/images/writings/schematic-scores/de-cesare.jpeg", "alt": "John De Cesare — Study 140A, The Magic Fire-Scene from Die Walküre by Richard Wagner, 1956", "caption": "John De Cesare, Study 140A (1956)"}
+        ]},
+        "The initial idea of this work lived in a 2d view, simple scores. But i'd be remiss not to include an artist that may be my favorite when it comes to visualizing scores and in general, using scores and musical notation as a medium and material. That artist is Frank Lepold, also known as @andyamholst on some social media sites. Frank has a beautiful catalogue of work on his blog. Sadly, Frank passed in 2023 and I often find myself thinking about his work a lot. I hope this project exposes someone to his work and maybe helps a memory of him be extended just a little further. Frank has a piece titled <em>Kasse II</em> where he creates a geometric score with four faces…this piece inspired me to experiment with a generator of scores and schematics as structures.",
+        {"type": "image", "src": "../assets/images/writings/schematic-scores/lepold-kasse-ii.webp", "alt": "Frank Lepold, Kasse II", "caption": "Frank Lepold — Kasse II"},
+        "Im not artist. Just someone who loves the creativity others have instilled through inspiration.",
+        "The next step is to see how to make these scores actually play. The most common thought when viewing generated output is \"what would it sound like?\". The next exploration to be had!",
+        "→ <a href=\"../visual-scores/\" class=\"text-acid hover:underline\">roll your own schematic score on the generator page</a>."
+      ]
     }
   ],
   "projects": {
+    "visual-scores": {
+      "private": true,
+      "title": "Visual Scores",
+      "description": "procedurally generated visual music scores after cage, penderecki, de cesare",
+      "details": [
+        "A three.js generator that builds compositions from five \"vocabularies\" — cage, penderecki, de cesare, general music notation, and mathematical equations ranging from basic geometry to differential equations to stress/failure structural engineering calculations from ASCE guidelines.",
+        "Inspired by Frank Lepold's Kasse II, the work moves the score from a flat 2d page into a geometric structure with multiple faces. Each composition is a representation of the data visualizations my eyes have always loved.",
+        "The public release branch is being prepped now. Roll your own schematic composition on the generator page — visitors will be able to remix, regenerate, and save their own scores."
+      ],
+      "tags": ["three.js", "generative", "scores", "music"],
+      "status": "coming soon",
+      "liveUrl": "../visual-scores/",
+      "featured": true
+    },
     "le-random-explorer": {
       "private": true,
       "title": "Le Random Explorer",
