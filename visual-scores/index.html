@@ -492,13 +492,289 @@
       }
       .vf-label.tl { top: -20px; left: 0; }
       .vf-label.br { bottom: -20px; right: 0; }
+
+      /* --- Mobile intro card ---
+         Calm, dismissable note shown on the first mobile visit. Body is
+         locked behind a soft scrim until the user taps "continue". After
+         dismiss the localStorage flag keeps it from showing again. */
+      #mobile-intro {
+        position: fixed;
+        inset: 0;
+        z-index: 30;
+        background: rgba(10, 10, 10, 0.78);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        display: none; /* shown only on small screens via media query + JS */
+        align-items: center;
+        justify-content: center;
+        padding: 28px;
+        opacity: 0;
+        transition: opacity 360ms ease;
+      }
+      #mobile-intro.is-visible { opacity: 1; }
+      #mobile-intro .card {
+        max-width: 420px;
+        width: 100%;
+        padding: 32px 28px 24px;
+        background: rgba(20, 19, 16, 0.96);
+        border: 1px solid rgba(239, 233, 216, 0.18);
+        color: #efe9d8;
+        text-align: center;
+      }
+      #mobile-intro .eyebrow {
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-size: 10px;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        opacity: 0.55;
+        margin-bottom: 18px;
+      }
+      #mobile-intro h2 {
+        font-family: "EB Garamond", Georgia, serif;
+        font-weight: 500;
+        font-size: 30px;
+        line-height: 1.15;
+        margin: 0 0 14px;
+        letter-spacing: -0.01em;
+      }
+      #mobile-intro h2 em { font-style: italic; color: #d4282a; }
+      #mobile-intro p {
+        font-family: "EB Garamond", Georgia, serif;
+        font-style: italic;
+        font-size: 16px;
+        line-height: 1.5;
+        opacity: 0.78;
+        margin: 0 0 24px;
+      }
+      #mobile-intro button {
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-size: 11px;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        padding: 12px 20px;
+        background: transparent;
+        border: 1px solid rgba(239, 233, 216, 0.5);
+        color: #efe9d8;
+        cursor: pointer;
+        width: 100%;
+        transition: background 160ms ease, border-color 160ms ease;
+      }
+      #mobile-intro button:hover,
+      #mobile-intro button:active {
+        background: rgba(239, 233, 216, 0.08);
+        border-color: rgba(239, 233, 216, 0.85);
+      }
+
+      /* --- Mobile floating save bar ---
+         Hidden on desktop (the settings panel is always visible there);
+         on mobile it floats bottom-right where it doesn't block the
+         canvas and is one tap away. Two ghosted buttons, matching the
+         panel's dark glass look. */
+      #mobile-save-bar {
+        position: fixed;
+        right: 14px;
+        bottom: 14px;
+        z-index: 14;
+        display: none;        /* shown via @media below */
+        flex-direction: column;
+        gap: 8px;
+      }
+      #mobile-save-bar button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        min-width: 64px;
+        padding: 10px 12px;
+        background: rgba(10, 10, 10, 0.78);
+        border: 1px solid rgba(239, 233, 216, 0.22);
+        color: #efe9d8;
+        /* match the panel .btn typography (EB Garamond via inherit) so the
+           floating mobile buttons feel native to the same UI family. */
+        font: inherit;
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        cursor: pointer;
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
+        transition: background 140ms ease, border-color 140ms ease;
+      }
+      #mobile-save-bar button:active {
+        background: rgba(212, 40, 42, 0.72);
+        border-color: #d4282a;
+      }
+      #mobile-save-bar button .ico { font-size: 13px; opacity: 0.85; }
+      #mobile-save-bar button .lbl { font-weight: 500; }
+      #mobile-save-bar button:disabled { opacity: 0.4; pointer-events: none; }
+
+      /* --- Mobile export confirm sheet ---
+         Bottom sheet that previews the current export options before the
+         save fires. Off by default; .is-open transitions both the scrim
+         and the sheet itself. */
+      #mobile-export-sheet {
+        position: fixed; inset: 0;
+        z-index: 25;
+        display: none;
+        pointer-events: none;
+      }
+      #mobile-export-sheet.is-open { display: block; pointer-events: auto; }
+      #mobile-export-sheet .scrim {
+        position: absolute; inset: 0;
+        background: rgba(10, 10, 10, 0.5);
+        backdrop-filter: blur(4px);
+        -webkit-backdrop-filter: blur(4px);
+        opacity: 0;
+        transition: opacity 220ms ease;
+      }
+      #mobile-export-sheet.is-open .scrim { opacity: 1; }
+      #mobile-export-sheet .sheet {
+        position: absolute;
+        left: 0; right: 0; bottom: 0;
+        background: rgba(20, 19, 16, 0.97);
+        border-top: 1px solid rgba(239, 233, 216, 0.18);
+        color: #efe9d8;
+        padding: 14px 24px 28px;
+        transform: translateY(110%);
+        transition: transform 280ms cubic-bezier(0.22, 0.61, 0.36, 1);
+      }
+      #mobile-export-sheet.is-open .sheet { transform: translateY(0); }
+      #mobile-export-sheet .handle {
+        width: 38px; height: 4px;
+        background: rgba(239, 233, 216, 0.3);
+        border-radius: 2px;
+        margin: 0 auto 14px;
+      }
+      #mobile-export-sheet .eyebrow {
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-size: 10px;
+        letter-spacing: 0.32em;
+        text-transform: uppercase;
+        opacity: 0.5;
+        margin-bottom: 6px;
+      }
+      #mobile-export-sheet h3 {
+        font-family: "EB Garamond", Georgia, serif;
+        font-weight: 500;
+        font-size: 22px;
+        margin: 0 0 18px;
+        letter-spacing: -0.005em;
+      }
+      #mobile-export-sheet h3 #mes-format { color: #d4282a; font-style: italic; }
+      #mobile-export-sheet .mes-meta {
+        margin: 0 0 22px;
+        padding: 12px 0;
+        border-top: 1px solid rgba(239, 233, 216, 0.1);
+        border-bottom: 1px solid rgba(239, 233, 216, 0.1);
+      }
+      #mobile-export-sheet .mes-meta > div {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        padding: 4px 0;
+        font-family: "EB Garamond", Georgia, serif;
+        font-size: 14px;
+      }
+      #mobile-export-sheet .mes-meta dt {
+        font-style: italic;
+        opacity: 0.55;
+      }
+      #mobile-export-sheet .mes-meta dd {
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-size: 12px;
+        letter-spacing: 0.06em;
+      }
+      #mobile-export-sheet .mes-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      #mobile-export-sheet .mes-actions button {
+        font-family: "JetBrains Mono", ui-monospace, monospace;
+        font-size: 11px;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+        padding: 14px 18px;
+        background: transparent;
+        border: 1px solid rgba(239, 233, 216, 0.32);
+        color: #efe9d8;
+        cursor: pointer;
+        transition: background 140ms ease, border-color 140ms ease;
+      }
+      #mobile-export-sheet .mes-actions button.primary {
+        background: rgba(212, 40, 42, 0.85);
+        border-color: #d4282a;
+      }
+      #mobile-export-sheet .mes-actions button.primary:active {
+        background: #d4282a;
+      }
+      #mobile-export-sheet .mes-actions button.ghost {
+        border-color: transparent;
+        opacity: 0.55;
+      }
+      #mobile-export-sheet .mes-actions button:active {
+        background: rgba(239, 233, 216, 0.08);
+      }
+
+      /* --- Mobile layout overrides ---
+         Below 768px: drop the keyboard hint hud (no keyboard, no mouse hover),
+         make the settings panel take the full screen when open, push the
+         toggle into the top-right corner, and tighten the title bar. */
+      @media (max-width: 768px) {
+        #hud { display: none; }
+        #mobile-save-bar { display: flex; }
+
+        #title {
+          top: 14px;
+          font-size: 12px;
+          max-width: 70vw;
+        }
+        #title .small { margin-left: 6px; }
+
+        #settings-toggle {
+          right: 14px;       /* always top-right on mobile */
+          top: 12px;
+          width: 40px;       /* bigger touch target */
+          height: 40px;
+          font-size: 18px;
+          opacity: 0.9;
+        }
+        #settings-panel.collapsed ~ #settings-toggle { right: 14px; }
+
+        #settings-panel {
+          width: 100vw;
+          border-left: 0;
+        }
+        #settings-panel header { padding: 18px 20px 14px; }
+        #settings-body section { padding: 16px 20px 14px; }
+
+        /* hide the inner ✕ on mobile — the ≡ toggle stays visible up top
+           even when the panel is open (panel covers it but is clearly the
+           same surface; tap ✕ to close which is now the larger target). */
+        #settings-close { font-size: 18px !important; padding: 4px 12px !important; }
+
+        #seed-display {
+          font-size: 11px;
+          bottom: 12px;
+          left: 14px;
+          /* leave room on the right for the floating save bar */
+          max-width: calc(100vw - 130px);
+          opacity: 0.55;
+        }
+
+        #viewfinder .vf-label { font-size: 9px; }
+
+        /* show the intro overlay on mobile by default; JS removes it once
+           dismissed and toggles .is-visible for the fade-in */
+        #mobile-intro { display: flex; }
+      }
     </style>
-    <script type="module" crossorigin src="./assets/main-Cfi2dxOR.js"></script>
+    <script type="module" crossorigin src="./assets/main-C56CFvf8.js"></script>
     <link rel="modulepreload" crossorigin href="./assets/score-Co1Yh-yA.js">
   </head>
   <body>
     <div id="title">
-      visual scores<span class="small">3d</span><span class="small"><a href="./scores.html">2d ↗</a></span>
+      visual scores<span class="small">3d</span><span class="small"><a href="./scores.html">2d &#x2197;&#xFE0E;</a></span>
     </div>
     <div id="hud">
       <div class="row"><span class="k">SPACE</span><span class="v">new seed</span></div>
@@ -692,5 +968,53 @@
 
     <div id="toast"></div>
     <div id="seed-display">seed: —</div>
+
+    <!-- Mobile-only floating save buttons. Visible below 768px so visitors
+         can save without opening the menu (which covers the canvas). Each
+         button opens a confirm sheet first so users can verify aspect /
+         resolution (otherwise hidden inside the panel they may not have seen). -->
+    <div id="mobile-save-bar" aria-hidden="true">
+      <button id="mobile-save-png" type="button" aria-label="save png">
+        <span class="ico">&#x2193;&#xFE0E;</span><span class="lbl">PNG</span>
+      </button>
+      <button id="mobile-save-gif" type="button" aria-label="save gif">
+        <span class="ico">&#x2193;&#xFE0E;</span><span class="lbl">GIF</span>
+      </button>
+    </div>
+
+    <!-- Mobile export confirm sheet. Slides up from the bottom; shows the
+         current aspect, resolution, and output dimensions so users know
+         exactly what they're about to download. Buttons: save now / change
+         settings / cancel. -->
+    <div id="mobile-export-sheet" aria-hidden="true">
+      <div class="scrim" data-action="cancel"></div>
+      <div class="sheet" role="dialog" aria-labelledby="mes-title">
+        <div class="handle"></div>
+        <div class="eyebrow">export</div>
+        <h3 id="mes-title">save as <span id="mes-format">PNG</span></h3>
+        <dl class="mes-meta">
+          <div><dt>aspect</dt><dd id="mes-aspect">—</dd></div>
+          <div><dt>resolution</dt><dd id="mes-res">—</dd></div>
+          <div><dt>output</dt><dd id="mes-dims">—</dd></div>
+        </dl>
+        <div class="mes-actions">
+          <button type="button" data-action="save" class="primary" id="mes-save">save now</button>
+          <button type="button" data-action="adjust">change settings</button>
+          <button type="button" data-action="cancel" class="ghost">cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile intro overlay — shown once on small screens; dismissed
+         state is remembered in localStorage so repeat visitors aren't
+         re-greeted. Hidden via CSS by default on desktop. -->
+    <div id="mobile-intro" aria-hidden="true">
+      <div class="card" role="dialog" aria-labelledby="mobile-intro-title">
+        <div class="eyebrow">visual scores</div>
+        <p id="mobile-intro-title">still works on mobile — just a suggestion to try desktop.</p>
+        <button id="mobile-intro-dismiss" type="button">continue →</button>
+      </div>
+    </div>
+
   </body>
 </html>
