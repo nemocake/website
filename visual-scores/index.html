@@ -3,146 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Generate your own schematic scores — a three.js generator after cage, penderecki, de cesare, lepold.">
-  <title>visual scores | con.rad</title>
-
-  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Space+Grotesk:wght@300..700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
-
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            'mono': ['"JetBrains Mono"', 'monospace'],
-            'sans': ['"Space Grotesk"', 'sans-serif'],
-            'display': ['"Syne"', 'sans-serif'],
-          },
-          colors: {
-            'acid': '#ccff00',
-            'neon-blue': '#00f3ff',
-            'void': '#050505',
-            'glass': 'rgba(255, 255, 255, 0.05)',
-            'border-dim': 'rgba(255, 255, 255, 0.1)',
-          },
-          animation: {
-            'blink': 'blink 1s step-end infinite',
-            'pulse-glow': 'pulse-glow 2s ease-in-out infinite',
-          },
-          keyframes: {
-            blink: { '0%, 100%': { opacity: '1' }, '50%': { opacity: '0' } },
-            'pulse-glow': {
-              '0%, 100%': { boxShadow: '0 0 5px rgba(204,255,0,0.3)' },
-              '50%':      { boxShadow: '0 0 20px rgba(204,255,0,0.6)' },
-            }
-          }
-        }
-      }
-    }
-  </script>
-
+  <meta name="description" content="schematic scores — a three.js generator after cage, penderecki, de cesare, lepold.">
+  <title>visual scores</title>
   <style>
-    body { background:#050505; color:#e5e7eb; }
-    ::selection { background:#ccff00; color:#000; }
-    .glass { background: rgba(255,255,255,0.03); backdrop-filter: blur(6px); border:1px solid rgba(255,255,255,0.08); }
-    .scanlines {
-      background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1));
-      background-size: 100% 4px;
-      position: fixed; inset: 0;
-      pointer-events: none; z-index: 9999; opacity: 0.5;
-    }
-    .ascii-frame { white-space: pre; line-height: 1.1; }
-    .marquee { animation: marquee 30s linear infinite; }
-    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    html, body { margin: 0; padding: 0; height: 100%; background: #050505; color: #e5e7eb; font-family: ui-monospace, "SF Mono", Menlo, monospace; overflow: hidden; }
+    #app { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 1rem; }
+    #app .tag { font-size: 11px; letter-spacing: 0.2em; color: #ccff00; opacity: 0.7; }
+    #app .title { font-size: clamp(2rem, 6vw, 4rem); letter-spacing: -0.02em; }
+    #app .sub { font-size: 12px; color: #888; max-width: 28rem; text-align: center; line-height: 1.6; padding: 0 1rem; }
+    .dot { display: inline-block; width: 6px; height: 6px; background: #ccff00; margin-right: 8px; vertical-align: middle; animation: blink 1s step-end infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
   </style>
 </head>
-<body class="font-sans antialiased overflow-x-hidden">
-  <div class="scanlines"></div>
-
-  <header class="border-b border-border-dim">
-    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between font-mono text-xs">
-      <a href="../" class="text-gray-400 hover:text-acid">← con.rad</a>
-      <span class="text-gray-500">/visual-scores</span>
-      <a href="../writings/#schematic-scores" class="text-gray-400 hover:text-acid">read the article →</a>
-    </div>
-  </header>
-
-  <div class="overflow-hidden border-b border-border-dim bg-black/60">
-    <div class="marquee whitespace-nowrap font-mono text-[11px] text-acid/80 py-2">
-      <span class="mx-8">▌ visual scores ▌ three.js generator ▌ status: coming soon ▌ rolling vocabularies of cage / penderecki / de cesare / lepold / math ▌ public release branch in prep ▌</span>
-      <span class="mx-8">▌ visual scores ▌ three.js generator ▌ status: coming soon ▌ rolling vocabularies of cage / penderecki / de cesare / lepold / math ▌ public release branch in prep ▌</span>
-    </div>
+<body>
+  <!-- Generator mounts here. Replace this whole #app block with the three.js generator from the visual-scores web-public branch. -->
+  <div id="app">
+    <div class="tag"><span class="dot"></span>SCHEMATIC_SCORES // COMING_SOON</div>
+    <div class="title">visual scores</div>
+    <div class="sub">the generator drops here when the public release branch lands.</div>
   </div>
-
-  <main class="max-w-4xl mx-auto px-6 py-16">
-    <div class="font-mono text-xs text-acid mb-4 flex items-center gap-3">
-      <span class="inline-block w-2 h-2 bg-acid animate-blink"></span>
-      <span>STATUS / COMING_SOON</span>
-    </div>
-    <h1 class="font-display text-5xl md:text-7xl font-bold mb-6 leading-tight">schematic scores<span class="text-acid">.</span></h1>
-    <p class="text-gray-400 max-w-2xl mb-10 leading-relaxed">
-      a three.js generator that rolls visual music scores from five vocabularies — cage, penderecki, de cesare, lepold-inspired geometric structures, and mathematical equations ranging from basic geometry to differential equations to asce stress/failure calculations. visitors will be able to roll their own compositions, right here, on this page.
-    </p>
-
-    <pre class="ascii-frame font-mono text-[10px] md:text-xs text-gray-500 glass p-6 rounded-sm overflow-x-auto mb-10 animate-pulse-glow">
-┌──────────────────────────────────────────────────────────────────────────┐
-│                                                                          │
-│   ░▒▓█ ▌▐ ◯ ◌ ─── ╱╲╱╲ ▦ ▩ ◢◣ ∇ ∂ ∮ ∫ √ ≈ ⊕ ⊗ ⌠ ⌡ ♩ ♪ ♫ ┃ ╳ ▤ ▥ █▓▒░    │
-│                                                                          │
-│   ┌──┐ ┌──────┐  ┌──┐    ┌─────┐  ╱──╲   ╱╲       ┌─┐ ┌──┐               │
-│   │  │ │      │  │  │    │     │ ╱    ╲ ╱  ╲      │ │ │  │               │
-│   └──┘ └──────┘  └──┘    └─────┘ ╲────╱╲────╲     └─┘ └──┘               │
-│                                                                          │
-│   ∮ f(x) dx     d²y/dt² + ω²y = 0     σ = F/A    Σ Mₒ = 0                │
-│                                                                          │
-│   ▌▌▌ ░▒▓█  ───  ◯ ◌ ◍  ▦ ▧ ▨ ▩  ╱╲╱╲╱╲  ─┃─ ─┃─  ♩ ♪ ♫                  │
-│                                                                          │
-│                  [ three.js viewport will mount here ]                   │
-│                                                                          │
-└──────────────────────────────────────────────────────────────────────────┘</pre>
-
-    <div class="grid md:grid-cols-2 gap-4 mb-12">
-      <div class="glass p-5 rounded-sm">
-        <div class="font-mono text-[10px] text-acid mb-2">VOCAB / 01</div>
-        <div class="font-display text-xl mb-1">cage</div>
-        <p class="font-mono text-xs text-gray-500">indeterminacy. dots, durations, broken staves.</p>
-      </div>
-      <div class="glass p-5 rounded-sm">
-        <div class="font-mono text-[10px] text-acid mb-2">VOCAB / 02</div>
-        <div class="font-display text-xl mb-1">penderecki</div>
-        <p class="font-mono text-xs text-gray-500">clusters, glissandi, geometric bands.</p>
-      </div>
-      <div class="glass p-5 rounded-sm">
-        <div class="font-mono text-[10px] text-acid mb-2">VOCAB / 03</div>
-        <div class="font-display text-xl mb-1">de cesare</div>
-        <p class="font-mono text-xs text-gray-500">graphic translation of orchestral form.</p>
-      </div>
-      <div class="glass p-5 rounded-sm">
-        <div class="font-mono text-[10px] text-acid mb-2">VOCAB / 04</div>
-        <div class="font-display text-xl mb-1">lepold</div>
-        <p class="font-mono text-xs text-gray-500">geometric scores — multi-faced structures.</p>
-      </div>
-      <div class="glass p-5 rounded-sm md:col-span-2">
-        <div class="font-mono text-[10px] text-acid mb-2">VOCAB / 05</div>
-        <div class="font-display text-xl mb-1">math + notation</div>
-        <p class="font-mono text-xs text-gray-500">staves, clefs, time signatures + geometry, differential equations, asce stress/failure calculations.</p>
-      </div>
-    </div>
-
-    <div class="flex flex-wrap items-center gap-4 mb-16 font-mono text-xs">
-      <a href="../writings/#schematic-scores" class="border border-acid text-acid px-4 py-2 hover:bg-acid hover:text-black transition-all">read the article →</a>
-      <a href="../projects/#visual-scores" class="border border-gray-600 text-gray-400 px-4 py-2 hover:border-acid hover:text-acid transition-all">project notes →</a>
-      <span class="text-gray-600">the generator drops here when the public branch lands.</span>
-    </div>
-  </main>
-
-  <footer class="border-t border-border-dim">
-    <div class="max-w-6xl mx-auto px-6 py-6 font-mono text-[11px] text-gray-600 flex items-center justify-between">
-      <span>con.rad / visual-scores</span>
-      <span>v0.0.1 — placeholder</span>
-    </div>
-  </footer>
 </body>
 </html>
