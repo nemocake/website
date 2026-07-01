@@ -1,6 +1,15 @@
 {
   "posts": [
     {
+      "slug": "2026-07-01-art-rabbit-holing",
+      "title": "Art Rabbit Holing and why you should too to improve taste",
+      "excerpt": "On the meditative ritual of the morning art rabbit hole — and what it teaches you about your own taste.",
+      "date": "2026-07-01",
+      "tags": ["art", "taste", "are.na", "rambling"],
+      "readTime": 3,
+      "published": true
+    },
+    {
       "slug": "2026-01-14-test",
       "title": "test",
       "excerpt": "First test of the blog tool.",
@@ -10,5 +19,5 @@
       "published": true
     }
   ],
-  "lastUpdated": "2026-01-14T00:00:00.000Z"
+  "lastUpdated": "2026-07-01T00:00:00.000Z"
 }
