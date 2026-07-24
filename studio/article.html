@@ -140,7 +140,7 @@
 <div class="corner-dots tr"></div>
 
 <nav class="rail" id="rail" aria-label="studio contents">
-  <a class="rail-mast" href="index.html" aria-label="back to the studio index"><div class="mast-title">
+  <a class="rail-mast" href="./" aria-label="back to the studio index"><div class="mast-title">
     <h1 id="mast-h1">studio</h1>
     <canvas id="masthead-canvas" data-word="studio" data-cap="58" aria-hidden="true"></canvas>
   </div></a>
@@ -153,10 +153,10 @@
     <a href="../writings/">writings</a>
     <a href="../collection/">collection</a>
     <a href="../projects/">projects</a>
-    <a class="cur" href="index.html">studio</a>
+    <a class="cur" href="./">studio</a>
   </nav>
   <nav class="furniture">
-    <span><a href="../index.html">con.rad</a> &nbsp;/&nbsp; <a href="index.html">studio</a> &nbsp;/&nbsp; writings</span>
+    <span><a href="../">con.rad</a> &nbsp;/&nbsp; <a href="./">studio</a> &nbsp;/&nbsp; writings</span>
     <span class="right" id="furn-no">—</span>
   </nav>
   <main id="main"></main>
@@ -177,7 +177,7 @@ const IMG_V = "?v=1784771550";
     art = a; list = l.articles || [];
   } catch (e) {
     main.innerHTML = `<div class="load-error">could not load article "${esc(slug)}" — ${e.message}.
-      No embedded fallback; fix the fetch. <br /><br /><a href="index.html" style="text-decoration:underline">back to the studio →</a></div>`;
+      No embedded fallback; fix the fetch. <br /><br /><a href="./" style="text-decoration:underline">back to the studio →</a></div>`;
     return;
   }
 
