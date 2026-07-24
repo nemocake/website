@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 130" fill="currentColor">
+  <!-- cnrd / faux-kanji wordmark v0.3 — UPPERCASE.
+       conventions: heavy uniform 20-unit strokes, 90° joins, "kick" flares
+       on free horizontal ends, "hane" (はね) hooks at left vertical bottoms,
+       and a chamfered-octagonal D (suggests curve without using one).
+       glyphs live in 100×110 cells. for the lowercase variant see
+       cnrd-kanji-lower.svg. -->
+
+  <!-- ====== C ====== -->
+  <g transform="translate(4, 10)">
+    <path d="M 0 0 H 82 L 92 10 L 82 20 H 0 Z"/>
+    <path d="M 0 0 H 20 V 100 L 30 110 L 20 114 H 0 Z"/>
+    <path d="M 0 90 H 82 L 92 100 L 82 110 H 0 Z"/>
+  </g>
+
+  <!-- ====== N ====== -->
+  <g transform="translate(108, 10)">
+    <path d="M 0 0 H 20 V 110 H 0 Z"/>
+    <path d="M 20 0 H 40 L 100 96 V 110 H 80 L 20 14 Z"/>
+    <path d="M 80 0 H 100 V 110 H 80 Z"/>
+  </g>
+
+  <!-- ====== R ====== -->
+  <g transform="translate(230, 10)">
+    <path d="M 0 0 H 20 V 100 L 30 110 L 20 114 H 0 Z"/>
+    <path d="M 20 0 H 100 V 20 H 20 Z"/>
+    <path d="M 80 20 H 100 V 60 H 80 Z"/>
+    <path d="M 20 42 H 80 L 92 52 L 80 62 H 20 Z"/>
+    <path d="M 50 50 H 68 L 100 100 L 108 108 L 98 112 L 50 68 Z"/>
+  </g>
+
+  <!-- ====== D (octagonal — chamfered top-right + bottom-right corners) ====== -->
+  <g transform="translate(342, 10)">
+    <path fill-rule="evenodd" d="M 0 0 L 78 0 L 100 22 L 100 88 L 78 110 L 0 110 Z M 20 22 L 60 22 L 80 42 L 80 68 L 60 88 L 20 88 Z"/>
+    <path d="M 0 100 H 20 L 30 110 L 20 114 H 0 Z"/>
+  </g>
+</svg>

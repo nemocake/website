@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cream">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>con.rad — DIRECTION</title>
+<script>try{var t=localStorage.getItem("studio.theme");if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<link rel="stylesheet" href="../assets/catalogue/shell.css" />
+<script src="../assets/catalogue/graphite.js" defer></script>
+<script src="../assets/catalogue/theme.js" defer></script>
+<script src="../assets/catalogue/masthead.js" defer></script>
+<script src="_home-data.js"></script>
+<style>
+  /* ---- header tuning (KEEP AS-IS) ---- */
+  #cover { padding-top: clamp(18px, 4vh, 40px); }
+  #cover .over.over-mark { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; }
+  #cover .over-mark .wordmark { justify-self: start; }
+  #cover .over-mark .est { justify-self: end; }
+  #cover .corner-logo { justify-self: center; width: clamp(150px, 20vw, 220px); }
+  #cover .corner-logo .drawn-title { display: flex; justify-content: center; }
+  #cover .corner-logo canvas { max-height: 50px; }
+  #cover .cover-intro { margin-top: 22px; font-style: italic; text-align: center; max-width: none; }
+  @media (max-width: 640px) {
+    #cover .over.over-mark { grid-template-columns: 1fr; justify-items: center; gap: 6px; }
+    #cover .over-mark .wordmark, #cover .over-mark .est { justify-self: center; }
+  }
+
+  /* ==================================================================
+     THE WORKTABLE — a spatial editorial spread / studio wall
+     ================================================================== */
+  #home-body { margin-top: clamp(30px, 6vh, 58px); }
+
+  .wt-lead {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 10px 20px; flex-wrap: wrap;
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .24em;
+    text-transform: lowercase; color: var(--ink-faint);
+    padding-bottom: 12px; margin-bottom: 4px;
+  }
+  .wt-lead .l-die { opacity: .85; }
+  .wt-lead em { font-style: italic; letter-spacing: .06em; color: var(--ink-soft); }
+
+  /* ---- the table itself: asymmetric grid on desktop ---- */
+  .worktable {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: min-content;
+    column-gap: clamp(16px, 2.4vw, 38px);
+    row-gap: clamp(42px, 6vh, 92px);
+    margin-top: clamp(26px, 5vh, 54px);
+    padding-top: 6px;
+  }
+
+  /* the pencil "plan": faint tremored connectors, drawn behind the objects */
+  .wt-plan {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 0; overflow: visible;
+  }
+
+  /* ---- an object on the table ---- */
+  .wt-obj {
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column; gap: 13px;
+    color: inherit; text-decoration: none;
+  }
+  .wt-tag {
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: .2em;
+    text-transform: lowercase; color: var(--ink-faint);
+    display: flex; align-items: baseline; gap: 8px;
+  }
+  .wt-tag .rn { color: var(--sanguine); }
+  .wt-tag::after {
+    content: ""; flex: 1; height: 0; border-top: 1px solid var(--rule-faint);
+    transform: translateY(-3px);
+  }
+  .wt-frame {
+    position: relative; border: 1px solid var(--rule);
+    background: var(--paper-deep); overflow: hidden;
+  }
+  .wt-frame img { width: 100%; height: 100%; object-fit: cover; display: block; background: var(--paper-deep); }
+  .wt-cap { display: flex; flex-direction: column; gap: 3px; }
+  .wt-name {
+    font-family: var(--font-display); font-weight: 400; line-height: 1.0;
+    font-size: clamp(24px, 3vw, 34px);
+  }
+  .wt-obj:hover .wt-name { color: var(--sanguine); }
+  .wt-obj:hover .wt-frame { border-color: rgba(var(--sang-rgb), .5); }
+  .wt-desc { font-style: italic; font-size: 13.5px; color: var(--ink-faint); max-width: 30ch; }
+  .wt-n {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .12em;
+    color: var(--sanguine); margin-top: 2px;
+  }
+
+  /* placement — deliberate asymmetry, objects at different scales */
+  .wt-fav        { grid-column: 1 / 8;  grid-row: 1; }
+  .obj-studio    { grid-column: 8 / 13; grid-row: 1 / 3; }
+  .obj-writings  { grid-column: 1 / 4;  grid-row: 2; transform: translateY(26px); }
+  .obj-collection{ grid-column: 4 / 8;  grid-row: 2; transform: translateY(-6px); }
+  .obj-projects  { grid-column: 1 / 5;  grid-row: 3; transform: translateY(14px); }
+  .wt-arena      { grid-column: 5 / 13; grid-row: 3; }
+
+  /* studio: the largest object — a peek mosaic */
+  .obj-studio .wt-name { font-size: clamp(30px, 3.6vw, 46px); }
+  .wt-mosaic {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px;
+    padding: 6px; background: var(--paper-deep); flex: 1; min-height: 0;
+  }
+  .wt-mosaic img { aspect-ratio: 1 / 1; }
+  .obj-studio { min-height: 100%; }
+
+  /* single-image objects */
+  .obj-writings .wt-frame,
+  .obj-projects .wt-frame { aspect-ratio: 3 / 2; }
+
+  /* collection: a typographic plate (no image) */
+  .wt-plate {
+    aspect-ratio: 3 / 2; border: 1px solid var(--rule); background: var(--paper-deep);
+    position: relative; overflow: hidden; display: grid; place-items: center;
+  }
+  .wt-plate .ghost {
+    position: absolute; inset: 0; display: grid; place-items: center;
+    font-family: var(--font-degraded); font-size: clamp(48px, 7vw, 78px);
+    color: rgba(var(--ink-rgb), .07); letter-spacing: .02em;
+    white-space: nowrap; user-select: none;
+  }
+  .wt-plate .plate-num {
+    position: relative; font-family: var(--font-mono); font-size: 11px;
+    letter-spacing: .2em; color: var(--sanguine); text-align: center;
+  }
+  .wt-plate .plate-num b { display: block; font-weight: 400; font-size: 30px; color: var(--ink); margin-bottom: 2px; }
+
+  /* ================= FAVOURITE spotlight ================= */
+  .wt-fav {
+    border: 1px solid var(--rule); background: var(--paper-deep);
+    padding: clamp(16px, 1.8vw, 26px);
+    display: flex; flex-direction: column; gap: 14px;
+    min-height: 320px;
+  }
+  .fav-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 12px; font-family: var(--font-mono); font-size: 9.5px;
+    letter-spacing: .2em; text-transform: lowercase; color: var(--ink-faint);
+  }
+  .fav-head .spot { color: var(--sanguine); }
+  .fav-inner {
+    flex: 1; display: grid; gap: clamp(14px, 1.8vw, 26px);
+    grid-template-columns: 1.05fr 1fr; align-items: center;
+    transition: opacity .34s ease;
+  }
+  .fav-inner.is-type { grid-template-columns: 1fr; }
+  .fav-media { border: 1px solid var(--rule); overflow: hidden; background: var(--paper); aspect-ratio: 4 / 3; }
+  .fav-media img { width: 100%; height: 100%; object-fit: cover; }
+  .fav-text { display: flex; flex-direction: column; gap: 9px; min-width: 0; }
+  .fav-kicker { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .2em; color: var(--sanguine); text-transform: lowercase; }
+  .fav-title { font-family: var(--font-display); font-weight: 400; line-height: .98; margin: 0; font-size: clamp(30px, 4vw, 50px); }
+  .is-type .fav-title { font-size: clamp(40px, 7vw, 84px); letter-spacing: -.01em; }
+  .fav-blurb { font-family: var(--font-text); font-style: italic; font-size: 15px; line-height: 1.5; color: var(--ink-soft); margin: 0; max-width: 42ch; }
+  .is-type .fav-blurb { font-size: 17px; max-width: 46ch; }
+  .fav-go { font-family: var(--font-mono); font-size: 10px; letter-spacing: .16em; color: var(--ink-faint); margin-top: 4px; }
+  .wt-fav:hover .fav-go, .fav-go:hover { color: var(--sanguine); }
+
+  .fav-foot { display: flex; align-items: center; gap: 14px; padding-top: 4px; }
+  .fav-dots { display: flex; gap: 7px; flex: 1; }
+  .fav-dots button {
+    width: 8px; height: 8px; padding: 0; border: 1px solid var(--rule);
+    background: transparent; cursor: pointer; border-radius: 0;
+    transform: rotate(45deg); transition: background .2s, border-color .2s;
+  }
+  .fav-dots button.on { background: var(--sanguine); border-color: var(--sanguine); }
+  .fav-step {
+    font-family: var(--font-mono); font-size: 15px; line-height: 1; color: var(--ink-faint);
+    background: transparent; border: 0; cursor: pointer; padding: 2px 4px;
+  }
+  .fav-step:hover { color: var(--sanguine); }
+
+  /* ================= are.na DESK SCATTER ================= */
+  .wt-arena { display: flex; flex-direction: column; gap: 12px; }
+  .arena-head {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 8px 16px; flex-wrap: wrap;
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .2em;
+    text-transform: lowercase; color: var(--ink-faint);
+    border-bottom: 1px solid var(--rule); padding-bottom: 9px;
+  }
+  .arena-head .fresh { color: var(--sanguine); letter-spacing: .12em; }
+  .arena-head .fresh.snap { color: var(--ink-faint); }
+  .arena-scatter {
+    display: flex; flex-wrap: wrap; gap: 10px 14px; padding: 12px 4px 6px;
+    align-items: flex-start;
+  }
+  .pin {
+    display: block; position: relative; background: var(--paper);
+    border: 1px solid var(--rule); padding: 5px 5px 4px;
+    box-shadow: 1px 2px 0 rgba(var(--ink-rgb), .05);
+    transform: rotate(var(--rot, 0deg)); transition: transform .2s ease, box-shadow .2s;
+    width: clamp(96px, 12vw, 128px);
+  }
+  .pin:hover { transform: rotate(0deg) translateY(-2px); box-shadow: 2px 4px 0 rgba(var(--ink-rgb), .08); z-index: 2; }
+  .pin::before {
+    content: ""; position: absolute; top: -4px; left: 50%; width: 5px; height: 5px;
+    transform: translateX(-50%); border-radius: 50%;
+    background: var(--sanguine); opacity: .7;
+  }
+  .pin .p-img { aspect-ratio: 1 / 1; overflow: hidden; background: var(--paper-deep); }
+  .pin .p-img img { width: 100%; height: 100%; object-fit: cover; }
+  .pin .p-when {
+    font-family: var(--font-mono); font-size: 8px; letter-spacing: .1em;
+    color: var(--ink-faint); margin-top: 4px; text-align: center; text-transform: lowercase;
+  }
+  .pin:hover .p-when { color: var(--sanguine); }
+  .arena-empty, .arena-loading {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em;
+    color: var(--ink-faint); padding: 18px 4px;
+  }
+
+  /* ================= RESPONSIVE: collapse to a stack ================= */
+  @media (max-width: 860px) {
+    .worktable { display: flex; flex-direction: column; gap: 40px; }
+    .wt-obj, .wt-fav { transform: none !important; }
+    .wt-plan { display: none; }
+    .fav-inner, .fav-inner.is-type { grid-template-columns: 1fr; }
+    .obj-studio .wt-name { font-size: clamp(28px, 8vw, 40px); }
+    .wt-mosaic { min-height: 0; }
+    .fav-media { aspect-ratio: 16 / 9; }
+  }
+  @media (max-width: 480px) {
+    .pin { width: calc(50% - 8px); }
+    .fav-title { font-size: clamp(28px, 9vw, 40px); }
+  }
+</style>
+</head>
+<body class="on-cover">
+
+<div class="wrap">
+  <header class="mast" id="cover">
+    <div class="over over-mark">
+      <span class="wordmark">building curiosity...</span>
+      <div class="corner-logo"><h1 data-drawn data-cap="30">con.rad</h1></div>
+      <span class="est" title="established 02·04·1998">est. ii·iv·mcmxcviii</span>
+    </div>
+    <p class="cover-intro">chronically online, techno-curious, art and music junky.</p>
+    <hr class="rule" />
+  </header>
+
+  <!-- ===== BODY: THE WORKTABLE ===== -->
+  <main id="home-body">
+    <div class="wt-lead">
+      <span>the worktable — <em>four places to look</em></span>
+      <span class="l-die" data-die="72x18" aria-hidden="true"></span>
+      <span>a spread, not a menu</span>
+    </div>
+    <section class="worktable" id="worktable" aria-label="site directory">
+      <svg class="wt-plan" id="wt-plan" aria-hidden="true"></svg>
+      <!-- objects injected here, before the arena -->
+    </section>
+  </main>
+
+</div>
+
+<footer class="colophon">
+  <div class="cols">
+    <span>con.rad</span>
+    <a href="mailto:conradhouse1998@gmail.com">email</a>
+    <a href="https://www.are.na/conrad-house" target="_blank" rel="noopener">are.na</a>
+  </div>
+  <span>set in happy times &amp; routed gothic</span>
+</footer>
+
+<script>
+/* THE WORKTABLE — spatial editorial spread built from window.HomeData.* */
+(function () {
+  var H = window.HomeData, esc = H.esc;
+  var table = document.getElementById("worktable");
+  var plan  = document.getElementById("wt-plan");
+
+  // count suffix per section
+  var SUFFIX = { studio: "editions", writings: "notes", collection: "works", projects: "projects" };
+  var RN = { studio: "01", writings: "02", collection: "03", projects: "04" };
+
+  function num(n) { return n == null ? "—" : String(n); }
+
+  // ---------- section objects ----------
+  function studioObj(s) {
+    var slugs = (s.peek || []).slice(0, 6);
+    var mos = slugs.map(function (sl) {
+      return '<img loading="lazy" alt="" src="' + esc(H.studioThumb(sl)) +
+             '" onerror="this.src=\'' + esc(H.studioHero(sl)) + '\'" />';
+    }).join("");
+    return objShell("studio", s,
+      '<div class="wt-frame"><div class="wt-mosaic">' + mos + '</div></div>');
+  }
+  function imageObj(key, s) {
+    var img = s.img
+      ? '<div class="wt-frame"><img loading="lazy" alt="" src="' + esc(s.img) +
+        '" onerror="this.closest(\'.wt-obj\').classList.add(\'no-img\');this.remove();" /></div>'
+      : plateObj(s);
+    return objShell(key, s, img);
+  }
+  function plateObj(s) {
+    return '<div class="wt-plate">' +
+      '<span class="ghost">' + esc(s.name) + '</span>' +
+      '<span class="plate-num"><b>' + num(s.n) + '</b>' + esc(SUFFIX[s.key] || "") + '</span>' +
+    '</div>';
+  }
+  function objShell(key, s, media) {
+    var a = document.createElement("a");
+    a.className = "wt-obj obj-" + key;
+    a.href = s.href;
+    a.setAttribute("data-key", key);
+    a.innerHTML =
+      '<span class="wt-tag"><span class="rn">' + RN[key] + '</span>' + esc(key) + '</span>' +
+      media +
+      '<span class="wt-cap">' +
+        '<span class="wt-name">' + esc(s.name) + '</span>' +
+        '<span class="wt-desc">' + esc(s.desc) + '</span>' +
+        '<span class="wt-n">' + num(s.n) + ' ' + esc(SUFFIX[key] || "") + '</span>' +
+      '</span>';
+    return a;
+  }
+
+  // ---------- favourite spotlight ----------
+  var favEl, favInner, favDots, FAV = H.FAVORITES || [], favI = 0, favTimer = null, favPaused = false;
+  function buildFav() {
+    favEl = document.createElement("section");
+    favEl.className = "wt-obj wt-fav";
+    favEl.setAttribute("aria-label", "spotlight");
+    favEl.innerHTML =
+      '<div class="fav-head"><span class="spot">spotlight</span><span class="cnt"></span></div>' +
+      '<div class="fav-inner" id="fav-inner"></div>' +
+      '<div class="fav-foot">' +
+        '<button class="fav-step" data-d="-1" aria-label="previous">‹</button>' +
+        '<div class="fav-dots" id="fav-dots"></div>' +
+        '<button class="fav-step" data-d="1" aria-label="next">›</button>' +
+      '</div>';
+    favInner = favEl.querySelector("#fav-inner");
+    favDots  = favEl.querySelector("#fav-dots");
+    favDots.innerHTML = FAV.map(function (_, i) {
+      return '<button data-i="' + i + '" aria-label="favourite ' + (i + 1) + '"></button>';
+    }).join("");
+    favDots.addEventListener("click", function (e) {
+      var b = e.target.closest("button"); if (!b) return;
+      showFav(+b.dataset.i, true);
+    });
+    favEl.querySelectorAll(".fav-step").forEach(function (b) {
+      b.addEventListener("click", function () { showFav(favI + (+b.dataset.d), true); });
+    });
+    favEl.addEventListener("mouseenter", function () { favPaused = true; });
+    favEl.addEventListener("mouseleave", function () { favPaused = false; });
+    return favEl;
+  }
+  function favMarkup(f) {
+    var isType = !f.img;
+    var media = isType ? "" :
+      '<div class="fav-media"><img alt="" src="' + esc(f.img) +
+      '" onerror="this.closest(\'.fav-inner\').classList.add(\'is-type\');this.parentNode.remove();" /></div>';
+    var text =
+      '<div class="fav-text">' +
+        '<span class="fav-kicker">' + esc(f.kicker || f.type) + '</span>' +
+        '<h3 class="fav-title">' + esc(f.title) + '</h3>' +
+        '<p class="fav-blurb">' + esc(f.blurb) + '</p>' +
+        '<a class="fav-go" href="' + esc(f.href) + '">see it →</a>' +
+      '</div>';
+    return { html: isType ? text : media + text, isType: isType };
+  }
+  function showFav(i, user) {
+    if (!FAV.length) return;
+    favI = (i % FAV.length + FAV.length) % FAV.length;
+    var f = FAV[favI], m = favMarkup(f);
+    favInner.style.opacity = "0";
+    setTimeout(function () {
+      favInner.className = "fav-inner" + (m.isType ? " is-type" : "");
+      favInner.innerHTML = m.html;
+      favInner.style.opacity = "1";
+    }, 180);
+    favEl.querySelector(".fav-head .cnt").textContent =
+      String(favI + 1).padStart(2, "0") + " / " + String(FAV.length).padStart(2, "0");
+    Array.prototype.forEach.call(favDots.children, function (b, k) {
+      b.classList.toggle("on", k === favI);
+    });
+    if (user) restartFav();
+  }
+  function restartFav() {
+    if (favTimer) clearInterval(favTimer);
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches || FAV.length < 2) return;
+    favTimer = setInterval(function () { if (!favPaused) showFav(favI + 1, false); }, 5000);
+  }
+
+  // ---------- are.na desk scatter ----------
+  function buildArena() {
+    var sec = document.createElement("section");
+    sec.className = "wt-arena";
+    sec.innerHTML =
+      '<div class="arena-head"><span>lately, on the wall</span>' +
+      '<span class="fresh" id="arena-fresh"></span></div>' +
+      '<div class="arena-scatter" id="arena-scatter">' +
+      '<span class="arena-loading">pulling recent blocks…</span></div>';
+    return sec;
+  }
+  function fillArena() {
+    var scatter = document.getElementById("arena-scatter");
+    var fresh = document.getElementById("arena-fresh");
+    var sec = document.querySelector(".wt-arena");
+    H.arena(14).then(function (res) {
+      var blocks = (res.blocks || []).filter(function (b) { return b.thumb || b.img; }).slice(0, 7);
+      if (!blocks.length) { if (sec) sec.style.display = "none"; return; }
+      var rots = [-3.4, 2.2, -1.6, 3.1, -2.4, 1.4, -3.0];
+      scatter.innerHTML = blocks.map(function (b, i) {
+        var when = H.whenAgo(b.when);
+        var t = (b.title || "").trim() || "untitled";
+        return '<a class="pin" href="' + esc(b.src || "#") + '" target="_blank" rel="noopener"' +
+          ' title="' + esc(t) + (when ? " · " + when : "") + '"' +
+          ' style="--rot:' + rots[i % rots.length] + 'deg">' +
+          '<span class="p-img"><img loading="lazy" alt="" src="' + esc(b.thumb || b.img) +
+          '" onerror="this.closest(\'.pin\').remove();" /></span>' +
+          (when ? '<span class="p-when">' + esc(when) + '</span>' : '') +
+        '</a>';
+      }).join("");
+      fresh.textContent = res.live ? "live · updates as i save" : "from a saved snapshot";
+      fresh.classList.toggle("snap", !res.live);
+    }).catch(function () { if (sec) sec.style.display = "none"; });
+  }
+
+  // ---------- the pencil plan: tremored connectors ----------
+  function rng(seed) {
+    var s = seed >>> 0;
+    return function () { s |= 0; s = s + 0x6D2B79F5 | 0; var t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; };
+  }
+  function penD(x1, y1, x2, y2, r, amp) {
+    var dx = x2 - x1, dy = y2 - y1, len = Math.hypot(dx, dy) || 1;
+    var n = Math.max(3, Math.round(len / 9)), ph = r() * 6.28, bow = (r() - 0.5) * amp * 3;
+    var p = "M" + x1.toFixed(1) + " " + y1.toFixed(1);
+    for (var i = 1; i <= n; i++) {
+      var t = i / n;
+      var wob = Math.sin(t * Math.PI * (2 + r() * 2) + ph) * amp * (0.4 + r() * 0.6) + Math.sin(t * Math.PI) * bow;
+      p += "L" + (x1 + dx * t - dy / len * wob).toFixed(1) + " " + (y1 + dy * t + dx / len * wob).toFixed(1);
+    }
+    return p;
+  }
+  var NS = "http://www.w3.org/2000/svg";
+  function drawPlan() {
+    if (!plan || window.innerWidth <= 860) { if (plan) plan.innerHTML = ""; return; }
+    var box = table.getBoundingClientRect();
+    plan.setAttribute("viewBox", "0 0 " + box.width + " " + box.height);
+    function c(sel) {
+      var el = table.querySelector(sel); if (!el) return null;
+      var r = el.getBoundingClientRect();
+      return { x: r.left - box.left, y: r.top - box.top, w: r.width, h: r.height,
+               cx: r.left - box.left + r.width / 2, cy: r.top - box.top + r.height / 2 };
+    }
+    var fav = c(".wt-fav"), st = c(".obj-studio"), wr = c(".obj-writings"),
+        co = c(".obj-collection"), pr = c(".obj-projects"), ar = c(".wt-arena");
+    var ink = getComputedStyle(document.documentElement).getPropertyValue("--ink-rgb").trim() || "28,26,22";
+    var sang = getComputedStyle(document.documentElement).getPropertyValue("--sang-rgb").trim() || "156,61,30";
+    plan.innerHTML = "";
+    var r = rng(20260723);
+    // studio is the hub; a loose plan links it to every place, and projects to the wall
+    var links = [];
+    if (fav && st) links.push([fav.x + fav.w, fav.cy - 14, st.x, st.cy - fav.h * 0.15]);
+    if (st && co)  links.push([st.x + 10, st.y + st.h - 8, co.cx, co.y]);
+    if (st && wr)  links.push([st.x, st.cy + 24, wr.x + wr.w, wr.cy]);
+    if (st && ar)  links.push([st.cx, st.y + st.h, ar.x + ar.w * 0.28, ar.y]);
+    if (pr && ar)  links.push([pr.x + pr.w, pr.cy, ar.x, ar.cy - ar.h * 0.1]);
+    links.forEach(function (L, k) {
+      var col = (k === 0) ? sang : ink, a = (k === 0) ? 0.24 : 0.16;
+      [[1.05, a], [0.7, a * 0.6]].forEach(function (pass) {
+        var path = document.createElementNS(NS, "path");
+        path.setAttribute("d", penD(L[0], L[1], L[2], L[3], r, 1.1));
+        path.setAttribute("fill", "none");
+        path.setAttribute("stroke", "rgba(" + col + "," + pass[1] + ")");
+        path.setAttribute("stroke-width", pass[0]);
+        path.setAttribute("stroke-linecap", "round");
+        plan.appendChild(path);
+      });
+      // a small node dot where a line meets the hub end
+      var dot = document.createElementNS(NS, "circle");
+      dot.setAttribute("cx", L[2]); dot.setAttribute("cy", L[3]); dot.setAttribute("r", "1.7");
+      dot.setAttribute("fill", "rgba(" + ink + ",.28)");
+      plan.appendChild(dot);
+    });
+  }
+
+  // ---------- assemble ----------
+  H.sections().then(function (secs) {
+    var by = {}; secs.forEach(function (s) { by[s.key] = s; });
+    var order = ["studio", "writings", "collection", "projects"];
+    // favourite goes first in DOM (top of the stack on mobile), then objects, then arena
+    table.appendChild(buildFav());
+    order.forEach(function (k) {
+      table.appendChild(k === "studio" ? studioObj(by[k]) : imageObj(k, by[k]));
+    });
+    table.appendChild(buildArena());
+
+    showFav(0, false); restartFav();
+    fillArena();
+
+    // drawn ornaments / rules + connectors after layout settles
+    if (window.Graphite) window.Graphite.init(document.getElementById("home-body"));
+    var settle = function () { drawPlan(); };
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { requestAnimationFrame(settle); });
+    else requestAnimationFrame(settle);
+    // images arriving change heights → redraw once loaded
+    window.addEventListener("load", function () { setTimeout(drawPlan, 60); });
+    table.querySelectorAll("img").forEach(function (im) {
+      im.addEventListener("load", debounce(drawPlan, 120));
+    });
+  });
+
+  function debounce(fn, ms) { var t; return function () { clearTimeout(t); t = setTimeout(fn, ms); }; }
+  window.addEventListener("resize", debounce(drawPlan, 160));
+  window.addEventListener("studio-theme", function () { setTimeout(drawPlan, 40); });
+})();
+</script>
+</body>
+</html>

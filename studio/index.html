@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>STUDIO · Conrad House</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="a practice of creating and chasing after images that intrigue me. editions, series, and explorations by Conrad House." />
+<script>try{document.documentElement.dataset.theme=localStorage.getItem("studio.theme")||"cream"}catch(e){}</script>
+<link rel="stylesheet" href="assets/catalogue.css" />
+<script src="assets/graphite.js" defer></script>
+<script src="assets/theme.js" defer></script>
+<script src="assets/masthead.js" defer></script>
+<script src="assets/lightbox.js" defer></script>
+<script src="assets/nav.js" defer></script>
+<style>
+  /* ---------- screens + parallax transition ---------- */
+  .screen { will-change: transform, opacity; }
+  .screen.leave-up { transform: translateY(-16vh); opacity: 0; transition: transform .6s cubic-bezier(.5,0,.3,1), opacity .5s ease; }
+  .screen.enter-below { transform: translateY(52vh); opacity: 0; }
+  .screen.enter-run { transform: none; opacity: 1; transition: transform .78s cubic-bezier(.22,.8,.24,1) .06s, opacity .6s ease .06s; }
+  .screen.gone { display: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .screen.leave-up, .screen.enter-below, .screen.enter-run { transition: none; transform: none; opacity: 1; }
+  }
+
+  /* ---------- cover ---------- */
+  #cover .over { padding-top: 22px; }
+  #cover .contents { margin-top: 24px; }
+
+  /* index / explore mode toggle */
+  .cover-modes { display: flex; gap: 18px; align-items: baseline; margin-top: 22px;
+    border-bottom: 1px solid var(--rule); padding-bottom: 10px; }
+  .cover-modes .mode-btn { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .18em;
+    text-transform: lowercase; color: var(--ink-faint); cursor: pointer; }
+  .cover-modes .mode-btn:hover { color: var(--sanguine); }
+  .cover-modes .mode-btn.cur { color: var(--sanguine); border-bottom: 1px solid var(--sanguine); padding-bottom: 8px; margin-bottom: -11px; }
+  #cover .contents[hidden], #cover .explore-grid[hidden] { display: none; }
+
+  /* visual explore: masonry image wall */
+  .explore-grid { columns: 5 210px; column-gap: 12px; margin-top: 26px; }
+  @media (max-width: 900px) { .explore-grid { columns: 3 160px; } }
+  @media (max-width: 560px) { .explore-grid { columns: 2 130px; } }
+  .ex-tile { display: block; width: 100%; margin: 0 0 12px; position: relative;
+    break-inside: avoid; border: 1px solid var(--rule); background: var(--paper-deep);
+    overflow: hidden; }
+  .ex-tile img { width: 100%; display: block; transition: filter .3s ease, transform .4s ease; }
+  .ex-tile:hover img { filter: none; transform: scale(1.02); }
+  .ex-cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 16px 10px 8px;
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: .1em; text-transform: lowercase;
+    color: #f4f1ea; background: linear-gradient(transparent, rgba(0,0,0,.62));
+    opacity: 0; transition: opacity .25s ease; pointer-events: none; }
+  .ex-tile:hover .ex-cap { opacity: 1; }
+
+  /* ---------- series view ---------- */
+  .sv-head { padding: 30px 0 0; }
+  .sv-topline { display: flex; justify-content: space-between; align-items: baseline;
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .2em;
+    text-transform: lowercase; color: var(--ink-faint); }
+  .sv-topline a:hover { color: var(--sanguine); }
+  .sv-title { display: flex; gap: 18px; align-items: baseline; border-bottom: 1px solid var(--ink);
+    padding: 10px 0 14px; margin-top: 10px; }
+  .sv-title .rn { font-family: var(--font-mono); font-size: 15px; color: var(--sanguine); }
+  .sv-title h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(34px, 5.4vw, 58px); }
+  .sv-title .n { font-family: var(--font-mono); font-size: 10px; color: var(--ink-faint); margin-left: auto; }
+  .sv-note { font-family: var(--font-text); font-style: italic; font-size: 14.5px; color: var(--ink-faint);
+    max-width: 600px; margin: 14px 0 34px; }
+  .sv-nav { display: flex; justify-content: space-between; margin-top: 64px; border-top: 1px solid var(--ink);
+    padding-top: 14px; font-family: var(--font-mono); font-size: 10px; letter-spacing: .16em;
+    text-transform: lowercase; color: var(--ink-faint); }
+  .sv-nav a:hover { color: var(--sanguine); }
+</style>
+</head>
+<body class="on-cover">
+<div class="ground-mount" aria-label="page ground"></div>
+
+<nav class="rail" id="rail" aria-label="studio spine">
+  <a class="rail-mast" href="index.html" aria-label="back to the studio index"><div class="mast-title">
+    <h1 id="mast-h1">studio</h1>
+    <canvas id="masthead-canvas" data-word="studio" data-cap="58" aria-hidden="true"></canvas>
+  </div></a>
+  <div class="rail-jumps" id="rail-jumps"></div>
+</nav>
+
+<div class="screens">
+  <div class="wrap">
+    <nav class="site-nav" aria-label="site">
+      <a class="home" href="../">con.rad</a>
+      <a href="../writings/">writings</a>
+      <a href="../collection/">collection</a>
+      <a href="../projects/">projects</a>
+      <a class="cur" href="index.html">studio</a>
+    </nav>
+    <main id="main"></main>
+    <footer class="colophon">
+      <span>Conrad House</span>
+      <a href="../index.html">con.rad</a>
+    </footer>
+  </div>
+</div>
+
+<script>
+const IMG_V = "?v=1784771550";
+(async function () {
+  const main = document.getElementById("main");
+  let data, articles = [];
+  try {
+    const r = await fetch("data/studio.json", { cache: "no-store" });
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    data = await r.json();
+    const al = await fetch("data/articles.json", { cache: "no-store" }).then(r => r.json()).catch(() => ({ articles: [] }));
+    for (const a of al.articles || []) {
+      const full = await fetch(`data/articles/${a.slug}.json`, { cache: "no-store" }).then(r => r.json()).catch(() => null);
+      if (full) articles.push(full);
+    }
+  } catch (e) {
+    main.innerHTML = `<div class="load-error">could not load data/studio.json — ${e.message}.
+      This page has no embedded fallback; fix the fetch.</div>`;
+    return;
+  }
+
+  const works = data.works || [];
+  const seriesDefs = data.series || [];
+  const topWorks = works.filter(w => !w.parent);
+  const childrenOf = slug => works.filter(w => w.parent === slug).sort(edSort);
+  const bySeries = id => topWorks.filter(w => w.series === id).sort(edSort);
+  const explorations = topWorks.filter(w => w.kind === "exploration").sort(edSort);
+  const singles = topWorks.filter(w => !w.series && w.kind !== "exploration").sort(edSort);
+  const articleFor = slug => articles.find(a => a.work === slug);
+  function edSort(a, b) { return (a.order ?? a.edition ?? 999) - (b.order ?? b.edition ?? 999); }
+  function edLbl(w) { return w.edition != null ? String(w.edition).padStart(2, "0") : "✦"; }
+  const bySlug = Object.fromEntries(works.map(w => [w.slug, w]));
+  function leadFile(slugOrWork) {
+    const w = typeof slugOrWork === "string" ? bySlug[slugOrWork] : slugOrWork;
+    const im = w && w.images && w.images[0];
+    return (im && !im.video) ? im.file : "hero.jpg";
+  }
+
+  const sections = [
+    ...seriesDefs.map(s => ({ id: s.id, numeral: s.numeral, name: s.name, note: s.note, works: bySeries(s.id) })),
+    { id: "explorations", numeral: "◎", name: "Explorations", note: "Not pieces but ways of searching: systems built to explore what the other systems can do, and to tune how that exploring happens.", works: explorations, kind: "exploration" },
+    { id: "singles", numeral: "·", name: "Single Works", note: "", works: singles },
+  ].filter(s => s.works.length);
+
+  // ---------- rail jumps ----------
+  const jumpHost = document.getElementById("rail-jumps");
+  if (jumpHost) jumpHost.innerHTML =
+    sections.map(s => `<a href="#/s/${s.id}" data-sect="${s.id}" title="${esc(s.name)}">${s.numeral}</a>`).join("") +
+    (articles.length ? `<a href="#/s/writings" data-sect="writings" title="writings">✎</a>` : "");
+
+  // ---------- cover (spine contents + well) ----------
+  const tocSeries = s => `
+    <div class="toc-series">
+      <h4 data-sect="${s.id}" data-thumbs="${s.works.map(w => w.slug).join(",")}">
+        <a href="#/s/${s.id}" style="display:flex;gap:10px;align-items:baseline;flex:1">
+          <span class="rn">${s.numeral}</span> ${esc(s.name).toUpperCase()}</a></h4>
+      ${s.works.map(w => `
+        <a class="toc-row" href="#/s/${s.id}/${w.slug}" data-slug="${w.slug}" data-cap="${w.edition != null ? "ED. " + edLbl(w) + " · " : ""}${esc(w.name)}">
+          <span class="nm">${esc(titleCase(w.name))}</span><span class="dots"></span><span class="ed">${edLbl(w)}</span>
+        </a>` + childrenOf(w.slug).map(c => `
+        <a class="toc-row toc-sub" href="piece.html?w=${w.slug}#ss-${c.slug}" data-slug="${c.slug}" data-cap="${c.edition != null ? "ED. " + edLbl(c) + " · " : ""}${esc(c.name)}">
+          <span class="nm">${esc(titleCase(c.name))}</span><span class="dots"></span><span class="ed">${edLbl(c)}</span>
+        </a>`).join("")).join("")}
+      <div class="toc-strip">${s.works.map(w =>
+        `<a href="#/s/${s.id}/${w.slug}"><img src="assets/img/${w.slug}/thumb.jpg${IMG_V}" loading="lazy" alt="" onerror="this.parentNode.style.display='none'"></a>`).join("")}</div>
+    </div>`;
+
+  const writingsToc = articles.length ? `
+    <div class="toc-series">
+      <h4 data-sect="writings"><a href="#/s/writings" style="display:flex;gap:10px;align-items:baseline;flex:1">
+        <span class="rn">✎</span> WRITINGS</a></h4>
+      ${articles.map(a => `
+        <a class="toc-row" href="../writings/#${encodeURIComponent(a.slug)}">
+          <span class="nm">${esc(a.title)}</span><span class="dots"></span><span class="ed">${esc(a.no)}</span>
+        </a>`).join("")}
+    </div>` : "";
+
+  const coverHtml = `
+    <div class="screen" id="cover">
+      <h1 class="mobile-mast" data-drawn data-cap="82">studio</h1>
+      <div class="over" style="font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;color:var(--ink-faint);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 16px">
+        <span>building curiosity...</span>
+        <span>${esc(data.intro || "")}</span>
+      </div>
+      <div class="cover-modes" id="cover-modes">
+        <a class="mode-btn cur" data-mode="index" href="#">index</a>
+        <a class="mode-btn" data-mode="explore" href="#">visual explore</a>
+      </div>
+      <div class="contents" id="contents">
+        <div class="toc">
+          <div class="toc-grid">${sections.map(tocSeries).join("")}${writingsToc}</div>
+        </div>
+        <div class="well-col">
+          <div class="well" id="well">
+            <img id="well-img" src="assets/img/${sections[0].works[0].slug}/${leadFile(sections[0].works[0])}${IMG_V}" alt="" />
+            <div id="well-sheet"></div>
+          </div>
+          <div class="well-cap" id="well-cap">${sections[0].works[0].edition != null ? "ED. " + edLbl(sections[0].works[0]) + " · " : ""}${esc(sections[0].works[0].name)}</div>
+          <div class="well-note" id="well-note">${esc(sections[0].works[0].note || "")}</div>
+        </div>
+      </div>
+      <div class="explore-grid" id="explore-grid" hidden></div>
+    </div>
+    <div class="screen gone" id="series-view"></div>`;
+
+  main.innerHTML = coverHtml;
+
+  // ---------- visual explore: a shuffled masonry of every studio image ----------
+  function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); const t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+  let exploreBuilt = false;
+  function buildExplore() {
+    if (exploreBuilt) return;
+    exploreBuilt = true;
+    const pool = shuffle(works.flatMap(w => (w.images || [])
+      .filter(im => !im.video)
+      .map(im => ({ slug: w.slug, parent: w.parent, file: im.file, name: w.name }))));
+    document.getElementById("explore-grid").innerHTML = pool.map(t => {
+      const href = t.parent ? `piece.html?w=${encodeURIComponent(t.parent)}#ss-${t.slug}`
+                            : `piece.html?w=${encodeURIComponent(t.slug)}`;
+      return `<a class="ex-tile" href="${href}" title="${esc(titleCase(t.name))}">` +
+        `<img src="assets/img/${t.slug}/${t.file}${IMG_V}" loading="lazy" alt="${esc(t.name)}" ` +
+        `onerror="this.closest('.ex-tile').remove()">` +
+        `<span class="ex-cap">${esc(titleCase(t.name))}</span></a>`;
+    }).join("");
+  }
+  function setMode(mode) {
+    const explore = mode === "explore";
+    if (explore) buildExplore();
+    document.getElementById("contents").hidden = explore;
+    document.getElementById("explore-grid").hidden = !explore;
+    document.querySelectorAll("#cover-modes .mode-btn").forEach(b =>
+      b.classList.toggle("cur", b.dataset.mode === mode));
+  }
+  document.querySelectorAll("#cover-modes .mode-btn").forEach(b =>
+    b.addEventListener("click", e => { e.preventDefault(); setMode(b.dataset.mode); }));
+
+  // ---------- series view rendering ----------
+  const plate = w => `
+    <a class="plate" id="p-${w.slug}" href="piece.html?w=${encodeURIComponent(w.slug)}">
+      <figure>
+        <div class="img"><img src="assets/img/${w.slug}/${leadFile(w)}${IMG_V}" alt="${esc(w.name)}" loading="lazy" /></div>
+        <figcaption>
+          <span class="num">${w.edition != null ? "ED. " + edLbl(w) : "✦"}</span>
+          <span class="name">${esc(w.name)}</span>
+          <span class="after">after ${esc(w.after)}</span>
+        </figcaption>
+      </figure>
+      ${w.kind === "exploration" && articleFor(w.slug) ? `<div class="expl-link">a way of searching — read the writing: “${esc(articleFor(w.slug).title)}”</div>` : ""}
+    </a>`;
+
+  function renderTag(tag) {
+    const view = document.getElementById("series-view");
+    const hits = works.filter(w => (w.tags || []).includes(tag)).sort(edSort);
+    if (!hits.length) return false;
+    view.innerHTML = `
+      <div class="sv-head">
+        <div class="sv-topline"><a href="#/">◀ contents</a><span>tagged</span></div>
+        <div class="sv-title"><span class="rn">#</span><h2 data-drawn data-cap="70">${esc(tag)}</h2><span class="n">${hits.length} works</span></div>
+      </div>
+      <div class="plates">${hits.map(plate).join("")}</div>
+      <div class="sv-nav"><a href="#/">◀ back to contents</a><span></span></div>`;
+    return true;
+  }
+
+  function renderSeries(id) {
+    const view = document.getElementById("series-view");
+    const idx = sections.findIndex(s => s.id === id);
+    if (id === "writings") {
+      view.innerHTML = `
+        <div class="sv-head">
+          <div class="sv-topline"><a href="#/">◀ contents</a><span>writings</span></div>
+          <div class="sv-title"><span class="rn">✎</span><h2 data-drawn data-cap="70">Writings — from the bench</h2><span class="n">${articles.length}</span></div>
+        </div>
+        <div class="writings-list">${articles.map(a => `
+          <a class="writing-row" href="../writings/#${encodeURIComponent(a.slug)}">
+            <span class="w-no">n° ${esc(a.no)}</span><span class="w-title">${esc(a.title)}</span>
+            <span class="w-sub">${esc(a.subtitle)}</span><span class="w-date">${esc(a.date)}</span>
+          </a>`).join("")}</div>
+        <div class="sv-nav"><a href="#/">◀ back to contents</a><span></span></div>`;
+      return true;
+    }
+    if (idx < 0) return false;
+    const s = sections[idx], prev = sections[idx - 1], next = sections[idx + 1];
+    view.innerHTML = `
+      <div class="sv-layout">
+        <aside class="sv-side">
+          <span class="rn">${s.numeral}</span>
+          <h2 data-drawn data-cap="44" data-orient="vertical">${esc(s.name)}</h2>
+        </aside>
+        <div class="sv-body">
+          <div class="sv-topline"><a href="#/">◀ contents</a>
+            <span>${s.works.length} works · ${idx + 1} / ${sections.length}</span></div>
+          ${s.note ? `<p class="sv-note">${esc(s.note)}</p>` : ""}
+          ${(seriesDefs.find(x => x.id === s.id)?.tags || []).length ? `<div class="tag-chips" style="margin:0 0 24px">${seriesDefs.find(x => x.id === s.id).tags.map(t =>
+            `<a class="tag-chip" href="#/t/${encodeURIComponent(t)}">${esc(t)}</a>`).join("")}</div>` : ""}
+          <div class="plates">${s.works.map(plate).join("")}</div>
+        </div>
+      </div>
+      <div class="sv-nav">
+        ${prev ? `<a href="#/s/${prev.id}">◀ ${prev.numeral} ${esc(prev.name)}</a>` : `<a href="#/">◀ contents</a>`}
+        ${next ? `<a href="#/s/${next.id}">${next.numeral} ${esc(next.name)} ▶</a>` : `<a href="#/s/writings">writings ▶</a>`}
+      </div>`;
+    return true;
+  }
+
+  // ---------- state machine + parallax transition ----------
+  const cover = document.getElementById("cover");
+  const view = document.getElementById("series-view");
+  let current = "";                                    // "" = cover, else section id
+  const setCoverFlag = () => document.body.classList.toggle("on-cover", !/^#\/?s\//.test(location.hash) && !/^#\/?t\//.test(location.hash));
+  let animating = false;
+
+  function decorate(root) {
+    if (window.Graphite) Graphite.init(root); else addEventListener("load", () => Graphite.init(root));
+    if (window.Masthead) Masthead.init();
+    if (window.Lightbox) Lightbox.attach(root);
+    root.querySelectorAll(".plate").forEach(p => p.classList.add("in"));
+  }
+
+  function markRail(id) {
+    document.querySelectorAll(".rail-jumps a").forEach(a => a.classList.toggle("cur", a.dataset.sect === id));
+    document.querySelectorAll(".nv-group").forEach(g => g.classList.toggle("open", g.dataset.series === id));
+  }
+
+  function swap(fromEl, toEl, after) {
+    if (animating) return;
+    animating = true;
+    scrollTo(0, 0);
+    toEl.classList.remove("gone");
+    toEl.classList.add("enter-below");
+    fromEl.classList.add("leave-up");
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      toEl.classList.add("enter-run");
+      setTimeout(() => {
+        fromEl.classList.add("gone");
+        fromEl.classList.remove("leave-up");
+        toEl.classList.remove("enter-below", "enter-run");
+        animating = false;
+        if (after) after();
+      }, 820);
+    }));
+  }
+
+  function route() {
+    const h = location.hash.replace(/^#\/?/, "");
+    const tm = h.match(/^t\/(.+)$/i);
+    const m = h.match(/^s\/([a-z0-9-]+)(?:\/([a-z0-9-]+))?$/i);
+    let target = m ? m[1] : "";
+    let workSlug = m && m[2];
+    if (tm) { target = "tag:" + decodeURIComponent(tm[1]); workSlug = null; }
+    if (target === current) { if (workSlug) scrollToPlate(workSlug); return; }
+    if (target) {
+      const ok = target.startsWith("tag:") ? renderTag(target.slice(4)) : renderSeries(target);
+      if (!ok) { location.hash = ""; return; }
+      if (current !== "") {                            // series -> series: no big transition
+        markRail(target); current = target; decorate(view);
+        scrollTo(0, 0); if (workSlug) scrollToPlate(workSlug);
+        return;
+      }
+      swap(cover, view, () => { if (workSlug) scrollToPlate(workSlug); });
+      decorate(view); markRail(target); current = target; setCoverFlag();
+    } else {
+      if (current === "") return;
+      swap(view, cover);
+      markRail(""); current = ""; setCoverFlag();
+    }
+  }
+  function scrollToPlate(slug) {
+    const el = document.getElementById("p-" + slug);
+    if (el) setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "start" }), 200);
+  }
+  addEventListener("hashchange", () => { route(); setCoverFlag(); });
+
+  // ---------- preview well ----------
+  const wImg = document.getElementById("well-img"), wSheet = document.getElementById("well-sheet"),
+        wCap = document.getElementById("well-cap"), wNote = document.getElementById("well-note");
+  document.querySelectorAll(".toc-row[data-slug]").forEach(r => r.addEventListener("mouseenter", () => {
+    wSheet.style.display = "none"; wImg.style.display = "block";
+    wImg.src = `assets/img/${r.dataset.slug}/${leadFile(r.dataset.slug)}${IMG_V}`; wCap.textContent = r.dataset.cap;
+    const w = works.find(x => x.slug === r.dataset.slug);
+    wNote.textContent = (w && w.note) || "";
+  }));
+  document.querySelectorAll(".toc-series h4[data-thumbs]").forEach(h => h.addEventListener("mouseenter", () => {
+    wImg.style.display = "none"; wSheet.style.display = "grid";
+    wSheet.innerHTML = h.dataset.thumbs.split(",").slice(0, 6).map(s =>
+      `<img src="assets/img/${s}/thumb.jpg${IMG_V}" loading="lazy" alt="" onerror="this.style.display='none'">`).join("");
+    wCap.textContent = h.textContent.trim() + " — at a glance";
+    const sd = seriesDefs.find(x => x.id === h.dataset.sect);
+    const sect = sections.find(x => x.id === h.dataset.sect);
+    wNote.textContent = (sd && sd.note) || (sect && sect.note) || "";
+  }));
+
+  decorate(cover);
+  route();                                             // honor a deep link on load
+  setCoverFlag();
+
+  function titleCase(s) { return s.toLowerCase().replace(/(^|\s|-)\S/g, c => c.toUpperCase()); }
+  function esc(s) { return String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
+})();
+</script>
+</body>
+</html>

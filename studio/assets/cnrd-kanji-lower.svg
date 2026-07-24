@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 130" fill="currentColor">
+  <!-- cnrd / faux-kanji wordmark — lowercase variant.
+       same stroke conventions as uppercase (20-unit strokes, 90° joins,
+       harai kicks, hane hooks). x-height occupies y=40-110; d's ascender
+       reaches up to y=0. glyph cells vary by letter width. -->
+
+  <!-- ====== c ====== -->
+  <g transform="translate(4, 0)">
+    <path d="M 0 40 H 50 L 60 50 L 50 60 H 0 Z"/>
+    <path d="M 0 40 H 20 V 100 L 30 110 L 20 114 H 0 Z"/>
+    <path d="M 0 90 H 50 L 60 100 L 50 110 H 0 Z"/>
+  </g>
+
+  <!-- ====== n ====== -->
+  <g transform="translate(80, 0)">
+    <path d="M 0 40 H 20 V 100 L 30 110 L 20 114 H 0 Z"/>
+    <path d="M 20 40 H 80 V 60 H 20 Z"/>
+    <path d="M 60 40 H 80 V 110 H 60 Z"/>
+  </g>
+
+  <!-- ====== r ====== -->
+  <g transform="translate(180, 0)">
+    <path d="M 0 40 H 20 V 100 L 30 110 L 20 114 H 0 Z"/>
+    <path d="M 20 40 H 40 L 50 50 L 40 60 H 20 Z"/>
+  </g>
+
+  <!-- ====== d (ascender on right, octagonal bowl) ====== -->
+  <g transform="translate(252, 0)">
+    <!-- tall right vertical (ascender) -->
+    <path d="M 60 0 H 80 V 110 H 60 Z"/>
+    <!-- left vertical of the bowl with hane -->
+    <path d="M 0 40 H 20 V 100 L 30 110 L 20 114 H 0 Z"/>
+    <!-- top of bowl, joins right vertical -->
+    <path d="M 20 40 H 80 V 60 H 20 Z"/>
+    <!-- bottom of bowl, joins right vertical -->
+    <path d="M 20 90 H 80 V 110 H 20 Z"/>
+  </g>
+</svg>

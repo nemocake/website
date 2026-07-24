@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>element mockups · STUDIO</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="assets/catalogue.css" />
+<style>
+  .mock-label { margin: 64px 0 4px; font-family: var(--font-mono); font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: var(--sanguine); }
+  .mock-label:first-of-type { margin-top: 30px; }
+  .mock-ref { font-size: 14px; font-style: italic; color: var(--ink-faint); margin-bottom: 14px; max-width: 660px; }
+  .mock-box { border: 1px solid var(--ink); padding: 26px 30px 30px; }
+
+  /* 1 — palette strips */
+  .pal-series { margin-bottom: 20px; }
+  .pal-series h4 { display: flex; gap: 10px; align-items: baseline; font-family: var(--font-mono);
+    font-size: 10px; letter-spacing: .2em; text-transform: uppercase; border-bottom: 1px solid var(--ink); padding-bottom: 6px; }
+  .pal-series h4 .rn { color: var(--sanguine); }
+  .pal-strip { display: flex; gap: 0; margin-top: 8px; height: 14px; width: 300px; border: 1px solid var(--rule); }
+  .pal-strip span { flex: 1; }
+  .pal-note { font-family: var(--font-mono); font-size: 8.5px; color: var(--ink-faint); letter-spacing: .1em; margin-top: 5px; }
+
+  /* 3 — cube placeholders */
+  .cube-demo { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .cube-plate { position: relative; aspect-ratio: 4/3; border: 1px solid var(--rule); background: var(--paper-deep); overflow: hidden; }
+  .cube-plate canvas { position: absolute; inset: 0; margin: auto; }
+  .cube-plate img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .8s ease; }
+  .cube-plate.loaded img { opacity: 1; }
+  .cube-plate.loaded canvas { opacity: 0; transition: opacity .6s ease .2s; }
+
+  /* 4 — degrading numerals */
+  .numerals { display: flex; gap: 26px; align-items: center; }
+  .numerals canvas { display: block; }
+
+  /* 5 — proof footer */
+  .proof-footer { display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid var(--ink); padding-top: 12px; }
+  .proof-left { display: flex; gap: 14px; align-items: center; font-family: var(--font-mono);
+    font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-faint); }
+  .reg-mark { width: 16px; height: 16px; }
+  .proof-bar { display: flex; height: 12px; width: 190px; border: 1px solid var(--rule); }
+  .proof-bar span { flex: 1; }
+
+  /* 2 — chop */
+  .chop-demo { display: flex; gap: 40px; align-items: flex-end; }
+  .chop {
+    display: inline-block; color: var(--sanguine); border: 2px solid var(--sanguine);
+    padding: 7px 9px 5px; transform: rotate(-1.6deg); position: relative;
+  }
+  .chop svg { display: block; height: 17px; width: auto; }
+  .chop::after { content: ""; position: absolute; inset: 0; border: 2px solid var(--sanguine);
+    transform: translate(1.3px, 1px); opacity: .35; pointer-events: none; }
+  .chop.small svg { height: 12px; }
+  .colophon-mock { flex: 1; display: flex; justify-content: space-between; align-items: flex-end;
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--ink-faint); }
+
+  /* 6 — photo corners */
+  .corners-demo { max-width: 420px; position: relative; padding: 14px; }
+  .corner { position: absolute; width: 26px; height: 26px; background: var(--paper-deep);
+    border: 1px solid var(--rule); }
+  .corner.tl { top: 0; left: 0; clip-path: polygon(0 0, 100% 0, 0 100%); }
+  .corner.tr { top: 0; right: 0; clip-path: polygon(0 0, 100% 0, 100% 100%); }
+  .corner.bl { bottom: 0; left: 0; clip-path: polygon(0 0, 0 100%, 100% 100%); }
+  .corner.br { bottom: 0; right: 0; clip-path: polygon(100% 0, 0 100%, 100% 100%); }
+  .corners-demo img { width: 100%; display: block; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="mast">
+    <div class="over"><a href="index.html">← studio</a><span>ELEMENT MOCKUPS — six candidates, pick any subset</span></div>
+  </header>
+
+  <div class="mock-label">1 — per-series palette strips (the PIGMENT method on the studio itself)</div>
+  <p class="mock-ref">Chips are extracted live from each series' actual thumbnails, coverage-weighted, sorted dark to light. In the real build they'd be precomputed and stored in studio.json.</p>
+  <div class="mock-box" id="pal-box">
+    <div class="pal-series" data-series="I·POSTER STUDIES" data-thumbs="jester-poster,idea-019,urban-housing-13,cnrd-quarterly-05"></div>
+    <div class="pal-series" data-series="II·FACTURE" data-thumbs="paint,merzbau,flux"></div>
+    <div class="pal-series" data-series="V·THE BROKEN ROOM" data-thumbs="enfilade,collide,weathering,tessera"></div>
+  </div>
+
+  <div class="mock-label">2 — the cnrd chop (your faux-kanji mark as a collector's seal)</div>
+  <p class="mock-ref">Your actual cnrd-mark SVG, stamped sanguine with a slight rotation and a doubled misregistered border, sitting in the colophon the way a seal sits on a print.</p>
+  <div class="mock-box chop-demo">
+    <div class="colophon-mock">
+      <span>Conrad House</span>
+      <span class="chop"><svg viewBox="0 0 440 130" fill="currentColor"><use href="#cnrd-mark"/></svg></span>
+      <span>con.rad</span>
+    </div>
+  </div>
+
+  <div class="mock-label">3 — incomplete-cube loading states (LeWitt, functionally incomplete)</div>
+  <p class="mock-ref">While a plate loads, the placeholder is one of the 122 incomplete open cubes, seeded per work and drawn with the pencil tremor. When the image arrives the cube resolves away. Loading is staged here so you can watch it.</p>
+  <div class="mock-box cube-demo" id="cube-demo">
+    <div class="cube-plate" data-img="assets/img/merzbau/hero.jpg" data-delay="1800"></div>
+    <div class="cube-plate" data-img="assets/img/capriccio/hero.jpg" data-delay="3600"></div>
+    <div class="cube-plate" data-img="assets/img/flux/hero.jpg" data-delay="9000"></div>
+  </div>
+
+  <div class="mock-label">4 — degrading numerals (Molnár; order decays down the catalogue)</div>
+  <p class="mock-ref">The section numerals drawn with progressively more tremor, I clean through VI collapsing.</p>
+  <div class="mock-box numerals" id="numerals"></div>
+
+  <div class="mock-label">5 — proof-sheet footer (registration marks + the studio palette as a colour bar)</div>
+  <p class="mock-ref">Press-proof furniture on the colophon: registration crosses and a colour bar of the site's own inks.</p>
+  <div class="mock-box">
+    <div class="proof-footer">
+      <div class="proof-left">
+        <svg class="reg-mark" viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.5" fill="none" stroke="rgba(28,26,22,.7)" stroke-width="0.8"/><line x1="8" y1="0" x2="8" y2="16" stroke="rgba(28,26,22,.7)" stroke-width="0.8"/><line x1="0" y1="8" x2="16" y2="8" stroke="rgba(28,26,22,.7)" stroke-width="0.8"/></svg>
+        <span>STUDIO · SHEET 1 OF 7</span>
+      </div>
+      <div class="proof-bar">
+        <span style="background:#1c1a16"></span><span style="background:#4a463f"></span>
+        <span style="background:#8b857a"></span><span style="background:#9c3d1e"></span>
+        <span style="background:rgb(222,218,209)"></span><span style="background:rgb(231,228,221)"></span>
+      </div>
+      <div class="proof-left">
+        <span>CONRAD HOUSE</span>
+        <svg class="reg-mark" viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.5" fill="none" stroke="rgba(28,26,22,.7)" stroke-width="0.8"/><line x1="8" y1="0" x2="8" y2="16" stroke="rgba(28,26,22,.7)" stroke-width="0.8"/><line x1="0" y1="8" x2="16" y2="8" stroke="rgba(28,26,22,.7)" stroke-width="0.8"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="mock-label">6 — photo-mount corners (tipped-in plates)</div>
+  <p class="mock-ref">Album corners holding the hero plate on piece pages.</p>
+  <div class="mock-box" style="display:flex;justify-content:center">
+    <div class="corners-demo">
+      <img src="assets/img/cube-study/hero.jpg" alt="" />
+      <span class="corner tl"></span><span class="corner tr"></span>
+      <span class="corner bl"></span><span class="corner br"></span>
+    </div>
+  </div>
+
+  <footer class="colophon" style="margin-top:70px"><span>MOCKUPS — NOTHING WIRED UNTIL YOU PICK</span><a href="index.html">back</a></footer>
+</div>
+
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg"><defs><g id="cnrd-mark"></g></defs></svg>
+
+<script>
+// inline the real cnrd mark
+fetch("assets/cnrd-kanji.svg").then(r => r.text()).then(t => {
+  const doc = new DOMParser().parseFromString(t, "image/svg+xml");
+  const g = document.getElementById("cnrd-mark");
+  [...doc.documentElement.children].forEach(n => { if (n.tagName !== "title") g.appendChild(document.importNode(n, true)); });
+});
+
+// ---- 1: live palette extraction (coverage-weighted quantization, dark→light) ----
+function extractPalette(imgs, cb) {
+  const counts = new Map();
+  let done = 0;
+  imgs.forEach(src => {
+    const im = new Image();
+    im.onload = () => {
+      const c = document.createElement("canvas"); c.width = 48; c.height = 60;
+      const x = c.getContext("2d"); x.drawImage(im, 0, 0, 48, 60);
+      const d = x.getImageData(0, 0, 48, 60).data;
+      for (let i = 0; i < d.length; i += 4) {
+        const k = ((d[i] >> 4) << 8) | ((d[i+1] >> 4) << 4) | (d[i+2] >> 4);
+        counts.set(k, (counts.get(k) || 0) + 1);
+      }
+      if (++done === imgs.length) finish();
+    };
+    im.onerror = () => { if (++done === imgs.length) finish(); };
+    im.src = src;
+  });
+  function finish() {
+    const top = [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 24);
+    // merge near-duplicates, keep 6, sort by luminance
+    const picked = [];
+    for (const [k] of top) {
+      const r = ((k >> 8) & 15) * 17, g = ((k >> 4) & 15) * 17, b = (k & 15) * 17;
+      if (picked.every(p => Math.abs(p[0]-r) + Math.abs(p[1]-g) + Math.abs(p[2]-b) > 90)) picked.push([r, g, b]);
+      if (picked.length === 6) break;
+    }
+    picked.sort((a, b) => (a[0]*.3+a[1]*.59+a[2]*.11) - (b[0]*.3+b[1]*.59+b[2]*.11));
+    cb(picked);
+  }
+}
+document.querySelectorAll(".pal-series").forEach(el => {
+  const [rn, name] = el.dataset.series.split("·");
+  el.innerHTML = `<h4><span class="rn">${rn}</span> ${name}</h4><div class="pal-strip"></div><div class="pal-note">extracted from ${el.dataset.thumbs.split(",").length} plates, coverage-weighted</div>`;
+  extractPalette(el.dataset.thumbs.split(",").map(s => `assets/img/${s}/thumb.jpg`), cols => {
+    el.querySelector(".pal-strip").innerHTML = cols.map(c => `<span style="background:rgb(${c})"></span>`).join("");
+  });
+});
+
+// ---- shared tremor line ----
+function trem(ctx, x1, y1, x2, y2, j, rnd) {
+  const n = 8; ctx.beginPath();
+  for (let i = 0; i <= n; i++) {
+    const t = i / n;
+    const px = x1 + (x2-x1)*t + (rnd()-.5)*j, py = y1 + (y2-y1)*t + (rnd()-.5)*j;
+    i ? ctx.lineTo(px, py) : ctx.moveTo(px, py);
+  }
+  ctx.stroke();
+}
+function rngf(s) { return () => { s |= 0; s = s + 0x6D2B79F5 | 0; let t = Math.imul(s ^ s >>> 15, 1 | s); t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t; return ((t ^ t >>> 14) >>> 0) / 4294967296; }; }
+
+// ---- 3: incomplete cube placeholders — DRAWN, cycling variations while loading ----
+const CV = [[0,0,0],[1,0,0],[1,1,0],[0,1,0],[0,0,1],[1,0,1],[1,1,1],[0,1,1]];
+const CE = [[0,1],[1,2],[2,3],[3,0],[4,5],[5,6],[6,7],[7,4],[0,4],[1,5],[2,6],[3,7]];
+function drawnCube(el, seed) {
+  const cv = document.createElement("canvas"); cv.width = 150; cv.height = 150;
+  el.appendChild(cv);
+  const ctx = cv.getContext("2d");
+  const P = v => [45 + v[0]*60 + v[2]*25.2, 105 - v[1]*60 - v[2]*20.4];   // cabinet oblique
+  let rnd = rngf(seed), stopped = false, raf = 0;
+
+  function variation() {
+    // pick kept edges (≥4), then order them as a draftsman would: connected walks
+    let keep;
+    do { keep = CE.filter(() => rnd() > 0.45); } while (keep.length < 4);
+    const left = keep.slice(), order = [];
+    let cur = -1;
+    while (left.length) {
+      let idx = left.findIndex(e => e[0] === cur || e[1] === cur);
+      if (idx < 0) idx = 0;
+      const e = left.splice(idx, 1)[0];
+      order.push(e[0] === cur ? e : (e[1] === cur ? [e[1], e[0]] : e));
+      cur = order[order.length - 1][1];
+    }
+    return order;
+  }
+
+  function segPts(a, b) {
+    const [x1, y1] = P(CV[a]), [x2, y2] = P(CV[b]);
+    const n = 10, pts = [];
+    for (let i = 0; i <= n; i++) {
+      const t = i / n;
+      pts.push([x1 + (x2-x1)*t + (rnd()-.5)*2.0, y1 + (y2-y1)*t + (rnd()-.5)*2.0]);
+    }
+    return pts;
+  }
+
+  function run() {
+    const order = variation().map(([a, b]) => segPts(a, b));
+    const perEdge = 260;                                 // ms to draw one edge
+    let start = performance.now();
+    ctx.strokeStyle = "rgba(28,26,22,.62)"; ctx.lineWidth = 1.1; ctx.lineCap = "round";
+    let lastDrawn = { e: 0, k: 1 };
+    function frame(now) {
+      if (stopped) return;
+      const t = now - start;
+      const e = Math.min(order.length - 1, Math.floor(t / perEdge));
+      const f = Math.min(1, (t - e * perEdge) / perEdge);
+      // draw only the new portion (accumulate, never clear — like graphite)
+      for (let ei = lastDrawn.e; ei <= e; ei++) {
+        const pts = order[ei];
+        const from = (ei === lastDrawn.e) ? lastDrawn.k : 1;
+        const to = (ei === e) ? Math.max(from, Math.round(f * (pts.length - 1))) : pts.length - 1;
+        for (let k = from; k <= to; k++) {
+          ctx.beginPath(); ctx.moveTo(...pts[k-1]); ctx.lineTo(...pts[k]); ctx.stroke();
+          // faint second pass = accumulation
+          ctx.globalAlpha = .35;
+          ctx.beginPath(); ctx.moveTo(pts[k-1][0]+.6, pts[k-1][1]+.5); ctx.lineTo(pts[k][0]+.6, pts[k][1]+.5); ctx.stroke();
+          ctx.globalAlpha = 1;
+        }
+        lastDrawn = { e: ei, k: to };
+      }
+      if (e === order.length - 1 && f >= 1) {
+        // finished this variation: pause, wipe to paper, draw the next of the 122
+        setTimeout(() => {
+          if (stopped) return;
+          let a = 0;
+          (function wipe() {
+            if (stopped) return;
+            ctx.fillStyle = "rgba(222,218,209,.28)"; ctx.fillRect(0, 0, 150, 150);
+            if (++a < 9) requestAnimationFrame(wipe);
+            else { lastDrawn = { e: 0, k: 1 }; start = performance.now(); raf = requestAnimationFrame(frame); }
+          })();
+        }, 480);
+        return;
+      }
+      raf = requestAnimationFrame(frame);
+    }
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      order.forEach(pts => { for (let k = 1; k < pts.length; k++) { ctx.beginPath(); ctx.moveTo(...pts[k-1]); ctx.lineTo(...pts[k]); ctx.stroke(); } });
+    } else raf = requestAnimationFrame(frame);
+  }
+  run();
+  return () => { stopped = true; cancelAnimationFrame(raf); };
+}
+document.querySelectorAll(".cube-plate").forEach((el, pi) => {
+  const stop = drawnCube(el, 1234 + pi * 999);
+  const img = document.createElement("img");
+  img.src = el.dataset.img;
+  el.appendChild(img);
+  setTimeout(() => { el.classList.add("loaded"); setTimeout(stop, 900); }, +el.dataset.delay);
+});
+
+// ---- 4: degrading numerals ----
+const NUM = ["I","II","III","IV","V","VI"];
+NUM.forEach((n, i) => {
+  const cv = document.createElement("canvas"); cv.width = 60; cv.height = 60;
+  document.getElementById("numerals").appendChild(cv);
+  const ctx = cv.getContext("2d"), rnd = rngf(77 + i), j = i * 1.4;
+  ctx.strokeStyle = "rgba(28,26,22,.85)"; ctx.lineWidth = 2; ctx.lineCap = "round";
+  let x = 12;
+  for (const ch of n) {
+    if (ch === "I") { trem(ctx, x+3, 14, x+3, 46, j, rnd); x += 11; }
+    if (ch === "V") { trem(ctx, x, 14, x+6, 46, j, rnd); trem(ctx, x+12, 14, x+6, 46, j, rnd); x += 17; }
+  }
+});
+</script>
+</body>
+</html>

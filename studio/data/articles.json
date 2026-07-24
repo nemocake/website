@@ -1,0 +1,18 @@
+{
+  "articles": [
+    {
+      "slug": "fugitive",
+      "title": "the anti loop list",
+      "subtitle": "a system that is only allowed to exist where nothing else has been.",
+      "date": "2026-07-10",
+      "no": "02"
+    },
+    {
+      "slug": "multiform",
+      "title": "the accident, expanded",
+      "subtitle": "a search system stumbled into one good plate; MULTIFORM is what happened when i refused to leave it there.",
+      "date": "2026-07-14",
+      "no": "04"
+    }
+  ]
+}

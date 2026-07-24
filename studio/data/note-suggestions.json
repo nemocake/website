@@ -1,0 +1,78 @@
+{
+ "series:poster-studies": {
+  "suggested": "Where the idea for starting the studio first came from. I've always been fascinated with Japanese designers of the 20th century, from magazines like IDEA and Urban Housing among others. These first poster studies came from thinking about visual aesthetics in procedural ways: questioning how each element of a composition can be made through a generative system, how randomness can explore a design's potential visual range. I am no artist, just someone inspired by the creativity of others.",
+  "comment": "Fixed the trailing \"and other ...\", merged your two questions into one flowing sentence, dropped the quote marks around studio. Your closing line is the best sentence in the note; untouched."
+ },
+ "work:jester-poster": {
+  "suggested": "Edition 1 of the Poster Studies, after Toshi Omagari's design for IDEA No. 403. This was the first attempt at translating a magazine cover into a procedural system. There are only a few elements: an ASCII'd figure in the background, rotated stacked overlaid text, a simple masthead, a coloured background. I took that general visual idea, swapped in a figure and phrase of my own, and explored the range of outputs.",
+  "comment": "Moved the raw URL out of the prose — if you want the IDEA No. 403 reference clickable, I can add a proper reference-link field to piece pages. Fixed magazine's/There are; kept your fragmentary rhythm."
+ },
+ "work:multiform": {
+  "suggested": "This series is a great example of what can come from the emergence of exploring a system's output range. A colour-field plate generator that started as one output of the Fugitive atlas study I liked too much to leave behind. There's a constant discussion of \"well, you could never paint a Rothko\", in the sense that there's context, process and material behind Rothko's creations, and even if you paint overlaid squares that resemble one, it still won't carry the emotional feel of a true Rothko. I decided to take the one Fugitive output that reminded me of Rothko and drill into it anyway. Soft glazed rectangles over a fully painted canvas ground, with 21 palettes taken from real Rothko canvases across the lineage of his career. I explored the system's range using the same atlas tool as before and have been pleasantly surprised by the outputs.",
+  "comment": "Typo sweep (Fugitive, there's/theirs). Added one word, \"anyway\", to the drill-into-it line — the note works because it admits the criticism and proceeds regardless; that word makes the move explicit. Cut it if too cute."
+ },
+ "work:fugitive": {
+  "suggested": "Fugitive acts more as an explorative tool than a dedicated piece itself. For me, and many others, the most interesting aspect of procedural generative art is emergence. It always harkens back to the Molnár line, \"the only thing that can replace intuition is randomness\": the idea that sometimes randomness is the only thing that can push us in new, unbiased directions. With every generative system I've made there's a huge gluttonous urge to constantly generate new seeds, and the urge only amplifies when the outputs are surprising. But a problem comes with manually generating thousands of outputs, or batch exporting thousands of randomized variations, and it isn't the time required to export, review and curate. It's duplicated compositions, and output ranges that never get expressed clearly enough. The atlas system designed around Fugitive is an attempt to solve this: it builds an atlas board for a specific system by generating thousands of outputs and organizing them by discernable visual indicators such as recipe (the script's step process), contrast, palette and chaos. By the end of an atlas run we have a large grid of outputs organized on X and Y axes, showing how the system pushes toward specific visual variables. Just as useful are the parts of the grid left blank, an indicator of the system's boundaries. While an atlas builds we can also favourite specific outputs, guiding the atlas to tune variable ranges and recipes closer to that aesthetic. In a way it's a rudimentary visual training model, adjusted by hand on a handful of random knobs inside our systems.",
+  "comment": "Your best writing in the set — every idea kept. Typo sweep (compositions, boundaries, such as). Split the long \"problem\" sentence so its twist lands: it isn't the time, it's the duplicates. The blank-cells observation is the strongest point; consider it a pull-quote if this ever becomes an article."
+ },
+ "work:martens-halftone": {
+  "suggested": "A study after one of the greatest designers of all time, Karel Martens. One specific aspect of his design has always caught my eye: his use of generative glyphs as ASCII or halftone-like filters. Two examples in particular have always stuck with me, both letterpress monoprints, a portrait typed out of overprinted glyph elements and a colour glyph sheet, shown in the reference images below. The process of recreating this glyph system started with looking closely at the works and breaking the glyphs down into their individual components. Once I had a catalogue of individual glyph elements, it was a simple step to a system that randomly overlays a set number of components and applies a riso-like colour opacity to each. Then one step further: a real-time glyph generator, constantly evolving new glyphs.",
+  "comment": "You confirmed the two works — the revision now names them and points at the reference images below the plates, so the note and the toggle work together."
+ },
+ "work:split-perspective": {
+  "suggested": "Inspired by Emil Drličiak, an artist I came across while browsing random central European art databases. A tongue-in-cheek reference: Emil Cioran as the figure in my designs, Emil after Emil.",
+  "comment": "\"Emil after Emil\" is a keeper. Moved the webumenia URL out of prose — same offer as jester: a reference-link field on piece pages would hold these properly."
+ },
+ "work:paint": {
+  "suggested": "The explorative process of trying to create skeuomorphic paint systems through code. Trying to understand the ways our eyes perceive paint-like textures, and replicating those ideas through systems, is fascinating to me. It's the same general interest in thinking of the world in procedural ways, or as the incredible artist Iskra Velitchkova might say, \"I see generative.\"",
+  "comment": "Grammar pass only (trying to create, the ways our eyes). The Velitchkova quote closes it well."
+ },
+ "work:paintsystem2-room": {
+  "suggested": "I look at a lot of art, and most of the time I have a rough time deciding on a favourite. But when it comes to contemporary masters I have a deeper affinity for Francis Bacon than most. There's an indescribable feeling I get looking at his work that I don't feel with much else. This room is built from that feeling: his space frames, squares and perspective lines, painted.",
+  "comment": "Typo pass, plus I ADDED the final sentence — your note never mentions the piece itself, and one line ties the Bacon feeling to what's on screen. Delete it if you'd rather let the plates do that work."
+ },
+ "work:paintsystem2-interior": {
+  "suggested": "An experiment from nostalgia.",
+  "comment": "Left alone. The five words do it."
+ },
+ "work:capriccio": {
+  "suggested": "Impossible architectures, drawn. Arches, stairs and colonnades composed the way Piranesi composed his capricci, except every element gets its own vanishing point, so the space never quite closes. Expanding on ideas explored in the previous room studies.",
+  "comment": "Split the last clause into its own sentence; otherwise punctuation only."
+ },
+ "work:aeolian": {
+  "suggested": "Another project born from nostalgia. Growing up visiting my grandma's house, playing in the backyard, hearing the faint orchestra of wind chimes she had hanging along the porch. I find myself thinking of her whenever I hear one. A place for thinking about her.",
+  "comment": "Trimmed \"arrayed\" and \"anywhere\" — the sentence breathes better bare. The last line stays exactly as you wrote it."
+ },
+ "work:cozens": {
+  "suggested": "An experiment in capturing the essence of landscapes. Simple blots and sketched lines. A study of detail and pattern recognition through scale.",
+  "comment": "Singularized essence/detail, compressed \"scaling of details\" to \"scale\" — revert if that loses the meaning you wanted."
+ },
+ "work:idea-044-grid": {
+  "suggested": "A grid poster engine after IDEA 044 by Ikko Tanaka (1960). A strict, simplified system that still creates interesting designs. I later explored it to make specific variations for each country ahead of the World Cup.",
+  "comment": "The World Cup country variations detail is great — is that the country-grid folder? If those exports exist we could show one as a plate."
+ },
+ "work:visual-scores": {
+  "suggested": "Procedural graphic scores after Cage, Penderecki, De Cesare and others; a vocabulary of staff fragments, node chains and duration marks that every later score piece borrows from. This one runs live in the browser, because it always has. Each visual element is a playable piece of the composition.",
+  "comment": "Only the last sentence smoothed (acts as a playable piece in → is a playable piece of)."
+ },
+ "work:tessera": {
+  "suggested": "A chamber after Maria Helena Vieira da Silva, every surface carrying its own tiled grid.",
+  "comment": "Corrected the full name (Maria Helena Vieira da Silva) and added the one technical clause so the note says what the piece does. Cut the clause if you want it bare."
+ },
+ "work:toth-scores": {
+  "suggested": "Scores after Dezider Tóth, exploring every part of the graphic score as material.",
+  "comment": "Singular \"the graphic score as material\" reads stronger; otherwise yours."
+ },
+ "work:sleeve": {
+  "suggested": "Mock-ups of burned EPs of outputs from the Visual Scores project. Designs generated procedurally through a sister system. Encased in a clear jewel CD case, an homage to childhood nostalgia.",
+  "comment": "jewel case (not jeweled), Encased (not Encasing). Dropped the parenthetical \"(Schematics n Scores)\" — if that's the project's real alternate title, put it back and I'll match it on the visual-scores note too."
+ },
+ "series:broken-room": {
+  "suggested": "I've always been fascinated by perspective drawings. Specifically Francis Bacon's use of squares, cubes and perspective lines to build canvases that feel like rooms.",
+  "comment": "Tightened into two sentences; \"canvases that feel like rooms\" is the phrase doing the work, kept verbatim."
+ },
+ "series:facture": {
+  "suggested": "Engines that attempt to counterfeit the behaviour of real media.",
+  "comment": "Your cut of my longer note is better than my longer note. Kept exactly."
+ }
+}

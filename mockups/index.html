@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cream">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>homepage directions — con.rad</title>
+<script>try{var t=localStorage.getItem("studio.theme");if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<link rel="stylesheet" href="../assets/catalogue/shell.css" />
+<script src="../assets/catalogue/graphite.js" defer></script>
+<script src="../assets/catalogue/theme.js" defer></script>
+<script src="../assets/catalogue/masthead.js" defer></script>
+<style>
+  .lede { max-width: 620px; margin: 0 0 8px; color: var(--ink-soft); font-size: 16.5px; }
+  .dirs { display: grid; gap: 0; margin-top: 30px; border-top: 1px solid var(--ink); }
+  .dir { display: grid; grid-template-columns: 40px 1fr auto; gap: 20px; align-items: baseline;
+    padding: 26px 4px; border-bottom: 1px solid var(--rule-faint); }
+  .dir:hover { background: var(--paper-deep); }
+  .dir .rn { font-family: var(--font-mono); font-size: 12px; color: var(--sanguine); letter-spacing: .1em; }
+  .dir .nm { font-family: var(--font-display); font-size: clamp(24px, 3.4vw, 34px); }
+  .dir:hover .nm { color: var(--sanguine); }
+  .dir .desc { font-size: 15px; color: var(--ink-soft); margin-top: 4px; max-width: 640px; }
+  .dir .go { font-family: var(--font-mono); font-size: 10px; letter-spacing: .18em; text-transform: lowercase; color: var(--ink-faint); align-self: center; }
+  .dir:hover .go { color: var(--sanguine); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="pagehead">
+    <div class="kicker">homepage · four directions</div>
+    <div class="drawn-title"><h1 data-drawn data-cap="72">directions</h1></div>
+    <p class="standfirst">Four ways to reimagine the homepage body — the same header, favourites and live are.na feed, arranged four different ways. Click through, then tell me what resonates and what to mix.</p>
+    <hr class="rule" />
+  </header>
+
+  <div class="dirs">
+    <a class="dir" href="home-a.html"><span class="rn">A</span><span><span class="nm">contact sheet</span><span class="desc">sections as an asymmetric grid of tiles; hover lifts a tile and brings its preview forward. favourites pinned into the grid; are.na as a thin strip below.</span></span><span class="go">open →</span></a>
+    <a class="dir" href="home-b.html"><span class="rn">B</span><span><span class="nm">the index that opens</span><span class="desc">the numbered list, alive — hovering a row expands it inline and cross-fades a big synced preview. favourites as a rotating card on top; are.na as a quiet strip.</span></span><span class="go">open →</span></a>
+    <a class="dir" href="home-c.html"><span class="rn">C</span><span><span class="nm">the worktable</span><span class="desc">no list — sections placed as objects across a spread, joined by hand-drawn pencil connectors, like a studio plan. rotating favourite hero; are.na pinned as a desk scatter.</span></span><span class="go">open →</span></a>
+    <a class="dir" href="home-d.html"><span class="rn">D</span><span><span class="nm">the notebook</span><span class="desc">a living daily page — cycling favourites spotlight, a compact directory band, then a generous are.na masonry as the main body. leans fully into the daily-note idea.</span></span><span class="go">open →</span></a>
+  </div>
+</div>
+
+<footer class="colophon">
+  <div class="cols"><span>con.rad</span><span>mockups</span></div>
+  <span>review &amp; mix</span>
+</footer>
+<script>if(window.Masthead)Masthead.init();</script>
+</body>
+</html>
