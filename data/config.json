@@ -564,7 +564,7 @@
         "visualization"
       ],
       "status": "in development",
-      "liveUrl": "https://nemocake.github.io/website/graph/index.html"
+      "liveUrl": "../graph/"
     },
     "claude-obsidian-assistant": {
       "description": "a starter obsidian vault wired for claude code",

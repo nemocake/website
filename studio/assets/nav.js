@@ -34,7 +34,7 @@
     const group = (id, numeral, name, list) => {
       const open = (openSeries === id) || (hashSeries === id);
       return `<div class="nv-group${open ? " open" : ""}" data-series="${id}">
-        <a class="nv-head" href="index.html#/s/${id}"><span class="rn">${numeral}</span>${esc(name)}</a>
+        <a class="nv-head" href="./#/s/${id}"><span class="rn">${numeral}</span>${esc(name)}</a>
         <div class="nv-list">${list.map(w => row(w) + kids(w.slug).map(k => row(k, true)).join("")).join("")}</div>
       </div>`;
     };
@@ -46,14 +46,14 @@
     rail.querySelector(".rail-jumps")?.remove();
     const nav = document.createElement("nav");
     nav.className = "nv";
-    nav.innerHTML = `<a class="nv-cover" href="index.html">contents</a>${groups}
-      <a class="nv-cover" href="index.html#/s/writings">writings</a>`;
+    nav.innerHTML = `<a class="nv-cover" href="./">contents</a>${groups}
+      <a class="nv-cover" href="./#/s/writings">writings</a>`;
     rail.appendChild(nav);
 
     nav.querySelectorAll(".nv-head").forEach(h => h.addEventListener("click", e => {
       // on the index, let the router handle it; elsewhere follow the link
       const g = h.parentElement;
-      if (location.pathname.endsWith("index.html") || location.pathname.endsWith("/studio/")) {
+      if (location.pathname.endsWith("./") || location.pathname.endsWith("/studio/")) {
         g.classList.toggle("open");
       }
     }));

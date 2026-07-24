@@ -16,7 +16,7 @@
 <div class="ground-mount" aria-label="page ground"></div>
 
 <nav class="rail" id="rail" aria-label="studio contents">
-  <a class="rail-mast" href="index.html" aria-label="back to the studio index"><div class="mast-title">
+  <a class="rail-mast" href="./" aria-label="back to the studio index"><div class="mast-title">
     <h1 id="mast-h1">studio</h1>
     <canvas id="masthead-canvas" data-word="studio" data-cap="58" aria-hidden="true"></canvas>
   </div></a>
@@ -30,14 +30,14 @@
     <a href="../writings/">writings</a>
     <a href="../collection/">collection</a>
     <a href="../projects/">projects</a>
-    <a class="cur" href="index.html">studio</a>
+    <a class="cur" href="./">studio</a>
   </nav>
 
   <main id="main"></main>
 
   <footer class="colophon">
     <span>Conrad House</span>
-    <a href="index.html">studio</a>
+    <a href="./">studio</a>
   </footer>
 
 </div>
@@ -76,7 +76,7 @@ const IMG_V = "?v=1784771550";
   const idx = works.findIndex(w => w.slug === slug);
   if (idx < 0) {
     main.innerHTML = `<div class="load-error">no work named "${esc(slug)}" in the catalogue.
-      <br /><br /><a href="index.html" style="text-decoration:underline">back to the index →</a></div>`;
+      <br /><br /><a href="./" style="text-decoration:underline">back to the index →</a></div>`;
     return;
   }
 
@@ -92,7 +92,7 @@ const IMG_V = "?v=1784771550";
   const sdef = (data.series || []).find(s => s.id === w.series);
   const sibs = sdef ? works.filter(x => x.series === sdef.id && !x.parent).sort((a, b) => (a.edition ?? 999) - (b.edition ?? 999)) : [];
   const seriesCell = sdef
-    ? `<div><dt>series</dt><dd><a href="index.html#s-${sdef.id}" style="color:var(--sanguine)">${esc(sdef.numeral)} · ${esc(sdef.name)}</a> — ${sibs.findIndex(x => x.slug === w.slug) + 1} of ${sibs.length}</dd></div>`
+    ? `<div><dt>series</dt><dd><a href="./#s-${sdef.id}" style="color:var(--sanguine)">${esc(sdef.numeral)} · ${esc(sdef.name)}</a> — ${sibs.findIndex(x => x.slug === w.slug) + 1} of ${sibs.length}</dd></div>`
     : "";
   const imgs = w.images || [];
   const hero = imgs[0];
@@ -127,13 +127,13 @@ const IMG_V = "?v=1784771550";
         <h1 data-drawn data-cap="42" data-orient="vertical">${esc(w.name)}</h1>
       </aside>
       <div class="pv-body">
-      <div class="pv-topline"><a href="index.html">◀ contents</a><span>${edLabel}</span></div>
+      <div class="pv-topline"><a href="./">◀ contents</a><span>${edLabel}</span></div>
 
     <dl class="specs">
       <div><dt>after</dt><dd>${esc(w.after)}</dd></div>
       ${seriesCell}
       ${(w.tags && w.tags.length) ? `<div><dt>tags</dt><dd class="tag-chips">${w.tags.map(t =>
-        `<a class="tag-chip" href="index.html#/t/${encodeURIComponent(t)}">${esc(t)}</a>`).join("")}</dd></div>` : ""}
+        `<a class="tag-chip" href="./#/t/${encodeURIComponent(t)}">${esc(t)}</a>`).join("")}</dd></div>` : ""}
     </dl>
 
     ${(w.note && w.note.trim()) ? `<p class="note">${esc(w.note)}</p>` : ""}
