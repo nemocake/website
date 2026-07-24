@@ -42,3 +42,7 @@ build/
 
 # Temp draft-editing tool (kept locally, not shipped)
 writings/edit.html
+
+# Internal studio tools (kept local, not shipped)
+studio/curate.html
+studio/editor.html
