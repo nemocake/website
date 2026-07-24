@@ -163,7 +163,7 @@
   function Masthead(canvas) {
     var holder = canvas.parentElement;
     var word = canvas.dataset.word || "Studio";
-    var state = null;
+    var state = null, drawToken = 0;
 
     function vertical() { return canvas.dataset.orient === "vertical"; }
 
@@ -233,6 +233,7 @@
     }
 
     function drawAll(seed) {
+      var myToken = ++drawToken;   // invalidate any in-flight draw loop (mobile fires redraws mid-draw)
       refreshInks();
       state = setup(seed);
       if (!state) return;
@@ -249,6 +250,7 @@
       } else {
         var i2 = 0, per = Math.max(120, Math.ceil(all.length / 85));
         (function frame() {
+          if (myToken !== drawToken) return;   // a newer draw superseded this loop — stop
           for (var k = i2; k < i2 + per && k < all.length; k++) mark(s.sctx, all[k], s.noise, s.W, s.H);
           i2 += per; blit();
           if (i2 < all.length) requestAnimationFrame(frame);
@@ -315,8 +317,12 @@
     var m = new Masthead(canvas);
     var go = function () { m.draw(); };
     go();
-    var t;
-    addEventListener("resize", function () { clearTimeout(t); t = setTimeout(go, 250); });
+    var t, lastW = innerWidth;
+    addEventListener("resize", function () {
+      if (innerWidth === lastW) return;         // height-only (mobile address bar) — don't redraw
+      lastW = innerWidth;
+      clearTimeout(t); t = setTimeout(go, 250);
+    });
     addEventListener("studio-theme", go);
   }
 
@@ -328,8 +334,12 @@
         var m = new Masthead(canvas);
         var go = function () { m.draw(); };
         go();
-        var t;
-        addEventListener("resize", function () { clearTimeout(t); t = setTimeout(go, 250); });
+        var t, lastW = innerWidth;
+        addEventListener("resize", function () {
+          if (innerWidth === lastW) return;     // height-only (mobile address bar) — don't redraw
+          lastW = innerWidth;
+          clearTimeout(t); t = setTimeout(go, 250);
+        });
         addEventListener("studio-theme", go);
       }
       document.querySelectorAll("[data-drawn]").forEach(drawHeading);
