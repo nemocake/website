@@ -39,8 +39,11 @@
       if (script.src && script.src.includes('config-loader.js')) {
         const scriptUrl = new URL(script.src);
         const pathParts = scriptUrl.pathname.split('/');
-        // Remove 'assets', 'js', 'config-loader.js' (3 parts) to get site root
-        const siteRoot = pathParts.slice(0, -3).join('/') || '/';
+        // Remove 'assets', 'js', 'config-loader.js' (3 parts) to get site root.
+        // Root domain -> '' (so we get '/data/config.json'); subpath -> '/website'.
+        // Do NOT fall back to '/', or a root domain builds '//data/config.json',
+        // which the browser treats as protocol-relative (host 'data') and fails.
+        const siteRoot = pathParts.slice(0, -3).join('/');
         return siteRoot + '/data/config.json';
       }
     }
