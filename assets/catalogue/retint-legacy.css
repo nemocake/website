@@ -1,0 +1,64 @@
+/* retint-legacy.css — remaps the old `assets/css` design-system tokens onto the
+ * studio's paper/ink/sanguine palette + fonts. Load AFTER the legacy sheets.
+ * Layout and components stay; only the tokens and type change. Theme-reactive. */
+
+@font-face { font-family:"Happy Times"; src:url("fonts/HappyTimes-regular.woff2") format("woff2"); font-weight:400; font-style:normal; font-display:swap; }
+@font-face { font-family:"Happy Times"; src:url("fonts/HappyTimes-italic.woff2") format("woff2"); font-weight:400; font-style:italic; font-display:swap; }
+@font-face { font-family:"Happy Times"; src:url("fonts/HappyTimes-bold.woff2") format("woff2"); font-weight:700; font-style:normal; font-display:swap; }
+@font-face { font-family:"Routed Gothic"; src:url("fonts/routed-gothic.ttf") format("truetype"); font-display:swap; }
+
+:root {
+  --paper-rgb:231,228,221; --ink-rgb:28,26,22;
+  --paper:rgb(var(--paper-rgb)); --paper-deep:rgb(222,218,209);
+  --ink:rgb(var(--ink-rgb)); --ink-soft:#4a463f; --ink-faint:#8b857a;
+  --rule:rgba(var(--ink-rgb),.22); --sanguine:#9c3d1e; --sang-rgb:156,61,30;
+
+  /* remap legacy tokens */
+  --color-primary: var(--ink);
+  --color-primary-light: var(--ink-soft);
+  --color-primary-dark: var(--ink);
+  --color-accent: var(--sanguine);
+  --color-accent-light: var(--sanguine);
+  --color-accent-dark: var(--sanguine);
+  --color-bg-primary: var(--paper);
+  --color-bg-secondary: var(--paper-deep);
+  --color-bg-tertiary: var(--paper-deep);
+  --color-text-primary: var(--ink);
+  --color-text-secondary: var(--ink-soft);
+  --color-text-tertiary: var(--ink-faint);
+  --color-text-inverse: var(--paper);
+  --color-border-light: var(--rule);
+  --color-border-medium: var(--rule);
+  --color-border-dark: var(--rule);
+  --color-white: var(--paper);
+  --color-black: var(--ink);
+
+  --font-family-primary: "Happy Times", georgia, serif;
+  --font-family-mono: "Routed Gothic", monospace;
+}
+html[data-theme="white"]{ --paper-rgb:250,250,247; --paper-deep:#efeeea; }
+html[data-theme="dark"]{ --paper-rgb:25,24,21; --paper-deep:#211f1b; --ink-rgb:226,221,210; --ink-soft:#b5afa2; --ink-faint:#7d786d; --sanguine:#c05f38; --sang-rgb:192,95,56; }
+
+html, body { background:var(--paper); color:var(--ink); font-family:var(--font-family-primary); }
+
+/* the site logo used an inverse/white ink; force it to read on paper */
+.site-logo, .logo-name, .logo-tagline, .nav-link { color:var(--ink) !important; }
+.logo-tagline { color:var(--ink-faint) !important; }
+.nav-link:hover, .site-logo:hover .logo-name { color:var(--sanguine) !important; }
+
+/* faint paper grain */
+body::after{ content:""; position:fixed; inset:0; pointer-events:none; z-index:9997; opacity:.14;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+::selection{ background:var(--sanguine); color:var(--paper); }
+
+/* the ground picker, tucked bottom-right */
+.ground-mount{ position:fixed; z-index:120; right:16px; bottom:14px; display:flex; align-items:center; gap:7px;
+  font-family:var(--font-family-mono); font-size:9px; letter-spacing:.14em; text-transform:lowercase; color:var(--ink-faint);
+  background:var(--paper); border:1px solid var(--rule); padding:6px 9px; }
+.theme-picker{ display:inline-flex; gap:5px; align-items:center; }
+.theme-picker button{ width:12px; height:12px; border:1px solid var(--rule); cursor:pointer; padding:0; }
+.theme-picker button[data-t="white"]{ background:#fafaf7; }
+.theme-picker button[data-t="cream"]{ background:rgb(231,228,221); }
+.theme-picker button[data-t="dark"]{ background:#191815; }
+.theme-picker button.cur{ outline:1px solid var(--sanguine); outline-offset:1px; }

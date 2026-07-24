@@ -10,6 +10,7 @@
   <script src="../assets/js/config-loader.js"></script>
 
   <!-- Tailwind CSS -->
+  <script>try{var t=localStorage.getItem("studio.theme");if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script>
     tailwind.config = {
@@ -42,10 +43,8 @@
     }
   </script>
 
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+  <!-- Studio type + retint (self-hosted, no CDN) -->
+  <script src="../assets/catalogue/theme.js" defer></script>
 
   <style>
     /* Scrollbar */
@@ -129,13 +128,16 @@
 
     /* Nav link active state */
     .nav-link-item.is-active {
-      color: #ccff00;
-      border-left-color: #ccff00;
+      color: var(--sanguine);
+      border-left-color: var(--sanguine);
     }
   </style>
 
   <!-- Tally.so Popup Embed -->
   <script async src="https://tally.so/widgets/embed.js"></script>
+
+  <!-- STUDIO RETINT — palette + fonts aligned to the catalogue; layout untouched -->
+  <link rel="stylesheet" href="../assets/catalogue/retint.css" />
 </head>
 <body class="bg-void text-gray-200 antialiased overflow-x-hidden selection:bg-acid selection:text-black">
 
@@ -145,24 +147,14 @@
 
   <!-- Header -->
   <header class="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex justify-between items-start pointer-events-none mix-blend-difference text-white">
-    <a href="../index.html" class="pointer-events-auto group cursor-pointer flex flex-col">
-      <span class="font-display font-bold text-2xl tracking-tighter leading-none group-hover:text-acid transition-colors">con.rad</span>
-      <span class="font-mono text-[10px] opacity-70 tracking-widest mt-1">BUILDING CURIOSITY...</span>
-    </a>
+    <a href="../index.html" class="pointer-events-auto site-home">con.rad</a>
 
-    <nav class="pointer-events-auto hidden md:flex items-center gap-8 font-mono text-xs tracking-wider">
-      <a href="../writings/index.html" class="hover:text-acid hover:underline underline-offset-4 decoration-acid decoration-1">[ WRITINGS ]</a>
-      <a href="../collection/index.html" class="hover:text-acid hover:underline underline-offset-4 decoration-acid decoration-1">[ COLLECTION ]</a>
-      <a href="../projects/index.html" class="hover:text-acid hover:underline underline-offset-4 decoration-acid decoration-1">[ PROJECTS ]</a>
-      <a href="../graph/index.html" class="hover:text-acid hover:underline underline-offset-4 decoration-acid decoration-1">[ ARE.NA GRAPH ]</a>
-      <span class="w-2 h-2 rounded-full bg-acid animate-pulse-glow shadow-[0_0_10px_#ccff00]"></span>
+    <nav class="pointer-events-auto site-links" aria-label="site">
+      <a href="../writings/" class="cur" aria-current="page">writings</a>
+      <a href="../collection/">collection</a>
+      <a href="../projects/">projects</a>
+      <a href="../studio/">studio</a>
     </nav>
-
-    <button class="md:hidden pointer-events-auto text-acid">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-      </svg>
-    </button>
   </header>
 
   <!-- Main Layout -->
@@ -172,7 +164,6 @@
     <aside class="md:w-1/4 md:sticky md:top-32 h-fit">
       <div class="glass-panel p-6 rounded-sm">
         <div class="flex items-center gap-3 mb-6">
-          <span class="font-mono text-acid text-sm">01.</span>
           <h2 class="font-display text-xl font-bold uppercase">Writings</h2>
         </div>
 
@@ -183,19 +174,6 @@
             <!-- Populated by JS -->
           </ul>
         </nav>
-
-        <div class="border-t border-dashed border-gray-700 my-4"></div>
-
-        <div class="font-mono text-[10px] uppercase tracking-wider text-gray-500 space-y-2">
-          <div class="flex justify-between">
-            <span>Articles</span>
-            <span id="article-count" class="text-acid">0</span>
-          </div>
-          <div class="flex justify-between">
-            <span>Last Updated</span>
-            <span id="last-updated">--</span>
-          </div>
-        </div>
       </div>
 
       <!-- Back to home -->
@@ -208,16 +186,9 @@
     <!-- Content Area -->
     <div class="md:w-3/4 space-y-16">
 
-      <!-- Intro Section -->
-      <div class="writings-intro glass-panel p-8 rounded-sm" id="writings-intro">
-        <div class="flex items-center gap-4 mb-6">
-          <div class="h-[1px] w-12 bg-acid"></div>
-          <span class="font-mono text-acid text-xs uppercase tracking-widest">Archive</span>
-        </div>
-        <h1 class="font-display text-4xl md:text-5xl font-bold mb-4">Writings</h1>
-        <p class="font-sans text-lg text-gray-400 max-w-xl leading-relaxed">
-          Thoughts on art, technology, and the spaces between. Essays and reflections on what I'm learning and building.
-        </p>
+      <!-- Header (one-liner only — the nav already says where you are) -->
+      <div class="mb-8 pb-4 border-b border-border-dim">
+        <p class="font-sans text-gray-400">Thoughts on art, technology, and the spaces between. Essays and reflections on what I'm learning and building.</p>
       </div>
 
       <!-- Articles Container -->
@@ -253,16 +224,11 @@
       function renderWritings(writings) {
         if (!writings || writings.length === 0) return;
 
-        // Update article count
-        document.getElementById('article-count').textContent = writings.length;
-
-        // Update last updated date - find most recent and parse as local time
-        const dates = writings.map(w => {
-          const [year, month, day] = w.date.split('-').map(Number);
-          return new Date(year, month - 1, day);
-        });
-        const latestDate = new Date(Math.max(...dates));
-        document.getElementById('last-updated').textContent = latestDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+        // Escape HTML so code blocks render literally (not executed / parsed as markup)
+        const escHtml = (s) => String(s)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;');
 
         // Format date helper (Month Day, Year) - parse as local to avoid timezone shift
         const formatDate = (dateStr) => {
@@ -304,6 +270,22 @@
                 return `<figure><img src="${img.src}" alt="${img.alt || ''}" class="w-full h-64 object-contain bg-black/40 rounded-sm border border-border-dim" loading="lazy">${cap}</figure>`;
               }).join('');
               return `<div class="my-8 grid grid-cols-1 md:grid-cols-3 gap-4">${imgs}</div>`;
+            } else if (p.type === 'subhead') {
+              return `<h3 class="font-display text-xl md:text-2xl mt-10 mb-3">${p.text || ''}</h3>`;
+            } else if (p.type === 'code') {
+              const label = (p.file || p.title) ? `<div class="font-mono text-[10px] text-gray-500 mb-2">${p.file ? `<span class="text-acid/70">${escHtml(p.file)}</span>` : ''}${(p.file && p.title) ? ' — ' : ''}${p.title ? escHtml(p.title) : ''}</div>` : '';
+              const cap = p.caption ? `<figcaption class="mt-2 font-mono text-[10px] text-gray-500">${p.caption}</figcaption>` : '';
+              return `<figure class="my-6">
+                ${label}
+                <pre class="border border-border-dim bg-black/30 rounded-sm p-4 overflow-x-auto text-xs leading-relaxed"><code class="font-mono">${escHtml(p.code || '')}</code></pre>
+                ${cap}
+              </figure>`;
+            } else if (p.type === 'pair') {
+              const imgs = (p.images || []).map(img => {
+                const cap = img.caption ? `<figcaption class="mt-2 font-mono text-[10px] text-gray-500 text-center">${img.caption}</figcaption>` : '';
+                return `<figure><img src="${img.src}" alt="${img.alt || ''}" class="w-full h-64 object-contain bg-black/40 rounded-sm border border-border-dim" loading="lazy">${cap}</figure>`;
+              }).join('');
+              return `<div class="my-8 grid grid-cols-1 md:grid-cols-2 gap-4">${imgs}</div>`;
             }
             return '';
           }).join('');
@@ -320,6 +302,7 @@
                 <span class="font-mono text-acid text-sm">${String(index + 1).padStart(2, '0')}.</span>
                 <span class="font-mono text-xs text-gray-500 border border-gray-700 px-2 py-0.5">TXT</span>
                 <span class="font-mono text-xs text-gray-500">${formatDate(item.date)}</span>
+                ${item.draft ? `<span class="font-mono text-[10px] uppercase tracking-wider text-gray-500 border border-gray-700 px-2 py-0.5">draft</span>` : ''}
               </div>
               <h2 class="font-display text-2xl md:text-3xl font-bold mb-2 group-hover:text-acid">${item.title}</h2>
               <p class="font-mono text-sm text-gray-500 mb-6">${item.description}</p>
@@ -469,5 +452,7 @@
     })();
   </script>
 
+  <!-- studio ground selector -->
+  <div class="colophon ground-mount"></div>
 </body>
 </html>

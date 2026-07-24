@@ -1,0 +1,1719 @@
+{
+  "updated": "2026-07-24",
+  "title": "STUDIO",
+  "intro": "a practice of creating and chasing after images that intrigue me.",
+  "series": [
+    {
+      "id": "poster-studies",
+      "numeral": "I",
+      "name": "Poster Studies",
+      "note": "Where the idea for starting the studio first came from. I've always been fascinated with Japanese designers of the 20th century, from magazines like IDEA and Urban Housing among others. These first poster studies came from thinking about visual aesthetics in procedural ways: questioning how each element of a composition can be made through a generative system, how randomness can explore a design's potential visual range. I am no artist, just someone inspired by the creativity of others.",
+      "tags": [
+        "print",
+        "posters"
+      ]
+    },
+    {
+      "id": "broken-room",
+      "numeral": "II",
+      "name": "Spatial Studies",
+      "note": "Experiments in creating spaces. Pushing what the idea of perspective lines can be. Many systems also acting as explorative processes of trying to create skeuomorphic paint systems through code. Trying to understand the ways our eyes perceive paint-like textures, and replicating those ideas through systems. It's the same general interest in thinking of the world in procedural ways, or as the incredible artist Iskra Velitchkova might say, \"I see generative.\" Each type of paint works in different manners and attempting to procedurally create things like the impasto of oils, matte-ness of gouaches, transparency of watercolors and more becomes fun visual puzzles.",
+      "tags": [
+        "rooms",
+        "perspective"
+      ]
+    },
+    {
+      "id": "scores",
+      "numeral": "III",
+      "name": "Notation, Scores & Sound",
+      "note": "Graphic notation as a working vocabulary and material for generative systems.",
+      "tags": [
+        "notation",
+        "music"
+      ]
+    },
+    {
+      "id": "misc",
+      "numeral": "IV",
+      "name": "Misc. Studies",
+      "note": "Standalone experiments around visual ideas and inspirations."
+    }
+  ],
+  "works": [
+    {
+      "slug": "flux",
+      "name": "FLUX",
+      "edition": 64,
+      "kind": "edition",
+      "year": 2026,
+      "after": "wind maps, Ebru marbling, phase portraits",
+      "medium": "oil strata and graphite hatch over one vector field",
+      "status": "approved",
+      "note": "Oil and pencil fused over a single vector field, with no partition between them. An exploration in combining systems.",
+      "images": [
+        {
+          "file": "add05.jpg",
+          "caption": "diptych",
+          "title": "",
+          "w": 1378,
+          "h": 1700
+        },
+        {
+          "file": "hero.jpg",
+          "caption": "strata",
+          "title": "",
+          "w": 1800,
+          "h": 1110
+        },
+        {
+          "file": "cyanotype.jpg",
+          "caption": "cyanotype palette",
+          "title": "",
+          "w": 1600,
+          "h": 986
+        },
+        {
+          "file": "mondrian.jpg",
+          "caption": "mondrian palette",
+          "title": "",
+          "w": 1600,
+          "h": 986
+        },
+        {
+          "file": "ember.jpg",
+          "caption": "ember palette",
+          "title": "",
+          "w": 1600,
+          "h": 1141
+        },
+        {
+          "file": "add04.jpg",
+          "caption": "dev 01",
+          "title": "",
+          "w": 1700,
+          "h": 1048
+        },
+        {
+          "file": "add06.jpg",
+          "caption": "Flux 37",
+          "title": "",
+          "w": 1700,
+          "h": 1049
+        }
+      ],
+      "series": "misc",
+      "tags": [
+        "oil",
+        "graphite",
+        "flow field",
+        "flat"
+      ]
+    },
+    {
+      "slug": "enfilade",
+      "name": "ENFILADE",
+      "edition": 62,
+      "kind": "edition",
+      "year": 2026,
+      "after": "Barragán, Hockney, De Chirico",
+      "medium": "flat colour fields, no lighting model",
+      "status": "approved",
+      "note": "Thinking of things like The Truman Show, MC Escher, and others. A colour-field stairwell set in Broken Rooms. A deeper exploration into the idea of broken perspective lines and uncertainties",
+      "images": [
+        {
+          "file": "hero.jpg",
+          "caption": "",
+          "title": "seed 195",
+          "w": 1800,
+          "h": 1113
+        },
+        {
+          "file": "m168.jpg",
+          "caption": "",
+          "title": "seed 168",
+          "w": 1600,
+          "h": 989
+        },
+        {
+          "file": "m214.jpg",
+          "caption": "",
+          "title": "seed 214",
+          "w": 1600,
+          "h": 989
+        },
+        {
+          "file": "survey.jpg",
+          "caption": "survey, cool palette",
+          "title": "",
+          "w": 1600,
+          "h": 989
+        }
+      ],
+      "series": "broken-room",
+      "tags": [
+        "flat",
+        "interior",
+        "stairs",
+        "colour field"
+      ]
+    },
+    {
+      "slug": "evolution-to-disorder",
+      "name": "EVOLUTION TO DISORDER",
+      "edition": 50,
+      "kind": "edition",
+      "year": 2026,
+      "after": "Vera Molnár, (Dés)ordres",
+      "medium": "poster grid, incremental randomness",
+      "status": "approved",
+      "note": "A grid of one cube degrading. Every cell repeats the same motif with a little more randomness injected. After Vera Molnár's controlled disorder.",
+      "images": [
+        {
+          "file": "hero.jpg",
+          "caption": "study of one hundred",
+          "title": "",
+          "w": 2200,
+          "h": 2200
+        },
+        {
+          "file": "add01.jpg",
+          "title": "seed 7",
+          "caption": "paint seed 7 cobalt",
+          "w": 2000,
+          "h": 2000
+        },
+        {
+          "file": "add02.jpg",
+          "title": "seed 7",
+          "caption": "paint seed 7 bacon pope",
+          "w": 2000,
+          "h": 2000
+        },
+        {
+          "file": "add03.jpg",
+          "title": "seed 7",
+          "caption": "paint seed 7 storm",
+          "w": 2000,
+          "h": 2000
+        }
+      ],
+      "needsMore": true,
+      "tags": [
+        "cube",
+        "grid",
+        "molnar",
+        "disorder"
+      ],
+      "refs": [
+        {
+          "file": "ref-molnar-1.jpg",
+          "caption": "Vera Molnár, installation view of framed plotter studies — via HOLO, Vera Molnár: Variations"
+        },
+        {
+          "file": "ref-molnar-2.jpg",
+          "caption": "Vera Molnár, plotter drawing — via HOLO, Vera Molnár: Variations"
+        }
+      ],
+      "parent": "cube-study"
+    },
+    {
+      "slug": "cube-study",
+      "name": "CUBE STUDY",
+      "edition": 48,
+      "kind": "edition",
+      "year": 2026,
+      "after": "a study of forms in the simplest way",
+      "medium": "hand-drawn cube, studio oil engine",
+      "status": "approved",
+      "note": "A square is empty and silent.",
+      "images": [
+        {
+          "file": "sheet.jpg",
+          "caption": "study of one hundred cubes",
+          "title": "",
+          "w": 2200,
+          "h": 2200
+        },
+        {
+          "file": "hero.jpg",
+          "caption": "",
+          "title": "seed 1074",
+          "w": 1800,
+          "h": 1800
+        },
+        {
+          "file": "mono.jpg",
+          "caption": "",
+          "title": "seed 1000",
+          "w": 1600,
+          "h": 1600
+        },
+        {
+          "file": "terra.jpg",
+          "caption": "",
+          "title": "seed 1111",
+          "w": 1600,
+          "h": 1600
+        },
+        {
+          "file": "add04.jpg",
+          "caption": "palette study sheet",
+          "title": "",
+          "w": 2094,
+          "h": 2200
+        },
+        {
+          "file": "add05.jpg",
+          "caption": "",
+          "title": "seed 1555",
+          "w": 1700,
+          "h": 1700
+        },
+        {
+          "file": "add06.jpg",
+          "caption": "",
+          "title": "seed 1740",
+          "w": 1700,
+          "h": 1700
+        },
+        {
+          "file": "add07.jpg",
+          "caption": "",
+          "title": "seed 3061",
+          "w": 1700,
+          "h": 1700
+        },
+        {
+          "file": "add08.jpg",
+          "caption": "",
+          "title": "seed 3488",
+          "w": 1700,
+          "h": 1700
+        },
+        {
+          "file": "add09.jpg",
+          "caption": "",
+          "title": "seed 1185",
+          "w": 1700,
+          "h": 1700
+        }
+      ],
+      "series": "broken-room",
+      "tags": [
+        "oil",
+        "cube",
+        "room"
+      ],
+      "lead": "sheet.jpg"
+    },
+    {
+      "slug": "capriccio",
+      "name": "CAPRICCIO",
+      "edition": null,
+      "kind": "experiment",
+      "year": 2026,
+      "after": "Piranesi",
+      "medium": "pencil accumulation only, no fills",
+      "status": "approved",
+      "note": "Impossible architectures, drawn. Arches, stairs and colonnades composed after Piranesi's capricci, except every element gets its own vanishing point, expanding on similar ideas explored in previous studies of rooms.",
+      "images": [
+        {
+          "file": "lead.jpg",
+          "title": "",
+          "caption": "primaries over graphite",
+          "w": 2400,
+          "h": 1560
+        },
+        {
+          "file": "hero.jpg",
+          "caption": "nocturne",
+          "title": "",
+          "w": 1800,
+          "h": 1170
+        },
+        {
+          "file": "graphite.jpg",
+          "caption": "graphite",
+          "title": "",
+          "w": 1600,
+          "h": 1040
+        },
+        {
+          "file": "sanguine.jpg",
+          "caption": "sanguine",
+          "title": "",
+          "w": 1600,
+          "h": 1179
+        },
+        {
+          "file": "mondrian.jpg",
+          "caption": "mondrian print",
+          "title": "",
+          "w": 1172,
+          "h": 1600
+        },
+        {
+          "file": "progression.jpg",
+          "title": "",
+          "caption": "the break increasing, left to right",
+          "w": 2400,
+          "h": 372,
+          "wide": true
+        },
+        {
+          "file": "add05.jpg",
+          "caption": "riso",
+          "title": "",
+          "w": 1700,
+          "h": 1105
+        },
+        {
+          "file": "add06.jpg",
+          "caption": "de stijl",
+          "title": "",
+          "w": 1700,
+          "h": 1105
+        },
+        {
+          "file": "eight-palettes.jpg",
+          "title": "",
+          "caption": "one room, eight palettes",
+          "w": 2400,
+          "h": 1248,
+          "wide": true
+        },
+        {
+          "file": "nocturnes.jpg",
+          "title": "",
+          "caption": "nocturnes",
+          "w": 2400,
+          "h": 1632,
+          "wide": true
+        },
+        {
+          "file": "salon.jpg",
+          "title": "",
+          "caption": "one drawing and its variations",
+          "w": 2400,
+          "h": 1938,
+          "wide": true
+        },
+        {
+          "file": "sheet.jpg",
+          "caption": "study of one hundred",
+          "title": "",
+          "w": 2200,
+          "h": 2200,
+          "wide": true
+        }
+      ],
+      "series": "broken-room",
+      "tags": [
+        "graphite",
+        "architecture",
+        "piranesi",
+        "line"
+      ]
+    },
+    {
+      "slug": "multiform",
+      "name": "MULTIFORM",
+      "edition": null,
+      "kind": "experiment",
+      "year": 2026,
+      "after": "Mark Rothko, the multiforms and after",
+      "medium": "glazed rectangles over a painted ground",
+      "status": "approved",
+      "note": "This series is a great example of what can come from the emergence of exploring a system's output range. A colour-field plate generator that started as one output of the Fugitive atlas study I liked too much to leave behind. There's a constant discussion of \"well, you could never paint a Rothko\", in the sense that there's context, process and material behind Rothko's creations, and even if you paint overlaid squares that resemble one, it still won't carry the emotional feel of a true Rothko. I decided to take the one Fugitive output that reminded me of Rothko and drill into it anyway. Soft glazed rectangles over a fully painted canvas ground, with 21 palettes taken from real Rothko canvases across the lineage of his career. I explored the system's range using the same atlas tool as before and have been pleasantly surprised by the outputs.",
+      "images": [
+        {
+          "file": "hero.jpg",
+          "caption": "after ory, 1961",
+          "title": "",
+          "w": 1800,
+          "h": 1800
+        },
+        {
+          "file": "orange.jpg",
+          "caption": "orange on maroon",
+          "title": "",
+          "w": 1600,
+          "h": 1600
+        },
+        {
+          "file": "triptych.jpg",
+          "caption": "chapel plum triptych",
+          "title": "",
+          "w": 2000,
+          "h": 1091
+        },
+        {
+          "file": "sheet.jpg",
+          "caption": "study of one hundred",
+          "title": "",
+          "w": 2200,
+          "h": 2200
+        }
+      ],
+      "tags": [
+        "rothko",
+        "glaze",
+        "colour field"
+      ],
+      "refs": [
+        {
+          "file": "ref-multiform-1948.jpg",
+          "caption": "Mark Rothko, Multiform, 1948, oil on canvas, 155 × 118.7 cm — National Gallery of Australia, Canberra"
+        },
+        {
+          "file": "ref-rothko-1948.jpg",
+          "caption": "Mark Rothko, Untitled (multiform), 1948, oil on canvas"
+        }
+      ],
+      "series": "misc",
+      "order": -1
+    },
+    {
+      "slug": "fugitive",
+      "name": "FUGITIVE",
+      "edition": null,
+      "kind": "exploration",
+      "year": 2026,
+      "after": "MAP-Elites, quality-diversity search",
+      "medium": "search over tiny composition programs",
+      "status": "approved",
+      "note": "Fugitive acts more as an explorative tool than a dedicated piece itself. For me, and many others, the most interesting aspect of procedural generative art is emergence. It always harkens back to the Molnár line, \"the only thing that can replace intuition is randomness\", the idea that sometimes randomness is the only thing that can push us in new, unbiased directions. With every generative system I've made there's a huge gluttonous urge to constantly generate new seeds, and the urge only amplifies when the outputs are surprising. But a problem comes with manually generating thousands of outputs, or batch exporting thousands of randomized variations, and it isn't the time required to export, review and curate. It's duplicated compositions, and output ranges that never get expressed clearly enough efficiently. The atlas system designed around Fugitive is an attempt to solve this as it builds an atlas board for a specific system by generating thousands of outputs and organizing them by discernable visual indicators such as recipe (the script's step process), contrast, palette and chaos. By the end of an atlas run we have a large grid of outputs organized on X and Y axes, showing how the system pushes toward specific visual variables. Just as useful are the parts of the grid left blank, an indicator of the system's boundaries. While an atlas builds we can also favourite specific outputs, guiding the atlas to tune variable ranges and recipes closer to that aesthetic. In a way it's a rudimentary visual training model, adjusted by hand on a handful of random knobs inside our systems.",
+      "images": [
+        {
+          "file": "hero.jpg",
+          "caption": "",
+          "title": "how the search works",
+          "w": 2400,
+          "h": 1720
+        },
+        {
+          "file": "atlas-sheets.jpg",
+          "caption": "the atlas over successive runs; the five colour sheets below",
+          "title": "the atlas, five sheets",
+          "w": 2400,
+          "h": 2389
+        },
+        {
+          "file": "tree.jpg",
+          "caption": "",
+          "title": "family tree",
+          "w": 1800,
+          "h": 1097
+        }
+      ],
+      "tags": [
+        "search",
+        "archive",
+        "map-elites"
+      ]
+    },
+    {
+      "slug": "visual-scores",
+      "name": "VISUAL SCORES",
+      "edition": null,
+      "kind": "guest",
+      "year": 2026,
+      "series": "scores",
+      "after": "Cage, Penderecki, De Cesare",
+      "medium": "procedural graphic scores, live in the browser",
+      "status": "approved",
+      "live": "../visual-scores/",
+      "note": "Procedural graphic scores after Cage, Penderecki, De Cesare and others; a vocabulary of staff fragments, node chains and duration marks that every later score piece borrows from. This one runs live in the browser, because it always has. Each visual element acts as a playable piece in the composition.",
+      "images": [
+        {
+          "file": "hero.jpg",
+          "title": "",
+          "caption": "a score, generated in the browser",
+          "w": 1600,
+          "h": 1200
+        },
+        {
+          "file": "scores-collage.jpg",
+          "title": "",
+          "caption": "four scores — two études, two in the 3d view",
+          "w": 4146,
+          "h": 1568
+        },
+        {
+          "file": "sleeves-collage.jpg",
+          "title": "sleeves",
+          "caption": "a mockup experiment: burned EPs of score outputs, sleeves fr",
+          "w": 3756,
+          "h": 1020
+        }
+      ],
+      "tags": [
+        "notation",
+        "score",
+        "live"
+      ],
+      "essay": {
+        "url": "../writings/index.html#schematic-scores",
+        "title": "Schematic Scores",
+        "date": "2026-05-13"
+      },
+      "embeds": [
+        {
+          "url": "https://x.com/DlSPUTED/status/2061086346819846560",
+          "caption": "a score, played"
+        },
+        {
+          "url": "https://x.com/DlSPUTED/status/2066162949174296718",
+          "caption": "played in the 3d view"
+        }
+      ]
+    },
+    {
+      "slug": "idea-403",
+      "name": "IDEA 403",
+      "edition": 1,
+      "kind": "edition",
+      "year": 2026,
+      "after": "Toshi Omagari, IDEA No. 403",
+      "medium": "ASCII figure and rotated typewriter type",
+      "status": "approved",
+      "note": "Edition 1 of the Poster Studies, after Toshi Omagari's design for IDEA No. 403. This was the first attempt at translating a magazine cover into a procedural system. There are only a few elements: an ASCII'd figure in the background, rotated stacked overlaid text, a simple masthead, a coloured background. Exploring this general visual recipe and stepping into the idea of seeing procedurally.",
+      "images": [
+        {
+          "file": "grid.jpg",
+          "caption": "grid of nine, one per palette",
+          "title": "",
+          "w": 1657,
+          "h": 2200
+        },
+        {
+          "file": "hero.jpg",
+          "caption": "",
+          "title": "master of none, jack of some, jester of all",
+          "w": 1267,
+          "h": 1700
+        }
+      ],
+      "series": "poster-studies",
+      "tags": [
+        "typewriter",
+        "ascii",
+        "poster"
+      ]
+    },
+    {
+      "slug": "idea-044",
+      "name": "IDEA 044 GRID",
+      "edition": 2,
+      "kind": "edition",
+      "year": 2026,
+      "after": "IDEA 044, 1960",
+      "medium": "procedural grid poster",
+      "status": "approved",
+      "note": "A grid poster engine after IDEA 044 by Ikko Tanaka (1960). A strict, simplified system that still creates interesting designs.",
+      "images": [
+        {
+          "file": "hero.jpg",
+          "caption": "grid of nine, one per palette",
+          "title": "",
+          "w": 1657,
+          "h": 2200
+        },
+        {
+          "file": "mono.jpg",
+          "caption": "",
+          "title": "seed 64733",
+          "w": 1416,
+          "h": 1900
+        }
+      ],
+      "series": "poster-studies",
+      "tags": [
+        "grid",
+        "poster",
+        "print"
+      ]
+    },
+    {
+      "slug": "design-japan-086",
+      "name": "DESIGN JAPAN 086",
+      "edition": 4,
+      "kind": "edition",
+      "year": 2026,
+      "after": "T. Kimura, Design Japan 086, 1966",
+      "medium": "procedural poster",
+      "status": "approved",
+      "note": "After Takashi Kimura from Design Japan 086, 1966.",
+      "images": [
+        {
+          "file": "hero.jpg",
+          "caption": "grid of nine",
+          "title": "",
+          "w": 1655,
+          "h": 2200
+        },
+        {
+          "file": "pl01.jpg",
+          "caption": "",
+          "title": "seed 23324",
+          "w": 1267,
+          "h": 1700,
+          "trip": 1
+        },
+        {
+          "file": "pl02.jpg",
+          "caption": "",
+          "title": "seed 64101",
+          "w": 1267,
+          "h": 1700,
+          "trip": 1
+        },
+        {
+          "file": "pl04.jpg",
+          "caption": "",
+          "title": "seed 30818",
+          "w": 1267,
+          "h": 1700,
+          "trip": 1
+        },
+        {
+          "file": "pl03.jpg",
+          "caption": "",
+          "title": "seed 94867",
+          "w": 1267,
+          "h": 1700
+        },
+        {
+          "file": "design-japan-086_seed7394_dark_2026-05-20t23-52-21.jpg",
+          "caption": "",
+          "title": "",
+          "w": 1640,
+          "h": 2200,
+          "trip": 3
+        },
+        {
+          "file": "design-japan-086_seed12519_dark_2026-05-21t00-48-23.jpg",
+          "caption": "",
+          "title": "",
+          "w": 1640,
+          "h": 2200,
+          "trip": 3
+        },
+        {
+          "file": "design-japan-086_seed16269_mono_2026-05-21t23-56-28.jpg",
+          "caption": "",
+          "title": "",
+          "w": 1640,
+          "h": 2200,
+          "trip": 3
+        }
+      ],
+      "series": "poster-studies",
+      "needsMore": true,
+      "tags": [
+        "poster",
+        "japan",
+        "print"
+      ]
+    },
+    {
+      "slug": "urban-housing-13",
+      "name": "URBAN HOUSING 13",
+      "edition": 5,
+      "kind": "edition",
+      "year": 2026,
+      "after": "都市住宅 no. 13, May 1969",
+      "medium": "procedural poster",
+      "status": "approved",
+      "note": "After Kohei Sugiura.",
+      "images": [
+        {
+          "file": "hero.jpg",
+          "caption": "grid of nine, one per palette",
+          "title": "",
+          "w": 1990,
+          "h": 2644
+        },
+        {
+          "file": "mono-tower.jpg",
+          "caption": "mono — the isometric tower",
+          "title": "",
+          "w": 1640,
+          "h": 2200,
+          "trip": 1
+        },
+        {
+          "file": "punk-pink.jpg",
+          "caption": "punk pink",
+          "title": "",
+          "w": 1640,
+          "h": 2200,
+          "trip": 1
+        },
+        {
+          "file": "urban-housing-13_seed102014_acid_green_2026-07-24t06-21-57.jpg",
+          "caption": "",
+          "title": "",
+          "w": 1640,
+          "h": 2200,
+          "trip": 2
+        },
+        {
+          "file": "urban-housing-13_seed99996_cream_6905_2026-07-24t06-23-21.jpg",
+          "caption": "",
+          "title": "",
+          "w": 1640,
+          "h": 2200,
+          "trip": 2
+        },
+        {
+          "file": "urban-housing-13_seed101005_dark_2026-07-24t06-24-52.jpg",
+          "caption": "",
+          "title": "",
+          "w": 1640,
+          "h": 2200,
+          "trip": 2
+        }
+      ],
+      "series": "poster-studies",
+      "tags": [
+        "poster",
+        "japan",
+        "axonometric"
+      ]
+    },
+    {
+      "slug": "idea-019",
+      "name": "IDEA 019",
+      "edition": 6,
+      "kind": "edition",
+      "year": 2026,
+      "after": "George Giusti, IDEA 019, 1956",
+      "medium": "procedural poster",
+      "status": "approved",
+      "note": "After George Giusti's IDEA 019 cover from 1956.",
+      "images": [
+        {
+          "file": "hero.jpg",
+          "caption": "grid of nine",
+          "title": "seed 11199",
+          "w": 1656,
+          "h": 2200
+        },
+        {
+          "file": "pl01.jpg",
+          "caption": "",
+          "title": "seed 11199",
+          "w": 1267,
+          "h": 1700,
+          "trip": 2
+        },
+        {
+          "file": "idea-019_seed59162_cream_2026-07-23t17-14-42.jpg",
+          "caption": "",
+          "title": "",
+          "w": 1640,
+          "h": 2200,
+          "trip": 2
+        },
+        {
+          "file": "idea-019_seed9766_punk_pink_2026-07-23t17-16-25.jpg",
+          "caption": "",
+          "title": "",
+          "w": 1640,
+          "h": 2200,
+          "trip": 2
+        },
+        {
+          "file": "pl02.jpg",
+          "caption": "",
+          "title": "seed 40674",
+          "w": 1267,
+          "h": 1700,
+          "trip": 1
+        },
+        {
+          "file": "pl03.jpg",
+          "caption": "",
+          "title": "seed 80073",
+          "w": 1267,
+          "h": 1700,
+          "trip": 1
+        },
+        {
+          "file": "idea-019_seed28374_dark_2026-05-22t00-43-57.jpg",
+          "caption": "",
+          "title": "",
+          "w": 1640,
+          "h": 2200,
+          "trip": 1
+        }
+      ],
+      "series": "poster-studies",
+      "tags": [
+        "poster",
+        "figure",
+        "print"
+      ]
+    },
+    {
+      "slug": "idea-107",
+      "name": "IDEA 107",
+      "edition": 7,
+      "kind": "edition",
+      "year": 2026,
+      "after": "IDEA 107, 1971",
+      "medium": "procedural poster",
+      "status": "approved",
+      "note": "After IDEA 107, 1971.",
+      "images": [
+        {
+          "file": "hero.jpg",
+          "caption": "grid of nine",
+          "title": "",
+          "w": 1657,
+          "h": 2200
+        },
+        {
+          "file": "07-seed100970-punk.jpg",
+          "caption": "",
+          "title": "",
+          "w": 1640,
+          "h": 2200,
+          "trip": 1
+        },
+        {
+          "file": "idea-107-grid_seed35672_punk_2026-05-22t01-59-12.jpg",
+          "caption": "",
+          "title": "",
+          "w": 1640,
+          "h": 2200,
+          "trip": 1
+        },
+        {
+          "file": "pl03.jpg",
+          "caption": "",
+          "title": "seed 35672",
+          "w": 1267,
+          "h": 1700,
+          "trip": 1
+        },
+        {
+          "file": "alt2.jpg",
+          "title": "seed 102988",
+          "caption": "",
+          "w": 1491,
+          "h": 2000,
+          "trip": 2
+        },
+        {
+          "file": "idea-107-grid_seed102988_blueprint_2026-05-22t02-39-55.jpg",
+          "caption": "",
+          "title": "",
+          "w": 1640,
+          "h": 2200,
+          "trip": 2
+        },
+        {
+          "file": "idea-107-grid_seed43860_riso_pop_2026-07-24t06-31-10.jpg",
+          "caption": "",
+          "title": "",
+          "w": 1640,
+          "h": 2200,
+          "trip": 2
+        }
+      ],
+      "series": "poster-studies",
+      "needsMore": true,
+      "tags": [
+        "poster",
+        "repetition",
+        "print"
+      ]
+    },
+    {
+      "slug": "cnrd-quarterly-05",
+      "name": "CNRD QUARTERLY 05",
+      "edition": 8,
+      "kind": "edition",
+      "year": 2026,
+      "after": "Film Quarterly no. 5, 1970",
+      "medium": "procedural cover system",
+      "status": "approved",
+      "note": "After Film Quarterly No. 5, 1970.",
+      "images": [
+        {
+          "file": "hero.jpg",
+          "caption": "",
+          "title": "seed 54863",
+          "w": 1267,
+          "h": 1700
+        },
+        {
+          "file": "pl01.jpg",
+          "caption": "",
+          "title": "seed 78472",
+          "w": 1267,
+          "h": 1700
+        },
+        {
+          "file": "pl02.jpg",
+          "caption": "",
+          "title": "seed 62311",
+          "w": 1267,
+          "h": 1700
+        },
+        {
+          "file": "pl03.jpg",
+          "caption": "",
+          "title": "seed 18889",
+          "w": 1267,
+          "h": 1700
+        }
+      ],
+      "series": "poster-studies",
+      "needsMore": true,
+      "tags": [
+        "poster",
+        "halftone",
+        "cover"
+      ]
+    },
+    {
+      "slug": "martens-halftone",
+      "name": "MARTENS HALFTONE",
+      "edition": 10,
+      "kind": "edition",
+      "year": 2026,
+      "after": "Karel Martens",
+      "medium": "glyph halftone engine",
+      "status": "approved",
+      "note": "A study after one of the greatest designers of all time, Karel Martens. One specific aspect of his design has always caught my eye is his use of generative glyphs as ASCII or halftone-like filters. Two examples in particular have always stuck with me. The process of recreating this glyph system started with looking closely at the works and breaking the glyphs down into their individual components. Once I had a catalogue of individual glyph elements, it was a simple step to a system that randomly overlays a set number of components and applies a riso-like colour opacity to each. Then one step further in making it a real-time glyph generator, constantly evolving new glyphs as you sit with it.",
+      "images": [
+        {
+          "file": "hero.jpg",
+          "title": "",
+          "caption": "a field of generated glyphs",
+          "w": 2200,
+          "h": 1243
+        },
+        {
+          "file": "riso-horse.jpg",
+          "title": "",
+          "caption": "a photograph rebuilt through the glyph filter",
+          "w": 4096,
+          "h": 2339
+        },
+        {
+          "file": "animated.mp4",
+          "title": "the generator",
+          "caption": "real-time glyphs, evolving",
+          "video": true
+        }
+      ],
+      "series": "misc",
+      "tags": [
+        "halftone",
+        "glyphs",
+        "overprint"
+      ],
+      "refs": [
+        {
+          "file": "ref-typed-portrait.jpg",
+          "caption": "Karel Martens, letterpress monoprint portrait — from Small Prints (Roma Publications, 2023)"
+        },
+        {
+          "file": "ref-color-glyphs.jpg",
+          "caption": "Karel Martens, letterpress monoprint, overprinted glyph elements — from Small Prints (Roma Publications, 2023)"
+        }
+      ]
+    },
+    {
+      "slug": "room-with-cube",
+      "name": "ROOM WITH CUBE",
+      "edition": 25,
+      "kind": "edition",
+      "year": 2026,
+      "after": "paint made of accumulated strokes",
+      "medium": "generative oil, stroke accumulation",
+      "status": "approved",
+      "note": "Inspired by Francis Bacon's use of squares, cubes and perspective lines to build canvases that feel like rooms.",
+      "images": [
+        {
+          "file": "hk3ic5iamaep86z.jpeg",
+          "caption": "",
+          "title": "",
+          "w": 4096,
+          "h": 3097
+        },
+        {
+          "file": "hero.jpg",
+          "caption": "",
+          "title": "seed 8",
+          "w": 1700,
+          "h": 1275,
+          "trip": 1
+        },
+        {
+          "file": "paint_seed56449_storm_2026-06-15t05-35-25.jpg",
+          "caption": "",
+          "title": "",
+          "w": 2400,
+          "h": 1800,
+          "trip": 1
+        },
+        {
+          "file": "06-seed42817-bacon-two-figures.jpg",
+          "caption": "",
+          "title": "",
+          "w": 2400,
+          "h": 1800,
+          "trip": 1
+        },
+        {
+          "file": "01-seed74279-storm.jpg",
+          "caption": "",
+          "title": "",
+          "w": 2400,
+          "h": 1800,
+          "trip": 2
+        },
+        {
+          "file": "02-seed75288-bacon-nurse.jpg",
+          "caption": "",
+          "title": "",
+          "w": 2400,
+          "h": 1800,
+          "trip": 2
+        },
+        {
+          "file": "07-seed80333-bacon-sand-dune.jpg",
+          "caption": "",
+          "title": "",
+          "w": 2400,
+          "h": 1800,
+          "trip": 2
+        },
+        {
+          "file": "hk3jchfaaaad0dw.jpeg",
+          "caption": "",
+          "title": "",
+          "w": 4096,
+          "h": 3097
+        }
+      ],
+      "series": "broken-room",
+      "interim": true,
+      "tags": [
+        "oil",
+        "bacon",
+        "engine"
+      ],
+      "lead": "hk3ic5iamaep86z.jpeg",
+      "thumb": "hk3ic5iamaep86z.jpeg"
+    },
+    {
+      "slug": "broken-rooms",
+      "name": "BROKEN ROOMS",
+      "edition": 36,
+      "kind": "edition",
+      "year": 2026,
+      "after": "Bacon space frames, Lissitzky Prouns",
+      "medium": "the engine pointed at a broken room",
+      "status": "approved",
+      "note": "",
+      "images": [
+        {
+          "file": "hero.jpg",
+          "caption": "evolution of the broken room, nine seeds",
+          "title": "",
+          "w": 2200,
+          "h": 2200
+        },
+        {
+          "file": "original_c60e802667abc94e11a779673e8c142b.jpg",
+          "caption": "after Bacon, Three Studies for Vanishing Points.",
+          "title": "",
+          "w": 2400,
+          "h": 1053
+        },
+        {
+          "file": "pl05.jpg",
+          "caption": "Bacon's pope",
+          "title": "",
+          "w": 2200,
+          "h": 2200
+        },
+        {
+          "file": "pl06.jpg",
+          "caption": "into the distance",
+          "title": "",
+          "w": 2200,
+          "h": 2200
+        },
+        {
+          "file": "pl01.jpg",
+          "caption": "mondrian",
+          "title": "",
+          "w": 2200,
+          "h": 1357
+        },
+        {
+          "file": "pl02.jpg",
+          "caption": "exploding perspectives",
+          "title": "",
+          "w": 1700,
+          "h": 1700
+        },
+        {
+          "file": "pl03.jpg",
+          "caption": "evolution of exploding rooms",
+          "title": "",
+          "w": 2200,
+          "h": 2200
+        },
+        {
+          "file": "hlpkgr0agaajd10.jpeg",
+          "caption": "",
+          "title": "",
+          "w": 3752,
+          "h": 2396
+        }
+      ],
+      "series": "broken-room",
+      "tags": [
+        "oil",
+        "broken room",
+        "bacon",
+        "lissitzky"
+      ],
+      "refs": [
+        {
+          "file": "ref-bacon-pope.jpg",
+          "caption": "Francis Bacon, Study after Velázquez's Portrait of Pope Innocent X, 1953 — Des Moines Art Center"
+        },
+        {
+          "file": "ref-proun99.jpg",
+          "caption": "El Lissitzky, Proun 99, c. 1923–25 — Yale University Art Gallery"
+        }
+      ],
+      "lead": "hero.jpg",
+      "thumb": "hero.jpg"
+    },
+    {
+      "slug": "horizons",
+      "name": "HORIZONS",
+      "edition": 40,
+      "kind": "edition",
+      "year": 2026,
+      "after": "an Intel 4004 die shot",
+      "medium": "guillotine partition, painted",
+      "status": "approved",
+      "note": "",
+      "images": [
+        {
+          "file": "hero.jpg",
+          "caption": "die mondrian 17",
+          "title": "",
+          "w": 1700,
+          "h": 1051
+        },
+        {
+          "file": "pl01.jpg",
+          "caption": "die riso punch 123",
+          "title": "",
+          "w": 1700,
+          "h": 1051
+        },
+        {
+          "file": "pl02.jpg",
+          "caption": "die mono 39",
+          "title": "",
+          "w": 1700,
+          "h": 1051
+        }
+      ],
+      "tags": [
+        "oil",
+        "circuit",
+        "partition"
+      ],
+      "series": "broken-room"
+    },
+    {
+      "slug": "chamber",
+      "name": "CHAMBER",
+      "edition": 41,
+      "kind": "edition",
+      "year": 2026,
+      "after": "de Chirico, Lynch, Bacon",
+      "medium": "the room, furnished and staged",
+      "status": "approved",
+      "note": "",
+      "images": [
+        {
+          "file": "pl07.jpg",
+          "caption": "3d mondrian",
+          "title": "",
+          "w": 1700,
+          "h": 1050
+        },
+        {
+          "file": "pl01.jpg",
+          "caption": "die cream 40",
+          "title": "",
+          "w": 1700,
+          "h": 1049,
+          "trip": 1
+        },
+        {
+          "file": "pl04.jpg",
+          "caption": "land 37 cream 252",
+          "title": "",
+          "w": 1700,
+          "h": 1050,
+          "trip": 1
+        },
+        {
+          "file": "hero.jpg",
+          "caption": "port 43 mondrian 181",
+          "title": "",
+          "w": 1327,
+          "h": 1700,
+          "trip": 2
+        },
+        {
+          "file": "pl03.jpg",
+          "caption": "port 09 vintage 115",
+          "title": "",
+          "w": 1327,
+          "h": 1700,
+          "trip": 2
+        },
+        {
+          "file": "pl02.jpg",
+          "caption": "port 38 film 70 231",
+          "title": "",
+          "w": 1327,
+          "h": 1700,
+          "trip": 2
+        },
+        {
+          "file": "pl06.jpg",
+          "caption": "land 11 newsprint 49",
+          "title": "",
+          "w": 1700,
+          "h": 1050
+        },
+        {
+          "file": "hlgt2ygbiaaxbli.jpeg",
+          "caption": "",
+          "title": "",
+          "w": 2210,
+          "h": 4096
+        },
+        {
+          "file": "chamber-og-study-100-4026x4026.jpg",
+          "caption": "study of 100 chamber fields",
+          "title": "",
+          "w": 2400,
+          "h": 2400
+        }
+      ],
+      "tags": [
+        "oil",
+        "broken room",
+        "stage",
+        "de chirico"
+      ],
+      "parent": "horizons",
+      "lead": "pl07.jpg"
+    },
+    {
+      "slug": "interior",
+      "name": "INTERIOR",
+      "edition": 47,
+      "kind": "edition",
+      "year": 2026,
+      "after": "a sad nostalgia furnished room",
+      "medium": "flat furnished interior",
+      "status": "approved",
+      "note": "An experiment from nostalgia and further exploration of spatial studies. Imagining time spent in my room with my brother.",
+      "images": [
+        {
+          "file": "hero.jpg",
+          "caption": "die mondrian 41",
+          "title": "",
+          "w": 1700,
+          "h": 1048
+        },
+        {
+          "file": "pl01.jpg",
+          "caption": "p16 bacon pope i60",
+          "title": "",
+          "w": 1700,
+          "h": 1049,
+          "trip": 1
+        },
+        {
+          "file": "pl03.jpg",
+          "caption": "survey cool 31",
+          "title": "",
+          "w": 1700,
+          "h": 1049,
+          "trip": 1
+        },
+        {
+          "file": "fig_09_brothers_cream_shadow_s16.jpg",
+          "caption": "",
+          "title": "",
+          "w": 1500,
+          "h": 926,
+          "trip": 2
+        },
+        {
+          "file": "pl05.jpg",
+          "caption": "newsprint 12",
+          "title": "",
+          "w": 1700,
+          "h": 1049,
+          "trip": 2
+        },
+        {
+          "file": "_triptych-a.jpg",
+          "caption": "",
+          "title": "",
+          "w": 1800,
+          "h": 418
+        }
+      ],
+      "tags": [
+        "oil",
+        "interior",
+        "flat",
+        "furniture"
+      ],
+      "parent": "room-with-cube"
+    },
+    {
+      "slug": "incomplete-cubes",
+      "name": "INCOMPLETE CUBES",
+      "edition": 49,
+      "kind": "edition",
+      "year": 2026,
+      "after": "Sol LeWitt, Variations of Incomplete Open Cubes, 1974",
+      "medium": "the 122 variations, drawn",
+      "status": "approved",
+      "note": "A simple procedural study of LeWitt's work.",
+      "images": [
+        {
+          "file": "lead.jpg",
+          "title": "seed 7",
+          "caption": "bacon carcass",
+          "w": 2000,
+          "h": 2000
+        },
+        {
+          "file": "v1.jpg",
+          "title": "seed 7",
+          "caption": "cobalt",
+          "w": 2000,
+          "h": 2000
+        },
+        {
+          "file": "v2.jpg",
+          "title": "seed 7",
+          "caption": "plum",
+          "w": 2000,
+          "h": 2000
+        },
+        {
+          "file": "v3.jpg",
+          "title": "seed 7",
+          "caption": "ochre",
+          "w": 2000,
+          "h": 2000
+        },
+        {
+          "file": "hero.jpg",
+          "caption": "the 122 variations, catalogued",
+          "title": "",
+          "w": 1700,
+          "h": 1700
+        }
+      ],
+      "interim": true,
+      "needsMore": true,
+      "tags": [
+        "cube",
+        "lewitt",
+        "wireframe"
+      ],
+      "parent": "cube-study"
+    },
+    {
+      "slug": "toth-scores",
+      "name": "TÓTH SCORES",
+      "edition": null,
+      "kind": "edition",
+      "year": 2026,
+      "after": "Dezider Tóth",
+      "medium": "graphic scores",
+      "status": "approved",
+      "note": "Scores after Dezider Tóth, exploring every part of the graphic score as simple material.",
+      "images": [
+        {
+          "file": "hero.jpg",
+          "caption": "",
+          "title": "po majstroch",
+          "w": 1437,
+          "h": 1900
+        },
+        {
+          "file": "sheet.jpg",
+          "caption": "study of one hundred",
+          "title": "",
+          "w": 1582,
+          "h": 2000
+        },
+        {
+          "file": "pl01.jpg",
+          "caption": "score mode study",
+          "title": "",
+          "w": 1267,
+          "h": 1700
+        }
+      ],
+      "series": "scores",
+      "tags": [
+        "notation",
+        "score",
+        "toth"
+      ]
+    },
+    {
+      "slug": "aeolian",
+      "name": "AEOLIAN",
+      "edition": null,
+      "kind": "edition",
+      "year": 2026,
+      "after": "wind chimes",
+      "medium": "one wind field, image and sound",
+      "status": "approved",
+      "note": "Another project born from nostalgia. Growing up visiting my grandma's house, playing in the backyard, hearing the faint orchestra of wind chimes she had hanging along the porch. I find myself thinking of her whenever I hear one. A place for thinking about her.",
+      "images": [
+        {
+          "file": "hero.jpg",
+          "caption": "interim render",
+          "title": "",
+          "w": 1700,
+          "h": 1700
+        }
+      ],
+      "series": "scores",
+      "interim": true,
+      "tags": [
+        "sound",
+        "wind",
+        "chimes"
+      ]
+    },
+    {
+      "slug": "cozens",
+      "name": "COZENS",
+      "edition": 75,
+      "kind": "edition",
+      "year": 2026,
+      "after": "Alexander Cozens, 1785",
+      "medium": "landscape developed from an ink blot",
+      "status": "approved",
+      "note": "An experiment in capturing the essence of landscapes. Simple blots and sketched lines. A study of detail and pattern recognition through scale.",
+      "images": [
+        {
+          "file": "c1.jpg",
+          "title": "seed 16147",
+          "caption": "sepia",
+          "w": 2000,
+          "h": 1370
+        },
+        {
+          "file": "c2.jpg",
+          "title": "seed 30411",
+          "caption": "bistre",
+          "w": 2000,
+          "h": 1370
+        },
+        {
+          "file": "c3.jpg",
+          "title": "seed 38330",
+          "caption": "ink",
+          "w": 2000,
+          "h": 1370
+        },
+        {
+          "file": "c4.jpg",
+          "title": "seed 53388",
+          "caption": "charcoal",
+          "w": 2000,
+          "h": 1370
+        },
+        {
+          "file": "hero.jpg",
+          "caption": "study of one hundred",
+          "title": "",
+          "w": 1700,
+          "h": 1261
+        }
+      ],
+      "interim": true,
+      "series": "misc",
+      "tags": [
+        "ink",
+        "blot",
+        "landscape"
+      ]
+    },
+    {
+      "slug": "tessera",
+      "name": "TESSERA",
+      "edition": null,
+      "kind": "edition",
+      "year": 2026,
+      "after": "Vieira da Silva",
+      "medium": "grid chamber, homography tiling",
+      "status": "approved",
+      "note": "A chamber after Maria Helena Vieira da Silva, every surface carrying its own tiled grid. The backing wall of the room seemingly fading into the perspective.",
+      "images": [
+        {
+          "file": "add02.jpg",
+          "title": "",
+          "caption": "grid of four",
+          "w": 2000,
+          "h": 1616
+        },
+        {
+          "file": "vieira.jpg",
+          "caption": "grisaille",
+          "title": "seed 7",
+          "w": 2000,
+          "h": 1600
+        },
+        {
+          "file": "add01.jpg",
+          "title": "",
+          "caption": "study of one hundred",
+          "w": 2000,
+          "h": 2000
+        }
+      ],
+      "series": "broken-room",
+      "interim": true,
+      "tags": [
+        "tiles",
+        "grid",
+        "vieira",
+        "room"
+      ]
+    },
+    {
+      "slug": "weather",
+      "name": "WEATHER",
+      "edition": null,
+      "kind": "edition",
+      "year": 2026,
+      "after": "chamber skies",
+      "medium": "FLUX currents inside the chamber's windows",
+      "status": "approved",
+      "note": "",
+      "images": [
+        {
+          "file": "hero.jpg",
+          "caption": "crucifixion diptych",
+          "title": "",
+          "w": 1700,
+          "h": 550
+        },
+        {
+          "file": "add02.jpg",
+          "title": "",
+          "caption": "checkers triptych",
+          "w": 2000,
+          "h": 462
+        },
+        {
+          "file": "add01.jpg",
+          "title": "",
+          "caption": "skies triptych stacked",
+          "w": 1144,
+          "h": 2000
+        },
+        {
+          "file": "add03.jpg",
+          "title": "",
+          "caption": "bacon triptych",
+          "w": 2000,
+          "h": 462
+        }
+      ],
+      "interim": true,
+      "tags": [
+        "storm",
+        "room",
+        "flow field"
+      ],
+      "parent": "horizons"
+    },
+    {
+      "slug": "split-perspective",
+      "name": "SPLIT PERSPECTIVE",
+      "edition": null,
+      "kind": "edition",
+      "year": 2026,
+      "after": "a view cut against itself",
+      "medium": "one scene, divided viewpoints",
+      "status": "approved",
+      "note": "Inspired by Emil Drličiak, an artist I came across while browsing random central European art databases. A tongue-in-cheek reference with Emil Cioran as the figure in my designs, Emil after Emil.",
+      "images": [
+        {
+          "file": "add01.jpg",
+          "title": "",
+          "caption": "grid of nine",
+          "w": 1504,
+          "h": 2000
+        },
+        {
+          "file": "hero.jpg",
+          "caption": "bw classic",
+          "title": "seed 26413",
+          "w": 1280,
+          "h": 1700,
+          "trip": 1
+        },
+        {
+          "file": "add02.jpg",
+          "title": "seed 46925",
+          "caption": "riso red",
+          "w": 1491,
+          "h": 2000,
+          "trip": 1
+        },
+        {
+          "file": "add03.jpg",
+          "title": "seed 49952",
+          "caption": "amber",
+          "w": 1491,
+          "h": 2000,
+          "trip": 1
+        }
+      ],
+      "interim": true,
+      "series": "poster-studies",
+      "tags": [
+        "poster",
+        "perspective",
+        "panels"
+      ]
+    }
+  ]
+}

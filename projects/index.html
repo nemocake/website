@@ -10,6 +10,7 @@
   <script src="../assets/js/config-loader.js"></script>
 
   <!-- Tailwind CSS -->
+  <script>try{var t=localStorage.getItem("studio.theme");if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script>
     tailwind.config = {
@@ -42,10 +43,8 @@
     }
   </script>
 
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
+  <!-- Studio type + retint (self-hosted, no CDN) -->
+  <script src="../assets/catalogue/theme.js" defer></script>
 
   <style>
     /* Scrollbar */
@@ -111,13 +110,16 @@
 
     /* Nav link active state */
     .nav-link-item.is-active {
-      color: #ccff00;
-      border-left-color: #ccff00;
+      color: var(--sanguine);
+      border-left-color: var(--sanguine);
     }
   </style>
 
   <!-- Tally.so Popup Embed -->
   <script async src="https://tally.so/widgets/embed.js"></script>
+
+  <!-- STUDIO RETINT — palette + fonts aligned to the catalogue; layout untouched -->
+  <link rel="stylesheet" href="../assets/catalogue/retint.css" />
 </head>
 <body class="bg-void text-gray-200 antialiased overflow-x-hidden selection:bg-acid selection:text-black">
 
@@ -127,24 +129,14 @@
 
   <!-- Header -->
   <header class="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex justify-between items-start pointer-events-none mix-blend-difference text-white">
-    <a href="../index.html" class="pointer-events-auto group cursor-pointer flex flex-col">
-      <span class="font-display font-bold text-2xl tracking-tighter leading-none group-hover:text-acid transition-colors">con.rad</span>
-      <span class="font-mono text-[10px] opacity-70 tracking-widest mt-1">BUILDING CURIOSITY...</span>
-    </a>
+    <a href="../index.html" class="pointer-events-auto site-home">con.rad</a>
 
-    <nav class="pointer-events-auto hidden md:flex items-center gap-8 font-mono text-xs tracking-wider">
-      <a href="../writings/index.html" class="hover:text-acid hover:underline underline-offset-4 decoration-acid decoration-1">[ WRITINGS ]</a>
-      <a href="../collection/index.html" class="hover:text-acid hover:underline underline-offset-4 decoration-acid decoration-1">[ COLLECTION ]</a>
-      <a href="../projects/index.html" class="hover:text-acid hover:underline underline-offset-4 decoration-acid decoration-1">[ PROJECTS ]</a>
-      <a href="../graph/index.html" class="hover:text-acid hover:underline underline-offset-4 decoration-acid decoration-1">[ ARE.NA GRAPH ]</a>
-      <span class="w-2 h-2 rounded-full bg-acid animate-pulse-glow shadow-[0_0_10px_#ccff00]"></span>
+    <nav class="pointer-events-auto site-links" aria-label="site">
+      <a href="../writings/">writings</a>
+      <a href="../collection/">collection</a>
+      <a href="../projects/" class="cur" aria-current="page">projects</a>
+      <a href="../studio/">studio</a>
     </nav>
-
-    <button class="md:hidden pointer-events-auto text-acid">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-      </svg>
-    </button>
   </header>
 
   <!-- Main Layout -->
@@ -154,7 +146,6 @@
     <aside class="md:w-1/4 md:sticky md:top-32 h-fit">
       <div class="glass-panel p-6 rounded-sm">
         <div class="flex items-center gap-3 mb-6">
-          <span class="font-mono text-acid text-sm">03.</span>
           <h2 class="font-display text-xl font-bold uppercase">Projects</h2>
         </div>
 
@@ -165,19 +156,6 @@
             <!-- Populated by JS -->
           </ul>
         </nav>
-
-        <div class="border-t border-dashed border-gray-700 my-4"></div>
-
-        <div class="font-mono text-[10px] uppercase tracking-wider text-gray-500 space-y-2">
-          <div class="flex justify-between">
-            <span>Projects</span>
-            <span id="project-count" class="text-acid">0</span>
-          </div>
-          <div class="flex justify-between">
-            <span>Status</span>
-            <span class="text-acid">ACTIVE</span>
-          </div>
-        </div>
       </div>
 
       <!-- Back to home -->
@@ -190,16 +168,9 @@
     <!-- Content Area -->
     <div class="md:w-3/4 space-y-16">
 
-      <!-- Intro Section -->
-      <div class="projects-intro glass-panel p-8 rounded-sm" id="projects-intro">
-        <div class="flex items-center gap-4 mb-6">
-          <div class="h-[1px] w-12 bg-acid"></div>
-          <span class="font-mono text-acid text-xs uppercase tracking-widest">Portfolio</span>
-        </div>
-        <h1 class="font-display text-4xl md:text-5xl font-bold mb-4">Projects</h1>
-        <p class="font-sans text-lg text-gray-400 max-w-xl leading-relaxed">
-          things i'm building, experimenting with, or contributing to. a mix of personal tools, creative experiments, and open source work.
-        </p>
+      <!-- Header (one-liner only — the nav already says where you are) -->
+      <div class="mb-8 pb-4 border-b border-border-dim">
+        <p class="font-sans text-gray-400">things i'm building, experimenting with, or contributing to. a mix of personal tools, creative experiments, and open source work.</p>
       </div>
 
       <!-- Projects Container -->
@@ -241,8 +212,10 @@
 
       // Merge GitHub data with config overrides + add private projects
       function mergeWithConfig(repos, projectsConfig) {
+        // names rendered as curated (config-only) cards — skip the fetched repo so it isn't listed twice
+        const curatedNames = new Set(Object.entries(projectsConfig || {}).filter(([k, c]) => c.private === true).map(([k]) => k));
         // Map GitHub repos with config overrides
-        const githubProjects = repos.map(repo => {
+        const githubProjects = repos.filter(repo => !curatedNames.has(repo.name)).map(repo => {
           const config = projectsConfig?.[repo.name] || {};
           return {
             ...repo,
@@ -254,7 +227,9 @@
             tags: config.tags || [],
             status: config.status,
             status2: config.status2,
-            featured: config.featured || false
+            featured: config.featured || false,
+            liveUrl: config.liveUrl,
+            articleUrl: config.articleUrl
           };
         });
 
@@ -275,6 +250,7 @@
             featured: config.featured || false,
             liveUrl: config.liveUrl,
             repoUrl: config.repoUrl,
+            articleUrl: config.articleUrl,
             updated_at: new Date().toISOString() // Use current date for private projects
           }));
 
@@ -294,9 +270,6 @@
           document.getElementById('projects-grid').innerHTML = '<p class="text-gray-500 font-mono">No repositories found.</p>';
           return;
         }
-
-        // Update project count
-        document.getElementById('project-count').textContent = repos.length;
 
         // Render navigation
         const navList = document.getElementById('projects-nav-list');
@@ -346,21 +319,25 @@
             ? `<span class="font-mono text-xs text-neon-blue">${repo.status2.toUpperCase()}</span>`
             : '';
 
-          // Footer: GitHub stats for public, tags + optional custom links for private
-          const footerContent = repo.isPrivate
-            ? `
+          // Prominent call-to-action links (live tool / the writing), shown right under the blurb
+          const cloneHref = repo.isPrivate ? repo.repoUrl : repo.html_url;
+          const liveHref = repo.liveUrl || (repo.isPrivate ? null : repo.homepage);
+          const linkCls = "inline-flex items-center gap-2 font-mono text-sm text-acid underline decoration-dotted decoration-acid underline-offset-4 hover:decoration-solid transition-all";
+          const primaryLinks = [
+            liveHref ? `<a href="${liveHref}" target="_blank" rel="noopener" class="${linkCls}"><span aria-hidden="true">→</span> open it live</a>` : '',
+            repo.articleUrl ? `<a href="${repo.articleUrl}" class="${linkCls}"><span aria-hidden="true">→</span> read the writing</a>` : ''
+          ].filter(Boolean).join('');
+          const primaryLinksHtml = primaryLinks
+            ? `<div class="flex flex-wrap gap-x-8 gap-y-2 mb-6">${primaryLinks}</div>`
+            : '';
+          // Footer: tags, stats, code link (the enticing links live up under the blurb)
+          const footerContent = `
               ${tagsHtml}
-              ${repo.repoUrl ? `<a href="${repo.repoUrl}" target="_blank" class="font-mono text-xs text-acid hover:underline ml-auto">::git_clone</a>` : ''}
-              ${repo.liveUrl ? `<a href="${repo.liveUrl}" target="_blank" class="font-mono text-xs ${repo.repoUrl ? 'text-gray-400' : 'ml-auto text-gray-400'} hover:text-acid hover:underline">→ live</a>` : ''}
-            `
-            : `
-              ${tagsHtml}
-              <div class="flex items-center gap-4 font-mono text-xs text-gray-500">
+              ${!repo.isPrivate ? `<div class="flex items-center gap-4 font-mono text-xs text-gray-500 ml-auto">
                 <span>★ ${repo.stargazers_count}</span>
                 <span>⑂ ${repo.forks_count}</span>
-              </div>
-              <a href="${repo.html_url}" target="_blank" class="font-mono text-xs text-acid hover:underline ml-auto">::git_clone</a>
-              ${repo.homepage ? `<a href="${repo.homepage}" target="_blank" class="font-mono text-xs text-gray-400 hover:text-acid hover:underline">→ live</a>` : ''}
+              </div>` : ''}
+              ${cloneHref ? `<a href="${cloneHref}" target="_blank" class="font-mono text-xs text-acid hover:underline ${repo.isPrivate ? 'ml-auto' : ''}">::git_clone</a>` : ''}
             `;
 
           return `
@@ -373,7 +350,8 @@
                 ${status2Badge}
               </div>
               <h2 class="font-display text-2xl md:text-3xl font-bold mb-2">${displayTitle}</h2>
-              <p class="font-mono text-sm text-gray-500 mb-6">${description}</p>
+              <p class="font-mono text-sm text-gray-500 mb-4">${description}</p>
+              ${primaryLinksHtml}
 
               ${detailsHtml}
               ${imagesHtml}
@@ -481,5 +459,8 @@
       loadProjects();
     })();
   </script>
+
+  <!-- studio ground selector -->
+  <div class="colophon ground-mount"></div>
 </body>
 </html>

@@ -1,1360 +1,1325 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="cream">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Personal website showcasing projects, writings, and inspirations.">
-    <title>con.rad | v3.0</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>con.rad</title>
+<script>try{var t=localStorage.getItem("studio.theme");if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<link rel="stylesheet" href="assets/catalogue/shell.css" />
+<script src="assets/catalogue/graphite.js" defer></script>
+<script src="assets/catalogue/theme.js" defer></script>
+<script src="assets/catalogue/masthead.js" defer></script>
+<script src="assets/catalogue/home-data.js"></script>
+<style>
+  /* ---- header tuning (KEEP AS-IS) ---- */
+  #cover { padding-top: clamp(18px, 4vh, 40px); }
+  #cover .over.over-mark { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; }
+  #cover .over-mark .wordmark { justify-self: start; }
+  #cover .over-mark .est { justify-self: end; }
+  #cover .corner-logo { justify-self: center; width: clamp(150px, 20vw, 220px); }
+  #cover .corner-logo .drawn-title { display: flex; justify-content: center; }
+  #cover .corner-logo canvas { max-height: 50px; }
+  #cover .cover-intro { margin-top: 22px; font-style: italic; text-align: center; max-width: none; }
+  @media (max-width: 640px) {
+    #cover .over.over-mark { grid-template-columns: 1fr; justify-items: center; gap: 6px; }
+    #cover .over-mark .wordmark, #cover .over-mark .est { justify-self: center; }
+  }
 
-    <!-- Site Configuration Loader - loads from /data/config.json -->
-    <script src="./assets/js/config-loader.js"></script>
+  body { overflow-x: hidden; }
 
-    <!-- Fallback config for when fetch fails (e.g., file:// protocol) -->
-    <script>
-      const needsFallback = !window.SITE_CONFIG ||
-                            Object.keys(window.SITE_CONFIG).length === 0 ||
-                            (window.SITE_CONFIG.collection &&
-                             window.SITE_CONFIG.collection.length > 0 &&
-                             !window.SITE_CONFIG.collection[0].type);
-      if (needsFallback) {
-        console.log('[Config Fallback] Using embedded fallback config');
-        window.SITE_CONFIG = {
-          "backgroundArt": {
-            "src": "https://cdn.feralfileassets.com/previews/500ccc6e-d7ad-443f-a9df-0bf709b3b3c9/1645052262/index.html",
-            "title": "36 Points",
-            "artist": "Sage Jenson",
-            "year": "2022"
-          },
-          "artworks": [
-            {"title": "36 Points", "artist": "Sage Jenson", "year": "2022", "url": "https://cdn.feralfileassets.com/previews/500ccc6e-d7ad-443f-a9df-0bf709b3b3c9/1645052262/index.html"},
-            {"title": "monogrid 1.1 CE #34", "artist": "Kim Asendorf", "year": "2022", "url": "https://ipfs.io/ipfs/QmQtaLb8fC7DUebFLTbkj3p7ByVVDxtRu7Na56dyo5BgM9/?fxhash=onteKmUycJyeWGjdavoVrqn74XQHsjVFfmMSBtocPigg7a7TryE"},
-            {"title": "Spiders", "artist": "Piter Pasma", "year": "2021", "url": "https://ipfs.io/ipfs/QmSbrCo52wPrcLUQwGdtbcLFQjjrhnR4M8wdcXtpbYtNFb/"},
-            {"title": "Reading a book #873", "artist": "Kim Asendorf", "year": "2021", "url": "https://ipfs.io/ipfs/QmUtfp5tvPwVefWQrhjTMEt9Xy3J4VooMjbR29qSPCvz6F/"},
-            {"title": "C-SCAPE #36", "artist": "Toxi", "year": "2022", "url": "https://ipfs.io/ipfs/QmdHhcTBEUUNZ68gWHUsSRfjFrHYXStvgMvB6HwS1bVbMG/?fxhash=oo9ANVZwtvSGktuEZiVxN9oDWyfL7W9L71c5e6WZnMHNWTSfSka"}
-          ],
-          "collection": [
-            {"thumbnail": "https://ipfs.io/ipfs/QmQV57honsnKiWnsgRikU43WL5h4tk2eSi9QcsaphBiSsJ", "render": "https://ipfs.io/ipfs/QmQV57honsnKiWnsgRikU43WL5h4tk2eSi9QcsaphBiSsJ", "title": "CSRSNT-ZAAI-45-of-64.png", "artist": "Caesuras (Casey Reas)", "medium": "Digital Art", "type": "image", "description": ""},
-            {"thumbnail": "https://ipfs.io/ipfs/QmTdTi3ctvT1Npcp6eKDuN1notyZoVJuTYK6iRivcKpW8V", "render": "https://ipfs.io/ipfs/QmTdTi3ctvT1Npcp6eKDuN1notyZoVJuTYK6iRivcKpW8V", "title": "The Starry Night: Not Van Gogh, Not Sorry", "artist": "Helena Sarin", "medium": "Digital Art", "type": "image", "description": ""},
-            {"thumbnail": "https://ipfs.io/ipfs/QmSRtLFUF39tsj639EsAk1uZKRCDvYMGHcCQwsqdqpiXMs", "render": "https://ipfs.io/ipfs/QmSRtLFUF39tsj639EsAk1uZKRCDvYMGHcCQwsqdqpiXMs", "title": "Lushtemples", "artist": "Zancan", "medium": "Digital Art", "type": "image", "description": ""}
-          ],
-          "writings": [
-            {"id": "on-collecting", "title": "On Collecting", "description": "There's something deeply human about the act of collecting. We gather objects, images, sounds, and ideas not just to possess them, but to create a mirror of ourselves.", "date": "2026-01-15", "body": []},
-            {"id": "digital-gardens", "title": "Digital Gardens", "description": "A website doesn't have to be a publication. It can be a garden—a place where ideas grow, evolve, and sometimes wither.", "date": "2026-01-10", "body": []},
-            {"id": "the-space-between", "title": "The Space Between", "description": "The most interesting things happen at the edges—where art meets technology, where structure meets chaos.", "date": "2025-12-20", "body": []}
-          ],
-          "inspirations": {
-            "channel": "visually-intriguing",
-            "channelUrl": "https://www.are.na/conrad-house/visually-intriguing",
-            "itemCount": 12
-          },
-          "profile": {
-            "name": "Conrad House",
-            "title": "",
-            "bio": ["chronically online.", "techno-curious.", "art and music junky."],
-            "photo": "./assets/images/misc/profilepicture.png"
-          },
-          "social": {
-            "email": "hello@conrad.house",
-            "github": "",
-            "twitter": ""
+  /* ==================================================================
+     THE INDEX THAT OPENS — b1: fixed crossfade spotlight
+     ================================================================== */
+  #home-body { margin-top: 46px; }
+
+  /* ---- ZONE 1 · favourite spotlight (fixed-size crossfade) ---- */
+  .spot {
+    position: relative;
+    border: 1px solid var(--ink);
+    background: var(--paper-deep);
+    margin-bottom: 44px;
+    overflow: hidden;
+    /* THE fixed box — never grows or shrinks as it cycles */
+    height: clamp(300px, 42vh, 430px);
+  }
+  .spot-stage { position: absolute; inset: 0; }
+  .spot-slide {
+    position: absolute; inset: 0;
+    opacity: 0; visibility: hidden;
+    transition: opacity .6s ease, visibility 0s linear .6s;
+  }
+  .spot-slide.cur { opacity: 1; visibility: visible; transition: opacity .6s ease; z-index: 2; }
+
+  /* artwork layout: figure + text, filling the box */
+  .spot-slide.art { display: grid; grid-template-columns: minmax(0, 44%) 1fr; }
+  .spot-fig {
+    position: relative; overflow: hidden;
+    border-right: 1px solid var(--rule);
+    background: var(--paper);
+  }
+  /* show the whole piece, never cropped — same rule as the index-list preview */
+  .spot-fig img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; padding: 16px; box-sizing: border-box; }
+  .spot-body {
+    padding: clamp(24px, 3vw, 44px) clamp(24px, 3.4vw, 48px);
+    display: flex; flex-direction: column; justify-content: center; gap: 12px;
+    min-width: 0;
+  }
+  /* typographic layout: centred, filling the same box */
+  .spot-slide.typo { display: flex; align-items: center; justify-content: center; }
+  .spot-slide.typo .spot-body {
+    align-items: center; text-align: center; gap: 14px;
+    max-width: 34ch; padding: clamp(28px, 5vw, 58px);
+  }
+
+  /* ---- editorial ARTICLE layout (writing favourite) — reads like an essay opening ---- */
+  .spot-slide.article { display: flex; align-items: center; justify-content: center; }
+  .spot-slide.article .spot-article {
+    width: 100%; max-width: 620px;
+    padding: clamp(22px, 4vw, 52px) clamp(26px, 5vw, 68px);
+    display: flex; flex-direction: column; align-items: flex-start; text-align: left;
+    gap: 12px; min-width: 0;
+  }
+  .spot-slide.article .spot-title {
+    font-size: clamp(38px, 5.6vw, 62px);
+  }
+  .spot-rule {
+    display: block; width: 58px; height: 0;
+    border-top: 1px solid var(--rule); margin: 4px 0 2px;
+  }
+  .spot-lede {
+    font-family: var(--font-text); font-size: 15.5px; line-height: 1.62;
+    color: var(--ink-soft); max-width: 52ch; margin: 0;
+    max-height: calc(1.62em * 5); overflow: hidden;   /* block flow keeps the drop-cap correct */
+  }
+  .spot-lede::first-letter {
+    float: left; font-family: var(--font-display); font-weight: 400;
+    color: var(--sanguine); font-size: 3.15em; line-height: 0.82;
+    padding: 2px 9px 0 0;
+  }
+
+  /* ---- light PROJECT layout (distinct from the article) ---- */
+  .spot-slide.proj { display: flex; align-items: center; justify-content: center; }
+  .spot-slide.proj .spot-proj {
+    max-width: 40ch; padding: clamp(28px, 5vw, 58px);
+    display: flex; flex-direction: column; align-items: center; text-align: center; gap: 13px;
+  }
+  .spot-slide.proj .spot-title { font-size: clamp(40px, 6.4vw, 70px); }
+  .spot-slide.proj .spot-blurb { max-width: 38ch; }
+  .spot-slide.proj .spot-go { justify-content: center; }
+
+  .spot-kick {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .26em;
+    text-transform: lowercase; color: var(--sanguine);
+  }
+  .spot-title {
+    font-family: var(--font-display); font-weight: 400; line-height: 1.0;
+    font-size: clamp(34px, 5vw, 58px); letter-spacing: .01em;
+  }
+  .spot-slide.typo .spot-title { font-size: clamp(40px, 7vw, 76px); }
+  .spot-blurb {
+    font-family: var(--font-text); font-size: 15.5px; line-height: 1.6;
+    color: var(--ink-soft); max-width: 46ch; font-style: italic;
+  }
+  .spot-slide.typo .spot-blurb { max-width: 40ch; }
+  .spot-go {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .2em;
+    text-transform: lowercase; color: var(--ink-faint); margin-top: 4px;
+    display: inline-flex; align-items: baseline; gap: 7px;
+  }
+  .spot-slide.typo .spot-go { justify-content: center; }
+  .spot-go .arw { color: var(--sanguine); transition: transform .3s ease; }
+  .spot-slide:hover .spot-go .arw { transform: translateX(4px); }
+  .spot-slide.spot-click { cursor: pointer; }
+
+  /* auto-advance progress tick */
+  /* the tick still runs as the invisible auto-advance timer (kept for animationend + hover-pause), just not shown */
+  .spot-prog {
+    position: absolute; left: 0; top: 0; right: 0; height: 2px;
+    z-index: 6; overflow: hidden; opacity: 0; pointer-events: none;
+  }
+  .spot-prog i { display: block; height: 100%; width: 0; background: var(--sanguine); }
+  @keyframes spotfill { from { width: 0; } to { width: 100%; } }
+
+  /* controls */
+  .spot-nav {
+    position: absolute; right: 16px; bottom: 12px;
+    display: flex; align-items: center; gap: 12px; z-index: 7;
+  }
+  .spot-eyebrow {
+    position: absolute; left: 16px; top: 14px; z-index: 7;
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: .24em;
+    text-transform: lowercase; color: var(--ink-faint);
+  }
+  .spot-dots { display: flex; gap: 7px; }
+  .spot-dot {
+    width: 6px; height: 6px; border-radius: 50%; padding: 0;
+    border: 1px solid var(--ink-faint); background: transparent; cursor: pointer;
+    transition: background .3s ease, border-color .3s ease; -webkit-appearance: none; appearance: none;
+  }
+  .spot-dot.cur { background: var(--sanguine); border-color: var(--sanguine); }
+  .spot-arrows { display: flex; gap: 2px; }
+  .spot-arrows button {
+    font-family: var(--font-mono); font-size: 13px; line-height: 1;
+    width: 22px; height: 22px; padding: 0; cursor: pointer;
+    background: var(--paper-deep); border: 1px solid var(--rule); color: var(--ink-soft);
+    transition: color .2s, border-color .2s;
+  }
+  .spot-arrows button:hover { color: var(--sanguine); border-color: var(--sanguine); }
+
+  /* ---- ZONE 2 · the two-column index ---- */
+  .open {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    border: 1px solid var(--ink);
+  }
+  .dir { border-right: 1px solid var(--rule); min-width: 0; }
+  .orow {
+    display: block; position: relative;
+    border-bottom: 1px solid var(--rule-faint);
+    cursor: pointer;
+  }
+  .orow:last-child { border-bottom: 0; }
+  .orow-head {
+    display: grid; grid-template-columns: 34px 1fr auto;
+    align-items: baseline; gap: 14px;
+    padding: 22px clamp(20px, 2.4vw, 32px);
+    transition: background .35s ease;
+  }
+  .orow.on .orow-head { background: var(--paper-deep); }
+  .orow .rn {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em;
+    color: var(--sanguine);
+  }
+  .orow .nm {
+    font-family: var(--font-display); font-weight: 400;
+    font-size: clamp(27px, 3.6vw, 40px); line-height: 1.0;
+    transition: color .3s ease;
+  }
+  .orow.on .nm, .orow:hover .nm { color: var(--sanguine); }
+  .orow .desc {
+    display: block; font-family: var(--font-text); font-style: italic;
+    font-size: 13.5px; color: var(--ink-faint); margin-top: 5px;
+  }
+  .orow .ct {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em;
+    color: var(--sanguine); align-self: center; white-space: nowrap;
+  }
+  .orow .ct .lab { color: var(--ink-faint); letter-spacing: .16em; }
+
+  /* inline strip that opens downward */
+  .strip-wrap {
+    display: grid; grid-template-rows: 0fr;
+    transition: grid-template-rows .42s cubic-bezier(.4,0,.15,1);
+  }
+  .orow.on .strip-wrap { grid-template-rows: 1fr; }
+  .strip-clip { overflow: hidden; min-height: 0; }
+  .strip {
+    display: flex; gap: 8px; align-items: stretch;
+    padding: 16px clamp(20px, 2.4vw, 32px) 22px calc(34px + clamp(20px, 2.4vw, 32px) + 14px);
+    overflow-x: auto; overflow-y: hidden;
+    opacity: 0; transform: translateY(-4px);
+    transition: opacity .4s ease .08s, transform .4s ease .08s;
+    scrollbar-width: thin; scrollbar-color: var(--rule) transparent;
+  }
+  .orow.on .strip { opacity: 1; transform: none; }
+  .strip::-webkit-scrollbar { height: 5px; }
+  .strip::-webkit-scrollbar-thumb { background: var(--rule); }
+  .strip-thumb {
+    flex: 0 0 auto; width: 62px; height: 62px;
+    border: 1px solid var(--rule); background: var(--paper);
+    overflow: hidden; position: relative;
+    transition: border-color .25s ease, transform .25s ease;
+  }
+  .strip-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .strip-thumb:hover, .strip-thumb.active { border-color: var(--sanguine); }
+  .strip-chip {
+    flex: 0 0 auto; height: 62px; padding: 0 16px; max-width: 240px;
+    border: 1px solid var(--rule); background: var(--paper);
+    display: flex; align-items: center; text-align: left;
+    font-family: var(--font-display); font-size: 16px; line-height: 1.1;
+    color: var(--ink-soft);
+    transition: color .25s ease, border-color .25s ease;
+  }
+  .strip-chip:hover, .strip-chip.active { color: var(--sanguine); border-color: var(--sanguine); }
+  .strip-empty {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em;
+    color: var(--ink-faint); text-transform: lowercase; align-self: center;
+  }
+  .strip-all {
+    flex: 0 0 auto; height: 62px; padding: 0 14px;
+    border: 1px dashed var(--rule); background: var(--paper);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px;
+    font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .12em; text-transform: lowercase;
+    color: var(--ink-faint); text-align: center;
+    transition: color .25s ease, border-color .25s ease;
+  }
+  .strip-all .aw { font-size: 13px; color: var(--sanguine); line-height: 1; }
+  .strip-all:hover { color: var(--sanguine); border-color: var(--sanguine); }
+
+  /* ---- the synced preview panel ---- */
+  .preview {
+    position: relative;
+    background: var(--paper-deep);
+    display: flex; flex-direction: column;
+  }
+  .pv-stage {
+    position: relative; flex: 1; margin: 18px 18px 0;
+    border: 1px solid var(--rule); background: var(--paper);
+    overflow: hidden; min-height: 300px;
+  }
+  .pv-layer {
+    position: absolute; inset: 0;
+    opacity: 0; transition: opacity .5s ease;
+  }
+  .pv-layer.cur { opacity: 1; }
+  .pv-layer img { width: 100%; height: 100%; object-fit: contain; padding: 16px; box-sizing: border-box; }
+  .pv-txt {
+    padding: clamp(26px, 3vw, 40px);
+    display: flex; flex-direction: column; justify-content: center; gap: 14px;
+  }
+  .pv-txt .pv-lead {
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: .22em;
+    text-transform: lowercase; color: var(--sanguine);
+  }
+  .pv-txt .pv-snip {
+    font-family: var(--font-text); font-size: 16px; line-height: 1.62;
+    color: var(--ink-soft); font-style: italic;
+  }
+  .pv-txt .pv-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+  .pv-txt .pv-tag {
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: .1em;
+    color: var(--ink-faint); text-transform: lowercase;
+    border: 1px solid var(--rule); padding: 3px 8px;
+  }
+  .pv-txt .pv-live {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em;
+    text-transform: lowercase; margin-top: 4px;
+  }
+  .pv-txt .pv-live a { color: var(--sanguine); }
+
+  /* writing preview: title + one-liner, then the piece fades in for reading on hover */
+  .pv-txt.reading { justify-content: flex-start; gap: 9px; overflow: hidden; }
+  .pv-txt.reading .pv-date {
+    position: absolute; top: clamp(26px, 3vw, 40px); right: clamp(26px, 3vw, 40px);
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: .14em;
+    text-transform: lowercase; color: var(--ink-faint);
+  }
+  .pv-txt.reading .pv-lead { padding-right: 60px; }
+  .pv-txt.reading .pv-snip { margin-bottom: 2px; }
+  .pv-wtitle {
+    font-family: var(--font-display); font-weight: 400; line-height: 1.06;
+    font-size: clamp(23px, 2.7vw, 32px); color: var(--ink);
+  }
+  .pv-read {
+    flex: 1 1 auto; min-height: 0; overflow-y: auto; padding-right: 8px;
+    scrollbar-width: thin; scrollbar-color: var(--rule) transparent;
+    -webkit-mask-image: linear-gradient(to bottom, #000 80%, transparent);
+    mask-image: linear-gradient(to bottom, #000 80%, transparent);
+  }
+  .pv-read::-webkit-scrollbar { width: 4px; }
+  .pv-read::-webkit-scrollbar-thumb { background: var(--rule); }
+  .pv-read p {
+    font-family: var(--font-text); font-size: 14px; line-height: 1.68;
+    color: var(--ink-soft); margin: 0 0 11px;
+  }
+  .pv-read a { color: var(--sanguine); text-decoration: underline; text-underline-offset: 2px; }
+  .pv-read em, .pv-read i { font-style: italic; }
+  .pv-txt.reading.cur .pv-read p { opacity: 0; animation: pvfade .55s ease var(--d, 0s) forwards; }
+  @keyframes pvfade { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .pv-txt.reading.cur .pv-read p { animation: none; opacity: 1; } }
+  .pv-more {
+    flex: 0 0 auto; margin-top: 4px;
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .16em;
+    text-transform: lowercase; color: var(--sanguine);
+  }
+  .pv-more:hover { text-decoration: underline; text-underline-offset: 2px; }
+
+  .pv-cap {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+    padding: 13px 20px 16px; margin-top: 2px;
+  }
+  .pv-cap .pv-nm {
+    font-family: var(--font-display); font-size: 21px; line-height: 1.05;
+    transition: opacity .4s ease; min-width: 0;
+  }
+  .pv-cap .pv-meta {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em;
+    color: var(--ink-faint); text-transform: lowercase; white-space: nowrap;
+  }
+
+  /* ---- ZONE 3 · are.na "lately" (compact scale-in-place masonry) ---- */
+  .lately { margin-top: 48px; overflow: visible; }
+  .lately-head {
+    display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
+    border-bottom: 1px solid var(--ink); padding-bottom: 9px;
+  }
+  .lately-head h2 {
+    margin: 0; font-family: var(--font-display); font-weight: 400;
+    font-size: 22px; line-height: 1;
+  }
+  .lately-head .lh-sub {
+    font-family: var(--font-text); font-style: italic; font-size: 13.5px;
+    color: var(--ink-faint);
+  }
+  .lately-head .live {
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: .18em;
+    text-transform: lowercase; color: var(--ink-faint);
+    display: inline-flex; align-items: center; gap: 6px; margin-left: auto;
+  }
+  .lately-head .live .dot {
+    width: 5px; height: 5px; border-radius: 50%; background: var(--sanguine);
+  }
+  .lately-head .live.on .dot { animation: pulse 2.4s ease-in-out infinite; }
+  a.lately-head .live { text-decoration: none; }
+  .lately-head a.live:hover { color: var(--sanguine); }
+
+  /* "listening to" easter-egg trigger — revealed on hover of the lately header */
+  .lh-listen {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .16em;
+    text-transform: lowercase; color: var(--sanguine); cursor: pointer;
+    background: none; border: 0; padding: 0;
+    opacity: 0; transform: translateX(-4px);
+    transition: opacity .3s ease, transform .3s ease;
+  }
+  .lately-head:hover .lh-listen, .lh-listen:focus-visible { opacity: 1; transform: none; }
+  .lh-listen:hover { text-decoration: underline; text-underline-offset: 3px; }
+
+  /* the winamp music player (opens on click; youtube api lazy-loads only then) */
+  .mplayer {
+    position: fixed; left: 16px; bottom: 14px; z-index: 120; width: 274px;
+    background: var(--paper); border: 1px solid var(--ink);
+    box-shadow: 0 10px 38px rgba(var(--ink-rgb), .2); user-select: none;
+  }
+  .mplayer[hidden] { display: none; }
+
+  /* title bar / drag handle */
+  .mp-bar {
+    display: flex; justify-content: space-between; align-items: center;
+    background: var(--paper-deep); border-bottom: 1px solid var(--rule);
+    padding: 4px 8px; cursor: move;
+  }
+  .mp-dots { display: flex; gap: 5px; align-items: center; }
+  .mp-dots .mp-dot { width: 9px; height: 9px; border-radius: 50%; display: block; border: 0; padding: 0; box-shadow: inset 0 0 0 1px rgba(var(--ink-rgb), .18); }
+  .mp-dots .mp-dot:nth-child(1) { background: var(--sanguine); cursor: pointer; }   /* red = close */
+  .mp-dots .mp-dot:nth-child(2) { background: #b98a2e; }
+  .mp-dots .mp-dot:nth-child(3) { background: #5a7a4a; }
+  .mp-dot-close { position: relative; }
+  .mp-dot-close:hover::after { content: "\00d7"; position: absolute; inset: -1px 0 0; display: flex;
+    align-items: center; justify-content: center; font-size: 9px; line-height: 1; color: rgba(var(--ink-rgb), .75); }
+  .mp-name { font-family: var(--font-mono); font-size: 8.5px; letter-spacing: .22em; text-transform: lowercase; color: var(--ink-faint); }
+
+  .mp-body { padding: 12px 13px 13px; }
+
+  /* LCD display */
+  .mp-lcd {
+    border: 1px solid var(--rule); background: var(--paper-deep);
+    box-shadow: inset 0 1px 3px rgba(var(--ink-rgb), .12);
+    padding: 7px 9px; margin-bottom: 10px;
+  }
+  .mp-lcd-title { font-family: var(--font-mono); font-size: 11px; color: var(--sanguine); white-space: nowrap; overflow: hidden; }
+  .mp-lcd-title .mp-marquee { display: inline-block; }
+  .mp-lcd-title.mp-scroll .mp-marquee { animation: mpMarquee 12s linear infinite; }
+  .mp-lcd-meta {
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: .06em;
+    color: var(--sanguine); margin-top: 5px;
+  }
+  .mp-lcd-meta .mp-status { opacity: .78; text-transform: lowercase; letter-spacing: .12em; }
+
+  /* equalizer */
+  .mp-eq { display: flex; align-items: flex-end; gap: 3px; height: 20px; margin-bottom: 10px; }
+  .mp-eq i { flex: 1; height: 20%; background: rgba(var(--ink-rgb), .16); display: block; }
+  .mp-eq.on i { background: var(--sanguine); animation: mpEq 1s ease-in-out infinite; }
+  .mp-eq.on i:nth-child(1) { animation-delay: 0s; }
+  .mp-eq.on i:nth-child(2) { animation-delay: .18s; }
+  .mp-eq.on i:nth-child(3) { animation-delay: .42s; }
+  .mp-eq.on i:nth-child(4) { animation-delay: .08s; }
+  .mp-eq.on i:nth-child(5) { animation-delay: .3s; }
+  .mp-eq.on i:nth-child(6) { animation-delay: .52s; }
+  .mp-eq.on i:nth-child(7) { animation-delay: .22s; }
+  .mp-eq.on i:nth-child(8) { animation-delay: .36s; }
+
+  /* progress bar */
+  .mp-prog { position: relative; height: 5px; background: var(--rule-faint); cursor: pointer; margin-bottom: 11px; }
+  .mp-prog-fill { position: absolute; left: 0; top: 0; height: 100%; width: 0; background: var(--sanguine); }
+  .mp-prog-handle { position: absolute; top: 50%; left: 0; width: 8px; height: 8px; border-radius: 50%; background: var(--sanguine); transform: translate(-50%, -50%); box-shadow: 0 0 0 2px var(--paper); }
+
+  /* controls */
+  .mp-ctrls { display: flex; align-items: center; gap: 12px; }
+  .mp-ctrls button { background: none; border: 0; cursor: pointer; color: var(--ink-soft); font-size: 12px; padding: 0; line-height: 1; font-family: var(--font-mono); }
+  .mp-ctrls button:hover { color: var(--sanguine); }
+  .mp-ctrls .mp-play { font-size: 15px; color: var(--sanguine); }
+  .mp-ctrls .mp-txt { font-size: 9px; letter-spacing: .1em; }
+  .mp-ctrls .mp-txt.on { color: var(--sanguine); }
+  .mp-x { margin-left: auto; color: var(--ink-faint); font-size: 15px; }
+  .mp-vol { width: 46px; height: 4px; background: var(--rule-faint); cursor: pointer; position: relative; }
+  .mp-vol-fill { height: 100%; width: 70%; background: var(--sanguine); }
+
+  /* playlist panel */
+  .mp-list { margin-top: 11px; border-top: 1px solid var(--rule); padding-top: 9px; max-height: 156px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--rule) transparent; }
+  .mp-list[hidden] { display: none; }
+  .mp-list-h { font-family: var(--font-mono); font-size: 8px; letter-spacing: .22em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 6px; }
+  .mp-list-item { display: flex; gap: 8px; align-items: baseline; padding: 3px 4px; cursor: pointer; font-family: var(--font-mono); font-size: 10px; color: var(--ink-soft); }
+  .mp-list-item:hover { color: var(--sanguine); }
+  .mp-list-item.cur { color: var(--sanguine); }
+  .mp-list-item .n { opacity: .5; width: 15px; flex: none; }
+  .mp-list-item .t { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  @keyframes mpEq { 0%, 100% { height: 20%; } 50% { height: 100%; } }
+  @keyframes mpMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) {
+    .mp-eq.on i { animation: none; height: 55%; }
+    .mp-lcd-title.mp-scroll .mp-marquee { animation: none; }
+  }
+
+  .lately-more {
+    display: flex; width: fit-content; align-items: center; gap: 8px; margin: 26px auto 0;
+    padding: 11px 22px; border: 1px dashed var(--rule); background: var(--paper);
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .16em; text-transform: lowercase;
+    color: var(--ink-faint); transition: color .25s ease, border-color .25s ease;
+  }
+  .lately-more .aw { color: var(--sanguine); font-size: 13px; }
+  .lately-more:hover { color: var(--sanguine); border-color: var(--sanguine); }
+  @keyframes pulse { 0%,100% { opacity: .3; } 50% { opacity: 1; } }
+
+  /* the organism: an absolutely-packed masonry that morphs around a hot tile */
+  .lately-grid { position: relative; margin-top: 20px; width: 100%; }
+  .ltile {
+    position: absolute; top: 0; left: 0; display: block;
+    border: 1px solid var(--rule); background: var(--paper-deep);
+    overflow: hidden; z-index: 1;
+    transform-origin: center center;
+    transition: transform .45s cubic-bezier(.22,.8,.24,1),
+                box-shadow .45s ease, border-color .28s ease;
+    will-change: transform;
+  }
+  .ltile img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    filter: grayscale(.14) contrast(.98);
+    transition: filter .4s ease;
+  }
+  .ltile.hot {
+    z-index: 30;
+    box-shadow: 0 16px 40px rgba(var(--ink-rgb), .34);
+    border-color: var(--sanguine);
+  }
+  .ltile.hot img { filter: none; }
+  /* title + date overlay (borrowed from home-b2's focus-dim treatment) */
+  .lt-meta {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 22px 8px 6px;
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 8px;
+    background: linear-gradient(0deg, rgba(var(--ink-rgb), .82), rgba(var(--ink-rgb), 0));
+    opacity: 0; transition: opacity .3s ease .04s;
+    pointer-events: none;
+  }
+  .ltile.hot .lt-meta { opacity: 1; }
+  .lt-meta .lt-t {
+    font-family: var(--font-text); font-size: 9px; line-height: 1.22;
+    color: rgb(var(--paper-rgb)); min-width: 0;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .lt-meta .lt-w {
+    font-family: var(--font-mono); font-size: 7px; letter-spacing: .08em;
+    color: rgba(var(--paper-rgb), .82); text-transform: lowercase; white-space: nowrap; flex: none;
+  }
+  /* mobile fallback: a plain small masonry with a caption under each tile */
+  .lately-grid.mob { columns: 3 100px; column-gap: 10px; height: auto !important; }
+  .lately-grid.mob .ltile {
+    position: static; break-inside: avoid; margin: 0 0 10px;
+    width: auto !important; height: auto !important; transform: none !important;
+    box-shadow: none; will-change: auto;
+  }
+  .lately-grid.mob .ltile img { height: auto; filter: grayscale(.14) contrast(.98); }
+  .lately-grid.mob .lt-meta {
+    position: static; background: none; opacity: 1; padding: 5px 2px 2px;
+    flex-direction: column; align-items: flex-start; gap: 1px;
+  }
+  .lately-grid.mob .lt-meta .lt-t { color: var(--ink-soft); font-size: 9px; }
+  .lately-grid.mob .lt-meta .lt-w { color: var(--ink-faint); }
+  .lately-loading, .lately-empty {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em;
+    color: var(--ink-faint); text-transform: lowercase; padding: 24px 0;
+  }
+
+  /* ---- responsive ---- */
+  @media (max-width: 860px) {
+    .open { grid-template-columns: 1fr; }
+    .dir { border-right: 0; }
+    .preview { display: none; }
+  }
+  @media (max-width: 560px) {
+    .spot-slide.art { grid-template-columns: 1fr; grid-template-rows: 42% 1fr; }
+    .spot-fig { border-right: 0; border-bottom: 1px solid var(--rule); }
+    .spot-nav { right: 12px; bottom: 10px; }
+    .lately-head .live { margin-left: 0; flex-basis: 100%; }
+  }
+  @media (max-width: 420px) {
+    .lately-grid.mob { columns: 2 100px; }
+  }
+
+  /* tighten the tail so the footer sits close under the feed */
+  .wrap { padding-bottom: 22px; }
+  footer.colophon { margin-top: 30px; }
+  /* the ground selector is pinned to the bottom-right corner, not in the footer flow */
+  footer.colophon .theme-picker {
+    position: fixed; right: 16px; bottom: 14px; z-index: 60; margin: 0;
+    background: var(--paper); border: 1px solid var(--rule); padding: 6px 8px;
+  }
+</style>
+</head>
+<body class="on-cover">
+
+<div class="wrap">
+  <header class="mast" id="cover">
+    <div class="over over-mark">
+      <span class="wordmark">building curiosity...</span>
+      <div class="corner-logo"><h1 data-drawn data-cap="30">con.rad</h1></div>
+      <span class="est" title="established 02·04·1998">est. ii·iv·mcmxcviii</span>
+    </div>
+    <p class="cover-intro">chronically online, techno-curious, art and music junky.</p>
+    <hr class="rule" />
+  </header>
+
+  <!-- ===== BODY: the index that opens (b1) ===== -->
+  <main id="home-body">
+    <!-- ZONE 1 · favourite spotlight (fixed crossfade) -->
+    <section class="spot" id="spot" aria-label="featured">
+      <div class="spot-prog"><i id="spot-prog-i"></i></div>
+      <span class="spot-eyebrow">favourites</span>
+      <div class="spot-stage" id="spot-stage"></div>
+      <div class="spot-nav">
+        <div class="spot-dots" id="spot-dots"></div>
+        <div class="spot-arrows">
+          <button type="button" id="spot-prev" aria-label="previous">&larr;</button>
+          <button type="button" id="spot-next" aria-label="next">&rarr;</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ZONE 2 · the directory + synced preview -->
+    <div class="open">
+      <div class="dir" id="dir"></div>
+      <aside class="preview" id="preview" aria-hidden="true">
+        <div class="pv-stage" id="pv-stage"></div>
+        <div class="pv-cap"><span class="pv-nm" id="pv-nm"></span><span class="pv-meta" id="pv-meta"></span></div>
+      </aside>
+    </div>
+
+    <!-- ZONE 3 · are.na "lately" -->
+    <section class="lately" id="lately" aria-label="lately from are.na">
+      <div class="lately-head">
+        <span class="lh-sub">what i've been looking at</span>
+        <button class="lh-listen" id="lh-listen" type="button" aria-label="open the music player">&#9835; listening to</button>
+        <a class="live" id="lately-live" href="https://www.are.na/conrad-house/visually-intriguing" target="_blank" rel="noopener"><span class="dot"></span><span id="lately-live-t">connecting&hellip;</span></a>
+      </div>
+      <div class="lately-grid" id="lately-grid"><div class="lately-loading">gathering recent finds&hellip;</div></div>
+      <a class="lately-more" href="https://www.are.na/conrad-house/visually-intriguing" target="_blank" rel="noopener">see more on are.na <span class="aw">&rarr;</span></a>
+    </section>
+  </main>
+
+</div>
+
+<footer class="colophon">
+  <div class="cols">
+    <span>con.rad</span>
+    <a href="mailto:conradhouse1998@gmail.com">email</a>
+    <a href="https://www.are.na/conrad-house" target="_blank" rel="noopener">are.na</a>
+    <a href="https://x.com/DlSPUTED" target="_blank" rel="noopener">twitter</a>
+  </div>
+  <span class="colophon-motto">master of none, jack of some, jester of all.</span>
+</footer>
+
+<script>
+/* THE INDEX THAT OPENS — b1: fixed crossfade spotlight + rich index hover + scale masonry */
+(function () {
+  const H = window.HomeData, esc = H.esc;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------------- ZONE 1 · favourite spotlight (fixed box, crossfade) ---------------- */
+  (function spotlight() {
+    const favs = H.FAVORITES || [];
+    const spot = document.getElementById("spot");
+    if (!favs.length) { spot.style.display = "none"; return; }
+    const stage = document.getElementById("spot-stage");
+    const dotsWrap = document.getElementById("spot-dots");
+    const progI = document.getElementById("spot-prog-i");
+    let i = 0, paused = false;
+
+    // pre-render EVERY slide once, stacked absolutely — crossfade is just a class toggle,
+    // so rapid arrow clicks never rebuild the DOM and never jank.
+    const slides = favs.map(f => {
+      const el = document.createElement("div");
+      const href = esc(f.href || "#");
+      const type = f.type || (f.img ? "artwork" : "writing");
+      if (f.img) {
+        // ---- artwork: figure + text (UNCHANGED) ----
+        el.className = "spot-slide art";
+        el.innerHTML =
+          `<div class="spot-fig"><img src="${esc(f.img)}" alt="" loading="lazy"></div>` +
+          `<div class="spot-body">
+             <span class="spot-kick">${esc(f.kicker || "")}</span>
+             <span class="spot-title">${esc(f.title || "")}</span>
+             <span class="spot-blurb">${esc(f.blurb || "")}</span>
+             <a class="spot-go" href="${href}">view <span class="arw">&rarr;</span></a>
+           </div>`;
+      } else if (type === "writing") {
+        // ---- writing: the OPENING of an essay, filling the same fixed box ----
+        el.className = "spot-slide article";
+        el.innerHTML =
+          `<div class="spot-article">
+             <span class="spot-kick">${esc(f.kicker || "writing")}</span>
+             <span class="spot-title">${esc(f.title || "")}</span>
+             <span class="spot-rule" aria-hidden="true"></span>
+             <p class="spot-lede">${esc(f.blurb || "")}</p>
+             <a class="spot-go" href="${href}">read the piece <span class="arw">&rarr;</span></a>
+           </div>`;
+      } else {
+        // ---- project: light distinct centred treatment ----
+        el.className = "spot-slide proj";
+        el.innerHTML =
+          `<div class="spot-proj">
+             <span class="spot-kick">${esc(f.kicker || "project")}</span>
+             <span class="spot-title">${esc(f.title || "")}</span>
+             <span class="spot-blurb">${esc(f.blurb || "")}</span>
+             <a class="spot-go" href="${href}">open <span class="arw">&rarr;</span></a>
+           </div>`;
+      }
+      // the whole card is a click target (not just the small go-link), so any
+      // favourite — artwork, writing or project — opens where it lives.
+      if (f.href) {
+        el.classList.add("spot-click");
+        el.addEventListener("click", e => {
+          if (e.target.closest("a")) return;                 // real links behave normally
+          if (String(window.getSelection() || "")) return;   // don't hijack a text drag
+          location.href = f.href;
+        });
+      }
+      stage.appendChild(el);
+      return el;
+    });
+
+    favs.forEach((_, k) => {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "spot-dot"; b.setAttribute("aria-label", "favourite " + (k + 1));
+      b.addEventListener("click", () => go(k));
+      dotsWrap.appendChild(b);
+    });
+    const dots = [...dotsWrap.children];
+
+    function restartProgress() {
+      if (reduce) return;
+      progI.style.animation = "none";
+      // force reflow so the animation restarts cleanly
+      void progI.offsetWidth;
+      progI.style.animation = "spotfill 5s linear forwards";
+      progI.style.animationPlayState = paused ? "paused" : "running";
+    }
+    // auto-advance is driven off the progress tick finishing — always in sync
+    progI.addEventListener("animationend", () => { if (!paused) go(i + 1); });
+
+    function go(n) {
+      i = (n + favs.length) % favs.length;
+      slides.forEach((s, k) => s.classList.toggle("cur", k === i));
+      dots.forEach((d, k) => d.classList.toggle("cur", k === i));
+      restartProgress();
+    }
+
+    document.getElementById("spot-next").addEventListener("click", () => go(i + 1));
+    document.getElementById("spot-prev").addEventListener("click", () => go(i - 1));
+    spot.addEventListener("mouseenter", () => { paused = true; progI.style.animationPlayState = "paused"; });
+    spot.addEventListener("mouseleave", () => { paused = false; progI.style.animationPlayState = "running"; });
+
+    // init
+    slides[0].classList.add("cur"); dots[0].classList.add("cur"); restartProgress();
+  })();
+
+  /* ---------------- ZONE 2 · directory + synced preview ---------------- */
+  (async function directory() {
+    const dir = document.getElementById("dir");
+    const pvStage = document.getElementById("pv-stage");
+    const pvNm = document.getElementById("pv-nm");
+    const pvMeta = document.getElementById("pv-meta");
+    const isNarrow = () => window.matchMedia("(max-width: 860px)").matches;
+    const SAMPLE_N = 5;
+    // Fisher–Yates shuffle (returns a new array)
+    function shuffle(arr) {
+      const a = arr.slice();
+      for (let k = a.length - 1; k > 0; k--) {
+        const j = Math.floor(Math.random() * (k + 1));
+        [a[k], a[j]] = [a[j], a[k]];
+      }
+      return a;
+    }
+
+    let secs;
+    try { secs = await H.sections(); } catch (e) { secs = []; }
+    if (!secs.length) { dir.innerHTML = '<div class="strip-empty" style="padding:28px 26px">could not load sections</div>'; return; }
+
+    // preview panel: two ping-pong image layers + one text layer
+    const imgA = document.createElement("div"); imgA.className = "pv-layer pv-img"; imgA.innerHTML = '<img alt="">';
+    const imgB = document.createElement("div"); imgB.className = "pv-layer pv-img"; imgB.innerHTML = '<img alt="">';
+    const txt  = document.createElement("div"); txt.className = "pv-layer pv-txt";
+    pvStage.appendChild(imgA); pvStage.appendChild(imgB); pvStage.appendChild(txt);
+    let curImg = imgA;
+
+    function showImage(item, capMeta) {
+      const next = (curImg === imgA) ? imgB : imgA;
+      const im = next.querySelector("img");
+      im.onerror = () => { next.style.background = "var(--paper)"; };
+      im.onload = () => {
+        next.classList.add("cur");
+        (curImg === imgA ? imgB : imgA); // no-op keep readable
+        imgA.classList.toggle("cur", next === imgA);
+        imgB.classList.toggle("cur", next === imgB);
+        txt.classList.remove("cur");
+        curImg = next;
+      };
+      const src = item.img || item.thumb || "";
+      im.src = src;
+      if (im.complete && im.naturalWidth) im.onload();
+      pvNm.textContent = item.title || "";
+      pvMeta.textContent = capMeta || "";
+    }
+    function showText(item, kind) {
+      txt.classList.toggle("reading", kind !== "mix");
+      let html;
+      if (kind === "mix") {
+        html = `<span class="pv-lead">project</span>` +
+               `<span class="pv-snip">${esc(item.snippet || "")}</span>`;
+        if (item.tags && item.tags.length)
+          html += `<span class="pv-tags">${item.tags.slice(0, 6).map(t => `<span class="pv-tag">${esc(t)}</span>`).join("")}</span>`;
+        if (item.live)
+          html += `<span class="pv-live"><a href="${esc(item.live)}" target="_blank" rel="noopener">live &nearr;</a></span>`;
+        pvNm.textContent = item.title || "";
+        pvMeta.textContent = item.meta || item.status || "";
+      } else {
+        // writing: label / title / one-liner / the piece itself, fading in for reading
+        const paras = (item.body || []).slice(0, 14);
+        html = `${item.meta ? `<span class="pv-date">${esc(item.meta)}</span>` : ""}` +
+               `<span class="pv-lead">writing</span>` +
+               `<span class="pv-wtitle">${esc(item.title || "")}</span>` +
+               `<span class="pv-snip">${esc(item.snippet || "")}</span>` +
+               `<div class="pv-read"><div class="pv-read-inner">` +
+                 paras.map((p, i) => `<p style="--d:${(i * 0.14).toFixed(2)}s">${p}</p>`).join("") +
+               `</div></div>` +
+               `<a class="pv-more" href="${esc(item.href)}">read the piece &rarr;</a>`;
+        pvNm.textContent = "";
+        pvMeta.textContent = "";
+      }
+      txt.innerHTML = html;
+      txt.classList.add("cur"); imgA.classList.remove("cur"); imgB.classList.remove("cur");
+    }
+
+    function capFor(item) {
+      const parts = [];
+      if (item.meta) parts.push(item.meta);
+      if (item.sub && item.sub !== item.meta) parts.push(item.sub);
+      return parts.join(" · ");
+    }
+    function showItem(item, kind) {
+      if (kind === "image") showImage(item, capFor(item));
+      else showText(item, kind);
+    }
+
+    // build rows
+    secs.forEach((s, idx) => {
+      const kind = H.SECTION_KIND[s.key] || (s.img ? "image" : "text");
+      const row = document.createElement("a");
+      row.className = "orow"; row.href = s.href; row.dataset.key = s.key;
+      const num = String(idx + 1).padStart(2, "0");
+
+      row.innerHTML =
+        `<div class="orow-head">
+           <span class="rn">${num}</span>
+           <span class="body"><span class="nm">${esc(s.name)}</span><span class="desc">${esc(s.desc)}</span></span>
+         </div>
+         <div class="strip-wrap"><div class="strip-clip"><div class="strip"><span class="strip-empty">opening&hellip;</span></div></div></div>`;
+
+      const strip = row.querySelector(".strip");
+      let loaded = false, list = null, sample = null;
+
+      function buildStrip() {
+        strip.innerHTML = "";
+        if (!list || !list.length) { strip.innerHTML = '<span class="strip-empty">nothing to preview yet</span>'; return; }
+        const cap = sample;
+        cap.forEach((item, k) => {
+          let node;
+          if (kind === "image") {
+            node = document.createElement("a");
+            node.className = "strip-thumb"; node.href = item.href || s.href;
+            const im = document.createElement("img");
+            im.alt = ""; im.loading = "lazy";
+            im.onerror = () => { node.style.display = "none"; };
+            im.src = item.thumb || item.img || "";
+            node.appendChild(im);
+          } else {
+            node = document.createElement("a");
+            node.className = "strip-chip"; node.href = item.href || s.href;
+            node.textContent = item.title || "untitled";
+          }
+          node.addEventListener("mouseenter", () => {
+            [...strip.children].forEach(c => c.classList.remove("active"));
+            node.classList.add("active");
+            showItem(item, kind);
+          });
+          strip.appendChild(node);
+        });
+        // "see all" — signals there's more than the random peek
+        const all = document.createElement("a");
+        all.className = "strip-all";
+        all.href = s.href;
+        all.innerHTML = `<span>see all</span><span class="aw">&rarr;</span>`;
+        strip.appendChild(all);
+      }
+
+      async function ensure() {
+        if (loaded) return;
+        loaded = true;
+        try { list = await H.items(s.key); } catch (e) { list = []; }
+        // sample a small RANDOM handful ONCE, stable for the session (fresh on reload)
+        sample = (list && list.length > SAMPLE_N) ? shuffle(list).slice(0, SAMPLE_N) : (list || []);
+        buildStrip();
+      }
+
+      function open() {
+        [...dir.children].forEach(r => r.classList.remove("on"));
+        row.classList.add("on");
+        ensure().then(() => {
+          // default: section's lead item drives the preview (title shown, never "N entries")
+          [...strip.children].forEach(c => c.classList.remove("active"));
+          if (sample && sample.length) { showItem(sample[0], kind); }
+          else if (kind === "image" && s.img) { showImage({ title: s.name, img: s.img }, s.desc); }
+        });
+      }
+
+      row.addEventListener("mouseenter", open);
+      row.addEventListener("focus", open);
+      // touch / narrow: first tap opens, second tap follows the link
+      row.addEventListener("click", (e) => {
+        if (isNarrow() && !row.classList.contains("on")) { e.preventDefault(); open(); }
+      });
+      dir.appendChild(row);
+    });
+
+    // default state: open the first row (loads its strip + drives the preview with its lead item)
+    const first = dir.firstElementChild;
+    if (first) first.dispatchEvent(new Event("mouseenter"));
+  })();
+
+  /* ---------------- ZONE 3 · are.na "lately" — the ORGANISM displacement masonry ---------------- */
+  (async function lately() {
+    const grid = document.getElementById("lately-grid");
+    const live = document.getElementById("lately-live");
+    const liveT = document.getElementById("lately-live-t");
+
+    let res;
+    try { res = await H.arena(50); } catch (e) { res = { live: false, blocks: [] }; }
+    const blocks = (res.blocks || []).filter(b => b.thumb || b.img).slice(0, 50);
+    if (!blocks.length) { document.getElementById("lately").style.display = "none"; return; }
+
+    live.classList.toggle("on", !!res.live);
+    const newest = H.whenAgo(blocks[0].when);
+    liveT.textContent = (res.live ? "live from are.na" : "recent snapshot") + (newest ? " · updated " + newest : "");
+
+    const GAP = 10;
+    const MAXPUSH = 48;                 // px of shove at the epicentre
+    let RADIUS = 260;                    // falloff scale, recomputed from colW (~2.5×)
+    const isMobile = () => window.matchMedia("(max-width: 560px)").matches;
+
+    function tileHTML(b) {
+      const when = H.whenAgo(b.when);
+      const title = b.title || "untitled";
+      return `<a class="ltile" href="${esc(b.src || "#")}" target="_blank" rel="noopener" title="${esc(title)}">
+          <img src="${esc(b.thumb || b.img)}" alt="" loading="lazy" onerror="this.closest('.ltile').style.display='none'">
+          <span class="lt-meta"><span class="lt-t">${esc(title)}</span>${when ? `<span class="lt-w">${esc(when)}</span>` : ""}</span>
+        </a>`;
+    }
+
+    let state = [];         // desktop tile geometry
+    let curMob = null;
+
+    // ---- MOBILE: a plain small masonry, captions shown, no displacement/scale ----
+    function buildMobile() {
+      state = [];
+      grid.classList.add("mob");
+      grid.style.height = "";
+      grid.innerHTML = blocks.map(tileHTML).join("");
+    }
+
+    // ---- DESKTOP: absolutely-packed masonry + the displacement field ----
+    function buildDesktop() {
+      grid.classList.remove("mob");
+      grid.innerHTML = blocks.map(tileHTML).join("");
+      const tiles = [...grid.querySelectorAll(".ltile")];
+      state = tiles.map(el => ({ el, aspect: 1, x: 0, y: 0, w: 0, h: 0, cx: 0, cy: 0 }));
+
+      // measure each tile's true aspect by loading its thumb; relayout as they settle
+      state.forEach(s => {
+        const src = s.el.querySelector("img").getAttribute("src");
+        if (!src) return;
+        const probe = new Image();
+        probe.onload = () => {
+          if (probe.naturalWidth && probe.naturalHeight) {
+            s.aspect = probe.naturalWidth / probe.naturalHeight;
+            scheduleLayout();
           }
         };
-        try { localStorage.setItem('conradSiteConfig', JSON.stringify(window.SITE_CONFIG)); } catch(e) {}
+        probe.src = src;
+      });
+
+      // hover = the organism: hot tile swells, neighbours flee radially
+      state.forEach(s => {
+        s.el.addEventListener("mouseenter", () => makeHot(s));
+        s.el.addEventListener("mouseleave", cool);
+      });
+
+      layout();
+    }
+
+    function chooseCols(W) {
+      // aim for small tiles (~120px) — ~7-9 cols on desktop, fewer as it narrows
+      let cols = Math.round((W + GAP) / (120 + GAP));
+      return Math.max(3, Math.min(9, cols));
+    }
+
+    function layout() {
+      if (curMob) return;
+      const W = grid.clientWidth;
+      if (!W) return;
+      const cols = chooseCols(W);
+      const colW = (W - (cols - 1) * GAP) / cols;
+      RADIUS = 2.5 * colW;
+      const colH = new Array(cols).fill(0);
+      state.forEach(s => {
+        // place in the currently-shortest column
+        let c = 0;
+        for (let k = 1; k < cols; k++) if (colH[k] < colH[c]) c = k;
+        const x = c * (colW + GAP);
+        const y = colH[c];
+        const h = colW / (s.aspect || 1);
+        s.x = x; s.y = y; s.w = colW; s.h = h;
+        s.cx = x + colW / 2; s.cy = y + h / 2;
+        s.el.style.left = x + "px";
+        s.el.style.top = y + "px";
+        s.el.style.width = colW + "px";
+        s.el.style.height = h + "px";
+        colH[c] += h + GAP;
+      });
+      grid.style.height = (Math.max.apply(null, colH) - GAP) + "px";
+    }
+
+    function makeHot(hot) {
+      if (curMob) return;
+      hot.el.classList.add("hot");
+      hot.el.style.transform = "scale(1.7)";
+      state.forEach(o => {
+        if (o === hot) return;
+        const dx = o.cx - hot.cx, dy = o.cy - hot.cy;
+        const d = Math.hypot(dx, dy) || 0.0001;
+        const mag = MAXPUSH * Math.exp(-d / RADIUS);   // decays with distance
+        o.el.style.transform = "translate(" + (dx / d * mag).toFixed(2) + "px," + (dy / d * mag).toFixed(2) + "px)";
+      });
+    }
+    function cool() {
+      if (curMob) return;
+      state.forEach(o => { o.el.classList.remove("hot"); o.el.style.transform = ""; });
+    }
+
+    let layoutT = null;
+    function scheduleLayout() {
+      clearTimeout(layoutT);
+      layoutT = setTimeout(layout, 60);
+    }
+
+    function decide() {
+      const mob = isMobile();
+      if (mob !== curMob) { curMob = mob; if (mob) buildMobile(); else buildDesktop(); }
+      else if (!mob) layout();
+    }
+
+    let resizeT = null;
+    window.addEventListener("resize", () => { clearTimeout(resizeT); resizeT = setTimeout(decide, 120); });
+
+    decide();
+  })();
+})();
+</script>
+
+<!-- easter egg: a winamp-style music player, revealed by "listening to" in the lately header -->
+<div class="mplayer" id="mplayer" hidden aria-label="music player">
+  <div class="mp-bar" id="mp-bar">
+    <span class="mp-dots"><button class="mp-dot mp-dot-close" id="mp-dot-close" type="button" aria-label="close player" title="close"></button><i class="mp-dot" aria-hidden="true"></i><i class="mp-dot" aria-hidden="true"></i></span>
+    <span class="mp-name">winamp_v2.9</span>
+  </div>
+  <div class="mp-body">
+    <div class="mp-lcd">
+      <div class="mp-lcd-title" id="mp-lcd-title"><span class="mp-marquee" id="mp-marquee">tuning in&hellip;</span></div>
+      <div class="mp-lcd-meta">
+        <span id="mp-cur">0:00</span>
+        <span class="mp-status" id="mp-status">ready</span>
+        <span id="mp-dur">0:00</span>
+      </div>
+    </div>
+    <div class="mp-eq" id="mp-eq" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="mp-prog" id="mp-prog" role="slider" aria-label="seek">
+      <div class="mp-prog-fill" id="mp-prog-fill"></div>
+      <div class="mp-prog-handle" id="mp-prog-handle"></div>
+    </div>
+    <div class="mp-ctrls">
+      <button id="mp-prev" type="button" aria-label="previous">&#9198;</button>
+      <button id="mp-play" type="button" aria-label="play or pause" class="mp-play">&#9654;</button>
+      <button id="mp-next" type="button" aria-label="next">&#9197;</button>
+      <button id="mp-stop" type="button" aria-label="stop">&#9209;</button>
+      <button id="mp-shuffle" class="mp-txt" type="button" aria-label="shuffle" title="shuffle">SHF</button>
+      <button id="mp-list-toggle" class="mp-txt" type="button" aria-label="playlist" title="playlist">LST</button>
+      <div class="mp-vol" id="mp-vol" role="slider" aria-label="volume"><div class="mp-vol-fill" id="mp-vol-fill"></div></div>
+    </div>
+    <div class="mp-list" id="mp-list" hidden>
+      <div class="mp-list-h">playlist</div>
+      <div id="mp-list-items"><div class="mp-list-item"><span class="t">loading&hellip;</span></div></div>
+    </div>
+  </div>
+  <div id="mp-yt" style="position:absolute;left:-9999px;top:0;width:200px;height:200px;overflow:hidden;pointer-events:none"></div>
+</div>
+
+<script>
+/* winamp music easter egg — the YouTube API only loads once you click "listening to" */
+(function () {
+  var PLAYLIST_ID = "PLGl_0guG9m0iKPAfhpooMWA0zKESKkYN4";
+  var yt = null, apiPending = false, ready = false, shuffled = false;
+  var progTimer = null;
+
+  var panel      = document.getElementById("mplayer");
+  var lcdTitle   = document.getElementById("mp-lcd-title");
+  var marquee    = document.getElementById("mp-marquee");
+  var curEl      = document.getElementById("mp-cur");
+  var durEl      = document.getElementById("mp-dur");
+  var statusEl   = document.getElementById("mp-status");
+  var eq         = document.getElementById("mp-eq");
+  var progEl     = document.getElementById("mp-prog");
+  var progFill   = document.getElementById("mp-prog-fill");
+  var progHandle = document.getElementById("mp-prog-handle");
+  var volEl      = document.getElementById("mp-vol");
+  var volFill    = document.getElementById("mp-vol-fill");
+  var playBtn    = document.getElementById("mp-play");
+  var shuffleBtn = document.getElementById("mp-shuffle");
+  var listToggle = document.getElementById("mp-list-toggle");
+  var listPanel  = document.getElementById("mp-list");
+  var listItems  = document.getElementById("mp-list-items");
+
+  function fmt(s) {
+    if (!s || isNaN(s)) return "0:00";
+    var m = Math.floor(s / 60), sec = Math.floor(s % 60);
+    return m + ":" + (sec < 10 ? "0" : "") + sec;
+  }
+  function setStatus(state) {
+    if (state === "playing") { statusEl.textContent = "playing"; playBtn.innerHTML = "&#10073;&#10073;"; eq.classList.add("on"); }
+    else if (state === "paused") { statusEl.textContent = "paused"; playBtn.innerHTML = "&#9654;"; eq.classList.remove("on"); }
+    else { statusEl.textContent = "ready"; playBtn.innerHTML = "&#9654;"; eq.classList.remove("on"); }
+  }
+  function setTitle(t) {
+    marquee.textContent = t;
+    lcdTitle.classList.remove("mp-scroll");
+    // if the title overflows the LCD, duplicate it and marquee
+    if (marquee.scrollWidth > lcdTitle.clientWidth + 4) {
+      marquee.innerHTML = "";
+      var a = document.createElement("span"), b = document.createElement("span");
+      a.textContent = t + "  •  ";
+      b.textContent = t + "  •  ";
+      marquee.appendChild(a); marquee.appendChild(b);
+      lcdTitle.classList.add("mp-scroll");
+    }
+  }
+  function updateTrack() {
+    try { var d = yt.getVideoData(); if (d && d.title) setTitle(d.title); } catch (e) {}
+  }
+  function updateProgress() {
+    if (!yt || !ready) return;
+    try {
+      var cur = yt.getCurrentTime() || 0, dur = yt.getDuration() || 1;
+      var pct = (cur / dur) * 100;
+      progFill.style.width = pct + "%";
+      progHandle.style.left = pct + "%";
+      curEl.textContent = fmt(cur);
+      durEl.textContent = fmt(dur);
+    } catch (e) {}
+  }
+
+  function loadAPI(cb) {
+    if (window.YT && window.YT.Player) return cb();
+    var prev = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = function () { if (typeof prev === "function") prev(); cb(); };
+    if (!apiPending) {
+      apiPending = true;
+      var s = document.createElement("script");
+      s.src = "https://www.youtube.com/iframe_api";
+      document.head.appendChild(s);
+    }
+  }
+  function createPlayer() {
+    yt = new YT.Player("mp-yt", {
+      height: "200", width: "200",
+      playerVars: { autoplay: 1, controls: 0, disablekb: 1, fs: 0, modestbranding: 1, rel: 0,
+                    listType: "playlist", list: PLAYLIST_ID },
+      events: {
+        onReady: function () {
+          ready = true; setStatus("ready");
+          try { yt.setVolume(70); } catch (e) {}
+          volFill.style.width = "70%";
+          setTimeout(updateTrack, 900);
+        },
+        onStateChange: function (e) {
+          var S = YT.PlayerState;
+          clearInterval(progTimer);
+          if (e.data === S.PLAYING) {
+            setStatus("playing"); updateTrack();
+            setTimeout(storeCurrentTitle, 500);
+            progTimer = setInterval(updateProgress, 500);
+          } else if (e.data === S.PAUSED) {
+            setStatus("paused"); updateTrack();
+          } else if (e.data === S.BUFFERING) {
+            statusEl.textContent = "loading"; setTimeout(updateTrack, 300);
+          } else if (e.data === S.CUED) {
+            setStatus("ready"); updateTrack(); try { yt.playVideo(); } catch (e2) {}
+          } else if (e.data === S.ENDED) {
+            setStatus("ready");
+          }
+        },
+        onError: function () {
+          marquee.textContent = "skipping…"; setStatus("ready");
+          setTimeout(function () { if (yt && ready) try { yt.nextVideo(); } catch (e) {} }, 1500);
+        }
       }
-    </script>
-
-    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Space+Grotesk:wght@300..700&family=Syne:wght@400;700;800&display=swap" rel="stylesheet">
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'mono': ['"JetBrains Mono"', 'monospace'],
-                        'sans': ['"Space Grotesk"', 'sans-serif'],
-                        'display': ['"Syne"', 'sans-serif'],
-                    },
-                    colors: {
-                        'acid': '#ccff00',
-                        'neon-blue': '#00f3ff',
-                        'void': '#050505',
-                        'glass': 'rgba(255, 255, 255, 0.05)',
-                        'glass-dark': 'rgba(0, 0, 0, 0.6)',
-                        'border-dim': 'rgba(255, 255, 255, 0.1)',
-                    },
-                    animation: {
-                        'spin-slow': 'spin 12s linear infinite',
-                        'blink': 'blink 1s step-end infinite',
-                        'marquee': 'marquee 25s linear infinite',
-                        'glitch': 'glitch 1s linear infinite',
-                    },
-                    keyframes: {
-                        blink: {
-                            '0%, 100%': { opacity: '1' },
-                            '50%': { opacity: '0' },
-                        },
-                        marquee: {
-                            '0%': { transform: 'translateX(0%)' },
-                            '100%': { transform: 'translateX(-100%)' },
-                        },
-                        glitch: {
-                            '2%, 64%': { transform: 'translate(2px,0) skew(0deg)' },
-                            '4%, 60%': { transform: 'translate(-2px,0) skew(0deg)' },
-                            '62%': { transform: 'translate(0,0) skew(5deg)' },
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-
-    <style>
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #050505;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #333;
-            border-radius: 3px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #ccff00;
-        }
-
-        .scanlines {
-            background: linear-gradient(
-                to bottom,
-                rgba(255,255,255,0),
-                rgba(255,255,255,0) 50%,
-                rgba(0,0,0,0.1) 50%,
-                rgba(0,0,0,0.1)
-            );
-            background-size: 100% 4px;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            pointer-events: none;
-            z-index: 9999;
-            opacity: 0.6;
-        }
-
-        .noise {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            pointer-events: none;
-            z-index: 9998;
-            opacity: 0.03;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-        }
-
-        ::selection {
-            background: #ccff00;
-            color: #000;
-        }
-
-        .glass-panel {
-            background: rgba(10, 10, 10, 0.6);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .text-outline {
-            -webkit-text-stroke: 1px rgba(255,255,255,0.2);
-            color: transparent;
-        }
-
-        .hover-glitch:hover {
-            animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
-            color: #ccff00;
-        }
-
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        /* Marquee for track titles */
-        @keyframes scroll-title {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-        .scrolling {
-            animation: scroll-title 12s linear infinite;
-            display: inline-block;
-        }
-    </style>
-
-</head>
-<body class="bg-void text-gray-200 antialiased overflow-x-hidden selection:bg-acid selection:text-black">
-
-    <!-- Background Art -->
-    <div class="fixed inset-0 z-0">
-        <iframe
-            id="art-frame"
-            src=""
-            class="w-full h-full border-none opacity-60 grayscale-[20%] transition-opacity duration-700 ease-in-out"
-            allow="autoplay">
-        </iframe>
-        <div class="absolute inset-0 bg-void/30 pointer-events-none"></div>
-    </div>
-
-    <!-- Overlays -->
-    <div class="scanlines"></div>
-    <div class="noise"></div>
-
-    <!-- Mobile Splash Screen -->
-    <div id="mobile-splash" class="fixed inset-0 z-[200] bg-void flex flex-col items-center justify-center p-8 md:hidden">
-        <div class="text-center max-w-sm">
-            <div class="font-mono text-acid text-xs tracking-widest mb-6 animate-pulse">DEVICE_CHECK_FAILED</div>
-            <pre class="text-acid text-4xl mb-6 leading-none">
-  ___
- /   \
-| x_x |
- \___/
-            </pre>
-            <h2 class="font-display text-2xl font-bold text-white mb-4">Desktop Required</h2>
-            <p class="font-sans text-gray-400 text-sm leading-relaxed mb-6">
-                This experience was built for larger screens. The generative art, layouts, and interactions need room to breathe.
-            </p>
-            <p class="font-mono text-[10px] text-gray-600 uppercase tracking-widest">
-                sorry phone users...come back on desktop
-            </p>
-            <div class="mt-8 flex justify-center gap-2">
-                <span class="w-2 h-2 bg-acid/30 animate-pulse"></span>
-                <span class="w-2 h-2 bg-acid/50 animate-pulse" style="animation-delay: 0.2s"></span>
-                <span class="w-2 h-2 bg-acid animate-pulse" style="animation-delay: 0.4s"></span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Intro Loader -->
-    <div id="intro" class="fixed inset-0 z-[100] bg-void flex flex-col items-center justify-center transition-opacity duration-1000 pointer-events-none">
-        <div class="text-acid font-mono text-xs mb-2 animate-pulse">SYSTEM_BOOT_SEQUENCE</div>
-        <div class="text-6xl font-display font-bold tracking-tighter mix-blend-difference text-white mb-4">CON.RAD</div>
-        <div class="w-64 h-1 bg-gray-900 rounded overflow-hidden">
-            <div id="loader" class="h-full bg-acid w-0 transition-all duration-[1500ms] ease-out"></div>
-        </div>
-    </div>
-
-    <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex justify-between items-start pointer-events-none mix-blend-difference text-white">
-        <div class="pointer-events-auto group cursor-pointer">
-            <h1 class="font-display font-bold text-2xl tracking-tighter leading-none group-hover:text-acid transition-colors">con.rad</h1>
-            <p class="font-mono text-[10px] opacity-70 tracking-widest mt-1">BUILDING CURIOSITY...</p>
-        </div>
-
-        <nav class="pointer-events-auto hidden md:flex items-center gap-8 font-mono text-xs tracking-wider">
-            <a href="./writings/index.html" class="hover:text-acid hover:underline underline-offset-4 decoration-acid decoration-1">[ WRITINGS ]</a>
-            <a href="./collection/index.html" class="hover:text-acid hover:underline underline-offset-4 decoration-acid decoration-1">[ COLLECTION ]</a>
-            <a href="./projects/index.html" class="hover:text-acid hover:underline underline-offset-4 decoration-acid decoration-1">[ PROJECTS ]</a>
-            <a href="./graph/index.html" class="hover:text-acid hover:underline underline-offset-4 decoration-acid decoration-1">[ ARE.NA GRAPH ]</a>
-            <span class="w-2 h-2 rounded-full bg-acid animate-pulse shadow-[0_0_10px_#ccff00]"></span>
-        </nav>
-
-        <button id="mobile-menu-btn" class="md:hidden pointer-events-auto text-acid">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="square" stroke-linejoin="miter" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-        </button>
-    </header>
-
-    <!-- Main Content -->
-    <main class="relative z-10 pt-32 pb-48 px-4 md:px-0 max-w-7xl mx-auto flex flex-col md:flex-row gap-8">
-
-        <!-- Sidebar -->
-        <aside class="md:w-1/4 md:sticky md:top-32 h-fit space-y-6">
-            <div class="glass-panel p-6 rounded-sm">
-                <div class="relative w-full aspect-square mb-4 overflow-hidden border border-border-dim group">
-                    <img id="profile-photo" src="./assets/images/misc/profilepicture.png" alt="Profile" class="w-full h-full object-cover grayscale contrast-125 group-hover:grayscale-0 transition-all duration-500">
-                    <div class="absolute inset-0 bg-acid/10 mix-blend-overlay opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    <div class="absolute top-2 right-2 text-[10px] font-mono bg-black text-white px-1">IMG_001</div>
-                </div>
-
-                <h2 id="profile-name" class="font-display font-bold text-xl mb-1">Conrad House</h2>
-                <p class="font-mono text-xs text-gray-500 mb-3">aka nemocake</p>
-                <div id="profile-bio" class="font-mono text-xs text-gray-400 mb-4 leading-relaxed">
-                    <span class="text-acid">></span> chronically online.<br>
-                    <span class="text-acid">></span> techno-curious.<br>
-                    <span class="text-acid">></span> art and music junky.
-                </div>
-
-                <div class="border-t border-dashed border-gray-700 my-4"></div>
-
-                <div class="font-mono text-[10px] uppercase tracking-wider text-gray-500 space-y-2">
-                    <div class="flex justify-between">
-                        <span>Status</span>
-                        <span class="text-green-400">● Online</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span>Location</span>
-                        <span>LATENTSPACE</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span>Local Time</span>
-                        <span id="clock">00:00:00 PST</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Mobile Nav -->
-            <div class="glass-panel p-4 md:hidden">
-                <div class="grid grid-cols-2 gap-2 text-center font-mono text-xs">
-                    <a href="./writings/index.html" class="p-2 border border-border-dim hover:bg-white/10">Writings</a>
-                    <a href="./collection/index.html" class="p-2 border border-border-dim hover:bg-white/10">Collection</a>
-                    <a href="./projects/index.html" class="p-2 border border-border-dim hover:bg-white/10">Projects</a>
-                    <a href="./graph/index.html" class="p-2 border border-border-dim hover:bg-white/10">Are.na Graph</a>
-                </div>
-            </div>
-        </aside>
-
-        <!-- Content Area -->
-        <div class="md:w-3/4 space-y-24">
-
-            <!-- Writings Section -->
-            <section id="writings" class="relative group">
-                <div class="flex items-center gap-4 mb-8">
-                    <span class="font-mono text-acid text-sm">01.</span>
-                    <h2 class="font-display text-4xl font-bold uppercase">Writings</h2>
-                    <div class="h-[1px] flex-grow bg-gradient-to-r from-acid to-transparent opacity-50"></div>
-                </div>
-
-                <div id="writings-grid" class="grid md:grid-cols-2 gap-4">
-                    <!-- Populated by JS -->
-                </div>
-            </section>
-
-             <!-- Inspirations Section -->
-             <section id="inspirations">
-                <div class="flex items-center gap-4 mb-8">
-                    <span class="font-mono text-acid text-sm">02.</span>
-                    <h2 class="font-display text-4xl font-bold uppercase">Visually Intriguing</h2>
-                    <div class="h-[1px] flex-grow bg-gradient-to-r from-acid to-transparent opacity-50"></div>
-                    <div class="flex items-center gap-2">
-                        <button id="arena-prev" class="font-mono text-xs border border-gray-700 px-2 py-1 hover:border-acid hover:text-acid transition-colors disabled:opacity-30 disabled:cursor-not-allowed">←</button>
-                        <button id="arena-next" class="font-mono text-xs border border-gray-700 px-2 py-1 hover:border-acid hover:text-acid transition-colors disabled:opacity-30 disabled:cursor-not-allowed">→</button>
-                    </div>
-                    <a href="https://www.are.na/conrad-house/visually-intriguing" target="_blank" class="font-mono text-xs border border-gray-700 px-3 py-1.5 hover:border-acid hover:text-acid transition-colors">ARE.NA →</a>
-                </div>
-
-                <div class="glass-panel p-4">
-                    <div id="arena-grid" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <!-- Populated by JS -->
-                    </div>
-                </div>
-             </section>
-
-            <!-- Collection Section -->
-            <section id="collection">
-                <div class="flex items-center gap-4 mb-8">
-                    <span class="font-mono text-acid text-sm">03.</span>
-                    <h2 class="font-display text-4xl font-bold uppercase">Collection</h2>
-                    <div class="h-[1px] flex-grow bg-gradient-to-r from-acid to-transparent opacity-50"></div>
-                    <a href="./collection/index.html" class="font-mono text-xs border border-gray-700 px-3 py-1.5 hover:border-acid hover:text-acid transition-colors">GALLERY →</a>
-                </div>
-
-                <div class="glass-panel p-4">
-                    <div id="collection-grid" class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <!-- Populated by JS -->
-                    </div>
-                </div>
-            </section>
-
-            <!-- Projects Section -->
-            <section id="projects">
-                <div class="flex items-center gap-4 mb-8">
-                    <span class="font-mono text-acid text-sm">04.</span>
-                    <h2 class="font-display text-4xl font-bold uppercase">Building</h2>
-                    <div class="h-[1px] flex-grow bg-gradient-to-r from-acid to-transparent opacity-50"></div>
-                </div>
-
-                <div id="github-repos" class="space-y-4">
-                    <!-- Populated by JS -->
-                </div>
-            </section>
-
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="relative z-10 border-t border-white/10 bg-black/80 backdrop-blur-md mt-12 py-12">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-end gap-6">
-            <div>
-                <h3 class="font-display text-2xl mb-2">con.rad</h3>
-                <p class="font-mono text-xs text-gray-500">© <span id="current-year"></span> conrad house. curiously tinkering and breaking things.</p>
-            </div>
-            <div class="flex gap-6 font-mono text-xs">
-                <a href="#" onclick="openContactModal(); return false;" class="hover:text-acid hover:underline">CONTACT</a>
-                <a href="https://github.com/nemocake" target="_blank" class="hover:text-acid hover:underline">GITHUB</a>
-                <a href="https://x.com/DlSPUTED" target="_blank" class="hover:text-acid hover:underline">TWITTER/X</a>
-            </div>
-        </div>
-    </footer>
-
-    <!-- Winamp-style Music Player -->
-    <div id="y2k-player" class="fixed bottom-6 left-6 z-50 w-72 glass-panel border-t-2 border-t-white/20 shadow-2xl transition-transform duration-300 transform translate-y-0 md:translate-y-0">
-        <!-- Title bar -->
-        <div class="bg-gradient-to-r from-gray-800 to-gray-900 p-1 flex justify-between items-center cursor-move border-b border-black" id="player-drag-handle">
-            <div class="flex gap-1 ml-1">
-                <div class="w-2 h-2 rounded-full bg-red-500"></div>
-                <div class="w-2 h-2 rounded-full bg-yellow-500"></div>
-                <div class="w-2 h-2 rounded-full bg-green-500"></div>
-            </div>
-            <div class="font-mono text-[9px] uppercase tracking-widest text-gray-400 mr-2">Winamp_v2.9</div>
-        </div>
-
-        <!-- Player body -->
-        <div class="p-4 bg-void/90">
-            <!-- LCD Display -->
-            <div class="bg-black border-2 border-gray-700 rounded-sm p-2 mb-3 shadow-[inset_0_0_10px_rgba(0,0,0,1)]">
-                <div class="font-mono text-acid text-xs whitespace-nowrap overflow-hidden">
-                    <div id="y2k-track-title" class="inline-block">
-                         Press play to start
-                    </div>
-                </div>
-                <div class="flex justify-between font-mono text-[10px] text-acid mt-1">
-                    <span id="y2k-current-time">0:00</span>
-                    <span id="y2k-status-text" class="animate-pulse">Ready</span>
-                    <span id="y2k-duration">0:00</span>
-                </div>
-            </div>
-
-            <!-- Equalizer bars -->
-            <div class="flex items-end h-8 gap-[2px] mb-3 opacity-80">
-                <div class="w-full bg-acid/20 h-full relative overflow-hidden">
-                    <div class="absolute bottom-0 w-[10%] left-[0%] bg-acid h-[40%] animate-pulse"></div>
-                    <div class="absolute bottom-0 w-[10%] left-[12%] bg-acid h-[70%] animate-pulse" style="animation-delay: 0.1s"></div>
-                    <div class="absolute bottom-0 w-[10%] left-[24%] bg-acid h-[30%] animate-pulse" style="animation-delay: 0.3s"></div>
-                    <div class="absolute bottom-0 w-[10%] left-[36%] bg-acid h-[90%] animate-pulse" style="animation-delay: 0.05s"></div>
-                    <div class="absolute bottom-0 w-[10%] left-[48%] bg-acid h-[50%] animate-pulse" style="animation-delay: 0.2s"></div>
-                    <div class="absolute bottom-0 w-[10%] left-[60%] bg-acid h-[80%] animate-pulse" style="animation-delay: 0.4s"></div>
-                    <div class="absolute bottom-0 w-[10%] left-[72%] bg-acid h-[20%] animate-pulse" style="animation-delay: 0.15s"></div>
-                    <div class="absolute bottom-0 w-[10%] left-[84%] bg-acid h-[60%] animate-pulse" style="animation-delay: 0.25s"></div>
-                </div>
-            </div>
-
-            <!-- Progress bar -->
-            <div id="y2k-progress" class="w-full h-2 bg-gray-800 rounded cursor-pointer mb-3 relative">
-                <div id="y2k-progress-bar" class="h-full bg-acid rounded transition-all" style="width: 0%"></div>
-                <div id="y2k-progress-handle" class="absolute top-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full" style="left: 0%"></div>
-            </div>
-
-            <!-- Controls -->
-            <div class="flex justify-between items-center">
-                <div class="flex gap-2">
-                    <button id="y2k-prev" class="text-gray-400 hover:text-white text-xs">⏮</button>
-                    <button id="y2k-play" class="text-acid hover:text-white text-base"><span id="y2k-play-icon">▶</span></button>
-                    <button id="y2k-next" class="text-gray-400 hover:text-white text-xs">⏭</button>
-                    <button id="y2k-stop" class="text-gray-400 hover:text-white text-xs">⏹</button>
-                </div>
-
-                <div class="flex items-center gap-2">
-                    <button id="y2k-shuffle" class="text-acid hover:text-acid text-[10px] font-mono transition-colors" title="Shuffle">SHF</button>
-                    <button id="y2k-playlist-toggle" class="text-gray-400 hover:text-acid text-[10px] font-mono transition-colors" title="Playlist">LST</button>
-                    <div id="y2k-volume" class="w-12 h-1 bg-gray-700 rounded-full cursor-pointer">
-                        <div id="y2k-volume-bar" class="w-3/4 h-full bg-acid rounded-full"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Playlist Panel -->
-            <div id="y2k-playlist" class="hidden mt-3 border-t border-gray-700 pt-3 max-h-40 overflow-y-auto">
-                <div class="font-mono text-[9px] text-gray-500 uppercase tracking-widest mb-2">Playlist</div>
-                <div id="y2k-playlist-items" class="space-y-1">
-                    <div class="text-gray-500 text-xs font-mono">Loading...</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Hidden YouTube player -->
-        <div id="y2k-yt-container" style="position:absolute;top:0;left:0;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;">
-            <div id="y2k-yt-player"></div>
-        </div>
-    </div>
-
-    <!-- Background Art Info -->
-    <div class="fixed bottom-6 right-6 z-50 text-right pointer-events-none mix-blend-difference text-white hidden md:block">
-        <div class="font-mono text-[9px] uppercase tracking-widest opacity-70 mb-1">Background Asset</div>
-        <div id="art-title" class="font-display font-bold text-lg">36 Points</div>
-        <div id="art-artist" class="font-mono text-xs opacity-80">Sage Jenson, 2022</div>
-        <div class="mt-2 pointer-events-auto">
-             <button class="text-[10px] border border-white/40 px-2 py-1 hover:bg-white hover:text-black transition-colors" onclick="changeArt()">
-                [ REFRESH_ASSET ]
-             </button>
-        </div>
-    </div>
-
-    <!-- Scripts -->
-    <script>
-        // Intro animation
-        window.addEventListener('load', () => {
-            const loader = document.getElementById('loader');
-            const intro = document.getElementById('intro');
-
-            setTimeout(() => {
-                loader.classList.remove('w-0');
-                loader.classList.add('w-full');
-            }, 100);
-
-            setTimeout(() => {
-                intro.style.opacity = '0';
-                setTimeout(() => {
-                    intro.style.display = 'none';
-                }, 1000);
-            }, 1800);
-        });
-
-        // Clock - always PST
-        function updateClock() {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString('en-US', {
-                hour12: false,
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit',
-                timeZone: 'America/Los_Angeles'
-            });
-            document.getElementById('clock').textContent = timeString + ' PST';
-        }
-        setInterval(updateClock, 1000);
-        updateClock();
-
-        // Current year
-        document.getElementById('current-year').textContent = new Date().getFullYear();
-
-        // Player drag functionality
-        const player = document.getElementById('y2k-player');
-        let isDragging = false;
-        let currentX, currentY, initialX, initialY;
-        let xOffset = 0, yOffset = 0;
-
-        document.getElementById('player-drag-handle').addEventListener("mousedown", dragStart);
-        document.addEventListener("mouseup", dragEnd);
-        document.addEventListener("mousemove", drag);
-
-        function dragStart(e) {
-            initialX = e.clientX - xOffset;
-            initialY = e.clientY - yOffset;
-            isDragging = true;
-        }
-
-        function dragEnd(e) {
-            initialX = currentX;
-            initialY = currentY;
-            isDragging = false;
-        }
-
-        function drag(e) {
-            if (isDragging) {
-                e.preventDefault();
-                currentX = e.clientX - initialX;
-                currentY = e.clientY - initialY;
-                xOffset = currentX;
-                yOffset = currentY;
-                player.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
-            }
-        }
-    </script>
-
-    <!-- Background Art (from config) -->
-    <script>
-        (function initBackgroundArt() {
-            const artworks = window.SITE_CONFIG?.artworks;
-
-            if (!artworks || artworks.length === 0) {
-                const config = window.SITE_CONFIG?.backgroundArt;
-                if (!config) return;
-                applyArtwork(config.src, config.title, config.artist, config.year);
-                return;
-            }
-
-            const randomIndex = Math.floor(Math.random() * artworks.length);
-            const artwork = artworks[randomIndex];
-            applyArtwork(artwork.url, artwork.title, artwork.artist, artwork.year);
-
-            window.SITE_CONFIG.backgroundArt = {
-                src: artwork.url,
-                title: artwork.title,
-                artist: artwork.artist,
-                year: artwork.year
-            };
-
-            function applyArtwork(src, title, artist, year) {
-                const artFrame = document.getElementById('art-frame');
-                if (artFrame && src) {
-                    artFrame.src = src;
-                }
-
-                const titleEl = document.getElementById('art-title');
-                const artistEl = document.getElementById('art-artist');
-
-                if (titleEl) titleEl.textContent = title || '';
-                if (artistEl) artistEl.textContent = `${artist || ''}, ${year || ''}`;
-            }
-        })();
-
-        function changeArt() {
-            const artworks = window.SITE_CONFIG?.artworks;
-            if (!artworks || artworks.length === 0) return;
-
-            const frame = document.getElementById('art-frame');
-            frame.style.opacity = '0';
-
-            setTimeout(() => {
-                const randomIndex = Math.floor(Math.random() * artworks.length);
-                const artwork = artworks[randomIndex];
-                frame.src = artwork.url;
-
-                document.getElementById('art-title').textContent = artwork.title;
-                document.getElementById('art-artist').textContent = `${artwork.artist}, ${artwork.year}`;
-
-                frame.style.opacity = '0.6';
-            }, 500);
-        }
-    </script>
-
-    <!-- Writings Grid -->
-    <script>
-        (function initWritingsGrid() {
-            const grid = document.getElementById('writings-grid');
-            if (!grid) return;
-
-            const config = window.SITE_CONFIG?.writings;
-            if (!config || config.length === 0) return;
-
-            try {
-                localStorage.setItem('conradWritings', JSON.stringify(config));
-            } catch (e) {}
-
-            const formatDate = (dateStr) => {
-                const date = new Date(dateStr);
-                return date.toISOString().split('T')[0];
-            };
-
-            const recentItems = config.slice(-3).reverse();
-
-            grid.innerHTML = recentItems.map((item) => `
-                <article class="glass-panel p-6 hover:bg-white/5 transition-all group/card cursor-pointer border-l-2 border-l-transparent hover:border-l-acid">
-                    <a href="./writings/index.html#${item.id}" class="block">
-                        <div class="flex justify-between items-start mb-4">
-                            <span class="font-mono text-xs text-gray-500 border border-gray-800 px-2 py-0.5">TXT</span>
-                            <span class="font-mono text-xs text-gray-500">${formatDate(item.date)}</span>
-                        </div>
-                        <h3 class="font-display text-xl mb-2 group-hover/card:text-acid transition-colors">${item.title}</h3>
-                        <p class="font-mono text-xs text-gray-400 leading-relaxed line-clamp-3">${item.description}</p>
-                    </a>
-                </article>
-            `).join('');
-
-            // Add archive link
-            grid.innerHTML += `
-                <a href="./writings/index.html" class="glass-panel p-6 flex flex-col items-center justify-center gap-2 hover:bg-acid hover:text-black transition-all group/all">
-                    <span class="font-mono text-4xl group-hover/all:rotate-90 transition-transform">→</span>
-                    <span class="font-mono text-xs uppercase tracking-widest">Archive.zip</span>
-                </a>
-            `;
-        })();
-    </script>
-
-    <!-- Collection Grid -->
-    <script>
-        (function initCollectionGrid() {
-            const grid = document.getElementById('collection-grid');
-            if (!grid) return;
-
-            const config = window.SITE_CONFIG?.collection;
-            if (!config || config.length === 0) return;
-
-            try {
-                localStorage.setItem('conradCollection', JSON.stringify(config));
-            } catch (e) {}
-
-            // Show 3 most recent items (last 3 in array - newest additions appended to end)
-            const recentItems = config.slice(-3).reverse();
-
-            grid.innerHTML = recentItems.map((item) => {
-                const actualIndex = config.indexOf(item);
-                return `
-                <a href="./collection/index.html?index=${actualIndex}" class="aspect-[4/5] relative group cursor-pointer overflow-hidden border border-border-dim hover:border-acid/30 transition-all">
-                    <img src="${item.thumbnail}" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0" alt="${item.title}">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
-                    <div class="absolute bottom-0 left-0 w-full p-4 transform translate-y-2 group-hover:translate-y-0 transition-transform">
-                        <h4 class="font-display text-lg leading-tight text-white">${item.title}</h4>
-                        <p class="font-mono text-[10px] text-gray-400">${item.artist}</p>
-                    </div>
-                </a>
-            `}).join('');
-        })();
-    </script>
-
-    <!-- GitHub Repos -->
-    <script>
-        (async function initProjects() {
-            const GITHUB_USERNAME = 'nemocake';
-            const container = document.getElementById('github-repos');
-            if (!container) return;
-
-            container.innerHTML = '<div class="font-mono text-xs text-gray-500">Loading projects...</div>';
-
-            try {
-                // Wait for config to load
-                const config = await window.waitForConfig(5000);
-                const projectsConfig = config?.projects || {};
-
-                // Fetch GitHub repos
-                const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=20`);
-                if (!response.ok) throw new Error('Failed to fetch');
-
-                const repos = await response.json();
-                const sourceRepos = repos.filter(repo => !repo.fork);
-
-                // Merge GitHub repos with config overrides
-                const githubProjects = sourceRepos.map(repo => {
-                    const cfg = projectsConfig[repo.name] || {};
-                    return {
-                        name: repo.name,
-                        displayName: cfg.title || repo.name,
-                        description: cfg.description || repo.description || 'No description',
-                        language: repo.language,
-                        stars: repo.stargazers_count,
-                        forks: repo.forks_count,
-                        url: repo.html_url,
-                        isPrivate: false,
-                        featured: cfg.featured || false,
-                        status: cfg.status,
-                        tags: cfg.tags || [],
-                        updated: new Date(repo.updated_at)
-                    };
-                });
-
-                // Add private/config-only projects
-                const privateProjects = Object.entries(projectsConfig)
-                    .filter(([key, cfg]) => cfg.private === true)
-                    .map(([key, cfg]) => ({
-                        name: key,
-                        displayName: cfg.title || key,
-                        description: cfg.description || '',
-                        language: null,
-                        stars: null,
-                        forks: null,
-                        url: null,
-                        isPrivate: true,
-                        featured: cfg.featured || false,
-                        status: cfg.status,
-                        tags: cfg.tags || [],
-                        updated: new Date()
-                    }));
-
-                // Combine and sort: featured first, then by update date
-                const allProjects = [...githubProjects, ...privateProjects].sort((a, b) => {
-                    if (a.featured && !b.featured) return -1;
-                    if (!a.featured && b.featured) return 1;
-                    return b.updated - a.updated;
-                });
-
-                if (!allProjects.length) {
-                    container.innerHTML = '<div class="font-mono text-xs text-gray-500">No projects found.</div>';
-                    return;
-                }
-
-                container.innerHTML = allProjects.map(project => `
-                    <a href="./projects/index.html#${project.name}" class="glass-panel p-5 flex flex-col md:flex-row md:items-center justify-between group hover:border-acid/30 transition-all block">
-                        <div class="flex-1">
-                            <div class="flex items-center gap-3 mb-2">
-                                <h3 class="font-mono font-bold text-lg group-hover:text-acid">${project.displayName}</h3>
-                                ${project.featured ? '<span class="text-[10px] font-mono text-acid">★ FEATURED</span>' : ''}
-                                ${project.isPrivate ? '<span class="text-[10px] font-mono border border-gray-700 px-1.5 py-0.5 text-gray-500">PRIVATE</span>' : ''}
-                                ${project.language ? `<span class="text-[10px] font-mono border border-gray-700 px-1.5 py-0.5 text-gray-400">${project.language}</span>` : ''}
-                                ${project.status ? `<span class="text-[10px] font-mono text-neon-blue">${project.status.toUpperCase()}</span>` : ''}
-                                ${(project.tags || []).map(tag =>
-                                    tag.toLowerCase() === 'tinkering'
-                                        ? `<span class="text-[10px] font-mono border border-red-500/50 px-1.5 py-0.5 text-red-400">${tag.toUpperCase()}</span>`
-                                        : `<span class="text-[10px] font-mono border border-gray-700 px-1.5 py-0.5 text-gray-400">${tag.toUpperCase()}</span>`
-                                ).join('')}
-                            </div>
-                            <p class="font-sans text-sm text-gray-400 max-w-xl">${project.description}</p>
-                        </div>
-                        <div class="flex items-center gap-4 mt-4 md:mt-0 font-mono text-xs text-gray-500">
-                            ${!project.isPrivate ? `
-                                <div class="flex items-center gap-1">★ ${project.stars}</div>
-                                <div class="flex items-center gap-1">⑂ ${project.forks}</div>
-                            ` : ''}
-                            <span class="text-white group-hover:text-acid">::view</span>
-                        </div>
-                    </a>
-                `).join('');
-            } catch (error) {
-                console.error('[Projects] Error:', error);
-                container.innerHTML = '<div class="font-mono text-xs text-gray-500">Could not load projects.</div>';
-            }
-        })();
-    </script>
-
-    <!-- Are.na Inspirations -->
-    <script>
-        (async function initArenaGrid() {
-            const grid = document.getElementById('arena-grid');
-            const prevBtn = document.getElementById('arena-prev');
-            const nextBtn = document.getElementById('arena-next');
-            if (!grid) return;
-
-            const inspirations = window.SITE_CONFIG?.inspirations;
-            const channelUrl = inspirations?.channelUrl || 'https://www.are.na/conrad-house/visually-intriguing';
-            const channelSlug = inspirations?.channel || 'visually-intriguing';
-
-            let allBlocks = [];
-            let currentPage = 0;
-            const perPage = 3;
-
-            grid.innerHTML = '<div class="col-span-3 font-mono text-xs text-gray-500">Loading inspirations...</div>';
-
-            function renderBlocks() {
-                const start = currentPage * perPage;
-                const blocks = allBlocks.slice(start, start + perPage);
-
-                grid.innerHTML = blocks.map(block => {
-                    const imageUrl = block.image?.display?.url || block.image?.thumb?.url || '';
-                    const blockUrl = `https://www.are.na/block/${block.id}`;
-                    const title = block.title || block.generated_title || 'Untitled';
-                    return `
-                        <a href="${blockUrl}" target="_blank" class="aspect-[4/5] relative group cursor-pointer overflow-hidden border border-border-dim hover:border-acid/30 transition-all">
-                            <div class="absolute inset-0 bg-gray-800">
-                                ${imageUrl ? `<img src="${imageUrl}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0" alt="${title}">` : ''}
-                            </div>
-                            <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-90"></div>
-                            <div class="absolute bottom-0 left-0 w-full p-4 transform translate-y-2 group-hover:translate-y-0 transition-transform">
-                                <h4 class="font-display text-lg leading-tight text-white line-clamp-2">${title}</h4>
-                                <p class="font-mono text-[10px] text-gray-400">are.na</p>
-                            </div>
-                        </a>
-                    `;
-                }).join('');
-
-                // Update button states
-                const maxPage = Math.ceil(allBlocks.length / perPage) - 1;
-                if (prevBtn) prevBtn.disabled = currentPage === 0;
-                if (nextBtn) nextBtn.disabled = currentPage >= maxPage;
-            }
-
-            try {
-                // First get channel info to find total count
-                const infoResponse = await fetch(`https://api.are.na/v2/channels/${channelSlug}?per=1`);
-                if (!infoResponse.ok) throw new Error('Failed to fetch');
-                const info = await infoResponse.json();
-                const totalBlocks = info.length || 0;
-
-                // Calculate last page (newest blocks are at the end)
-                const perFetch = 30;
-                const lastPage = Math.max(1, Math.ceil(totalBlocks / perFetch));
-
-                // Fetch last page to get newest blocks
-                const response = await fetch(`https://api.are.na/v2/channels/${channelSlug}?per=${perFetch}&page=${lastPage}`);
-                if (!response.ok) throw new Error('Failed to fetch');
-
-                const data = await response.json();
-                // Reverse to show newest first (last items in array are newest)
-                allBlocks = (data.contents || [])
-                    .filter(b => b.image)
-                    .reverse();
-
-                renderBlocks();
-
-                // Navigation handlers
-                if (prevBtn) {
-                    prevBtn.addEventListener('click', () => {
-                        if (currentPage > 0) {
-                            currentPage--;
-                            renderBlocks();
-                        }
-                    });
-                }
-                if (nextBtn) {
-                    nextBtn.addEventListener('click', () => {
-                        const maxPage = Math.ceil(allBlocks.length / perPage) - 1;
-                        if (currentPage < maxPage) {
-                            currentPage++;
-                            renderBlocks();
-                        }
-                    });
-                }
-            } catch (error) {
-                grid.innerHTML = `
-                    <div class="col-span-3 font-mono text-xs text-gray-500">Could not load inspirations. <a href="${channelUrl}" target="_blank" class="text-acid hover:underline">Visit channel →</a></div>
-                `;
-            }
-        })();
-    </script>
-
-    <!-- Profile from config -->
-    <script>
-        (function initProfile() {
-            const profile = window.SITE_CONFIG?.profile;
-            if (!profile) return;
-
-            if (profile.name) {
-                const nameEl = document.getElementById('profile-name');
-                if (nameEl) nameEl.textContent = profile.name;
-            }
-
-            if (profile.photo) {
-                const photoEl = document.getElementById('profile-photo');
-                if (photoEl) photoEl.src = profile.photo;
-            }
-
-            if (profile.bio && Array.isArray(profile.bio)) {
-                const bioEl = document.getElementById('profile-bio');
-                if (bioEl) {
-                    bioEl.innerHTML = profile.bio.map(line =>
-                        `<span class="text-acid">></span> ${line}<br>`
-                    ).join('');
-                }
-            }
-        })();
-    </script>
-
-    <!-- YouTube IFrame API -->
-    <script src="https://www.youtube.com/iframe_api"></script>
-
-    <!-- Y2K Player Controller -->
-    <script>
-        (function initY2KPlayer() {
-            const PLAYLIST_ID = 'PLGl_0guG9m0iKPAfhpooMWA0zKESKkYN4';
-
-            const statusText = document.getElementById('y2k-status-text');
-            const trackTitle = document.getElementById('y2k-track-title');
-            const currentTimeEl = document.getElementById('y2k-current-time');
-            const durationEl = document.getElementById('y2k-duration');
-            const progressBar = document.getElementById('y2k-progress-bar');
-            const progressHandle = document.getElementById('y2k-progress-handle');
-            const progress = document.getElementById('y2k-progress');
-            const volumeBar = document.getElementById('y2k-volume-bar');
-            const volume = document.getElementById('y2k-volume');
-            const playBtn = document.getElementById('y2k-play');
-            const playIcon = document.getElementById('y2k-play-icon');
-            const stopBtn = document.getElementById('y2k-stop');
-            const prevBtn = document.getElementById('y2k-prev');
-            const nextBtn = document.getElementById('y2k-next');
-            const shuffleBtn = document.getElementById('y2k-shuffle');
-            const playlistToggle = document.getElementById('y2k-playlist-toggle');
-            const playlistPanel = document.getElementById('y2k-playlist');
-            const playlistItems = document.getElementById('y2k-playlist-items');
-
-            let ytPlayer = null;
-            let progressInterval = null;
-            let isReady = false;
-            let isShuffled = true;
-            let trackTitles = {};
-            let titlesFetched = false;
-
-            function formatTime(seconds) {
-                if (!seconds || isNaN(seconds)) return '0:00';
-                const mins = Math.floor(seconds / 60);
-                const secs = Math.floor(seconds % 60);
-                return `${mins}:${secs.toString().padStart(2, '0')}`;
-            }
-
-            function updateProgress() {
-                if (!ytPlayer || !isReady) return;
-                try {
-                    const current = ytPlayer.getCurrentTime() || 0;
-                    const duration = ytPlayer.getDuration() || 1;
-                    const percent = (current / duration) * 100;
-
-                    progressBar.style.width = percent + '%';
-                    progressHandle.style.left = percent + '%';
-                    currentTimeEl.textContent = formatTime(current);
-                    durationEl.textContent = formatTime(duration);
-                } catch (e) {}
-            }
-
-            function setStatus(state) {
-                if (state === 'playing') {
-                    statusText.textContent = 'Playing';
-                    playIcon.textContent = '⏸';
-                } else if (state === 'paused') {
-                    statusText.textContent = 'Paused';
-                    playIcon.textContent = '▶';
-                } else {
-                    statusText.textContent = 'Ready';
-                    playIcon.textContent = '▶';
-                }
-            }
-
-            function createPlayer() {
-                if (ytPlayer) return;
-                ytPlayer = new YT.Player('y2k-yt-player', {
-                    height: '200',
-                    width: '200',
-                    playerVars: {
-                        autoplay: 0,
-                        controls: 0,
-                        disablekb: 1,
-                        fs: 0,
-                        modestbranding: 1,
-                        rel: 0,
-                        enablejsapi: 1,
-                        listType: 'playlist',
-                        list: PLAYLIST_ID
-                    },
-                    events: {
-                        onReady: onPlayerReady,
-                        onStateChange: onPlayerStateChange,
-                        onError: onPlayerError
-                    }
-                });
-            }
-
-            window.onYouTubeIframeAPIReady = function() {
-                createPlayer();
-            };
-
-            if (typeof YT !== 'undefined' && YT.Player) {
-                createPlayer();
-            }
-
-            function onPlayerReady(event) {
-                isReady = true;
-                setStatus('stopped');
-                trackTitle.textContent = 'Press play to start';
-                ytPlayer.setVolume(70);
-                volumeBar.style.width = '70%';
-                try { ytPlayer.setLoop(true); } catch (e) {}
-                try { ytPlayer.setShuffle(true); } catch (e) {}
-                setTimeout(updateTrackInfo, 1000);
-            }
-
-            function onPlayerStateChange(event) {
-                clearInterval(progressInterval);
-
-                switch (event.data) {
-                    case YT.PlayerState.PLAYING:
-                        setStatus('playing');
-                        updateTrackInfo();
-                        setTimeout(storeCurrentTitle, 500);
-                        progressInterval = setInterval(updateProgress, 500);
-                        break;
-                    case YT.PlayerState.PAUSED:
-                        setStatus('paused');
-                        updateTrackInfo();
-                        break;
-                    case YT.PlayerState.ENDED:
-                        setStatus('stopped');
-                        break;
-                    case YT.PlayerState.BUFFERING:
-                        statusText.textContent = 'Loading...';
-                        setTimeout(updateTrackInfo, 300);
-                        break;
-                    case YT.PlayerState.CUED:
-                        setStatus('stopped');
-                        updateTrackInfo();
-                        ytPlayer.playVideo();
-                        break;
-                    default:
-                        setStatus('stopped');
-                }
-            }
-
-            function onPlayerError(event) {
-                trackTitle.textContent = 'Skipping...';
-                setStatus('stopped');
-                setTimeout(() => {
-                    if (ytPlayer && isReady) ytPlayer.nextVideo();
-                }, 1500);
-            }
-
-            function updateTrackInfo() {
-                if (!ytPlayer || !isReady) return;
-                try {
-                    const videoData = ytPlayer.getVideoData();
-                    if (videoData && videoData.title) {
-                        setTrackTitle(videoData.title);
-                    } else {
-                        setTrackTitle('Loading...');
-                    }
-                } catch (e) {
-                    setTrackTitle('YouTube Playlist');
-                }
-            }
-
-            function setTrackTitle(title) {
-                const container = trackTitle.parentElement;
-                const maxWidth = container ? container.offsetWidth : 200;
-
-                const measureSpan = document.createElement('span');
-                measureSpan.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;font-size:0.75rem;';
-                measureSpan.textContent = title;
-                document.body.appendChild(measureSpan);
-                const textWidth = measureSpan.offsetWidth;
-                document.body.removeChild(measureSpan);
-
-                if (textWidth > maxWidth - 10) {
-                    trackTitle.innerHTML = title + '<span style="padding:0 30px;">•</span>' + title;
-                    trackTitle.classList.add('scrolling');
-                } else {
-                    trackTitle.textContent = title;
-                    trackTitle.classList.remove('scrolling');
-                }
-            }
-
-            playBtn?.addEventListener('click', () => {
-                if (!ytPlayer || !isReady) {
-                    trackTitle.textContent = 'Loading player...';
-                    return;
-                }
-                const state = ytPlayer.getPlayerState();
-                if (state === YT.PlayerState.PLAYING) {
-                    ytPlayer.pauseVideo();
-                } else {
-                    statusText.textContent = 'Loading...';
-                    ytPlayer.playVideo();
-                }
-            });
-
-            stopBtn?.addEventListener('click', () => {
-                if (!ytPlayer || !isReady) return;
-                ytPlayer.stopVideo();
-                progressBar.style.width = '0%';
-                progressHandle.style.left = '0%';
-                currentTimeEl.textContent = '0:00';
-                setStatus('stopped');
-            });
-
-            prevBtn?.addEventListener('click', () => {
-                if (!ytPlayer || !isReady) return;
-                trackTitle.textContent = 'Loading...';
-                statusText.textContent = 'Loading...';
-                try {
-                    const playlist = ytPlayer.getPlaylist();
-                    const index = ytPlayer.getPlaylistIndex();
-                    if (index === 0 && playlist && playlist.length > 0) {
-                        ytPlayer.playVideoAt(playlist.length - 1);
-                    } else {
-                        ytPlayer.previousVideo();
-                    }
-                } catch (e) {}
-            });
-
-            nextBtn?.addEventListener('click', () => {
-                if (!ytPlayer || !isReady) return;
-                trackTitle.textContent = 'Loading...';
-                statusText.textContent = 'Loading...';
-                try {
-                    const playlist = ytPlayer.getPlaylist();
-                    const index = ytPlayer.getPlaylistIndex();
-                    if (playlist && index >= playlist.length - 1) {
-                        ytPlayer.playVideoAt(0);
-                    } else {
-                        ytPlayer.nextVideo();
-                    }
-                } catch (e) {}
-            });
-
-            progress?.addEventListener('click', (e) => {
-                if (!ytPlayer || !isReady) return;
-                const rect = progress.getBoundingClientRect();
-                const percent = (e.clientX - rect.left) / rect.width;
-                const duration = ytPlayer.getDuration();
-                ytPlayer.seekTo(percent * duration, true);
-            });
-
-            volume?.addEventListener('click', (e) => {
-                if (!ytPlayer || !isReady) return;
-                const rect = volume.getBoundingClientRect();
-                const percent = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
-                ytPlayer.setVolume(percent * 100);
-                volumeBar.style.width = (percent * 100) + '%';
-            });
-
-            // Playlist toggle
-            playlistToggle?.addEventListener('click', () => {
-                playlistPanel.classList.toggle('hidden');
-                if (!playlistPanel.classList.contains('hidden')) {
-                    renderPlaylist();
-                }
-            });
-
-            // Shuffle toggle
-            shuffleBtn?.addEventListener('click', () => {
-                if (!ytPlayer || !isReady) return;
-                isShuffled = !isShuffled;
-                ytPlayer.setShuffle(isShuffled);
-                shuffleBtn.classList.toggle('text-acid', isShuffled);
-                shuffleBtn.classList.toggle('text-gray-400', !isShuffled);
-            });
-
-            // Fetch all track titles from YouTube oEmbed
-            async function fetchAllTitles() {
-                if (titlesFetched || !ytPlayer || !isReady) return;
-                const playlist = ytPlayer.getPlaylist();
-                if (!playlist || playlist.length === 0) return;
-
-                titlesFetched = true;
-
-                // Fetch titles in parallel
-                const promises = playlist.map(async (videoId, idx) => {
-                    try {
-                        const response = await fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`);
-                        if (response.ok) {
-                            const data = await response.json();
-                            trackTitles[idx] = data.title;
-                        }
-                    } catch (e) {
-                        // Keep default title on error
-                    }
-                });
-
-                await Promise.all(promises);
-
-                // Re-render playlist with fetched titles
-                if (!playlistPanel.classList.contains('hidden')) {
-                    renderPlaylist();
-                }
-            }
-
-            // Render playlist
-            function renderPlaylist() {
-                if (!ytPlayer || !isReady) return;
-                try {
-                    const playlist = ytPlayer.getPlaylist();
-                    const currentIdx = ytPlayer.getPlaylistIndex();
-                    if (!playlist || playlist.length === 0) {
-                        playlistItems.innerHTML = '<div class="text-gray-500 text-xs font-mono">No tracks</div>';
-                        return;
-                    }
-
-                    // Fetch titles if not already done
-                    if (!titlesFetched) fetchAllTitles();
-
-                    // Store current track title as fallback
-                    const currentTitle = ytPlayer.getVideoData()?.title;
-                    if (currentTitle) trackTitles[currentIdx] = currentTitle;
-
-                    playlistItems.innerHTML = playlist.map((videoId, idx) => {
-                        const title = trackTitles[idx] || `Loading...`;
-                        return `
-                        <div class="playlist-item flex items-center gap-2 py-1 px-2 rounded cursor-pointer hover:bg-white/5 transition-colors ${idx === currentIdx ? 'bg-acid/10 text-acid' : 'text-gray-400'}" data-index="${idx}">
-                            <span class="text-[10px] font-mono w-4 opacity-50">${String(idx + 1).padStart(2, '0')}</span>
-                            <span class="text-xs font-mono truncate flex-1">${title}</span>
-                        </div>
-                    `}).join('');
-
-                    // Add click handlers
-                    playlistItems.querySelectorAll('.playlist-item').forEach(item => {
-                        item.addEventListener('click', () => {
-                            const idx = parseInt(item.dataset.index, 10);
-                            ytPlayer.playVideoAt(idx);
-                            setTimeout(() => renderPlaylist(), 500);
-                        });
-                    });
-                } catch (e) {
-                    playlistItems.innerHTML = '<div class="text-gray-500 text-xs font-mono">Error loading playlist</div>';
-                }
-            }
-
-            // Update stored title when track changes
-            function storeCurrentTitle() {
-                if (!ytPlayer || !isReady) return;
-                const idx = ytPlayer.getPlaylistIndex();
-                const title = ytPlayer.getVideoData()?.title;
-                if (title && idx >= 0) {
-                    trackTitles[idx] = title;
-                    if (!playlistPanel.classList.contains('hidden')) {
-                        renderPlaylist();
-                    }
-                }
-            }
-        })();
-    </script>
-
-    <!-- Custom Contact Modal -->
-    <div id="contact-modal" class="fixed inset-0 z-[9999] hidden items-center justify-center p-4">
-        <!-- Backdrop -->
-        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeContactModal()"></div>
-
-        <!-- Scanlines overlay for modal -->
-        <div class="absolute inset-0 pointer-events-none opacity-40" style="background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.15) 50%, rgba(0,0,0,0.15)); background-size: 100% 4px;"></div>
-
-        <!-- Modal Content -->
-        <div class="relative w-full max-w-md glass-panel border border-acid/30 shadow-[0_0_40px_rgba(204,255,0,0.15)]">
-            <!-- Title Bar (like Winamp) -->
-            <div class="bg-gradient-to-r from-gray-900 to-black p-3 flex justify-between items-center border-b border-acid/20">
-                <div class="flex items-center gap-3">
-                    <div class="flex gap-1.5">
-                        <div class="w-3 h-3 rounded-full bg-red-500 cursor-pointer hover:bg-red-400" onclick="closeContactModal()"></div>
-                        <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                    </div>
-                    <span class="font-mono text-xs text-acid uppercase tracking-widest">Contact_v1.0</span>
-                </div>
-                <button onclick="closeContactModal()" class="font-mono text-gray-500 hover:text-acid text-lg leading-none">&times;</button>
-            </div>
-
-            <!-- Header -->
-            <div class="p-6 pb-4 border-b border-white/5">
-                <div class="flex items-center gap-3 mb-2">
-                    <span class="font-mono text-acid text-xl">:)</span>
-                    <h3 class="font-display text-xl font-bold text-white">Get in touch</h3>
-                </div>
-                <p class="font-mono text-xs text-gray-500">messages go directly to my inbox</p>
-            </div>
-
-            <!-- Tally Form Embed -->
-            <div class="p-6">
-                <iframe
-                    data-tally-src="https://tally.so/embed/KY10X8?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1"
-                    loading="lazy"
-                    width="100%"
-                    height="300"
-                    frameborder="0"
-                    marginheight="0"
-                    marginwidth="0"
-                    title="Contact Form"
-                    style="background: transparent;"
-                ></iframe>
-            </div>
-
-            <!-- Footer -->
-            <div class="px-6 py-3 border-t border-white/5 bg-black/30">
-                <p class="font-mono text-[10px] text-gray-600 text-center">powered by tally.so • responses are private</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Contact Modal Script -->
-    <script>
-        function openContactModal() {
-            const modal = document.getElementById('contact-modal');
-            modal.classList.remove('hidden');
-            modal.classList.add('flex');
-            document.body.style.overflow = 'hidden';
-
-            // Load Tally iframe when modal opens
-            const iframe = modal.querySelector('iframe[data-tally-src]');
-            if (iframe && !iframe.src) {
-                iframe.src = iframe.dataset.tallySrc;
-            }
-        }
-
-        function closeContactModal() {
-            const modal = document.getElementById('contact-modal');
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-            document.body.style.overflow = '';
-        }
-
-        // Close on Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeContactModal();
-        });
-    </script>
-
+    });
+  }
+
+  function open() {
+    panel.hidden = false;
+    if (!yt) loadAPI(createPlayer);
+    else if (ready) { try { yt.playVideo(); } catch (e) {} }
+  }
+  document.getElementById("lh-listen").addEventListener("click", open);
+  (function () {
+    var closeDot = document.getElementById("mp-dot-close");
+    closeDot.addEventListener("mousedown", function (e) { e.stopPropagation(); });  // don't start a drag
+    closeDot.addEventListener("click", function (e) {
+      e.stopPropagation();
+      panel.hidden = true; if (yt && ready) { try { yt.pauseVideo(); } catch (e) {} }
+    });
+  })();
+  playBtn.addEventListener("click", function () {
+    if (!ready) { marquee.textContent = "loading player…"; return; }
+    try { yt.getPlayerState() === YT.PlayerState.PLAYING ? yt.pauseVideo() : yt.playVideo(); } catch (e) {}
+  });
+  document.getElementById("mp-prev").addEventListener("click", function () {
+    if (!ready) return; statusEl.textContent = "loading";
+    try {
+      var pl = yt.getPlaylist(), i = yt.getPlaylistIndex();
+      if (i === 0 && pl && pl.length) yt.playVideoAt(pl.length - 1); else yt.previousVideo();
+    } catch (e) {}
+  });
+  document.getElementById("mp-next").addEventListener("click", function () {
+    if (!ready) return; statusEl.textContent = "loading";
+    try {
+      var pl = yt.getPlaylist(), i = yt.getPlaylistIndex();
+      if (pl && i >= pl.length - 1) yt.playVideoAt(0); else yt.nextVideo();
+    } catch (e) {}
+  });
+  document.getElementById("mp-stop").addEventListener("click", function () {
+    if (!ready) return;
+    try { yt.stopVideo(); } catch (e) {}
+    progFill.style.width = "0%"; progHandle.style.left = "0%"; curEl.textContent = "0:00";
+    setStatus("ready");
+  });
+  progEl.addEventListener("click", function (e) {
+    if (!ready) return;
+    var r = progEl.getBoundingClientRect(), p = (e.clientX - r.left) / r.width;
+    try { yt.seekTo(Math.max(0, Math.min(1, p)) * yt.getDuration(), true); } catch (er) {}
+  });
+  function setVol(e) {
+    var r = volEl.getBoundingClientRect(), p = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+    volFill.style.width = (p * 100) + "%";
+    if (ready) try { yt.setVolume(p * 100); } catch (er) {}
+  }
+  var volDrag = false;
+  volEl.addEventListener("mousedown", function (e) { volDrag = true; setVol(e); });
+  document.addEventListener("mousemove", function (e) { if (volDrag) setVol(e); });
+  document.addEventListener("mouseup", function () { volDrag = false; });
+  shuffleBtn.addEventListener("click", function () {
+    if (!ready) return;
+    shuffled = !shuffled;
+    try { yt.setShuffle(shuffled); } catch (e) {}
+    shuffleBtn.classList.toggle("on", shuffled);
+  });
+
+  /* playlist panel */
+  var trackTitles = {}, titlesFetched = false;
+  function fetchAllTitles() {
+    if (titlesFetched || !ready) return;
+    var pl; try { pl = yt.getPlaylist(); } catch (e) { return; }
+    if (!pl || !pl.length) return;
+    titlesFetched = true;
+    Promise.all(pl.map(function (vid, idx) {
+      return fetch("https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=" + vid + "&format=json")
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (d) { if (d && d.title) trackTitles[idx] = d.title; })
+        .catch(function () {});
+    })).then(function () { if (!listPanel.hidden) renderList(); });
+  }
+  function renderList() {
+    if (!ready) return;
+    var pl, cur; try { pl = yt.getPlaylist(); cur = yt.getPlaylistIndex(); } catch (e) { return; }
+    if (!pl || !pl.length) { listItems.innerHTML = '<div class="mp-list-item"><span class="t">no tracks</span></div>'; return; }
+    if (!titlesFetched) fetchAllTitles();
+    try { var ct = yt.getVideoData(); if (ct && ct.title) trackTitles[cur] = ct.title; } catch (e) {}
+    listItems.innerHTML = pl.map(function (vid, idx) {
+      var t = trackTitles[idx] || "loading…";
+      var n = (idx + 1 < 10 ? "0" : "") + (idx + 1);
+      return '<div class="mp-list-item' + (idx === cur ? " cur" : "") + '" data-i="' + idx + '">' +
+             '<span class="n">' + n + '</span><span class="t">' + t.replace(/</g, "&lt;") + '</span></div>';
+    }).join("");
+    Array.prototype.forEach.call(listItems.querySelectorAll(".mp-list-item"), function (el) {
+      el.addEventListener("click", function () {
+        var i = parseInt(el.dataset.i, 10);
+        try { yt.playVideoAt(i); } catch (e) {}
+        setTimeout(renderList, 500);
+      });
+    });
+  }
+  function storeCurrentTitle() {
+    if (!ready) return;
+    try {
+      var idx = yt.getPlaylistIndex(), t = yt.getVideoData() && yt.getVideoData().title;
+      if (t && idx >= 0) { trackTitles[idx] = t; if (!listPanel.hidden) renderList(); }
+    } catch (e) {}
+  }
+  listToggle.addEventListener("click", function () {
+    listPanel.hidden = !listPanel.hidden;
+    listToggle.classList.toggle("on", !listPanel.hidden);
+    if (!listPanel.hidden) renderList();
+  });
+
+  /* drag by the title bar */
+  (function () {
+    var bar = document.getElementById("mp-bar");
+    var dragging = false, sx = 0, sy = 0, ox = 0, oy = 0;
+    bar.addEventListener("mousedown", function (e) {
+      dragging = true; sx = e.clientX; sy = e.clientY;
+      var r = panel.getBoundingClientRect(); ox = r.left; oy = r.top;
+      e.preventDefault();
+    });
+    document.addEventListener("mousemove", function (e) {
+      if (!dragging) return;
+      var nx = ox + (e.clientX - sx), ny = oy + (e.clientY - sy);
+      panel.style.left = nx + "px"; panel.style.top = ny + "px"; panel.style.bottom = "auto";
+    });
+    document.addEventListener("mouseup", function () { dragging = false; });
+  })();
+
+  // keep title fresh while playing (getVideoData lags the CUED event a touch)
+  setInterval(function () { if (ready && yt && yt.getPlayerState && yt.getPlayerState() === 1) updateTrack(); }, 3000);
+})();
+</script>
 </body>
 </html>

@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>STUDIO · Conrad House</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<script>try{document.documentElement.dataset.theme=localStorage.getItem("studio.theme")||"cream"}catch(e){}</script>
+<link rel="stylesheet" href="assets/catalogue.css" />
+<script src="assets/graphite.js" defer></script>
+<script src="assets/masthead.js" defer></script>
+<script src="assets/lightbox.js" defer></script>
+<script src="assets/nav.js" defer></script>
+<script src="assets/theme.js" defer></script>
+</head>
+<body>
+<div class="ground-mount" aria-label="page ground"></div>
+
+<nav class="rail" id="rail" aria-label="studio contents">
+  <a class="rail-mast" href="index.html" aria-label="back to the studio index"><div class="mast-title">
+    <h1 id="mast-h1">studio</h1>
+    <canvas id="masthead-canvas" data-word="studio" data-cap="58" aria-hidden="true"></canvas>
+  </div></a>
+</nav>
+
+<div class="screens">
+<div class="wrap">
+
+  <nav class="site-nav" aria-label="site">
+    <a class="home" href="../">con.rad</a>
+    <a href="../writings/">writings</a>
+    <a href="../collection/">collection</a>
+    <a href="../projects/">projects</a>
+    <a class="cur" href="index.html">studio</a>
+  </nav>
+
+  <main id="main"></main>
+
+  <footer class="colophon">
+    <span>Conrad House</span>
+    <a href="index.html">studio</a>
+  </footer>
+
+</div>
+</div>
+
+<script>
+const IMG_V = "?v=1784771550";
+(async function () {
+  const main = document.getElementById("main");
+  let data;
+  try {
+    const r = await fetch("data/studio.json", { cache: "no-store" });
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    data = await r.json();
+  } catch (e) {
+    main.innerHTML = `<div class="load-error">could not load data/studio.json — ${e.message}.
+      This page has no embedded fallback; fix the fetch.</div>`;
+    return;
+  }
+
+  const works = data.works || [];
+  let articles = [];
+  try {
+    const al = await fetch("data/articles.json", { cache: "no-store" }).then(r => r.json());
+    for (const a of al.articles || []) {
+      const full = await fetch(`data/articles/${a.slug}.json`, { cache: "no-store" }).then(r => r.json()).catch(() => null);
+      if (full) articles.push(full);
+    }
+  } catch (_) { /* article list is optional on this page */ }
+  const SLUG_ALIAS = { paint: "room-with-cube", "paintsystem2-room": "broken-rooms",
+    "paintsystem2-die": "horizons", "paintsystem2-chamber": "chamber",
+    "paintsystem2-interior": "interior", "jester-poster": "idea-403",
+    "idea-044-grid": "idea-044", "idea-107-grid": "idea-107", sleeve: "visual-scores" };
+  let slug = new URLSearchParams(location.search).get("w");
+  if (SLUG_ALIAS[slug]) { location.replace(`piece.html?w=${SLUG_ALIAS[slug]}${location.hash}`); return; }
+  const idx = works.findIndex(w => w.slug === slug);
+  if (idx < 0) {
+    main.innerHTML = `<div class="load-error">no work named "${esc(slug)}" in the catalogue.
+      <br /><br /><a href="index.html" style="text-decoration:underline">back to the index →</a></div>`;
+    return;
+  }
+
+  const w = works[idx];
+  if (w.parent) { location.replace(`piece.html?w=${encodeURIComponent(w.parent)}#ss-${w.slug}`); return; }
+  const substudies = works.filter(x => x.parent === w.slug).sort((a, b) => (a.edition ?? 999) - (b.edition ?? 999));
+  document.title = `${w.name} · STUDIO · Conrad House`;
+
+  const edLabel = w.edition != null ? "EDITION " + String(w.edition).padStart(2, "0")
+    : w.kind === "exploration" ? "EXPLORATION · A WAY OF SEARCHING"
+    : w.kind === "guest" ? "GUEST · PRE-STUDIO"
+    : "EXPERIMENT · UNNUMBERED";
+  const sdef = (data.series || []).find(s => s.id === w.series);
+  const sibs = sdef ? works.filter(x => x.series === sdef.id && !x.parent).sort((a, b) => (a.edition ?? 999) - (b.edition ?? 999)) : [];
+  const seriesCell = sdef
+    ? `<div><dt>series</dt><dd><a href="index.html#s-${sdef.id}" style="color:var(--sanguine)">${esc(sdef.numeral)} · ${esc(sdef.name)}</a> — ${sibs.findIndex(x => x.slug === w.slug) + 1} of ${sibs.length}</dd></div>`
+    : "";
+  const imgs = w.images || [];
+  const hero = imgs[0];
+  const rest = imgs.slice(1);
+
+  // Pack plates into rows by aspect: wide images take a row to themselves;
+  // portrait/square ones sit 2-up (3-up when a page has many), so a page reads
+  // as a laid-out spread instead of one tall stack.
+  function packRows(list) {
+    const rows = []; let buf = [];
+    const wideish = im => im.wide === true || im.video === true || (im.w && im.h ? (im.w / im.h) >= 2.1 : false);
+    const flush = () => { if (buf.length) { rows.push(buf); buf = []; } };
+    const narrow = list.filter(im => !wideish(im)).length;
+    const cap = narrow >= 6 ? 3 : 2;
+    for (const im of list) {
+      if (wideish(im)) { flush(); rows.push([im]); continue; }
+      buf.push(im);
+      if (buf.length === cap) flush();
+    }
+    flush();
+    return rows;
+  }
+
+  let restHtml = packRows(rest).map(r =>
+    r.length === 1 ? fig(r[0], true) : `<div class="row-${r.length}">${r.map(im => fig(im)).join("")}</div>`
+  ).join("");
+
+  main.innerHTML = `
+    <div class="pv-layout">
+      <aside class="pv-side">
+        <span class="rn">${w.edition != null ? String(w.edition).padStart(2, "0") : "✦"}</span>
+        <h1 data-drawn data-cap="42" data-orient="vertical">${esc(w.name)}</h1>
+      </aside>
+      <div class="pv-body">
+      <div class="pv-topline"><a href="index.html">◀ contents</a><span>${edLabel}</span></div>
+
+    <dl class="specs">
+      <div><dt>after</dt><dd>${esc(w.after)}</dd></div>
+      ${seriesCell}
+      ${(w.tags && w.tags.length) ? `<div><dt>tags</dt><dd class="tag-chips">${w.tags.map(t =>
+        `<a class="tag-chip" href="index.html#/t/${encodeURIComponent(t)}">${esc(t)}</a>`).join("")}</dd></div>` : ""}
+    </dl>
+
+    ${(w.note && w.note.trim()) ? `<p class="note">${esc(w.note)}</p>` : ""}
+    ${w.live ? `<p style="margin-top:18px"><a href="${esc(w.live)}"
+      style="font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:lowercase;color:var(--sanguine);border:1px solid var(--sanguine);padding:8px 14px;display:inline-block">open the live piece ↗</a></p>` : ""}
+    ${w.essay ? `<p style="margin-top:14px"><a href="${esc(w.essay.url)}"
+      style="font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:lowercase;color:var(--sanguine)">→ i wrote about this: “${esc(w.essay.title)}”${w.essay.date ? " · " + esc(w.essay.date) : ""}</a></p>` : ""}
+    ${(() => {
+      const a = articles.find(a => a.work === w.slug);
+      return a ? `<p style="margin-top:18px"><a href="../writings/#${encodeURIComponent(a.slug)}"
+        style="font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:lowercase;color:var(--sanguine)">→ process writing: ${esc(a.title)}</a></p>` : "";
+    })()}
+
+    ${(w.embeds && w.embeds.length) ? `
+      <div class="embeds">
+        <div class="embeds-head">heard</div>
+        <div class="embed-row">${w.embeds.map(e => `<figure class="embed-fig">
+          <blockquote class="twitter-tweet" data-dnt="true" data-theme="light"><a href="${esc(e.url)}"></a></blockquote>
+          <noscript><a href="${esc(e.url)}">view on x ↗</a></noscript>
+          ${e.caption ? `<figcaption>${esc(e.caption)} · <a href="${esc(e.url)}" target="_blank" rel="noopener">open on x ↗</a></figcaption>` : ""}
+        </figure>`).join("")}</div>
+      </div>
+      ` : ""}
+
+    <div class="piece-plates">
+      ${hero ? fig(hero, true, 1) : ""}
+      ${restHtml}
+    </div>
+
+    ${substudies.map(ss => `
+      <section id="ss-${ss.slug}">
+        <div class="ss-head"><span class="tag">substudy</span><h2 data-drawn data-cap="56">${esc(ss.name)}</h2>
+          <span class="ed">${ss.edition != null ? "ED. " + String(ss.edition).padStart(2, "0") : "✦"} · after ${esc(ss.after)}</span></div>
+        ${(ss.note && ss.note.trim()) ? `<p class="ss-note">${esc(ss.note)}</p>` : ""}
+        <div class="piece-plates" style="margin-top:34px">
+          ${packRows(ss.images || []).map(r => r.map(im => {
+            const i = (ss.images || []).indexOf(im) + 1;
+            const cell = `<figure class="${r.length === 1 ? "wide" : ""}">
+              <div class="img" data-lb data-lb-group="ss-${ss.slug}" data-lb-work="${esc(ss.name)}"
+                data-lb-title="${esc(im.title || "")}" data-lb-caption="${esc(im.caption || "")}"><img src="assets/img/${ss.slug}/${im.file}${IMG_V}" alt="${esc(im.caption)}" loading="lazy" /></div>
+              <figcaption><span class="i">${esc(ss.name.toLowerCase())} · pl. ${i}/${(ss.images || []).length}</span>${(im.caption || im.title) ? `<span class="t">${esc(im.caption || im.title)}</span>` : ""}</figcaption>
+            </figure>`;
+            return cell;
+          }).join("")).map((html, ri) => {
+            const r = packRows(ss.images || [])[ri];
+            return r.length === 1 ? html : `<div class="row-${r.length}">${html}</div>`;
+          }).join("")}
+        </div>
+        ${(ss.refs && ss.refs.length) ? `
+        <div class="refs-toggle"><button type="button" data-refs="ss-${ss.slug}" aria-expanded="false">▸ references (${ss.refs.length})</button></div>
+        <div class="refs-grid" id="refs-ss-${ss.slug}" hidden>${ss.refs.map(r => `
+          <figure class="ref-fig" data-lb data-lb-group="refs-${ss.slug}" data-lb-work="reference" data-lb-caption="${esc(r.caption)}"><img src="assets/img/${ss.slug}/${esc(r.file)}${IMG_V}" alt="${esc(r.caption)}" loading="lazy" />
+          <figcaption>${esc(r.caption)}</figcaption></figure>`).join("")}</div>` : ""}
+      </section>`).join("")}
+
+    ${(w.refs && w.refs.length) ? `
+    <div class="refs-toggle"><button type="button" data-refs="main" aria-expanded="false">▸ references (${w.refs.length})</button></div>
+    <div class="refs-grid" id="refs-main" hidden>
+      ${w.refs.map(r => `<figure class="ref-fig">
+        <img src="assets/img/${w.slug}/${esc(r.file)}${IMG_V}" alt="${esc(r.caption)}" loading="lazy" />
+        <figcaption>${esc(r.caption)}</figcaption>
+      </figure>`).join("")}
+    </div>` : ""}
+
+      </div>
+    </div>
+
+    <div class="carousel-head"><span class="h">more from the studio</span><span>scroll ⟶</span></div>
+    <div class="carousel">${(() => {
+      const edS = (a, b) => (a.edition ?? 999) - (b.edition ?? 999);
+      const tops = works.filter(x => !x.parent);
+      const sibs = tops.filter(x => x.slug !== w.slug && x.series && x.series === w.series).sort(edS);
+      const rest2 = tops.filter(x => x.slug !== w.slug && !(x.series && x.series === w.series)).sort(edS);
+      return sibs.concat(rest2).map(x => `
+        <a class="car-card ${x.series && x.series === w.series ? "same-series" : ""}" href="piece.html?w=${encodeURIComponent(x.slug)}">
+          <img src="assets/img/${x.slug}/thumb.jpg${IMG_V}" alt="${esc(x.name)}" loading="lazy"
+            onerror="this.src='assets/img/${x.slug}/hero.jpg'" />
+          <span class="car-name"><span>${esc(x.name)}</span><span class="ed">${x.edition != null ? String(x.edition).padStart(2, "0") : "✦"}</span></span>
+        </a>`).join("");
+    })()}</div>`;
+
+  document.querySelectorAll("[data-refs]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const g = document.getElementById("refs-" + btn.dataset.refs);
+      if (!g) return;
+      g.hidden = !g.hidden;
+      btn.setAttribute("aria-expanded", String(!g.hidden));
+      btn.textContent = (g.hidden ? "▸" : "▾") + btn.textContent.slice(1);
+      if (!g.hidden) {
+        if (window.Graphite) Graphite.init(g);
+        if (window.Lightbox) Lightbox.attach(g);
+      }
+    });
+  });
+
+  if (w.embeds && w.embeds.length) {
+    const holder = document.querySelector(".embeds");
+    const scan = () => { try { window.twttr.widgets.load(holder); } catch (_) {} };
+    if (window.twttr && window.twttr.widgets) scan();
+    else {
+      const s = document.createElement("script");
+      s.async = true; s.charset = "utf-8";
+      s.src = "https://platform.twitter.com/widgets.js";
+      s.onload = () => (window.twttr && window.twttr.ready) ? window.twttr.ready(scan) : scan();
+      s.onerror = () => holder.classList.add("embed-failed");
+      document.head.appendChild(s);
+    }
+    // if the widget never renders (blocked/offline), fall back to plain links
+    setTimeout(() => { if (!holder.querySelector("iframe")) holder.classList.add("embed-failed"); }, 6000);
+  }
+
+  if (window.Graphite) Graphite.init(); else addEventListener("load", () => Graphite.init());
+  if (window.Masthead) Masthead.init();
+  if (window.Lightbox) Lightbox.attach(); else addEventListener("load", () => Lightbox.attach());
+
+  function fig(im, wide, n) {
+    if (!im) return "";
+    const i = imgs.indexOf(im) + 1;
+    const media = im.video
+      ? `<video src="assets/img/${w.slug}/${im.file}${IMG_V}" autoplay loop muted playsinline
+           poster="assets/img/${w.slug}/${(imgs[0]&&!imgs[0].video)?imgs[0].file:"hero.jpg"}${IMG_V}" style="width:100%;display:block"></video>`
+      : `<img src="assets/img/${w.slug}/${im.file}${IMG_V}" alt="${esc(im.caption)}" loading="lazy" />`;
+    return `<figure class="${wide ? "wide" : ""}">
+      <div class="img" data-lb data-lb-group="plates" data-lb-work="${esc(w.name)}"
+        data-lb-title="${esc(im.title || "")}" data-lb-caption="${esc(im.caption || "")}"
+        data-lb-notes='${JSON.stringify(im.notes || []).replace(/'/g, "&#39;")}'>${media}</div>
+      <figcaption><span class="i">pl. ${i}/${imgs.length}</span>${(im.caption || im.title) ? `<span class="t">${esc(im.caption || im.title)}</span>` : ""}</figcaption>
+    </figure>`;
+  }
+
+  function esc(s) { return String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
+})();
+</script>
+</body>
+</html>

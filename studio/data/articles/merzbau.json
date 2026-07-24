@@ -1,0 +1,90 @@
+{
+ "slug": "merzbau",
+ "title": "a room built from my own systems",
+ "subtitle": "eighty editions in, the studio paints a self portrait.",
+ "date": "2026-07-18",
+ "no": "01",
+ "work": null,
+ "draft": true,
+ "body": [
+  {
+   "type": "drop",
+   "html": "Since May the studio has been a daily practice; one system a day when it goes well, a fork or a fix when it doesn't. Somewhere around edition eighty i realized the systems had started talking to each other. The cube studies furnish the painted rooms, the pencil engine underdraws the oil, the circuit partition from DIE keeps showing up on any flat surface that will hold still. So the question wasn't really what to build next, it was whether the studio could paint a picture of itself."
+  },
+  {
+   "type": "p",
+   "html": "Kurt Schwitters spent years building the Merzbau, a room in his house that slowly became a sculpture of everything he cared about, fragments glued into columns until the room itself was the work. I like that the Merzbau wasn't designed, it accreted. That felt like the right precedent for a collage of my own editions; not a greatest hits grid, but one room that eight systems have to live in together."
+  },
+  {
+   "type": "image",
+   "src": "assets/img/merzbau/hero.jpg",
+   "caption": "MERZBAU, bacon sphinx palette",
+   "tag": "from the system"
+  },
+  {
+   "type": "p",
+   "html": "The room is the broken chamber from the paint system line, each back corner jittered by its own vanishing point so the space never quite closes. The walls get subdivided by the DIE treemap and sheared per cell. The floor gets furnished with cubes; a solid one from CUBE STUDY, open wireframes from the LeWitt incomplete cubes. And the whole thing runs EVOLUTION TO DISORDER across the frame, resolved order on one side collapsing into jitter on the other."
+  },
+  {
+   "type": "subhead",
+   "html": "the trick that made it cohere: the paint fade is the order axis"
+  },
+  {
+   "type": "p",
+   "html": "Early passes looked like a mood board, eight systems politely sharing a canvas. The fix came from PENTIMENTO. That system draws the whole composition in graphite first, then paints colour up in one coherent mass, so part of the image is finished painting and part is still drawing. In MERZBAU that same move became the spine of the whole picture; a master gradient decides where the field is resolved, and the surface state follows it. Where the field resolves you get full oil. In the transition band you get glaze, thin enough that the graphite reads through. Past that, bare drawing. Order literally means painted; disorder literally means the paint never arrived."
+  },
+  {
+   "type": "code",
+   "lang": "js",
+   "file": "merzbau/merzbau.js",
+   "title": "the whole composition hangs off two small functions",
+   "code": "function ordAt(cx,cy){ var t;\n  if(_ordDir){ var nx=(cx-DW*0.5)/DW, ny=(cy-DH*0.5)/DH;\n    t=0.5-(nx*_ordDir.x+ny*_ordDir.y)*1.18; }   // ramp across a direction\n  else { var dxn=(cx-DW*0.5)/(DW*0.5), dyn=(cy-DH*0.5)/(DH*0.5);\n    t=1-clamp(Math.hypot(dxn,dyn)/1.35,0,1); }  // radial\n  t+=(_noise(cx/230,cy/230)-0.5)*0.42;  // organic wobble on the boundary\n  return clamp(t,0,1);\n}\nfunction stateFor(ord){\n  var tHi=1-_res, band=0.2;\n  if(ord>=tHi) return 'paint';\n  if(ord>=tHi-band) return 'glaze';\n  return 'drawn';\n}",
+   "caption": "every region and every cube asks the same field the same question: am i painted yet."
+  },
+  {
+   "type": "p",
+   "html": "Everything else is ported verbatim. The oil primitives, the palette system, the cabinet projection for the cubes, the graphite hatch; none of it was rewritten for this piece, which was the point. If the collage needed new primitives it wouldn't be a collage of the studio, it would just be a ninth system."
+  },
+  {
+   "type": "pair",
+   "images": [
+    {
+     "src": "assets/img/merzbau/proc-drawn.jpg",
+     "caption": "the same seed held at the drawn state, nothing resolved"
+    },
+    {
+     "src": "assets/img/merzbau/proc-ghost.jpg",
+     "caption": "ghost pass, construction lines only"
+    }
+   ]
+  },
+  {
+   "type": "pair",
+   "images": [
+    {
+     "src": "assets/img/merzbau/proc-persp.jpg",
+     "caption": "perspective study, corners disagreeing on purpose"
+    },
+    {
+     "src": "assets/img/merzbau/proc-v2.jpg",
+     "caption": "v2 interior pass before the cube furnishing landed"
+    }
+   ]
+  },
+  {
+   "type": "quote",
+   "text": "the unresolved side had to read as pale drawing, not black void. the ground is drafting paper, tinted by the palette, so even the collapsed half of the room feels like it is waiting to be painted rather than erased.",
+   "attribution": "build note, ed. 80"
+  },
+  {
+   "type": "p",
+   "html": "The batch grid is my favourite proof that it works. Twenty four seeds, and every one is recognizably the same room in the same handwriting, but the eight source systems weight themselves differently each time. Some seeds are basically a DIE wall study with furniture. Some are a cube field with a room barely holding it. That range without losing the thread is what i wanted from a self portrait."
+  },
+  {
+   "type": "image",
+   "src": "assets/img/merzbau/grid.jpg",
+   "caption": "one batch, twenty four rooms",
+   "tag": "from the system"
+  }
+ ]
+}

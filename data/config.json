@@ -175,7 +175,10 @@
         "we're hitting a strange crossroads as accessible tools evolve. it's the difference between a carpenter who spends all day perfecting a single dovetail joint by hand versus someone using a CNC machine to have 100x the production rate. the end product might look identical, but the mental task model of the person making it is completely different.",
         "for the traditional developer, the manual dexterity of syntax and debugging is where the physical craft lives. but as tools evolve, that skill set starts to feel like a constraint. we're shifting toward intent engineering, where the value isn't in how well you can type, but how clearly you can envision the integration of complex systems. it's a shift from being the worker on the floor to being the one who understands the entire production pipeline.",
         "i see people asking...",
-        {"type": "quote", "text": "if anyone can make software, why do we need developers?"},
+        {
+          "type": "quote",
+          "text": "if anyone can make software, why do we need developers?"
+        },
         "...well, anyone CAN make a sandwich, but we still have thousands of sandwich shops. vibe coders are throwing together a midnight grilled cheese with half-stale bread—it gets the job done (maybe). it still takes an educated figure to understand how to scale this process or refine it."
       ]
     },
@@ -212,20 +215,32 @@
       "description": "building a personal learning framework with claude",
       "date": "2026-02-13",
       "body": [
-        {"type": "image", "src": "../assets/images/writings/learningos1.PNG"},
+        {
+          "type": "image",
+          "src": "../assets/images/writings/learningos1.PNG"
+        },
         "As a newly titled \"vibe coder\" the one thing I've really enjoyed when using Claude is the ambition to learn it instills in me. This ambition has only inspired me to explore ideas I've never thought id be capable of before.",
         "Prior to Claude I wasn't completely unaware of how programming, systems or even computers worked in general but I was still so lost on how most computing structures were built. Being chronically online since a little kid, there's been a handful of occasions where I've wanted to get more technical with my use of computers. At 12 years old I created my own Runescape private server on an old website that hosted RSPS webclients. The site allowed you to choose a specific client base for the game and allowed you to host and edit a server for others to play on. The site only allowed you to control server-sided files and not the client side so you could change the text dialogue of a character, stats of a weapon, or experience rates BUT you couldn't do many of the fun (and arguably more technical) client side programming. This meant no cool custom monsters, custom weapon models or changing combat animations. Although quite a \"boiler templated\" process, it was still a large learning journey in setting up a running server people could connect to, using compiling systems to push updates, and even managing a small online community. Funny enough, the naivety of my 12 year old self became a bit too ambitious with trying to learn programming and began creating my own custom client to excitingly begin exploring custom 3D asset creation....but long story short, I'd eventually download a virus, get RAT-ed, become terrified of malware and slowed down on my online digging and downloading for a short while after.",
         "Fast forward years and I'd still continuously explore more small programming endeavors in similar ways, curiously trying to mess with digital tools, programming languages, on-chain contracts, etc. I'd always get spurts of energy to try and learn more but would have a hard time even knowing what I should be learning. Should I dive into JS, HTML, CSS, C+.... should I learn frontend or backend practices...there was so many interesting aspects of computer science that intersected my hobbies that it was hard to find what to focus on.",
         "Claude has only made me want to understand programming more. The languages, how computers interpolate data, best practices, the whole shebang (pun intended). The idea that Claude could potentially help guide me to gaining a better broad understanding of computers so I could be better informed on what exactly I wanted to drill into, explore and learn.",
         "This led me to asking Claude to act as more of a professor by building out an educational framework that'd work with my current abilities and knowledge.",
         "The best part of Claude (or ML/AI in general) is the adaptability it provides. Rather than creating a rigid learning course tool that already exists for free all over the web, I could create a learning system that Claude updated, refined and adapted to how I was learning, working and processing information. Imagine doing leetcode or any online-lesson that you feel like could use a bit better explaining, more visual examples, or just additional information that'd help you better understand the topic at hand. Well with Claude working in parallel, it allowed for just that, I could give feedback as the lesson plans went on to improve the overall framework of the course. Finish up a Claude generated lesson that didn't seem to explain a topic or term well enough about? Prompt Claude to dive deeper.",
-        {"type": "quote", "text": "Well some online courses already provide AI assistants to better explain ideas, so what's different?"},
+        {
+          "type": "quote",
+          "text": "Well some online courses already provide AI assistants to better explain ideas, so what's different?"
+        },
         "The difference here, is that the learning framework, user interface, and imbedded features ARE ALL ADAPTABLE. You aren't stuck in the corporatized framework built by some arbitrary design team. You get to be the master of the creation and utility. Maybe you want a \"flash-card\" feature that gives you easily reviewable flashcards for important terms that can quickly be studied for definitions or use case examples. Simply explaining that feature structure to Claude can probably get you something close to it! Previous SaaS tools can be redefined to Software as a Seed. Open-source programs that act as bases for others to have Claude or any LLM model build from.",
-        {"type": "image", "src": "../assets/images/writings/learningos2.PNG"},
+        {
+          "type": "image",
+          "src": "../assets/images/writings/learningos2.PNG"
+        },
         "Another big benefit to this was expanding on the idea that everyone learns differently, whether that's visually, auditory, hands on examples, flash cards, pop quizzes, or structured note taking. Personal learning processes are SO unique. This is a concept public schooling is always attempting to tackle... \"What are the best ways to creating learning plans that benefit most types of learners?\" This project was made to let me cater to MY preferred learning methods each step of the way.",
         "Since Claude also has root access, it can directly read my projects, files, conversations and insights to better cater lessons for me. There's no amount of questions, preference sliders, or profile tag selections a private company could track that would generate a better customized lesson plan than Claude can with it having access to your entire filebase, context and quarks. Claude can understand your exact stack preferences, coding patterns, project MVPs to better guide you to improving your knowledge base.",
         "This can become a symbiotic relationship. As the saying goes...\"A fool doesn't know what he doesn't know.\" As Claude helps you improve my understandings, I'll only learn more unknowns, leading to future lessons plans! Reverse the Dunning-Kruger effect. There is a grace in being naive today, so long as you possess the ambition to outgrow it by tomorrow.",
-        {"type": "image", "src": "../assets/images/writings/learningos3.PNG"},
+        {
+          "type": "image",
+          "src": "../assets/images/writings/learningos3.PNG"
+        },
         "What can go wrong? Well maybe a lot. LLMs in general love to hallucinate, and even occasionally, take shortcuts to skip things. If Claude begins give lessons built around false information, the idea is kind of ruined BUT I'm hopeful most information it'll give will still better my understanding in totality.",
         "My long goal? To continue being ambitious about learning new things, systems and ideas."
       ]
@@ -241,7 +256,11 @@
         "Growing up and being introduced to the computer felt like a big breakthrough. You realize all these incredible things you can do with a computer essentially require no material to create. Somebody with Blender doesn't require a limited amount of \"Blender clay\" to create whatever they want; they can just make an infinite amount of shapes. There's a freedom to fail in these environments. There is still some limit to software costs and subscriptions, but the advancements of large language models and the interpretability between natural human language and computers have become so advanced. These machines become ever more important and useful to everyone's lives. This probably sounds like some crazy person that is just in love with machines, but I think it is warranted for how incredible these things are and the access we have now.",
         "The idea of personal software is becoming even more important. Ideally, this conglomerate capitalistic monopoly we have had over the utility of these machines collapses and goes more into the hands of the people. We have seen this with the open source community and the incredible contributions they have made to create the digital nature of the world we live in today. The malleability of the material we get to play with now is so strong. The analogy that it's no longer just the world-class sculptors who get access to the King's marble. That gatekept barrier has collapsed, and everybody can work within it to some degree.",
         "I am always reminded of a topic discussed by the artist Jan Robert Leegte, who uses computer visual elements and web UI elements within his work. He references things like the scroll bar, the \"X\" close window, tab interfaces, or Apple checkboxes as his sculptural material. He does not see himself as any different than a traditional sculptor. Looking at UI as material you can sculpt in new ways so fast is even more fascinating because it is not limited to any physical constraints whether that's material accessibility, weight, quality, etc.",
-        {"type": "quote", "text": "Feels like for anyone whose art practice involves systems or software at all, now is the time to dream ridiculously big. not only in scale, but in weirdness, depth or scope.", "attribution": "0xDEAFBEEF"}
+        {
+          "type": "quote",
+          "text": "Feels like for anyone whose art practice involves systems or software at all, now is the time to dream ridiculously big. not only in scale, but in weirdness, depth or scope.",
+          "attribution": "0xDEAFBEEF"
+        }
       ]
     },
     {
@@ -252,17 +271,41 @@
       "body": [
         "If anyone's browsed my <a href=\"https://www.are.na/conrad-house/visually-intriguing\" target=\"_blank\" class=\"text-acid hover:underline\">visually intriguing channel</a> on <a href=\"https://www.are.na\" target=\"_blank\" class=\"text-acid hover:underline\">are.na</a> they'd probably become aware of my fascination with the visualization of data in any schematic form. Whether it's musical scores, geometric representations, drafted architectural papers, or simply anything with values as the underlying material.",
         "Often I find myself enjoying works that I don't always understand.",
-        {"type": "quote", "text": "I really like things I don't understand: when I read a thing I don't understand I feel a sweet and abysmal vertigo.", "attribution": "Clarice Lispector"},
+        {
+          "type": "quote",
+          "text": "I really like things I don't understand: when I read a thing I don't understand I feel a sweet and abysmal vertigo.",
+          "attribution": "Clarice Lispector"
+        },
         "I like data visualization for the aesthetics alone rather than necessarily always caring what it represents (I know, shame on me right?). The idea that the formation of the composition is derived from some data in itself is more than enough to tickle my number-orientated brain. I love the idea that the most mundane data can represent some visual value, same applies to random data, the beauty in emergence.",
         "This piece is a homage to some of my favorite visualizations of music. There's 5 main \"vocabularies\" to the composition, three of them directly related to the artists John Cage, Krzysztof Penderecki, and John De Cesare.",
         "The other two vocabularies are general forms of music notation and mathematical equations ranging from basic geometry, to differential equations, to stress/failure structural engineering calculations from ASCE guidelines. These five forms come together to generate each composition as a representation of what my eyes have always loved. A way to keep me visually intrigued forever.",
-        {"type": "triptych", "images": [
-          {"src": "../assets/images/writings/schematic-scores/cage.png", "alt": "John Cage score", "caption": "John Cage"},
-          {"src": "../assets/images/writings/schematic-scores/penderecki.jpeg", "alt": "Krzysztof Penderecki score", "caption": "Krzysztof Penderecki"},
-          {"src": "../assets/images/writings/schematic-scores/de-cesare.jpeg", "alt": "John De Cesare — Study 140A, The Magic Fire-Scene from Die Walküre by Richard Wagner, 1956", "caption": "John De Cesare, Study 140A (1956)"}
-        ]},
+        {
+          "type": "triptych",
+          "images": [
+            {
+              "src": "../assets/images/writings/schematic-scores/cage.png",
+              "alt": "John Cage score",
+              "caption": "John Cage"
+            },
+            {
+              "src": "../assets/images/writings/schematic-scores/penderecki.jpeg",
+              "alt": "Krzysztof Penderecki score",
+              "caption": "Krzysztof Penderecki"
+            },
+            {
+              "src": "../assets/images/writings/schematic-scores/de-cesare.jpeg",
+              "alt": "John De Cesare — Study 140A, The Magic Fire-Scene from Die Walküre by Richard Wagner, 1956",
+              "caption": "John De Cesare, Study 140A (1956)"
+            }
+          ]
+        },
         "The initial idea of this work lived in a 2d view, simple scores. But I'd be remiss not to include an artist that may be my favorite when it comes to visualizing scores and in general, using scores and musical notation as a medium and material. That artist is Frank Lepold, also known as @andyamholst on some social media sites. Frank has a beautiful catalogue of work on his blog. Sadly, Frank passed in 2023 and I often find myself thinking about his work a lot. I hope this project exposes someone to his work and maybe helps a memory of him be extended just a little further. Frank has a piece titled <em>Kasse II</em> where he creates a geometric score with four faces…this piece inspired me to experiment with a generator of scores and schematics as structures.",
-        {"type": "image", "src": "../assets/images/writings/schematic-scores/lepold-kasse-ii.webp", "alt": "Frank Lepold, Kasse II", "caption": "Frank Lepold — Kasse II"},
+        {
+          "type": "image",
+          "src": "../assets/images/writings/schematic-scores/lepold-kasse-ii.webp",
+          "alt": "Frank Lepold, Kasse II",
+          "caption": "Frank Lepold — Kasse II"
+        },
         "I'm not an artist. Just someone who loves the creativity others have instilled through inspiration.",
         "The next step is to see how to make these scores actually play. The most common thought when viewing generated output is \"what would it sound like?\". The next exploration to be had!",
         "→ <a href=\"../visual-scores/\" class=\"text-acid hover:underline\">roll your own schematic score on the generator page</a>."
@@ -276,24 +319,137 @@
       "body": [
         "Each morning I generally spend around one or two hours just browsing the internet looking at art. The routine is always the same; grab the laptop, open to the browser of unorganized tabs of yesterday's rabbit holes, play my music, and begin exploring.",
         "Each tab <em>ctrl+clicked</em> from a previous, eventually leading to five new tabs. This never ending rabbit hole process of hopping from national gallery databases, to artist websites, to early 2000s art blogs is meditative to me.",
-        {"type": "image", "src": "../assets/images/writings/art-rabbit-holing/yamashiro-forest.jpg", "alt": "Ryuichi Yamashiro, Forest, 1954 — concrete poetry built from repeated Japanese characters for tree and forest.", "caption": "Ryuichi Yamashiro, Forest, 1954 · saved to are.na"},
+        {
+          "type": "image",
+          "src": "../assets/images/writings/art-rabbit-holing/yamashiro-forest.jpg",
+          "alt": "Ryuichi Yamashiro, Forest, 1954 — concrete poetry built from repeated Japanese characters for tree and forest.",
+          "caption": "Ryuichi Yamashiro, Forest, 1954 · saved to are.na"
+        },
         "Travess Smalley once mentioned his use of <a href=\"https://www.are.na\" target=\"_blank\" rel=\"noopener\">are.na</a> as almost \"gluttonous\" the way he wants to capture everything. I find myself relating to this a lot, i love information, i love images, i love to look at things i like to look at. It's important to me that I can have some way of archiving these things because <strong>I think a lot of thoughts, I forget even more.</strong>",
         "This is really where are.na comes in for me. A browser full of tabs is a rabbit hole in motion, but it disappears the second you close the window or your laptop dies, so are.na is where i actually catch the things worth keeping. I'll pull an image out of a dying tab and drop it into a channel, and over enough time those channels stop being folders and start being their own little arguments, connecting a block to three others i saved months apart is its own kind of thinking. It's bookmarking, but bookmarking that remembers for you and quietly shows you the shape of your own attention.",
         "The byproduct of all this is a browser history that's basically a diary i never meant to write, so at some point i started wanting to actually see it. I made a <a href=\"https://github.com/nemocake/favicon-collage\" target=\"_blank\" rel=\"noopener\">small thing</a> that reads every favicon out of my history and tiles them into one image, a mosaic of every site i fell into over a stretch of days. It was really just a way of visualizing the rabbit holing itself, turning the ephemeral version of it into something i could look at all at once, a whole month of looking compressed into a grid of tiny logos, made entirely out of where my curiosity went. Which is sort of the whole point, the archive isn't separate from the taste, the archive is the taste, just made visible.",
-        {"type": "image", "src": "../assets/images/writings/art-rabbit-holing/favicon-collage.jpg", "alt": "A dense mosaic of thousands of tiny website favicons tiled edge to edge, a visual record of months of browsing history.", "caption": "a favicon mosaic of my own rabbit holing"},
+        {
+          "type": "image",
+          "src": "../assets/images/writings/art-rabbit-holing/favicon-collage.jpg",
+          "alt": "A dense mosaic of thousands of tiny website favicons tiled edge to edge, a visual record of months of browsing history.",
+          "caption": "a favicon mosaic of my own rabbit holing"
+        },
         "Going back to the meditative process and feeling that seems to come over me when doing these morning \"digital walks\". And for all my friends who enjoy art, maybe adding this into your morning routine should be something to think about.",
         "With the recent passing of the painter David Hockney i keep getting reminded of his whole idea that the one real job of an artist is to look, and to keep looking, all the time, at everything. He really believed most people never actually see the world, they just kind of glance at it and move on with their day.",
-        {"type": "quote", "text": "The world is very very beautiful if you look at it, but most people don't look very much. They scan the ground in front of them so they can walk, they don't really look at things incredibly well, with an intensity. I do.", "attribution": "David Hockney"},
+        {
+          "type": "quote",
+          "text": "The world is very very beautiful if you look at it, but most people don't look very much. They scan the ground in front of them so they can walk, they don't really look at things incredibly well, with an intensity. I do.",
+          "attribution": "David Hockney"
+        },
         "To him the looking was the entire practice, the drawing almost just proof that the looking even happened at all. That's what these morning digital walks feel like to me, a way of actually seeing instead of glancing, and honestly it's part of why i think there's art worth looking at everywhere, not just the stuff already framed and hung on a wall.",
-        {"type": "image", "src": "../assets/images/writings/art-rabbit-holing/vieira-da-silva-le-couloir.jpg", "alt": "Maria Helena Vieira da Silva, Le couloir (ou Intérieur), 1948 — a shimmering tiled corridor of small angular planes receding into deep perspective.", "caption": "Maria Helena Vieira da Silva, Le couloir (ou Intérieur), 1948 · saved to are.na"},
+        {
+          "type": "image",
+          "src": "../assets/images/writings/art-rabbit-holing/vieira-da-silva-le-couloir.jpg",
+          "alt": "Maria Helena Vieira da Silva, Le couloir (ou Intérieur), 1948 — a shimmering tiled corridor of small angular planes receding into deep perspective.",
+          "caption": "Maria Helena Vieira da Silva, Le couloir (ou Intérieur), 1948 · saved to are.na"
+        },
         "The process of looking at images is not unrewarded. There's a real tangible personal learning experience that comes when you look at different art for hundreds of hours. This eventually makes me think about the nauseating \"taste debate\", the most boring discussion point that's regurgitated fold over fold from the most taste-less trust-fund nepo baby or millennial venture capitalist you've ever seen.",
         "Taste is subjective, taste is personal, taste is warranted. That being said, it's also completely warranted that you can think someone else has 'bad taste' because that's your own personal subjective interpretation. Everyone has taste.",
-        {"type": "quote", "text": "The bigger question is whether or not do you trust your taste? Do you understand your taste?"},
+        {
+          "type": "quote",
+          "text": "The bigger question is whether or not do you trust your taste? Do you understand your taste?"
+        },
         "Taste becomes a representation of you as a person. More importantly it's not just a discovery process of finding things you like and don't like, but rather a journey in understanding WHY you like or don't like something.",
-        {"type": "image", "src": "../assets/images/writings/art-rabbit-holing/mori-ikuo-postcard-poems.jpg", "alt": "Postcard Poems by Mori Ikuo — delicate typographic / concrete-poetry marks arranged across a pale card.", "caption": "Mori Ikuo, Postcard Poems · saved to are.na"},
+        {
+          "type": "image",
+          "src": "../assets/images/writings/art-rabbit-holing/mori-ikuo-postcard-poems.jpg",
+          "alt": "Postcard Poems by Mori Ikuo — delicate typographic / concrete-poetry marks arranged across a pale card.",
+          "caption": "Mori Ikuo, Postcard Poems · saved to are.na"
+        },
         "Lots of people think they have taste because they listen to Drake, watch Christopher Nolan, eat at Nobu…. But do they have taste or just enjoy pop culture? I do think some of these people genuinely LOVE these types of pop-phenomena but I would personally argue many of them are playing a part in the contemporary sheep skin performance of façading as someone who enjoys what everyone else likes. These types of \"taste-sheep\" are who I have a distaste for, pun intended. These people don't seem to have any understanding as to why they enjoy these things that's deeper than… \"well everyone else enjoys it!\".",
         "This is all to say that this process of art rabbit hole-ing every day has immensely informed me of my own personal interests around art; visually, historically, emotionally and more. Every day I come across an artist or artwork I had never seen before, the constant exposure to new forms, color theories, compositions, techniques and stories is refreshing. Taste is something that is always evolving, there's a beauty in cataloging the person you are throughout your life based on what you've been looking at.",
-        {"type": "image", "src": "../assets/images/writings/art-rabbit-holing/ivan-wyschnegradsky-chromatic.jpg", "alt": "Ivan Wyschnegradsky, Circonférence — a radial mandala of 12 colours over a handwritten musical score, a visual notation of ultra-chromatic music.", "caption": "Ivan Wyschnegradsky, chromatic drawing (Circonférence) · saved to are.na"}
+        {
+          "type": "image",
+          "src": "../assets/images/writings/art-rabbit-holing/ivan-wyschnegradsky-chromatic.jpg",
+          "alt": "Ivan Wyschnegradsky, Circonférence — a radial mandala of 12 colours over a handwritten musical score, a visual notation of ultra-chromatic music.",
+          "caption": "Ivan Wyschnegradsky, chromatic drawing (Circonférence) · saved to are.na"
+        }
+      ]
+    },
+    {
+      "id": "fugitive",
+      "title": "Fugitive, finding missing outputs.",
+      "description": "an explorative system built for finding the visual output range of procedural generative systems.",
+      "date": "2026-07-20",
+      "draft": true,
+      "body": [
+        "Sometimes the most exciting part about making a procedural generative system is the emergence in outputs that arise from happen chance. The idea of having the variable knobs open and free to see our interactions between functions create new forms. These randomized systems are a new way of creating visual studies in the digital world rather than doing a traditional study of something like human portraits where you explore the way shadows are laid and proportions align over hundreds of attempts.",
+        "Fugitive is the experiment in further improve this digital hunt. Instead of manual randomizing outputs and looking through each one for interests, I wanted to build a batch export system that'd be able to visually compare and sort outputs. Instead of designing a composition and building a system that renders it, the system starts from a tiny composition program, a few dozen numbers, and the only rule is that its output has to land somewhere in image space that nothing before it has reached. If it lands in occupied territory it dies. The name is literal in the sense our system is hunting for hidden fugitives of our system.",
+        {
+          "type": "image",
+          "src": "../studio/assets/img/fugitive/how.jpg",
+          "alt": "how the search works, one loop",
+          "caption": "how the search works, one loop"
+        },
+        {
+          "type": "subhead",
+          "text": "finding simple ways to visually classify outputs"
+        },
+        "The mechanism underneath is a MAP-Elites quality diversity search. The first important decision was what the map's atlas axes measure. It would have been easy to map the genome, the program's own parameters, but two very different programs can paint nearly the same picture and that would let the archive fill up with disguised repeats. So the descriptors are measured from the rendered image itself; fragmentation, tonal spread from luminance variance, and colourfulness. The archive doesn't care how a picture was made. It cares whether the studio has already seen it.",
+        {
+          "type": "code",
+          "lang": "js",
+          "file": "fugitive/fugitive.js",
+          "title": "descriptors, measured from the image",
+          "code": "function describe(cnv){\n  \n  for(var y=1;y<H-1;y++)for(var x=1;x<W-1;x++){ var k=y*W+x;\n    var gx=lum[k+1]-lum[k-1], gy=lum[k+W]-lum[k-W];\n    edge+=Math.min(0.5,Math.abs(gx)+Math.abs(gy));\n    sum+=lum[k]; sum2+=lum[k]*lum[k];\n    var R=img[k*4], G=img[k*4+1], B=img[k*4+2];\n    var rg=R-G, yb=(R+G)*0.5-B;          // opponent channels\n    srg+=rg; srg2+=rg*rg; syb+=yb; syb2+=yb*yb; n++; }\n  \n  return { frag:   clamp(edge/n*10,0,1),\n           spread: clamp(va*3.4,0,1),   // Day 2: recalibrated (was ×9)\n           col:    clamp(Math.log(Math.max(1,colraw)/COL_LO)\n                        /Math.log(COL_HI/COL_LO),0,1) };  // Day 3\n}",
+          "caption": "The Fugitive \"fingerprint\" function which assigns unique visual identifying values."
+        },
+        "With a way of visually identifying outputs the atlas begins to fill itself out as new \"addresses\" are discovered. Tuning the map is really deciding what counts as different, which turns out to be a curatorial question disguised in a math costume. The atlas allows for specific outputs to favored which will nudge surrounding atlas spots to gravitate towards that outputs recipe and fingerprint.",
+        {
+          "type": "pair",
+          "images": [
+            {
+              "src": "../studio/assets/img/fugitive/tree.jpg",
+              "caption": "family tree; every survivor's lineage back to a seed program"
+            },
+            {
+              "src": "../studio/assets/img/fugitive/coverage.jpg",
+              "caption": "coverage curve; the archive filling over generations"
+            }
+          ]
+        },
+        {
+          "type": "subhead",
+          "text": "the empty cells are findings too"
+        },
+        "The output of FUGITIVE isn't really any single image, it's the atlas the record of where the paint engine can and cannot go. The cells that stay empty after thousands of attempts are a map of what this engine refuses to be, allowing you to visualize the boundary space of a system.",
+        {
+          "type": "image",
+          "src": "../studio/assets/img/fugitive/hero.jpg",
+          "alt": "the filmstrip of survivors",
+          "caption": "the filmstrip of survivors"
+        },
+        {
+          "type": "quote",
+          "text": "One survivor, number 93465793, i liked too much to leave in the archive. it became MULTIFORM, a whole system grown from a single cell the search stumbled into.",
+          "attribution": ""
+        },
+        "The normal move would have been to note the coordinates and keep searching. Instead i pulled the cell out of the archive and asked what it would take for that one accident to become a system that does that one thing on purpose. With the immediate visual similarity to Rothko, I decided to name the study series after his own word for his 1946-49 paintings, Multiform.",
+        {
+          "type": "subhead",
+          "text": "the soft edge is not a blur"
+        },
+        "The thing that made the accident good was never the composition of two squares, it was the paint accumulation system used to fill the piece. The rectangle's breathing edge comes from the glaze accumulation thinning out as its blobs get clipped near a noisy boundary with many washes, each one slightly failing to reach the edge. ",
+        {
+          "type": "pair",
+          "images": [
+            {
+              "src": "../studio/assets/img/multiform/hero.jpg",
+              "caption": "after orange, red, yellow, 1961"
+            },
+            {
+              "src": "../studio/assets/img/multiform/orange.jpg",
+              "caption": "after magenta, black, green on orange, 1949"
+            }
+          ]
+        },
+        "Which is maybe the real function of a system like this. Not to replace taste with search, but to walk into rooms i wouldn't have opened, and let me decide which ones to move into.",
+        "see both pieces in the studio: <a href=\"../studio/piece.html?w=fugitive\">Fugitive</a> and <a href=\"../studio/piece.html?w=multiform\">Multiform</a>."
       ]
     }
   ],
@@ -307,7 +463,12 @@
         "Inspired by Frank Lepold's Kasse II, the work moves the score from a flat 2d page into a geometric structure with multiple faces. Each composition is a representation of the data visualizations my eyes have always loved.",
         "→ <a href=\"../visual-scores/\" class=\"text-acid hover:underline\">roll your own schematic score on the generator</a>. remix, regenerate, save."
       ],
-      "tags": ["three.js", "generative", "scores", "music"],
+      "tags": [
+        "three.js",
+        "generative",
+        "scores",
+        "music"
+      ],
       "status": "released",
       "liveUrl": "../visual-scores/",
       "featured": true
@@ -321,7 +482,13 @@
         "The graph can be explored three ways. The default Ecosystem view shows the whole archive at once as a 3D formation you can rotate, filter, and reshape. The Tree view starts from a single node and lets you follow connections outward, building your own path through the collection. The Curated view groups nodes into thematic shows, some shaped by hand and others assembled procedurally. The standout feature is Ecosystem Journeys: twenty eight Le Random podcast episodes have been annotated so that when you press play, the graph lights up alongside the conversation in real time. It's the closest I've come to making a podcast feel like a living document.",
         "Built with Next.js and Three.js, the whole project runs in the browser with no backend or database. This is the last thing I made during my time at Le Random, and the one I'll miss most."
       ],
-      "tags": ["three.js", "next.js", "webgl", "knowledge-graph", "generative-art"],
+      "tags": [
+        "three.js",
+        "next.js",
+        "webgl",
+        "knowledge-graph",
+        "generative-art"
+      ],
       "status": "released",
       "featured": true,
       "liveUrl": "https://explorer.lerandom.art/"
@@ -356,14 +523,18 @@
         "this expanded into working with recipes i was partially missing ingredients for, to help build shopping lists quick without having to rack your brain on what's missing only to get back from the grocery store realizing you needed three other things.",
         "eventually built in a meal planning section that allows you to catalogue meals you want to eat for the week, generates a shopping list of ingredients you need to fulfill those weekly meals. added specific diet restriction filters to help maintain allergy, calorie or other nutritional needs."
       ],
-      "tags": ["tinkering"]
+      "tags": [
+        "tinkering"
+      ]
     },
     "Sketch-to-site": {
       "description": "browser-based wireframe to website builder",
       "details": [
         "draw layouts and components in a sketch interface, then export to clean html/css. a tool for rapid prototyping without leaving the browser."
       ],
-      "tags": ["tinkering"]
+      "tags": [
+        "tinkering"
+      ]
     },
     "latent-sync": {
       "private": true,
@@ -373,7 +544,11 @@
         "traditional coding sessions are ephemeral; once the context window fills up or the chat resets, the \"intellectual momentum\" is lost. latent sync transforms claude from a temporary contractor into a long-term partner by creating a feedback loop between active development (NOW.md) and core project rules (CLAUDE.md).",
         "the machine's \"memory\" is a living asset you curate, better manage your Claude.md file."
       ],
-      "tags": ["claude", "memory", "productivity"],
+      "tags": [
+        "claude",
+        "memory",
+        "productivity"
+      ],
       "status": "in development",
       "featured": true
     },
@@ -383,8 +558,13 @@
         "i spend a lot of time on are.na saving things that catch my eye but never had a good way to see how everything connects. this pulls all your channels and blocks from the api and renders them as an interactive graph using cytoscape.js. channels become hubs, blocks become nodes, and you can finally see the web of references you've been building.",
         "the fetch script auto tags everything at build time, pulling artist names, mediums, themes and source domains from block metadata. no ml, just pattern matching. from there you get search, a gallery view, path finding between any two blocks, constellation mode that draws connections between blocks sharing tags, category and channel filters, age heatmaps, and a stats panel. one html file, no build step."
       ],
-      "tags": ["are.na", "graph", "visualization"],
-      "status": "in development"
+      "tags": [
+        "are.na",
+        "graph",
+        "visualization"
+      ],
+      "status": "in development",
+      "liveUrl": "https://nemocake.github.io/website/graph/index.html"
     },
     "claude-obsidian-assistant": {
       "description": "a starter obsidian vault wired for claude code",
@@ -392,7 +572,11 @@
         "wanted a structured place where claude could actually manage my notes alongside me. fork the repo, open it as a vault, and claude gets context on the whole system through a root CLAUDE.md file. comes with a johnny decimal folder structure, a /obsidian skill that syncs project info from any working directory, and architecture canvas generation that maps out your codebase visually.",
         "the main thing is the /obsidian skill. run it from any project and claude reads your codebase, matches it to a vault file, and gives you options to update project docs, write dev logs, or generate full architecture diagrams as native obsidian canvas files. it's a template meant to be adjusted, just a starting point to get claude oriented faster."
       ],
-      "tags": ["claude", "obsidian", "productivity"],
+      "tags": [
+        "claude",
+        "obsidian",
+        "productivity"
+      ],
       "status": "released",
       "status2": "open source",
       "featured": true
@@ -406,9 +590,32 @@
         "the project handles everything from session management, usage tracking, custom agent manager, better skill/plugin explorer. it's moving the cli away from being a \"boring\" text prompt and making it a more centralized command center for your projects.",
         "the dashboard acts as a central hub where you can browse old sessions to quickly resume your most recent project. tab-based terminal for running multiple claude instances at once in an organized fashion, and a dedicated agents view where you can see all your custom tools and launch them with a single click, drag them into sessions, and edit. built in a usage tracker that estimates token consumption and gives you a visual timeline of your activity."
       ],
-      "tags": ["claude", "dashboard", "cli", "electron"],
+      "tags": [
+        "claude",
+        "dashboard",
+        "cli",
+        "electron"
+      ],
       "status": "in development",
       "featured": true
+    },
+    "favicon-collage": {
+      "private": true,
+      "title": "Favicon Collage",
+      "description": "a little chrome extension that tiles every favicon in my browser history into one image.",
+      "details": [
+        "it reads every favicon out of my history and tiles them into a single mosaic, so a month of falling down art rabbit holes turns into something i can actually look at all at once. it came out of my writing on rabbit holing and is really just a record of where my curiosity went, made visible. the extension lives on github if you want to run it on your own history."
+      ],
+      "tags": [
+        "chrome extension",
+        "favicons",
+        "collage",
+        "browser history"
+      ],
+      "status": "live",
+      "liveUrl": "https://github.com/nemocake/favicon-collage",
+      "articleUrl": "../writings/#art-rabbit-holing",
+      "featured": false
     }
   },
   "inspirations": {
@@ -420,7 +627,11 @@
     "name": "Conrad House",
     "alias": "nemocake",
     "title": "",
-    "bio": ["chronically online.", "techno-curious.", "art and music junky."],
+    "bio": [
+      "chronically online.",
+      "techno-curious.",
+      "art and music junky."
+    ],
     "photo": "./assets/images/misc/profilepicture.png"
   },
   "social": {

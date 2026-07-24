@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cream">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>con.rad — the index that opens</title>
+<script>try{var t=localStorage.getItem("studio.theme");if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<link rel="stylesheet" href="../assets/catalogue/shell.css" />
+<script src="../assets/catalogue/graphite.js" defer></script>
+<script src="../assets/catalogue/theme.js" defer></script>
+<script src="../assets/catalogue/masthead.js" defer></script>
+<script src="_home-data.js"></script>
+<style>
+  /* ---- header tuning (KEEP AS-IS) ---- */
+  #cover { padding-top: clamp(18px, 4vh, 40px); }
+  #cover .over.over-mark { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; }
+  #cover .over-mark .wordmark { justify-self: start; }
+  #cover .over-mark .est { justify-self: end; }
+  #cover .corner-logo { justify-self: center; width: clamp(150px, 20vw, 220px); }
+  #cover .corner-logo .drawn-title { display: flex; justify-content: center; }
+  #cover .corner-logo canvas { max-height: 50px; }
+  #cover .cover-intro { margin-top: 22px; font-style: italic; text-align: center; max-width: none; }
+  @media (max-width: 640px) {
+    #cover .over.over-mark { grid-template-columns: 1fr; justify-items: center; gap: 6px; }
+    #cover .over-mark .wordmark, #cover .over-mark .est { justify-self: center; }
+  }
+
+  body { overflow-x: hidden; }
+
+  /* ==================================================================
+     THE INDEX THAT OPENS — b1: fixed crossfade spotlight
+     ================================================================== */
+  #home-body { margin-top: 46px; }
+
+  /* ---- ZONE 1 · favourite spotlight (fixed-size crossfade) ---- */
+  .spot {
+    position: relative;
+    border: 1px solid var(--ink);
+    background: var(--paper-deep);
+    margin-bottom: 44px;
+    overflow: hidden;
+    /* THE fixed box — never grows or shrinks as it cycles */
+    height: clamp(300px, 42vh, 430px);
+  }
+  .spot-stage { position: absolute; inset: 0; }
+  .spot-slide {
+    position: absolute; inset: 0;
+    opacity: 0; visibility: hidden;
+    transition: opacity .6s ease, visibility 0s linear .6s;
+  }
+  .spot-slide.cur { opacity: 1; visibility: visible; transition: opacity .6s ease; z-index: 2; }
+
+  /* artwork layout: figure + text, filling the box */
+  .spot-slide.art { display: grid; grid-template-columns: minmax(0, 44%) 1fr; }
+  .spot-fig {
+    position: relative; overflow: hidden;
+    border-right: 1px solid var(--rule);
+    background: var(--paper);
+  }
+  .spot-fig img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .spot-body {
+    padding: clamp(24px, 3vw, 44px) clamp(24px, 3.4vw, 48px);
+    display: flex; flex-direction: column; justify-content: center; gap: 12px;
+    min-width: 0;
+  }
+  /* typographic layout: centred, filling the same box */
+  .spot-slide.typo { display: flex; align-items: center; justify-content: center; }
+  .spot-slide.typo .spot-body {
+    align-items: center; text-align: center; gap: 14px;
+    max-width: 34ch; padding: clamp(28px, 5vw, 58px);
+  }
+
+  .spot-kick {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .26em;
+    text-transform: lowercase; color: var(--sanguine);
+  }
+  .spot-title {
+    font-family: var(--font-display); font-weight: 400; line-height: 1.0;
+    font-size: clamp(34px, 5vw, 58px); letter-spacing: .01em;
+  }
+  .spot-slide.typo .spot-title { font-size: clamp(40px, 7vw, 76px); }
+  .spot-blurb {
+    font-family: var(--font-text); font-size: 15.5px; line-height: 1.6;
+    color: var(--ink-soft); max-width: 46ch; font-style: italic;
+  }
+  .spot-slide.typo .spot-blurb { max-width: 40ch; }
+  .spot-go {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .2em;
+    text-transform: lowercase; color: var(--ink-faint); margin-top: 4px;
+    display: inline-flex; align-items: baseline; gap: 7px;
+  }
+  .spot-slide.typo .spot-go { justify-content: center; }
+  .spot-go .arw { color: var(--sanguine); transition: transform .3s ease; }
+  .spot-slide:hover .spot-go .arw { transform: translateX(4px); }
+
+  /* auto-advance progress tick */
+  .spot-prog {
+    position: absolute; left: 0; top: 0; right: 0; height: 2px;
+    background: var(--rule-faint); z-index: 6; overflow: hidden;
+  }
+  .spot-prog i { display: block; height: 100%; width: 0; background: var(--sanguine); }
+  @keyframes spotfill { from { width: 0; } to { width: 100%; } }
+
+  /* controls */
+  .spot-nav {
+    position: absolute; right: 16px; bottom: 12px;
+    display: flex; align-items: center; gap: 12px; z-index: 7;
+  }
+  .spot-eyebrow {
+    position: absolute; left: 16px; top: 14px; z-index: 7;
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: .24em;
+    text-transform: lowercase; color: var(--ink-faint);
+  }
+  .spot-dots { display: flex; gap: 7px; }
+  .spot-dot {
+    width: 6px; height: 6px; border-radius: 50%; padding: 0;
+    border: 1px solid var(--ink-faint); background: transparent; cursor: pointer;
+    transition: background .3s ease, border-color .3s ease; -webkit-appearance: none; appearance: none;
+  }
+  .spot-dot.cur { background: var(--sanguine); border-color: var(--sanguine); }
+  .spot-arrows { display: flex; gap: 2px; }
+  .spot-arrows button {
+    font-family: var(--font-mono); font-size: 13px; line-height: 1;
+    width: 22px; height: 22px; padding: 0; cursor: pointer;
+    background: var(--paper-deep); border: 1px solid var(--rule); color: var(--ink-soft);
+    transition: color .2s, border-color .2s;
+  }
+  .spot-arrows button:hover { color: var(--sanguine); border-color: var(--sanguine); }
+
+  /* ---- ZONE 2 · the two-column index ---- */
+  .open {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    border: 1px solid var(--ink);
+  }
+  .dir { border-right: 1px solid var(--rule); min-width: 0; }
+  .orow {
+    display: block; position: relative;
+    border-bottom: 1px solid var(--rule-faint);
+    cursor: pointer;
+  }
+  .orow:last-child { border-bottom: 0; }
+  .orow-head {
+    display: grid; grid-template-columns: 34px 1fr auto;
+    align-items: baseline; gap: 14px;
+    padding: 22px clamp(20px, 2.4vw, 32px);
+    transition: background .35s ease;
+  }
+  .orow.on .orow-head { background: var(--paper-deep); }
+  .orow .rn {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em;
+    color: var(--sanguine);
+  }
+  .orow .nm {
+    font-family: var(--font-display); font-weight: 400;
+    font-size: clamp(27px, 3.6vw, 40px); line-height: 1.0;
+    transition: color .3s ease;
+  }
+  .orow.on .nm, .orow:hover .nm { color: var(--sanguine); }
+  .orow .desc {
+    display: block; font-family: var(--font-text); font-style: italic;
+    font-size: 13.5px; color: var(--ink-faint); margin-top: 5px;
+  }
+  .orow .ct {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em;
+    color: var(--sanguine); align-self: center; white-space: nowrap;
+  }
+  .orow .ct .lab { color: var(--ink-faint); letter-spacing: .16em; }
+
+  /* inline strip that opens downward */
+  .strip-wrap {
+    display: grid; grid-template-rows: 0fr;
+    transition: grid-template-rows .42s cubic-bezier(.4,0,.15,1);
+  }
+  .orow.on .strip-wrap { grid-template-rows: 1fr; }
+  .strip-clip { overflow: hidden; min-height: 0; }
+  .strip {
+    display: flex; gap: 8px; align-items: stretch;
+    padding: 0 clamp(20px, 2.4vw, 32px) 20px calc(34px + clamp(20px, 2.4vw, 32px) + 14px);
+    overflow-x: auto; overflow-y: hidden;
+    opacity: 0; transform: translateY(-4px);
+    transition: opacity .4s ease .08s, transform .4s ease .08s;
+    scrollbar-width: thin; scrollbar-color: var(--rule) transparent;
+  }
+  .orow.on .strip { opacity: 1; transform: none; }
+  .strip::-webkit-scrollbar { height: 5px; }
+  .strip::-webkit-scrollbar-thumb { background: var(--rule); }
+  .strip-thumb {
+    flex: 0 0 auto; width: 62px; height: 62px;
+    border: 1px solid var(--rule); background: var(--paper);
+    overflow: hidden; position: relative;
+    transition: border-color .25s ease, transform .25s ease;
+  }
+  .strip-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .strip-thumb:hover, .strip-thumb.active { border-color: var(--sanguine); }
+  .strip-chip {
+    flex: 0 0 auto; height: 62px; padding: 0 16px; max-width: 240px;
+    border: 1px solid var(--rule); background: var(--paper);
+    display: flex; align-items: center; text-align: left;
+    font-family: var(--font-display); font-size: 16px; line-height: 1.1;
+    color: var(--ink-soft);
+    transition: color .25s ease, border-color .25s ease;
+  }
+  .strip-chip:hover, .strip-chip.active { color: var(--sanguine); border-color: var(--sanguine); }
+  .strip-empty {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em;
+    color: var(--ink-faint); text-transform: lowercase; align-self: center;
+  }
+
+  /* ---- the synced preview panel ---- */
+  .preview {
+    position: relative;
+    background: var(--paper-deep);
+    display: flex; flex-direction: column;
+  }
+  .pv-stage {
+    position: relative; flex: 1; margin: 18px 18px 0;
+    border: 1px solid var(--rule); background: var(--paper);
+    overflow: hidden; min-height: 300px;
+  }
+  .pv-layer {
+    position: absolute; inset: 0;
+    opacity: 0; transition: opacity .5s ease;
+  }
+  .pv-layer.cur { opacity: 1; }
+  .pv-layer img { width: 100%; height: 100%; object-fit: cover; }
+  .pv-txt {
+    padding: clamp(26px, 3vw, 40px);
+    display: flex; flex-direction: column; justify-content: center; gap: 14px;
+  }
+  .pv-txt .pv-lead {
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: .22em;
+    text-transform: lowercase; color: var(--sanguine);
+  }
+  .pv-txt .pv-snip {
+    font-family: var(--font-text); font-size: 16px; line-height: 1.62;
+    color: var(--ink-soft); font-style: italic;
+  }
+  .pv-txt .pv-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+  .pv-txt .pv-tag {
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: .1em;
+    color: var(--ink-faint); text-transform: lowercase;
+    border: 1px solid var(--rule); padding: 3px 8px;
+  }
+  .pv-txt .pv-live {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em;
+    text-transform: lowercase; margin-top: 4px;
+  }
+  .pv-txt .pv-live a { color: var(--sanguine); }
+  .pv-cap {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+    padding: 13px 20px 16px; margin-top: 2px;
+  }
+  .pv-cap .pv-nm {
+    font-family: var(--font-display); font-size: 21px; line-height: 1.05;
+    transition: opacity .4s ease; min-width: 0;
+  }
+  .pv-cap .pv-meta {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em;
+    color: var(--ink-faint); text-transform: lowercase; white-space: nowrap;
+  }
+
+  /* ---- ZONE 3 · are.na "lately" (compact scale-in-place masonry) ---- */
+  .lately { margin-top: 48px; overflow: visible; }
+  .lately-head {
+    display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
+    border-bottom: 1px solid var(--ink); padding-bottom: 9px;
+  }
+  .lately-head h3 {
+    margin: 0; font-family: var(--font-display); font-weight: 400;
+    font-size: 22px; line-height: 1;
+  }
+  .lately-head .lh-sub {
+    font-family: var(--font-text); font-style: italic; font-size: 13.5px;
+    color: var(--ink-faint);
+  }
+  .lately-head .live {
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: .18em;
+    text-transform: lowercase; color: var(--ink-faint);
+    display: inline-flex; align-items: center; gap: 6px; margin-left: auto;
+  }
+  .lately-head .live .dot {
+    width: 5px; height: 5px; border-radius: 50%; background: var(--sanguine);
+  }
+  .lately-head .live.on .dot { animation: pulse 2.4s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity: .3; } 50% { opacity: 1; } }
+
+  .lately-grid {
+    columns: 140px; column-gap: 12px; margin-top: 20px;
+  }
+  .ltile {
+    display: block; position: relative; break-inside: avoid;
+    margin: 0 0 12px; border: 1px solid var(--rule);
+    background: var(--paper-deep); overflow: hidden;
+    transition: transform .32s cubic-bezier(.2,.7,.2,1), box-shadow .32s ease, border-color .25s ease, z-index 0s;
+    z-index: 1;
+  }
+  .ltile img {
+    width: 100%; height: auto; display: block;
+    filter: grayscale(.14) contrast(.98);
+    transition: filter .4s ease;
+  }
+  .ltile:hover {
+    transform: scale(1.55); z-index: 20;
+    box-shadow: 0 14px 34px rgba(var(--ink-rgb), .34);
+    border-color: var(--sanguine);
+  }
+  .ltile:hover img { filter: none; }
+  .lt-meta {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 20px 8px 6px;
+    display: flex; flex-direction: column; gap: 2px;
+    background: linear-gradient(0deg, rgba(var(--ink-rgb), .82), rgba(var(--ink-rgb), 0));
+    opacity: 0; transition: opacity .28s ease;
+  }
+  .ltile:hover .lt-meta { opacity: 1; }
+  .lt-meta .lt-t {
+    font-family: var(--font-text); font-size: 8px; line-height: 1.25;
+    color: rgb(var(--paper-rgb));
+    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .lt-meta .lt-w {
+    font-family: var(--font-mono); font-size: 6.5px; letter-spacing: .08em;
+    color: rgba(var(--paper-rgb), .82); text-transform: lowercase;
+  }
+  .lately-loading, .lately-empty {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em;
+    color: var(--ink-faint); text-transform: lowercase; padding: 24px 0;
+  }
+
+  /* ---- responsive ---- */
+  @media (max-width: 860px) {
+    .open { grid-template-columns: 1fr; }
+    .dir { border-right: 0; }
+    .preview { display: none; }
+    .lately-grid { columns: 120px; }
+  }
+  @media (max-width: 560px) {
+    .spot-slide.art { grid-template-columns: 1fr; grid-template-rows: 42% 1fr; }
+    .spot-fig { border-right: 0; border-bottom: 1px solid var(--rule); }
+    .spot-nav { right: 12px; bottom: 10px; }
+    .lately-head .live { margin-left: 0; flex-basis: 100%; }
+    .lately-grid { columns: 108px; column-gap: 10px; }
+    .ltile:hover { transform: scale(1.4); }
+  }
+  @media (max-width: 420px) {
+    .lately-grid { columns: 2; }
+  }
+</style>
+</head>
+<body class="on-cover">
+
+<div class="wrap">
+  <header class="mast" id="cover">
+    <div class="over over-mark">
+      <span class="wordmark">building curiosity...</span>
+      <div class="corner-logo"><h1 data-drawn data-cap="30">con.rad</h1></div>
+      <span class="est" title="established 02·04·1998">est. ii·iv·mcmxcviii</span>
+    </div>
+    <p class="cover-intro">chronically online, techno-curious, art and music junky.</p>
+    <hr class="rule" />
+  </header>
+
+  <!-- ===== BODY: the index that opens (b1) ===== -->
+  <main id="home-body">
+    <!-- ZONE 1 · favourite spotlight (fixed crossfade) -->
+    <section class="spot" id="spot" aria-label="featured">
+      <div class="spot-prog"><i id="spot-prog-i"></i></div>
+      <span class="spot-eyebrow">favourite</span>
+      <div class="spot-stage" id="spot-stage"></div>
+      <div class="spot-nav">
+        <div class="spot-dots" id="spot-dots"></div>
+        <div class="spot-arrows">
+          <button type="button" id="spot-prev" aria-label="previous">&larr;</button>
+          <button type="button" id="spot-next" aria-label="next">&rarr;</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ZONE 2 · the directory + synced preview -->
+    <div class="open">
+      <div class="dir" id="dir"></div>
+      <aside class="preview" id="preview" aria-hidden="true">
+        <div class="pv-stage" id="pv-stage"></div>
+        <div class="pv-cap"><span class="pv-nm" id="pv-nm"></span><span class="pv-meta" id="pv-meta"></span></div>
+      </aside>
+    </div>
+
+    <!-- ZONE 3 · are.na "lately" -->
+    <section class="lately" id="lately" aria-label="lately from are.na">
+      <div class="lately-head">
+        <h3 data-drawn data-cap="30">lately</h3>
+        <span class="lh-sub">what i'm looking at</span>
+        <span class="live" id="lately-live"><span class="dot"></span><span id="lately-live-t">connecting&hellip;</span></span>
+      </div>
+      <div class="lately-grid" id="lately-grid"><div class="lately-loading">gathering recent finds&hellip;</div></div>
+    </section>
+  </main>
+
+</div>
+
+<footer class="colophon">
+  <div class="cols">
+    <span>con.rad</span>
+    <a href="mailto:conradhouse1998@gmail.com">email</a>
+    <a href="https://www.are.na/conrad-house" target="_blank" rel="noopener">are.na</a>
+  </div>
+  <span>set in happy times &amp; routed gothic</span>
+</footer>
+
+<script>
+/* THE INDEX THAT OPENS — b1: fixed crossfade spotlight + rich index hover + scale masonry */
+(function () {
+  const H = window.HomeData, esc = H.esc;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------------- ZONE 1 · favourite spotlight (fixed box, crossfade) ---------------- */
+  (function spotlight() {
+    const favs = H.FAVORITES || [];
+    const spot = document.getElementById("spot");
+    if (!favs.length) { spot.style.display = "none"; return; }
+    const stage = document.getElementById("spot-stage");
+    const dotsWrap = document.getElementById("spot-dots");
+    const progI = document.getElementById("spot-prog-i");
+    let i = 0, paused = false;
+
+    // pre-render EVERY slide once, stacked absolutely — crossfade is just a class toggle,
+    // so rapid arrow clicks never rebuild the DOM and never jank.
+    const slides = favs.map(f => {
+      const el = document.createElement("div");
+      const typo = !f.img;
+      el.className = "spot-slide " + (typo ? "typo" : "art");
+      const fig = typo ? "" :
+        `<div class="spot-fig"><img src="${esc(f.img)}" alt="" loading="lazy"></div>`;
+      el.innerHTML = fig +
+        `<div class="spot-body">
+           <span class="spot-kick">${esc(f.kicker || "")}</span>
+           <span class="spot-title">${esc(f.title || "")}</span>
+           <span class="spot-blurb">${esc(f.blurb || "")}</span>
+           <a class="spot-go" href="${esc(f.href || "#")}">view <span class="arw">&rarr;</span></a>
+         </div>`;
+      if (!typo) {
+        const fg = el.querySelector(".spot-fig");
+        if (fg) fg.addEventListener("click", () => { location.href = f.href || "#"; });
+      }
+      stage.appendChild(el);
+      return el;
+    });
+
+    favs.forEach((_, k) => {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "spot-dot"; b.setAttribute("aria-label", "favourite " + (k + 1));
+      b.addEventListener("click", () => go(k));
+      dotsWrap.appendChild(b);
+    });
+    const dots = [...dotsWrap.children];
+
+    function restartProgress() {
+      if (reduce) return;
+      progI.style.animation = "none";
+      // force reflow so the animation restarts cleanly
+      void progI.offsetWidth;
+      progI.style.animation = "spotfill 5s linear forwards";
+      progI.style.animationPlayState = paused ? "paused" : "running";
+    }
+    // auto-advance is driven off the progress tick finishing — always in sync
+    progI.addEventListener("animationend", () => { if (!paused) go(i + 1); });
+
+    function go(n) {
+      i = (n + favs.length) % favs.length;
+      slides.forEach((s, k) => s.classList.toggle("cur", k === i));
+      dots.forEach((d, k) => d.classList.toggle("cur", k === i));
+      restartProgress();
+    }
+
+    document.getElementById("spot-next").addEventListener("click", () => go(i + 1));
+    document.getElementById("spot-prev").addEventListener("click", () => go(i - 1));
+    spot.addEventListener("mouseenter", () => { paused = true; progI.style.animationPlayState = "paused"; });
+    spot.addEventListener("mouseleave", () => { paused = false; progI.style.animationPlayState = "running"; });
+
+    // init
+    slides[0].classList.add("cur"); dots[0].classList.add("cur"); restartProgress();
+  })();
+
+  /* ---------------- ZONE 2 · directory + synced preview ---------------- */
+  (async function directory() {
+    const dir = document.getElementById("dir");
+    const pvStage = document.getElementById("pv-stage");
+    const pvNm = document.getElementById("pv-nm");
+    const pvMeta = document.getElementById("pv-meta");
+    const isNarrow = () => window.matchMedia("(max-width: 860px)").matches;
+
+    let secs;
+    try { secs = await H.sections(); } catch (e) { secs = []; }
+    if (!secs.length) { dir.innerHTML = '<div class="strip-empty" style="padding:28px 26px">could not load sections</div>'; return; }
+
+    // preview panel: two ping-pong image layers + one text layer
+    const imgA = document.createElement("div"); imgA.className = "pv-layer pv-img"; imgA.innerHTML = '<img alt="">';
+    const imgB = document.createElement("div"); imgB.className = "pv-layer pv-img"; imgB.innerHTML = '<img alt="">';
+    const txt  = document.createElement("div"); txt.className = "pv-layer pv-txt";
+    pvStage.appendChild(imgA); pvStage.appendChild(imgB); pvStage.appendChild(txt);
+    let curImg = imgA;
+
+    function showImage(item, capMeta) {
+      const next = (curImg === imgA) ? imgB : imgA;
+      const im = next.querySelector("img");
+      im.onerror = () => { next.style.background = "var(--paper)"; };
+      im.onload = () => {
+        next.classList.add("cur");
+        (curImg === imgA ? imgB : imgA); // no-op keep readable
+        imgA.classList.toggle("cur", next === imgA);
+        imgB.classList.toggle("cur", next === imgB);
+        txt.classList.remove("cur");
+        curImg = next;
+      };
+      const src = item.img || item.thumb || "";
+      im.src = src;
+      if (im.complete && im.naturalWidth) im.onload();
+      pvNm.textContent = item.title || "";
+      pvMeta.textContent = capMeta || "";
+    }
+    function showText(item, kind) {
+      let html = `<span class="pv-lead">${esc(kind === "mix" ? "project" : "writing")}</span>` +
+                 `<span class="pv-snip">${esc(item.snippet || "")}</span>`;
+      if (kind === "mix") {
+        if (item.tags && item.tags.length)
+          html += `<span class="pv-tags">${item.tags.slice(0, 6).map(t => `<span class="pv-tag">${esc(t)}</span>`).join("")}</span>`;
+        if (item.live)
+          html += `<span class="pv-live"><a href="${esc(item.live)}" target="_blank" rel="noopener">live &nearr;</a></span>`;
+      }
+      txt.innerHTML = html;
+      txt.classList.add("cur"); imgA.classList.remove("cur"); imgB.classList.remove("cur");
+      pvNm.textContent = item.title || "";
+      pvMeta.textContent = item.meta || item.status || "";
+    }
+
+    function capFor(item) {
+      const parts = [];
+      if (item.meta) parts.push(item.meta);
+      if (item.sub && item.sub !== item.meta) parts.push(item.sub);
+      return parts.join(" · ");
+    }
+    function showItem(item, kind) {
+      if (kind === "image") showImage(item, capFor(item));
+      else showText(item, kind);
+    }
+
+    // build rows
+    secs.forEach((s, idx) => {
+      const kind = H.SECTION_KIND[s.key] || (s.img ? "image" : "text");
+      const row = document.createElement("a");
+      row.className = "orow"; row.href = s.href; row.dataset.key = s.key;
+      const num = String(idx + 1).padStart(2, "0");
+      const ctLab = s.n != null ? `${s.n} <span class="lab">${s.n === 1 ? "entry" : "entries"}</span>` : `<span class="lab">explore &rarr;</span>`;
+
+      row.innerHTML =
+        `<div class="orow-head">
+           <span class="rn">${num}</span>
+           <span class="body"><span class="nm">${esc(s.name)}</span><span class="desc">${esc(s.desc)}</span></span>
+           <span class="ct">${ctLab}</span>
+         </div>
+         <div class="strip-wrap"><div class="strip-clip"><div class="strip"><span class="strip-empty">opening&hellip;</span></div></div></div>`;
+
+      const strip = row.querySelector(".strip");
+      let loaded = false, list = null;
+
+      function buildStrip() {
+        strip.innerHTML = "";
+        if (!list || !list.length) { strip.innerHTML = '<span class="strip-empty">nothing to preview yet</span>'; return; }
+        const cap = list.slice(0, 30);
+        cap.forEach((item, k) => {
+          let node;
+          if (kind === "image") {
+            node = document.createElement("a");
+            node.className = "strip-thumb"; node.href = item.href || s.href;
+            const im = document.createElement("img");
+            im.alt = ""; im.loading = "lazy";
+            im.onerror = () => { node.style.display = "none"; };
+            im.src = item.thumb || item.img || "";
+            node.appendChild(im);
+          } else {
+            node = document.createElement("a");
+            node.className = "strip-chip"; node.href = item.href || s.href;
+            node.textContent = item.title || "untitled";
+          }
+          node.addEventListener("mouseenter", () => {
+            [...strip.children].forEach(c => c.classList.remove("active"));
+            node.classList.add("active");
+            showItem(item, kind);
+          });
+          strip.appendChild(node);
+        });
+      }
+
+      async function ensure() {
+        if (loaded) return;
+        loaded = true;
+        try { list = await H.items(s.key); } catch (e) { list = []; }
+        buildStrip();
+      }
+
+      function open() {
+        [...dir.children].forEach(r => r.classList.remove("on"));
+        row.classList.add("on");
+        ensure().then(() => {
+          // default: section's lead item drives the preview (title shown, never "N entries")
+          [...strip.children].forEach(c => c.classList.remove("active"));
+          if (list && list.length) { showItem(list[0], kind); }
+          else if (kind === "image" && s.img) { showImage({ title: s.name, img: s.img }, s.desc); }
+        });
+      }
+
+      row.addEventListener("mouseenter", open);
+      row.addEventListener("focus", open);
+      // touch / narrow: first tap opens, second tap follows the link
+      row.addEventListener("click", (e) => {
+        if (isNarrow() && !row.classList.contains("on")) { e.preventDefault(); open(); }
+      });
+      dir.appendChild(row);
+    });
+
+    // default state: open the first row (loads its strip + drives the preview with its lead item)
+    const first = dir.firstElementChild;
+    if (first) first.dispatchEvent(new Event("mouseenter"));
+  })();
+
+  /* ---------------- ZONE 3 · are.na "lately" (compact scale-in-place masonry) ---------------- */
+  (async function lately() {
+    const grid = document.getElementById("lately-grid");
+    const live = document.getElementById("lately-live");
+    const liveT = document.getElementById("lately-live-t");
+    let res;
+    try { res = await H.arena(28); } catch (e) { res = { live: false, blocks: [] }; }
+    const blocks = (res.blocks || []).filter(b => b.thumb || b.img).slice(0, 24);
+
+    if (!blocks.length) {
+      document.getElementById("lately").style.display = "none";
+      return;
+    }
+    live.classList.toggle("on", !!res.live);
+    const newest = H.whenAgo(blocks[0].when);
+    liveT.textContent = (res.live ? "live from are.na" : "recent snapshot") + (newest ? " · updated " + newest : "");
+
+    grid.innerHTML = blocks.map(b => {
+      const when = H.whenAgo(b.when);
+      const title = b.title || "untitled";
+      return `<a class="ltile" href="${esc(b.src || "#")}" target="_blank" rel="noopener" title="${esc(title)}">
+          <img src="${esc(b.thumb || b.img)}" alt="" loading="lazy" onerror="this.closest('.ltile').style.display='none'">
+          <span class="lt-meta"><span class="lt-t">${esc(title)}</span>${when ? `<span class="lt-w">${esc(when)}</span>` : ""}</span>
+        </a>`;
+    }).join("");
+  })();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cream">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>con.rad — the index that opens</title>
+<script>try{var t=localStorage.getItem("studio.theme");if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+<link rel="stylesheet" href="../assets/catalogue/shell.css" />
+<script src="../assets/catalogue/graphite.js" defer></script>
+<script src="../assets/catalogue/theme.js" defer></script>
+<script src="../assets/catalogue/masthead.js" defer></script>
+<script src="_home-data.js"></script>
+<style>
+  /* ---- header tuning (KEEP AS-IS) ---- */
+  #cover { padding-top: clamp(18px, 4vh, 40px); }
+  #cover .over.over-mark { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; }
+  #cover .over-mark .wordmark { justify-self: start; }
+  #cover .over-mark .est { justify-self: end; }
+  #cover .corner-logo { justify-self: center; width: clamp(150px, 20vw, 220px); }
+  #cover .corner-logo .drawn-title { display: flex; justify-content: center; }
+  #cover .corner-logo canvas { max-height: 50px; }
+  #cover .cover-intro { margin-top: 22px; font-style: italic; text-align: center; max-width: none; }
+  @media (max-width: 640px) {
+    #cover .over.over-mark { grid-template-columns: 1fr; justify-items: center; gap: 6px; }
+    #cover .over-mark .wordmark, #cover .over-mark .est { justify-self: center; }
+  }
+
+  /* ==================================================================
+     home-b2 — spotlight slide carousel · grid index · focus masonry
+     ================================================================== */
+  #home-body { margin-top: 46px; }
+
+  /* -------------------------------------------------------------- */
+  /* ZONE 1 — SPOTLIGHT (fixed box, horizontal slide carousel)      */
+  /* -------------------------------------------------------------- */
+  .spot {
+    position: relative;
+    height: clamp(300px, 42vh, 430px);
+    border: 1px solid var(--ink);
+    background: var(--paper-deep);
+    margin-bottom: 44px;
+    overflow: hidden;
+  }
+  .spot-viewport { position: absolute; inset: 0; overflow: hidden; }
+  .spot-track {
+    display: flex; height: 100%;
+    will-change: transform;
+  }
+  .spot-track.anim { transition: transform .62s cubic-bezier(.66,.01,.16,1); }
+  .spot-slide {
+    flex: 0 0 auto; height: 100%;
+    display: grid; grid-template-columns: minmax(0, 46%) 1fr;
+  }
+  .spot-slide.typo { grid-template-columns: 1fr; }
+  .spot-fig {
+    position: relative; overflow: hidden;
+    border-right: 1px solid var(--rule);
+    background: var(--paper);
+  }
+  .spot-fig img {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; filter: grayscale(.08) contrast(.99);
+  }
+  .spot-body {
+    padding: clamp(24px, 3.4vw, 48px) clamp(24px, 3.6vw, 52px);
+    display: flex; flex-direction: column; justify-content: center; gap: 13px;
+    min-width: 0;
+  }
+  .spot-slide.typo .spot-body {
+    padding: clamp(30px, 5vw, 64px) clamp(28px, 5vw, 72px);
+    max-width: 22ch; margin: 0 auto;
+  }
+  .spot-kick {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .26em;
+    text-transform: lowercase; color: var(--sanguine);
+  }
+  .spot-title {
+    font-family: var(--font-display); font-weight: 400; line-height: 1.0;
+    font-size: clamp(34px, 5vw, 58px); letter-spacing: .01em; color: var(--ink);
+  }
+  .spot-slide.typo .spot-title { font-size: clamp(42px, 7.2vw, 82px); }
+  .spot-blurb {
+    font-family: var(--font-text); font-size: 15.5px; line-height: 1.6;
+    color: var(--ink-soft); max-width: 46ch; font-style: italic;
+  }
+  .spot-slide.typo .spot-blurb { font-size: 16.5px; }
+  .spot-go {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .2em;
+    text-transform: lowercase; color: var(--ink-faint); margin-top: 6px;
+    display: inline-flex; align-items: baseline; gap: 7px; align-self: flex-start;
+  }
+  .spot-go .arw { color: var(--sanguine); transition: transform .3s ease; }
+  .spot-slide:hover .spot-go .arw { transform: translateX(4px); }
+
+  .spot-eyebrow {
+    position: absolute; left: 16px; top: 13px; z-index: 4;
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: .24em;
+    text-transform: lowercase; color: var(--ink-faint);
+    background: linear-gradient(90deg, var(--paper-deep) 60%, transparent);
+    padding-right: 16px; pointer-events: none;
+  }
+  .spot-nav {
+    position: absolute; right: 16px; bottom: 12px; z-index: 4;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .spot-dots { display: flex; gap: 7px; }
+  .spot-dot {
+    width: 6px; height: 6px; border-radius: 50%; padding: 0;
+    border: 1px solid var(--ink-faint); background: transparent; cursor: pointer;
+    transition: background .3s ease, border-color .3s ease, transform .3s ease;
+    -webkit-appearance: none; appearance: none;
+  }
+  .spot-dot.cur { background: var(--sanguine); border-color: var(--sanguine); transform: scale(1.25); }
+  .spot-arrows { display: flex; gap: 2px; }
+  .spot-arrows button {
+    font-family: var(--font-mono); font-size: 13px; line-height: 1;
+    width: 22px; height: 22px; padding: 0; cursor: pointer;
+    background: var(--paper-deep); border: 1px solid var(--rule); color: var(--ink-soft);
+    transition: color .2s, border-color .2s;
+  }
+  .spot-arrows button:hover { color: var(--sanguine); border-color: var(--sanguine); }
+
+  /* -------------------------------------------------------------- */
+  /* ZONE 2 — THE INDEX (numbered list + large synced preview)      */
+  /* -------------------------------------------------------------- */
+  .idx {
+    display: grid; grid-template-columns: 1.05fr 1fr;
+    border: 1px solid var(--ink);
+  }
+  .idx-list { border-right: 1px solid var(--rule); min-width: 0; }
+  .irow {
+    display: block; position: relative;
+    border-bottom: 1px solid var(--rule-faint); cursor: pointer;
+  }
+  .irow:last-child { border-bottom: 0; }
+  .irow-head {
+    display: grid; grid-template-columns: 34px 1fr auto;
+    align-items: baseline; gap: 14px;
+    padding: 20px clamp(20px, 2.4vw, 32px);
+    transition: background .35s ease;
+  }
+  .irow.on .irow-head { background: var(--paper-deep); }
+  .irow .rn {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em;
+    color: var(--sanguine);
+  }
+  .irow .nm {
+    font-family: var(--font-display); font-weight: 400;
+    font-size: clamp(27px, 3.6vw, 40px); line-height: 1.0;
+    transition: color .3s ease;
+  }
+  .irow.on .nm, .irow:hover .nm { color: var(--sanguine); }
+  .irow .desc {
+    display: block; font-family: var(--font-text); font-style: italic;
+    font-size: 13.5px; color: var(--ink-faint); margin-top: 5px;
+  }
+  .irow .ct {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em;
+    color: var(--sanguine); align-self: center; white-space: nowrap;
+  }
+  .irow .ct .lab { color: var(--ink-faint); letter-spacing: .16em; }
+
+  /* revealed 2-row grid of previews (opens downward) */
+  .reveal-wrap {
+    display: grid; grid-template-rows: 0fr;
+    transition: grid-template-rows .44s cubic-bezier(.4,0,.15,1);
+  }
+  .irow.on .reveal-wrap { grid-template-rows: 1fr; }
+  .reveal-clip { overflow: hidden; min-height: 0; }
+  .reveal {
+    padding: 2px clamp(20px, 2.4vw, 32px) 22px calc(34px + clamp(20px, 2.4vw, 32px) + 14px);
+    opacity: 0; transform: translateY(-4px);
+    transition: opacity .4s ease .06s, transform .4s ease .06s;
+  }
+  .irow.on .reveal { opacity: 1; transform: none; }
+
+  /* image sections: 2-row thumbnail grid */
+  .reveal-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 1fr; gap: 8px;
+  }
+  .rthumb {
+    position: relative; aspect-ratio: 1 / 1; padding: 0;
+    border: 1px solid var(--rule); background: var(--paper);
+    overflow: hidden; cursor: pointer; -webkit-appearance: none; appearance: none;
+    transition: border-color .25s ease;
+  }
+  .rthumb img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    filter: grayscale(.14); transition: filter .35s ease, transform .5s ease;
+  }
+  .rthumb:hover, .rthumb.cur { border-color: var(--sanguine); }
+  .rthumb:hover img, .rthumb.cur img { filter: none; transform: scale(1.05); }
+
+  /* text / mix sections: title chips in a 2-row grid */
+  .reveal-titles {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 1fr; gap: 8px;
+  }
+  .rtitle {
+    text-align: left; padding: 12px 14px; cursor: pointer;
+    border: 1px solid var(--rule); background: var(--paper);
+    -webkit-appearance: none; appearance: none;
+    display: flex; flex-direction: column; gap: 4px;
+    transition: border-color .25s ease, background .25s ease;
+  }
+  .rtitle:hover, .rtitle.cur { border-color: var(--sanguine); background: var(--paper-deep); }
+  .rtitle .tt {
+    font-family: var(--font-display); font-size: 18px; line-height: 1.08;
+    color: var(--ink); transition: color .25s ease;
+  }
+  .rtitle:hover .tt, .rtitle.cur .tt { color: var(--sanguine); }
+  .rtitle .tm {
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: .12em;
+    text-transform: lowercase; color: var(--ink-faint);
+  }
+  .reveal-empty {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .08em;
+    color: var(--ink-faint); text-transform: lowercase; padding: 6px 0;
+  }
+
+  /* ---- the large synced preview panel ---- */
+  .idx-pv {
+    position: relative; background: var(--paper-deep);
+    display: flex; flex-direction: column;
+    min-height: clamp(440px, 56vh, 640px);
+  }
+  .pv-stage {
+    position: relative; flex: 1; margin: 20px 20px 0;
+    border: 1px solid var(--rule); background: var(--paper);
+    overflow: hidden;
+  }
+  .pv-img { position: absolute; inset: 0; }
+  .pv-img img { width: 100%; height: 100%; object-fit: cover; }
+  .pv-text {
+    position: absolute; inset: 0;
+    padding: clamp(26px, 3vw, 44px);
+    display: flex; flex-direction: column; justify-content: center; gap: 16px;
+  }
+  .pv-text .pv-word {
+    font-family: var(--font-display); font-weight: 400; line-height: 1.02;
+    font-size: clamp(30px, 4vw, 48px); color: var(--ink);
+  }
+  .pv-text .pv-snip {
+    font-family: var(--font-text); font-size: 15.5px; line-height: 1.62;
+    color: var(--ink-soft); font-style: italic; max-width: 44ch; margin: 0;
+  }
+  .pv-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
+  .pv-tags span {
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: .12em;
+    text-transform: lowercase; color: var(--ink-faint);
+    border: 1px solid var(--rule); padding: 3px 8px;
+  }
+  .pv-live {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .16em;
+    text-transform: lowercase; color: var(--sanguine); margin-top: 4px;
+    display: inline-flex; align-items: baseline; gap: 6px; align-self: flex-start;
+  }
+  .pv-fade { opacity: 1; transition: opacity .32s ease; }
+  .idx-pv.swap .pv-fade { opacity: 0; }
+  .pv-cap {
+    display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+    padding: 14px 22px 18px;
+  }
+  .pv-cap .pv-nm {
+    font-family: var(--font-display); font-size: 22px; line-height: 1.05; color: var(--ink);
+  }
+  .pv-cap .pv-sub {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em;
+    color: var(--ink-faint); text-transform: lowercase; white-space: nowrap;
+    text-align: right;
+  }
+  .pv-cap .pv-sub b { color: var(--sanguine); font-weight: 400; }
+
+  /* -------------------------------------------------------------- */
+  /* ZONE 3 — LATELY (compact focus-dim masonry)                    */
+  /* -------------------------------------------------------------- */
+  .lately { margin-top: 52px; }
+  .lately-head {
+    display: flex; align-items: flex-end; gap: 12px 16px; flex-wrap: wrap;
+    border-bottom: 1px solid var(--ink); padding-bottom: 11px;
+  }
+  .lh-left { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; min-width: 0; }
+  .lh-left h3 {
+    margin: 0; font-family: var(--font-display); font-weight: 400;
+    font-size: clamp(24px, 4vw, 34px); line-height: 1;
+  }
+  .lh-sub {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em;
+    text-transform: lowercase; color: var(--ink-faint);
+  }
+  .lh-live {
+    margin-left: auto;
+    font-family: var(--font-mono); font-size: 9.5px; letter-spacing: .12em;
+    text-transform: lowercase; color: var(--ink-faint); white-space: nowrap;
+    display: inline-flex; align-items: center; gap: 7px;
+  }
+  .lh-live .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--ink-faint); }
+  .lh-live.on .dot { background: var(--sanguine); animation: pulse 2.4s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity: .3; } 50% { opacity: 1; } }
+  .lh-live a { color: inherit; }
+  .lh-live a:hover { color: var(--sanguine); }
+
+  .feed { columns: 6 132px; column-gap: 12px; margin-top: 20px; }
+  .ftile {
+    display: block; position: relative; break-inside: avoid;
+    margin: 0 0 12px; border: 1px solid var(--rule);
+    background: var(--paper-deep); overflow: hidden;
+    transform-origin: center; z-index: 1;
+    transition: transform .38s cubic-bezier(.4,0,.15,1),
+                box-shadow .38s ease, filter .38s ease, opacity .38s ease;
+  }
+  .ftile img {
+    width: 100%; height: auto; display: block;
+    filter: grayscale(.14) contrast(.98);
+    transition: filter .4s ease;
+  }
+  /* focus-dim: when the grid is hovered, non-hovered tiles recede */
+  .feed:hover .ftile { opacity: .55; filter: grayscale(.55); }
+  .feed:hover .ftile:hover {
+    opacity: 1; filter: none;
+    transform: scale(1.5); z-index: 20;
+    box-shadow: 0 14px 34px rgba(var(--ink-rgb), .32);
+  }
+  .feed:hover .ftile:hover img { filter: none; }
+  .fmeta {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 20px 8px 6px;
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 8px;
+    background: linear-gradient(0deg, rgba(var(--ink-rgb), .8), rgba(var(--ink-rgb), 0));
+    opacity: 0; transition: opacity .3s ease .04s;
+    pointer-events: none;
+  }
+  .ftile:hover .fmeta { opacity: 1; }
+  .fmeta .ft {
+    font-family: var(--font-text); font-size: 8.5px; line-height: 1.2;
+    color: rgb(var(--paper-rgb)); min-width: 0;
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .fmeta .fw {
+    font-family: var(--font-mono); font-size: 7px; letter-spacing: .08em;
+    color: rgba(var(--paper-rgb), .82); white-space: nowrap; flex: none;
+  }
+  .lately-loading, .lately-empty {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .1em;
+    color: var(--ink-faint); text-transform: lowercase; padding: 22px 0;
+  }
+
+  /* -------------------------------------------------------------- */
+  /* responsive                                                     */
+  /* -------------------------------------------------------------- */
+  @media (max-width: 900px) { .feed { columns: 4 128px; } }
+  @media (max-width: 860px) {
+    .idx { grid-template-columns: 1fr; }
+    .idx-list { border-right: 0; }
+    .idx-pv { display: none; }
+    .reveal-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .spot-slide { grid-template-columns: 1fr; grid-template-rows: 42% 1fr; }
+    .spot-fig { border-right: 0; border-bottom: 1px solid var(--rule); }
+    .spot-body { padding: 18px 20px; gap: 9px; justify-content: flex-start; }
+    .spot-nav { bottom: 10px; right: 12px; }
+    .feed { columns: 3 108px; column-gap: 10px; }
+    .reveal-grid { grid-template-columns: repeat(3, 1fr); }
+    .reveal-titles { grid-template-columns: 1fr; }
+    .reveal { padding-left: clamp(20px, 2.4vw, 32px); }
+  }
+  @media (max-width: 400px) {
+    .feed { columns: 2 100px; }
+    .reveal-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body class="on-cover">
+
+<div class="wrap">
+  <header class="mast" id="cover">
+    <div class="over over-mark">
+      <span class="wordmark">building curiosity...</span>
+      <div class="corner-logo"><h1 data-drawn data-cap="30">con.rad</h1></div>
+      <span class="est" title="established 02·04·1998">est. ii·iv·mcmxcviii</span>
+    </div>
+    <p class="cover-intro">chronically online, techno-curious, art and music junky.</p>
+    <hr class="rule" />
+  </header>
+
+  <!-- ===== BODY: spotlight · index · lately ===== -->
+  <main id="home-body">
+
+    <!-- ZONE 1 — favourite spotlight (slide carousel) -->
+    <section class="spot" id="spot" aria-label="featured">
+      <span class="spot-eyebrow">favourite</span>
+      <div class="spot-viewport">
+        <div class="spot-track" id="spot-track"></div>
+      </div>
+      <div class="spot-nav">
+        <div class="spot-dots" id="spot-dots"></div>
+        <div class="spot-arrows">
+          <button type="button" id="spot-prev" aria-label="previous">&larr;</button>
+          <button type="button" id="spot-next" aria-label="next">&rarr;</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ZONE 2 — the index -->
+    <div class="idx">
+      <div class="idx-list" id="idx-list"></div>
+      <aside class="idx-pv" id="idx-pv" aria-hidden="true">
+        <div class="pv-stage" id="pv-stage"></div>
+        <div class="pv-cap"><span class="pv-nm" id="pv-nm"></span><span class="pv-sub" id="pv-sub"></span></div>
+      </aside>
+    </div>
+
+    <!-- ZONE 3 — are.na "lately" -->
+    <section class="lately" id="lately" aria-label="lately from are.na">
+      <div class="lately-head">
+        <div class="lh-left">
+          <h3 data-drawn data-cap="40">lately</h3>
+          <span class="lh-sub">what i&#39;m looking at</span>
+        </div>
+        <span class="lh-live" id="lately-live"><span class="dot"></span><span id="lately-live-t">connecting&hellip;</span></span>
+      </div>
+      <div class="feed" id="feed"><div class="lately-loading">gathering recent finds&hellip;</div></div>
+    </section>
+  </main>
+
+</div>
+
+<footer class="colophon">
+  <div class="cols">
+    <span>con.rad</span>
+    <a href="mailto:conradhouse1998@gmail.com">email</a>
+    <a href="https://www.are.na/conrad-house" target="_blank" rel="noopener">are.na</a>
+  </div>
+  <span>set in happy times &amp; routed gothic</span>
+</footer>
+
+<script>
+/* home-b2 — spotlight slide carousel + grid index + focus-dim are.na masonry */
+(function () {
+  const H = window.HomeData, esc = H.esc;
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ===================== ZONE 1 — spotlight carousel ===================== */
+  (function spotlight() {
+    const favs = H.FAVORITES || [];
+    const spot = document.getElementById("spot");
+    if (!favs.length) { spot.style.display = "none"; return; }
+
+    const track = document.getElementById("spot-track");
+    const dotsWrap = document.getElementById("spot-dots");
+    const N = favs.length;
+
+    function slideHTML(f) {
+      const typo = !f.img;
+      const href = esc(f.href || "#");
+      const body =
+        `<div class="spot-body">
+           <span class="spot-kick">${esc(f.kicker || "")}</span>
+           <span class="spot-title">${esc(f.title || "")}</span>
+           <span class="spot-blurb">${esc(f.blurb || "")}</span>
+           <span class="spot-go">view <span class="arw">&rarr;</span></span>
+         </div>`;
+      // NB: the whole slide is a clickable div (navigates via JS). It must NOT
+      // be an <a>, because the parser would auto-close it around any inner <a>.
+      if (typo) return `<div class="spot-slide typo" role="link" tabindex="0" data-href="${href}">${body}</div>`;
+      return `<div class="spot-slide" role="link" tabindex="0" data-href="${href}">
+                <div class="spot-fig"><img src="${esc(f.img)}" alt="" loading="lazy" onerror="this.closest('.spot-fig').style.display='none'"></div>
+                ${body}
+              </div>`;
+    }
+
+    // build track with clones on both ends for a seamless loop:
+    // [ clone(last), s0..sN-1, clone(first) ]
+    const seq = [favs[N - 1], ...favs, favs[0]];
+    const total = seq.length;
+    track.innerHTML = seq.map(slideHTML).join("");
+    // make each slide the full viewport width; track holds them side by side
+    track.style.width = (total * 100) + "%";
+    [...track.children].forEach(s => { s.style.width = (100 / total) + "%"; });
+
+    favs.forEach((_, k) => {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "spot-dot"; b.setAttribute("aria-label", "favourite " + (k + 1));
+      b.addEventListener("click", () => jumpTo(k));
+      dotsWrap.appendChild(b);
+    });
+    const dots = [...dotsWrap.children];
+
+    let pos = 1;            // track index currently shown (1..N map to real 0..N-1)
+    let animating = false;
+    let queued = 0;         // queued +1 / -1 arrow steps
+    let timer = null, paused = false;
+
+    function xFor(p) { return -(p * (100 / total)) + "%"; }
+    function setTransform(withAnim) {
+      track.classList.toggle("anim", !!withAnim && !reduce);
+      track.style.transform = "translateX(" + xFor(pos) + ")";
+    }
+    function realIndex() { return (pos - 1 + N) % N; }
+    function syncDots() {
+      const ri = realIndex();
+      dots.forEach((d, k) => d.classList.toggle("cur", k === ri));
+    }
+
+    setTransform(false);
+    syncDots();
+
+    track.addEventListener("transitionend", (e) => {
+      if (e.propertyName !== "transform") return;
+      animating = false;
+      // seamlessly snap off the clones back to the real slide
+      if (pos === total - 1) { pos = 1; setTransform(false); }   // past last -> first real
+      else if (pos === 0)    { pos = N; setTransform(false); }   // before first -> last real
+      syncDots();
+      if (queued) { const dir = queued > 0 ? 1 : -1; queued -= dir; step(dir); }
+    });
+
+    function step(dir) {
+      if (reduce) {
+        pos = ((pos - 1 + dir + N) % N) + 1;
+        setTransform(false); syncDots();
+        return;
+      }
+      if (animating) { queued += dir; if (queued > N) queued = N; if (queued < -N) queued = -N; return; }
+      animating = true;
+      pos += dir;
+      setTransform(true);
+    }
+
+    // dots JUMP directly to a target real slide (single eased translate)
+    function jumpTo(ri) {
+      queued = 0;                       // cancel any pending arrow steps, dot wins
+      const target = ri + 1;
+      if (target === pos) { restart(); return; }   // already here — no-op, no lock
+      pos = target;
+      animating = !reduce;
+      setTransform(!reduce);
+      syncDots();
+      restart();
+    }
+
+    function next() { step(1); }
+    function restart() {
+      if (timer) clearInterval(timer);
+      if (!reduce) timer = setInterval(() => { if (!paused && !document.hidden) next(); }, 5000);
+    }
+
+    // whole-slide navigation (slides are role=link divs, not anchors)
+    track.addEventListener("click", (e) => {
+      const s = e.target.closest(".spot-slide");
+      if (s && s.dataset.href && s.dataset.href !== "#") location.href = s.dataset.href;
+    });
+    track.addEventListener("keydown", (e) => {
+      if (e.key !== "Enter" && e.key !== " ") return;
+      const s = e.target.closest(".spot-slide");
+      if (s && s.dataset.href && s.dataset.href !== "#") { e.preventDefault(); location.href = s.dataset.href; }
+    });
+
+    document.getElementById("spot-next").addEventListener("click", () => { step(1); restart(); });
+    document.getElementById("spot-prev").addEventListener("click", () => { step(-1); restart(); });
+    spot.addEventListener("mouseenter", () => { paused = true; });
+    spot.addEventListener("mouseleave", () => { paused = false; });
+
+    restart();
+  })();
+
+  /* ===================== ZONE 2 — the index ===================== */
+  (async function index() {
+    const list = document.getElementById("idx-list");
+    const stage = document.getElementById("pv-stage");
+    const pvNm = document.getElementById("pv-nm");
+    const pvSub = document.getElementById("pv-sub");
+    const pvWrap = document.getElementById("idx-pv");
+
+    let secs;
+    try { secs = await H.sections(); } catch (e) { secs = []; }
+    if (!secs.length) { list.innerHTML = '<div class="reveal-empty" style="padding:28px 26px">could not load sections</div>'; return; }
+
+    const itemCache = {};
+    async function getItems(key) {
+      if (!itemCache[key]) { try { itemCache[key] = await H.items(key); } catch (e) { itemCache[key] = []; } }
+      return itemCache[key];
+    }
+
+    // --- preview rendering (fade-swapped) ---
+    function swapPreview(html) {
+      stage.classList.remove("pv-img", "pv-text");
+      stage.innerHTML = html;
+    }
+    function fade(fn) {
+      pvWrap.classList.add("swap");
+      setTimeout(() => { fn(); pvWrap.classList.remove("swap"); }, 150);
+    }
+    function previewImage(item, secKey) {
+      swapPreview(`<div class="pv-img pv-fade"><img src="${esc(item.img || item.thumb || "")}" alt="" loading="lazy" onerror="this.style.display='none'"></div>`);
+      pvNm.textContent = item.title || "";
+      pvSub.innerHTML = secKey === "studio"
+        ? `${item.meta ? "<b>" + esc(item.meta) + "</b>" : ""}${item.sub ? " · " + esc(item.sub) : ""}`
+        : (item.meta ? esc(item.meta) : "");
+    }
+    function previewText(item) {
+      swapPreview(
+        `<div class="pv-text pv-fade">
+           <span class="pv-word">${esc(item.title || "")}</span>
+           <p class="pv-snip">${esc(item.snippet || "")}</p>
+         </div>`);
+      pvNm.textContent = item.title || "";
+      pvSub.textContent = item.meta || "";
+    }
+    function previewMix(item) {
+      const tags = (item.tags || []).slice(0, 5).map(t => `<span>${esc(t)}</span>`).join("");
+      const live = item.live ? `<a class="pv-live" href="${esc(item.live)}" target="_blank" rel="noopener">live &nearr;</a>` : "";
+      swapPreview(
+        `<div class="pv-text pv-fade">
+           <span class="pv-word">${esc(item.title || "")}</span>
+           <p class="pv-snip">${esc(item.snippet || "")}</p>
+           ${tags ? `<div class="pv-tags">${tags}</div>` : ""}
+           ${live}
+         </div>`);
+      pvNm.textContent = item.title || "";
+      pvSub.innerHTML = item.status ? `<b>${esc(item.status)}</b>` : "";
+    }
+    function showItem(item, sec) {
+      const kind = H.SECTION_KIND[sec.key];
+      fade(() => {
+        if (kind === "image") previewImage(item, sec.key);
+        else if (kind === "text") previewText(item);
+        else previewMix(item);
+      });
+    }
+
+    // --- build a row's revealed grid on first open ---
+    async function fillReveal(row, sec) {
+      const reveal = row.querySelector(".reveal");
+      if (reveal.dataset.loaded) return;
+      reveal.dataset.loaded = "1";
+      const kind = H.SECTION_KIND[sec.key];
+      const its = await getItems(sec.key);
+      if (!its.length) { reveal.innerHTML = '<div class="reveal-empty">nothing to preview yet</div>'; return; }
+
+      if (kind === "image") {
+        const shown = its.slice(0, 8);
+        reveal.innerHTML = `<div class="reveal-grid">` + shown.map((it, k) =>
+          `<button type="button" class="rthumb" data-i="${k}" aria-label="${esc(it.title)}">
+             <img src="${esc(it.thumb || it.img || "")}" alt="" loading="lazy" onerror="this.style.display='none'">
+           </button>`).join("") + `</div>`;
+        const btns = [...reveal.querySelectorAll(".rthumb")];
+        btns.forEach((b, k) => {
+          const it = shown[k];
+          const act = () => { btns.forEach(x => x.classList.remove("cur")); b.classList.add("cur"); showItem(it, sec); };
+          b.addEventListener("mouseenter", act);
+          b.addEventListener("focus", act);
+          b.addEventListener("click", () => { location.href = it.href; });
+        });
+      } else {
+        const shown = its.slice(0, 6);
+        reveal.innerHTML = `<div class="reveal-titles">` + shown.map((it, k) =>
+          `<button type="button" class="rtitle" data-i="${k}">
+             <span class="tt">${esc(it.title)}</span>
+             <span class="tm">${esc(kind === "text" ? (it.meta || "") : (it.status || (it.tags || [])[0] || ""))}</span>
+           </button>`).join("") + `</div>`;
+        const btns = [...reveal.querySelectorAll(".rtitle")];
+        btns.forEach((b, k) => {
+          const it = shown[k];
+          const act = () => { btns.forEach(x => x.classList.remove("cur")); b.classList.add("cur"); showItem(it, sec); };
+          b.addEventListener("mouseenter", act);
+          b.addEventListener("focus", act);
+          b.addEventListener("click", () => { location.href = it.href; });
+        });
+      }
+    }
+
+    // default preview for a section (before hovering an item)
+    async function defaultPreview(sec) {
+      const kind = H.SECTION_KIND[sec.key];
+      const its = await getItems(sec.key);
+      if (its.length) { showItem(its[0], sec); return; }
+      // fallback: section-level
+      if (sec.img) { fade(() => { swapPreview(`<div class="pv-img pv-fade"><img src="${esc(sec.img)}" alt="" loading="lazy"></div>`); pvNm.textContent = sec.name; pvSub.innerHTML = sec.n != null ? `<b>${sec.n}</b> ${sec.n === 1 ? "entry" : "entries"}` : ""; }); }
+      else fade(() => { swapPreview(`<div class="pv-text pv-fade"><span class="pv-word">${esc(sec.name)}</span><p class="pv-snip">${esc(sec.desc)}</p></div>`); pvNm.textContent = sec.name; pvSub.textContent = ""; });
+    }
+
+    // --- rows ---
+    secs.forEach((s, idx) => {
+      const row = document.createElement("div");
+      row.className = "irow"; row.dataset.key = s.key;
+      const num = String(idx + 1).padStart(2, "0");
+      const ct = s.n != null ? `${s.n} <span class="lab">${s.n === 1 ? "entry" : "entries"}</span>` : `<span class="lab">explore &rarr;</span>`;
+      row.innerHTML =
+        `<div class="irow-head">
+           <span class="rn">${num}</span>
+           <span class="body"><span class="nm">${esc(s.name)}</span><span class="desc">${esc(s.desc)}</span></span>
+           <span class="ct">${ct}</span>
+         </div>
+         <div class="reveal-wrap"><div class="reveal-clip"><div class="reveal"></div></div></div>`;
+
+      const open = async () => {
+        [...list.children].forEach(r => r.classList.remove("on"));
+        row.classList.add("on");
+        await fillReveal(row, s);
+        defaultPreview(s);
+      };
+      row.addEventListener("mouseenter", open);
+      row.querySelector(".irow-head").addEventListener("focusin", open);
+      // whole head navigates to the section
+      row.querySelector(".irow-head").addEventListener("click", () => { location.href = s.href; });
+      list.appendChild(row);
+    });
+
+    // default: first row open
+    const first = list.firstElementChild;
+    first.classList.add("on");
+    await fillReveal(first, secs[0]);
+    defaultPreview(secs[0]);
+  })();
+
+  /* ===================== ZONE 3 — are.na lately ===================== */
+  (async function lately() {
+    const feed = document.getElementById("feed");
+    const live = document.getElementById("lately-live");
+    const liveT = document.getElementById("lately-live-t");
+    let res;
+    try { res = await H.arena(28); } catch (e) { res = { live: false, blocks: [] }; }
+    const blocks = (res.blocks || []).filter(b => b.thumb || b.img).slice(0, 20);
+
+    if (!blocks.length) { document.getElementById("lately").style.display = "none"; return; }
+
+    const newest = H.whenAgo(blocks[0].when);
+    live.classList.toggle("on", !!res.live);
+    liveT.innerHTML = res.live
+      ? `<a href="https://www.are.na/conrad-house/visually-intriguing" target="_blank" rel="noopener">live from are.na</a>${newest ? " &middot; updated " + esc(newest) : ""}`
+      : `recent snapshot${newest ? " &middot; " + esc(newest) : ""}`;
+
+    feed.innerHTML = blocks.map(b => {
+      const when = H.whenAgo(b.when);
+      const title = b.title || "untitled";
+      return `<a class="ftile" href="${esc(b.src || "#")}" target="_blank" rel="noopener" title="${esc(title)}">
+          <img src="${esc(b.thumb || b.img)}" alt="" loading="lazy" onerror="this.closest('.ftile').style.display='none'">
+          <div class="fmeta"><span class="ft">${esc(title)}</span>${when ? `<span class="fw">${esc(when)}</span>` : ""}</div>
+        </a>`;
+    }).join("");
+  })();
+})();
+</script>
+</body>
+</html>

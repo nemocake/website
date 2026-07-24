@@ -1,0 +1,110 @@
+/* retint.css — drops the studio's paper/ink/sanguine palette and fonts onto
+ * the older Tailwind-utility pages WITHOUT touching their layout. Loaded after
+ * the Tailwind CDN so the token overrides win. Theme-reactive (cream/white/dark
+ * via <html data-theme>). Pair with theme.js and a `.ground-mount` element. */
+
+@font-face { font-family:"Happy Times"; src:url("fonts/HappyTimes-regular.woff2") format("woff2"); font-weight:400; font-style:normal; font-display:swap; }
+@font-face { font-family:"Happy Times"; src:url("fonts/HappyTimes-italic.woff2") format("woff2"); font-weight:400; font-style:italic; font-display:swap; }
+@font-face { font-family:"Happy Times"; src:url("fonts/HappyTimes-bold.woff2") format("woff2"); font-weight:700; font-style:normal; font-display:swap; }
+@font-face { font-family:"Routed Gothic"; src:url("fonts/routed-gothic.ttf") format("truetype"); font-display:swap; }
+
+:root {
+  --paper-rgb:231,228,221; --ink-rgb:28,26,22;
+  --paper:rgb(var(--paper-rgb)); --paper-deep:rgb(222,218,209);
+  --ink:rgb(var(--ink-rgb)); --ink-soft:#4a463f; --ink-faint:#8b857a;
+  --rule:rgba(var(--ink-rgb),.22); --sanguine:#9c3d1e; --sang-rgb:156,61,30;
+  --font-display:"Happy Times",serif; --font-text:"Happy Times",georgia,serif; --font-mono:"Routed Gothic",monospace;
+}
+html[data-theme="white"]{ --paper-rgb:250,250,247; --paper-deep:#efeeea; }
+html[data-theme="dark"]{ --paper-rgb:25,24,21; --paper-deep:#211f1b; --ink-rgb:226,221,210; --ink-soft:#b5afa2; --ink-faint:#7d786d; --sanguine:#c05f38; --sang-rgb:192,95,56; }
+
+html, body { background:var(--paper) !important; color:var(--ink) !important; font-family:var(--font-text); }
+
+/* fonts */
+.font-mono{ font-family:var(--font-mono) !important; letter-spacing:.04em; }
+.font-sans{ font-family:var(--font-text) !important; }
+.font-display{ font-family:var(--font-display) !important; font-weight:400 !important; letter-spacing:0 !important; }
+.font-bold{ font-weight:400 !important; }
+
+/* acid accent → sanguine */
+.text-acid, .hover\:text-acid:hover, .group:hover .group-hover\:text-acid{ color:var(--sanguine) !important; }
+.bg-acid, .bg-acid\/50, .bg-acid\/30{ background-color:var(--sanguine) !important; }
+.border-acid, .border-acid\/30, .border-acid\/50, .decoration-acid, .hover\:border-acid\/50:hover{ border-color:var(--sanguine) !important; }
+.decoration-acid{ text-decoration-color:var(--sanguine) !important; }
+
+/* text tones */
+.text-white, .text-white\/90, .text-black{ color:var(--ink) !important; }
+.text-white\/70, .text-white\/50, .text-white\/40, .text-gray-200, .text-gray-300{ color:var(--ink-soft) !important; }
+.text-gray-400, .text-gray-500, .text-gray-600{ color:var(--ink-faint) !important; }
+.bg-acid.text-black, .bg-acid .text-black{ color:var(--paper) !important; }
+
+/* dark grounds → paper */
+.bg-void, .bg-void\/90, .bg-void\/95,
+.bg-black, .bg-black\/95, .bg-black\/80, .bg-black\/70, .bg-black\/60, .bg-black\/30,
+.bg-gray-900, .bg-gray-800, .bg-gray-700{ background-color:var(--paper) !important; }
+.bg-white\/5, .bg-white\/10{ background-color:var(--paper-deep) !important; }
+.bg-white{ background-color:var(--paper) !important; }
+
+/* borders */
+.border-white\/10, .border-t-white\/20, .border-gray-700, .border-black, .border-border-dim,
+[class*="border-border-dim"]{ border-color:var(--rule) !important; }
+
+/* gradients (hover caption scrims) → soft paper */
+.from-black\/80, .from-black\/95, .from-gray-800{ --tw-gradient-from:rgba(var(--paper-rgb),.9) !important; --tw-gradient-to:rgba(var(--paper-rgb),0) !important; --tw-gradient-stops:var(--tw-gradient-from),var(--tw-gradient-to) !important; }
+.to-gray-900, .to-transparent{ --tw-gradient-to:rgba(var(--paper-rgb),0) !important; }
+
+/* status dots keep meaning but calmer */
+.bg-green-500{ background-color:#5a7a4a !important; }
+.bg-red-500{ background-color:var(--sanguine) !important; }
+.bg-yellow-500{ background-color:#b98a2e !important; }
+
+/* components common to the old pages */
+.glass-panel{ background:var(--paper-deep) !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important; border-color:var(--rule) !important; }
+.artwork-frame{ background:var(--paper) !important; border-color:var(--rule) !important; box-shadow:0 6px 30px rgba(var(--ink-rgb),.10) !important; }
+.scanlines, .noise{ display:none !important; }
+
+/* the top nav matches the studio site-nav: paper bar, lowercase mono links,
+   con.rad wordmark left, sanguine on hover and the current page */
+header.mix-blend-difference{
+  mix-blend-mode:normal !important; color:var(--ink) !important;
+  align-items:baseline !important;
+  padding:15px clamp(28px,7vw,96px) 12px !important;
+  background:rgba(var(--paper-rgb),.9);
+  -webkit-backdrop-filter:blur(9px); backdrop-filter:blur(9px);
+  border-bottom:1px solid var(--rule);
+}
+.site-home{ font-family:var(--font-mono) !important; font-weight:400 !important;
+  font-size:10.5px !important; letter-spacing:.16em; text-transform:lowercase;
+  color:var(--ink-soft) !important; line-height:1; }
+.site-home:hover{ color:var(--sanguine) !important; }
+.site-links{ display:flex !important; flex-wrap:wrap; gap:20px; align-items:baseline;
+  font-family:var(--font-mono) !important; font-size:10.5px; letter-spacing:.16em; text-transform:lowercase; }
+.site-links a{ color:var(--ink-faint) !important; padding:2px 0; }
+.site-links a:hover{ color:var(--sanguine) !important; }
+.site-links a.cur{ color:var(--sanguine) !important; }
+@media (max-width:640px){
+  header.mix-blend-difference{ flex-direction:column; align-items:center !important; gap:7px; padding-left:18px !important; padding-right:18px !important; }
+  .site-links{ gap:16px; justify-content:center; }
+}
+
+/* faint paper grain to match the studio */
+body::after{ content:""; position:fixed; inset:0; pointer-events:none; z-index:9997; opacity:.14;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+::selection{ background:var(--sanguine); color:var(--paper); }
+::-webkit-scrollbar-track{ background:var(--paper) !important; }
+::-webkit-scrollbar-thumb{ background:var(--rule) !important; }
+::-webkit-scrollbar-thumb:hover{ background:var(--sanguine) !important; }
+.grid-item img{ filter:grayscale(12%) !important; }
+.grid-item:hover img{ filter:none !important; }
+
+/* the ground picker, tucked bottom-right */
+.ground-mount{ position:fixed; z-index:120; right:16px; bottom:14px; display:flex; align-items:center; gap:7px;
+  font-family:var(--font-mono); font-size:9px; letter-spacing:.14em; text-transform:lowercase; color:var(--ink-faint);
+  background:var(--paper); border:1px solid var(--rule); padding:6px 9px; }
+.theme-picker{ display:inline-flex; gap:5px; align-items:center; }
+.theme-picker button{ width:12px; height:12px; border:1px solid var(--rule); cursor:pointer; padding:0; }
+.theme-picker button[data-t="white"]{ background:#fafaf7; }
+.theme-picker button[data-t="cream"]{ background:rgb(231,228,221); }
+.theme-picker button[data-t="dark"]{ background:#191815; }
+.theme-picker button.cur{ outline:1px solid var(--sanguine); outline-offset:1px; }
