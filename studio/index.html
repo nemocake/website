@@ -74,6 +74,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
+  <script src="../assets/catalogue/img-upgrade.js"></script>
 </head>
 <body class="on-cover">
 <div class="ground-mount" aria-label="page ground"></div>
@@ -149,8 +150,7 @@ const IMG_V = "?v=1784771550";
   // ---------- rail jumps ----------
   const jumpHost = document.getElementById("rail-jumps");
   if (jumpHost) jumpHost.innerHTML =
-    sections.map(s => `<a href="#/s/${s.id}" data-sect="${s.id}" title="${esc(s.name)}">${s.numeral}</a>`).join("") +
-    (articles.length ? `<a href="#/s/writings" data-sect="writings" title="writings">✎</a>` : "");
+    sections.map(s => `<a href="#/s/${s.id}" data-sect="${s.id}" title="${esc(s.name)}">${s.numeral}</a>`).join("");
 
   // ---------- cover (spine contents + well) ----------
   const tocSeries = s => `
@@ -169,15 +169,8 @@ const IMG_V = "?v=1784771550";
         `<a href="#/s/${s.id}/${w.slug}"><img src="assets/img/${w.slug}/thumb.jpg${IMG_V}" loading="lazy" alt="" onerror="this.parentNode.style.display='none'"></a>`).join("")}</div>
     </div>`;
 
-  const writingsToc = articles.length ? `
-    <div class="toc-series">
-      <h4 data-sect="writings"><a href="#/s/writings" style="display:flex;gap:10px;align-items:baseline;flex:1">
-        <span class="rn">✎</span> WRITINGS</a></h4>
-      ${articles.map(a => `
-        <a class="toc-row" href="../writings/#${encodeURIComponent(a.slug)}">
-          <span class="nm">${esc(a.title)}</span><span class="dots"></span><span class="ed">${esc(a.no)}</span>
-        </a>`).join("")}
-    </div>` : "";
+  // writings live in the dedicated writings section now — no writings block in the studio contents
+  const writingsToc = "";
 
   const coverHtml = `
     <div class="screen" id="cover">
@@ -302,7 +295,7 @@ const IMG_V = "?v=1784771550";
       </div>
       <div class="sv-nav">
         ${prev ? `<a href="#/s/${prev.id}">◀ ${prev.numeral} ${esc(prev.name)}</a>` : `<a href="#/">◀ contents</a>`}
-        ${next ? `<a href="#/s/${next.id}">${next.numeral} ${esc(next.name)} ▶</a>` : `<a href="#/s/writings">writings ▶</a>`}
+        ${next ? `<a href="#/s/${next.id}">${next.numeral} ${esc(next.name)} ▶</a>` : `<a href="#/">▲ contents</a>`}
       </div>`;
     return true;
   }

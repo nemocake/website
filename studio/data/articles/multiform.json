@@ -1,9 +1,10 @@
 {
   "slug": "fugitive",
-  "title": "the accident, expanded",
+  "title": "Fugitive, finding missing outputs.",
   "subtitle": "a search system stumbled into one good plate; MULTIFORM is what happened when i refused to leave it there.",
   "date": "2026-07-14",
   "no": "04",
   "work": "multiform",
-  "draft": true
+  "draft": true,
+  "relation": "referenced in"
 }

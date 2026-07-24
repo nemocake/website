@@ -39,8 +39,8 @@
   ],
   "collection": [
     {
-      "thumbnail": "https://ipfs.io/ipfs/QmSVg7WS1KYpoAkSRxQY9WFEfCZxup1BP7GNWRTy7b7df7",
-      "render": "https://ipfs.io/ipfs/QmX6nVkoCa3MBjKoxekT62d8s8S68ChYcHtmfaJMHFg3rk",
+      "thumbnail": "../assets/images/collection/mirror/c0-thumb.webp",
+      "render": "../assets/images/collection/mirror/c0-render.webp",
       "title": "Lost control",
       "artist": "Iskra Velitchkova",
       "medium": "Digital Art",
@@ -48,8 +48,8 @@
       "description": "spent a lot of time with iskra's work and it always hits me with a deep sense of ephemerality. her systems feel soft and delicate. like a passing leaf that is here and then gone, unnoticed by the normal eye and lost in the monotony of life. she captures these fleeting moments, helping viewers understand an aesthetic essence to the simpler things."
     },
     {
-      "thumbnail": "https://ipfs.io/ipfs/QmQV57honsnKiWnsgRikU43WL5h4tk2eSi9QcsaphBiSsJ",
-      "render": "https://ipfs.io/ipfs/QmQV57honsnKiWnsgRikU43WL5h4tk2eSi9QcsaphBiSsJ",
+      "thumbnail": "../assets/images/collection/mirror/c1-thumb.webp",
+      "render": "../assets/images/collection/mirror/c1-render.webp",
       "title": "CSRSNT-ZAAI-45-of-64.png",
       "artist": "Caesuras (Casey Reas)",
       "medium": "Digital Art",
@@ -57,8 +57,8 @@
       "description": "always been enamored by casey's work. the depth and intricacies of his pieces from seemingly simple diagonal lines and dashes. takes a special eye to be able to imagine, create and express these aesthetics, casey's eye has always been a favorite of mine."
     },
     {
-      "thumbnail": "https://ipfs.io/ipfs/QmTdTi3ctvT1Npcp6eKDuN1notyZoVJuTYK6iRivcKpW8V",
-      "render": "https://ipfs.io/ipfs/QmTdTi3ctvT1Npcp6eKDuN1notyZoVJuTYK6iRivcKpW8V",
+      "thumbnail": "../assets/images/collection/mirror/c2-thumb.webp",
+      "render": "../assets/images/collection/mirror/c2-render.webp",
       "title": "The Starry Night: Not Van Gogh, Not Sorry",
       "artist": "Helena Sarin",
       "medium": "Digital Art",
@@ -66,8 +66,8 @@
       "description": "gans have always been my favorite sub-genre of AI, machine-learning, generative, or 'whatever u want to call it' art. fondness for simpler, more personalized systems. early gan outputs allowed more room for contemplation, emotions, and freedom for the machines to dream. there's a rawness to gans, an aesthetic that feels refreshing and incomparable to other artistic explorations. helena's work with gans is the perfect representation of this.... her style, emotions, story and so much more is expressed through her systems, digitally and physically."
     },
     {
-      "thumbnail": "https://ipfs.io/ipfs/QmSRtLFUF39tsj639EsAk1uZKRCDvYMGHcCQwsqdqpiXMs",
-      "render": "https://ipfs.io/ipfs/QmSRtLFUF39tsj639EsAk1uZKRCDvYMGHcCQwsqdqpiXMs",
+      "thumbnail": "../assets/images/collection/mirror/c3-thumb.webp",
+      "render": "../assets/images/collection/mirror/c3-render.webp",
       "title": "Lushtemples — landscape in dark tones",
       "artist": "Zancan",
       "medium": "Digital Art",
@@ -75,7 +75,7 @@
       "description": "say what you want about how skeuomorphic or not digital art should or shouldnt be. zancan crafted something special with his early tezos forestry. an artist that captured an entire chain and is a big reason for helping pushing our niche art nerd scene forward just a little more."
     },
     {
-      "thumbnail": "https://i.ibb.co/QjPYPK1p/karel.webp",
+      "thumbnail": "../assets/images/collection/mirror/c4-thumb.webp",
       "render": "https://ipfs.io/ipfs/QmbsDwhx7saoCcAUsqrEfRZwa4iEm6KBgQZQFsNp885mFB",
       "title": "Window Still Life 064",
       "artist": "John Karel",
@@ -84,7 +84,7 @@
       "description": "my partner first recognized john's work from early tumblr days, we became active collectors of his daily windows throughout the early hicetnunc days. fond memories of auto-refreshing tzkt pages, waiting for a mint operations to come through… this one has always been a personal favorite, reminds me of my brother and the countless hours we'd share in front of split-screen tvs."
     },
     {
-      "thumbnail": "https://i2c.seadn.io/shape/0xbb8f2711bd4bc98223990267f771e97d2d9bc167/e1f7e0b99bfceb22880207a3b9c8b9/b0e1f7e0b99bfceb22880207a3b9c8b9.png?w=350",
+      "thumbnail": "../assets/images/collection/mirror/c5-thumb.webp",
       "render": "https://raw2.seadn.io/shape/0xbb8f2711bd4bc98223990267f771e97d2d9bc167/f25af6a194cf28dc386b56d03c602f/c3f25af6a194cf28dc386b56d03c602f.html",
       "title": "Infinite Garden: 12879 Flowers",
       "artist": "Leander Herzog",
@@ -93,7 +93,7 @@
       "description": "leander's infinite garden series is a beautiful example of protocol art. becoming the gardener of the digital floral arrangement through online contracts. leander doesn't shy away from hard edges, there's no rush towards realism, but rather a meditative retreat in a field of polygons. cool guy makes cool artwork."
     },
     {
-      "thumbnail": "https://ipfs.io/ipfs/QmbrgWFtkajrX8nhDfMNwFo3MnBBZraRHE9pHCki1DjwCd",
+      "thumbnail": "../assets/images/collection/mirror/c6-thumb.webp",
       "render": "https://onchfs.fxhash2.xyz/046f4712c2aaa344f82f1ef8ffed2ab8c9714819228e29c6a28cf67b14377f61/?cid=onchfs%3A%2F%2F046f4712c2aaa344f82f1ef8ffed2ab8c9714819228e29c6a28cf67b14377f61&fxhash=0x90ec40ca1678bb224479e39903cd6f9350118d924d00dda1b7eadf4512d17921&fxminter=0x4d477F1aabcFc2FC3FC9b802E861C013E0123AD9&fxiteration=369&fxcontext=standalone&fxchain=ETHEREUM&legacy=false",
       "title": "Genomes #369",
       "artist": "Ciphrd and Alexander Mordvintsev",
@@ -102,8 +102,8 @@
       "description": "one of the most under-appreciated projects in the space. such a lovely blend of aesthetics between two legends, mordvinstev and ciphrds ability to create a procedural system that is reminiscent of the early deepdream textures is *chefs kiss*. can sit and watch this living genome evolve forever."
     },
     {
-      "thumbnail": "https://artblocks-mainnet.s3.amazonaws.com/28000842.png",
-      "render": "https://artblocks-mainnet.s3.amazonaws.com/28000842.png",
+      "thumbnail": "../assets/images/collection/mirror/c7-thumb.webp",
+      "render": "../assets/images/collection/mirror/c7-render.webp",
       "title": "Apparitions #842",
       "artist": "Aaron Penne",
       "medium": "Digital Art",
@@ -111,8 +111,8 @@
       "description": "just a special piece from early days of collecting, surrounded with seemingly nostalgic and fond memories. my partner and i have always said our colors are green and pink, this piece reminds me of her. <3"
     },
     {
-      "thumbnail": "https://ipfs.io/ipfs/Qma5mbRphoPR8aZYNmmKbEkZyKyhQq2UmuY1rR657q6AHZ",
-      "render": "https://ipfs.io/ipfs/Qma5mbRphoPR8aZYNmmKbEkZyKyhQq2UmuY1rR657q6AHZ",
+      "thumbnail": "../assets/images/collection/mirror/c8-thumb.webp",
+      "render": "../assets/images/collection/mirror/c8-render.webp",
       "title": "fl(uu)f. luluxxx",
       "artist": "luluxxx",
       "medium": "Digital Art",
@@ -120,8 +120,8 @@
       "description": "lulu is an og in the cryptoart space. part of the larger p(jj)tch series, these cat gifs are always a dopamine injection. whatever ascii filter/style transfer system lulu has built is a work of art in itself, a signature style thats unforgettable. also who doesnt love cats?"
     },
     {
-      "thumbnail": "https://ipfs.io/ipfs/QmUrJFJsyz3yE19xJdcrqzioJBws8Zy1851pxiX2DvUYUh",
-      "render": "https://ipfs.io/ipfs/QmUrJFJsyz3yE19xJdcrqzioJBws8Zy1851pxiX2DvUYUh",
+      "thumbnail": "../assets/images/collection/mirror/c9-thumb.webp",
+      "render": "../assets/images/collection/mirror/c9-render.webp",
       "title": "Standard Deck 022",
       "artist": "Elna Frederick",
       "medium": "Digital Art",
@@ -129,8 +129,8 @@
       "description": "elna's illusionary flashing style is such a neat way of conveying motion. all the cards within the standard deck series have a life, a scene, a feeling. i like to imagine the band is playing tezeta by mulatu astatke"
     },
     {
-      "thumbnail": "https://ipfs.io/ipfs/Qme1Cs4VXDqdv5rAPTuQ4STzoHAw23YaoUjdirWWhgLoqy",
-      "render": "https://ipfs.io/ipfs/Qme1Cs4VXDqdv5rAPTuQ4STzoHAw23YaoUjdirWWhgLoqy",
+      "thumbnail": "../assets/images/collection/mirror/c10-thumb.webp",
+      "render": "../assets/images/collection/mirror/c10-render.webp",
       "title": "an inefable momento rainbow",
       "artist": "Marcelo Soria-Rodríguez",
       "medium": "Digital Art",
@@ -138,8 +138,8 @@
       "description": "marcelo's work is a breath of fresh air. a child-like whimsy in this piece. the piece was dedicated to the special group of bird n worm lovers, iykyk. one of the few groups in this space who've never seem to stray from true n honest intentions."
     },
     {
-      "thumbnail": "https://ipfs.io/ipfs/QmYWX4tZ4Qa92FvsBmLBYjXN7SSuLwwmQZ5ZKhy4P8HMnx",
-      "render": "https://ipfs.io/ipfs/QmYACcaUDPQG2yYiVYsFVT3eBJrqVvyukmcwRQtajWTA7X",
+      "thumbnail": "../assets/images/collection/mirror/c11-thumb.webp",
+      "render": "../assets/images/collection/mirror/c11-render.webp",
       "title": "08_26_23_Pixel_Rug_01_THANK_YOU",
       "artist": "Travess Smalley",
       "medium": "Digital Art",
@@ -156,7 +156,7 @@
       "description": "erin's work feels almost prodigious with how early she was to exploring complex gan systems for her age. this piece has always been a favorite, a meditative drift… it was gifted to my partner and i from evan aka metaissance, one of the most honest collectors in this space who has a real love for the works and artists he collects from. have been lucky enough to meet him n his lovely family through this odd interconnected on-chain community."
     },
     {
-      "thumbnail": "https://ipfs.io/ipfs/QmUb86r6ruC1R4K55DjrF81npGMYMXNviWY6qykJbok8X1",
+      "thumbnail": "../assets/images/collection/mirror/c13-thumb.webp",
       "render": "https://ipfs.io/ipfs/QmRUKBDs23pmg9jTDT3cwfMPDnRcMDW2EGoShRhAGnS49g",
       "title": "Impossible Architecture #1",
       "artist": "inconvergent (Anders Hoff)",
@@ -401,17 +401,10 @@
         },
         "With a way of visually identifying outputs the atlas begins to fill itself out as new \"addresses\" are discovered. Tuning the map is really deciding what counts as different, which turns out to be a curatorial question disguised in a math costume. The atlas allows for specific outputs to favored which will nudge surrounding atlas spots to gravitate towards that outputs recipe and fingerprint.",
         {
-          "type": "pair",
-          "images": [
-            {
-              "src": "../studio/assets/img/fugitive/tree.jpg",
-              "caption": "family tree; every survivor's lineage back to a seed program"
-            },
-            {
-              "src": "../studio/assets/img/fugitive/coverage.jpg",
-              "caption": "coverage curve; the archive filling over generations"
-            }
-          ]
+          "type": "image",
+          "src": "../studio/assets/img/fugitive/tree.jpg",
+          "alt": "family tree; every survivor's lineage back to a seed program",
+          "caption": "family tree; every survivor's lineage back to a seed program"
         },
         {
           "type": "subhead",

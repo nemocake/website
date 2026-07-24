@@ -16,6 +16,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
+  <script src="../assets/catalogue/img-upgrade.js"></script>
 </head>
 <body>
 <div class="ground-mount" aria-label="page ground"></div>
@@ -149,7 +150,7 @@ const IMG_V = "?v=1784771550";
     ${(() => {
       const a = articles.find(a => a.work === w.slug);
       return a ? `<p style="margin-top:18px"><a href="../writings/#${encodeURIComponent(a.slug)}"
-        style="font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:lowercase;color:var(--sanguine)">→ process writing: ${esc(a.title)}</a></p>` : "";
+        style="font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:lowercase;color:var(--sanguine)">→ ${esc(a.relation || "process writing")}: ${esc(a.title)}</a></p>` : "";
     })()}
 
     ${(w.embeds && w.embeds.length) ? `
