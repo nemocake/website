@@ -679,6 +679,8 @@ footer.colophon {
 }
 
 footer.colophon a:hover { color: var(--sanguine); }
+footer.colophon .cols { display: flex; gap: 20px; align-items: baseline; flex-wrap: wrap; }
+@media (max-width: 560px) { footer.colophon { flex-wrap: wrap; gap: 10px 0; } }
 
 
 /* ---------- plates never exceed the viewport ----------
