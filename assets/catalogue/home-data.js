@@ -15,7 +15,7 @@ window.HomeData = (function () {
   // a representative image per section, for tiles/previews that want one
   const SECTION_IMG = {
     studio:     "studio/assets/img/multiform/hero.jpg",
-    writings:   "studio/assets/img/capriccio/hero.jpg",
+    writings:   "studio/assets/img/capriccio/lead.jpg",
     collection: null,   // collection images are remote (ipfs); left to the mockup
     projects:   "studio/assets/img/cube-study/hero.jpg"
   };
@@ -29,7 +29,7 @@ window.HomeData = (function () {
   // type drives styling; artworks carry an image, writing/project are typographic.
   const FAVORITES = [
     { type: "artwork", title: "Multiform",          kicker: "colour field system", blurb: "a procedurally generative code study after rothko.", img: "studio/assets/img/multiform/hero.jpg", href: "studio/piece.html?w=multiform" },
-    { type: "artwork", title: "Capriccio",          kicker: "impossible architecture", blurb: "drawn architecture where every element gets its own vanishing point.", img: "studio/assets/img/capriccio/hero.jpg", href: "studio/piece.html?w=capriccio" },
+    { type: "artwork", title: "Capriccio",          kicker: "impossible architecture", blurb: "drawn architecture where every element gets its own vanishing point.", img: "studio/assets/img/capriccio/lead.jpg", href: "studio/piece.html?w=capriccio" },
     { type: "writing", title: "art rabbit holing",  kicker: "writing", blurb: "on the practice of looking and exploring to understand personal taste.", img: null, href: "writings/#art-rabbit-holing" },
     { type: "artwork", title: "Fugitive",           kicker: "a way of searching", blurb: "an explorative system built for finding the visual output range of procedural generative systems.", img: "studio/assets/img/fugitive/hero.jpg", href: "studio/piece.html?w=fugitive" },
     { type: "artwork", title: "Visual Scores",       kicker: "notation in three dimensions", blurb: "procedurally generated visual music scores, after cage and penderecki, read in 3d.", img: "studio/assets/img/visual-scores/hero.jpg", href: "studio/piece.html?w=visual-scores" },
