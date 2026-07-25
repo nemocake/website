@@ -50,7 +50,6 @@
       "after": "wind maps, Ebru marbling, phase portraits",
       "medium": "oil strata and graphite hatch over one vector field",
       "status": "approved",
-      "note": "Oil and pencil fused over a single vector field, with no partition between them. An exploration in combining systems.",
       "images": [
         {
           "file": "add05.jpg",
@@ -524,7 +523,7 @@
       "medium": "procedural graphic scores, live in the browser",
       "status": "approved",
       "live": "../visual-scores/",
-      "note": "Procedural graphic scores after Cage, Penderecki, De Cesare and others; a vocabulary of staff fragments, node chains and duration marks that every later score piece borrows from. This one runs live in the browser, because it always has. Each visual element acts as a playable piece in the composition.",
+      "note": "A homage to score as image, after Cage, Penderecki, De Cesare and Frank Lepold. Each score is generated from five visual vocabularies, three drawn from those artists plus general music notation and mathematical figures, and read in three dimensions. I've always loved data turned into pictures for the look of it alone, and this points that instinct at music.",
       "images": [
         {
           "file": "hero.jpg",

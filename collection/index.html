@@ -8,6 +8,8 @@
 
   <!-- Tailwind CSS -->
   <script>try{var t=localStorage.getItem("studio.theme");if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+  <style>html.preload{opacity:0}</style>
+  <script>document.documentElement.classList.add("preload");(function(){function r(){var h=document.documentElement;h.style.transition="opacity .28s ease";h.classList.remove("preload");}addEventListener("DOMContentLoaded",function(){requestAnimationFrame(function(){requestAnimationFrame(r);});});addEventListener("load",r);setTimeout(r,1400);})();</script>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
   <script>
     tailwind.config = {
