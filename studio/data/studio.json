@@ -325,78 +325,44 @@
           "h": 1560
         },
         {
-          "file": "hero.jpg",
-          "caption": "nocturne",
-          "title": "",
-          "w": 1800,
-          "h": 1170
-        },
-        {
-          "file": "graphite.jpg",
-          "caption": "graphite",
-          "title": "",
-          "w": 1600,
-          "h": 1040
-        },
-        {
-          "file": "sanguine.jpg",
-          "caption": "sanguine",
-          "title": "",
-          "w": 1600,
-          "h": 1179
-        },
-        {
-          "file": "mondrian.jpg",
-          "caption": "mondrian print",
-          "title": "",
-          "w": 1172,
-          "h": 1600
-        },
-        {
           "file": "progression.jpg",
           "title": "",
-          "caption": "the break increasing, left to right",
+          "caption": "",
           "w": 2400,
           "h": 372,
           "wide": true
+        },
+        {
+          "file": "add06.jpg",
+          "caption": "mondrian",
+          "title": "",
+          "w": 1700,
+          "h": 1105,
+          "trip": 1
         },
         {
           "file": "add05.jpg",
           "caption": "riso",
           "title": "",
           "w": 1700,
-          "h": 1105
+          "h": 1105,
+          "trip": 1
         },
         {
-          "file": "add06.jpg",
-          "caption": "de stijl",
+          "file": "sanguine.jpg",
+          "caption": "sanguine",
           "title": "",
-          "w": 1700,
-          "h": 1105
+          "w": 1600,
+          "h": 1179,
+          "trip": 2
         },
         {
-          "file": "eight-palettes.jpg",
+          "file": "c18-graphite-i1024-b38.jpg",
+          "caption": "",
           "title": "",
-          "caption": "one room, eight palettes",
-          "w": 2400,
-          "h": 1248,
-          "wide": true
-        },
-        {
-          "file": "nocturnes.jpg",
-          "title": "",
-          "caption": "nocturnes",
-          "w": 2400,
-          "h": 1632,
-          "wide": true
-        },
-        {
-          "file": "salon.jpg",
-          "title": "",
-          "caption": "one drawing and its variations",
-          "w": 2400,
-          "h": 1938,
-          "wide": true
+          "w": 1600,
+          "h": 1040,
+          "trip": 2
         },
         {
           "file": "sheet.jpg",
@@ -405,6 +371,46 @@
           "w": 2200,
           "h": 2200,
           "wide": true
+        },
+        {
+          "file": "v2-chalks-pop.jpg",
+          "caption": "",
+          "title": "",
+          "w": 1600,
+          "h": 1040,
+          "trip": 3
+        },
+        {
+          "file": "cap75-nocturne-i39.jpg",
+          "caption": "",
+          "title": "",
+          "w": 2400,
+          "h": 1714,
+          "trip": 3
+        },
+        {
+          "file": "mondrian.jpg",
+          "caption": "mondrian print",
+          "title": "",
+          "w": 1172,
+          "h": 1600,
+          "trip": 4
+        },
+        {
+          "file": "c11-nocturne-i222-b50-port.jpg",
+          "caption": "",
+          "title": "",
+          "w": 1040,
+          "h": 1420,
+          "trip": 4
+        },
+        {
+          "file": "c16-sanguine-i833-b68-port.jpg",
+          "caption": "",
+          "title": "",
+          "w": 1040,
+          "h": 1420,
+          "trip": 4
         }
       ],
       "series": "broken-room",
