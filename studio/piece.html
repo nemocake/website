@@ -118,7 +118,15 @@ const IMG_V = "?v=1784771550";
     const flush = () => { if (buf.length) { rows.push(buf); buf = []; } };
     const narrow = list.filter(im => !wideish(im)).length;
     const cap = narrow >= 6 ? 3 : 2;
-    for (const im of list) {
+    for (let i = 0; i < list.length; i++) {
+      const im = list[i];
+      if (im.trip != null) {                   // curated row: consecutive plates sharing a trip stay together
+        flush();
+        const grp = [im];
+        while (i + 1 < list.length && list[i + 1].trip === im.trip) grp.push(list[++i]);
+        rows.push(grp);
+        continue;
+      }
       if (wideish(im)) { flush(); rows.push([im]); continue; }
       buf.push(im);
       if (buf.length === cap) flush();
