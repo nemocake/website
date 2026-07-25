@@ -101,6 +101,8 @@
     }
 
     /* Artwork frame */
+    body.gallery-mode #gallery-main { padding-bottom: 120px; } /* breathing room for the plaque */
+
     .artwork-frame {
       background: #0a0a0a;
       border: 1px solid rgba(255, 255, 255, 0.1);
@@ -113,7 +115,7 @@
     .artwork-frame img,
     .artwork-frame video {
       max-width: min(90vw, calc(100vw - 400px)); /* Leave room for sidebar */
-      max-height: 80vh;
+      max-height: min(80vh, calc(100vh - 270px)); /* always clear the plaque */
       min-width: min(50vw, 500px); /* Scale up small content */
       min-height: min(50vh, 400px);
       width: auto;
@@ -130,7 +132,7 @@
     .artwork-frame--iframe {
       width: min(80vw, calc(100vw - 500px));
       max-width: 1000px;
-      height: 75vh;
+      height: min(75vh, calc(100vh - 270px)); /* always clear the plaque */
     }
 
     .artwork-frame--iframe .artwork-inner {
@@ -626,8 +628,6 @@
 
         // Counter
         galleryCounter.textContent = (index + 1) + ' / ' + collection.length;
-        sidePrevBtn.disabled = index === 0;
-        sideNextBtn.disabled = index === collection.length - 1;
         document.title = (item.title || 'Artwork') + ' | Collection | con.rad';
 
         // Reposition player above plaque after content updates
@@ -635,14 +635,13 @@
       }
 
       function navigate(direction) {
-        const newIndex = currentIndex + direction;
-        if (newIndex >= 0 && newIndex < collection.length) {
-          currentIndex = newIndex;
-          displayArtwork(currentIndex);
-          const url = new URL(window.location);
-          url.searchParams.set('index', currentIndex);
-          history.replaceState(null, '', url);
-        }
+        if (!collection.length) return;
+        // cycle: stepping past either end wraps around to the other
+        currentIndex = (currentIndex + direction + collection.length) % collection.length;
+        displayArtwork(currentIndex);
+        const url = new URL(window.location);
+        url.searchParams.set('index', currentIndex);
+        history.replaceState(null, '', url);
       }
 
       function toggleGridMode() {
