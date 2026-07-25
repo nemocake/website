@@ -226,6 +226,46 @@
 
     (function() {
       // Function to render writings
+      // Land exactly on an article: smooth-scroll, then re-measure once motion settles and
+      // correct for any layout shift (lazy images loading above the target move it mid-flight).
+      function scrollToArticle(targetId) {
+        const target = document.getElementById(targetId);
+        if (!target) return;
+        const headerOffset = 120;
+        const wanted = () => {
+          const max = document.documentElement.scrollHeight - window.innerHeight;
+          return Math.min(target.getBoundingClientRect().top + window.pageYOffset - headerOffset, Math.max(0, max));
+        };
+        let tries = 0, verifies = 0, cancelled = false;
+        const cancel = () => { cancelled = true; };
+        ['wheel', 'touchstart', 'keydown'].forEach(ev =>
+          addEventListener(ev, cancel, { once: true, passive: true }));
+        const settle = () => {
+          let last = window.pageYOffset, still = 0;
+          const tick = () => {
+            if (cancelled) return;
+            const y = window.pageYOffset;
+            if (Math.abs(y - last) < 1) { if (++still >= 4) { finish(); return; } }
+            else still = 0;
+            last = y;
+            requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        };
+        const finish = () => {
+          if (cancelled) return;
+          const want = wanted();
+          if (Math.abs(window.pageYOffset - want) > 2 && ++tries <= 6) {
+            window.scrollTo({ top: want, behavior: tries === 1 ? 'smooth' : 'auto' });
+            settle();
+          } else if (verifies++ < 3) {
+            setTimeout(finish, 350);   // catch late image loads that shift the target after arrival
+          }
+        };
+        window.scrollTo({ top: wanted(), behavior: 'smooth' });
+        settle();
+      }
+
       function renderWritings(writings) {
         if (!writings || writings.length === 0) return;
 
@@ -325,14 +365,7 @@
         // Handle hash navigation (from homepage links)
         if (window.location.hash) {
           setTimeout(() => {
-            const targetId = window.location.hash.substring(1);
-            const target = document.getElementById(targetId);
-            if (target) {
-              const headerOffset = 120;
-              const elementPosition = target.getBoundingClientRect().top;
-              const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-              window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
-            }
+            scrollToArticle(window.location.hash.substring(1));
           }, 200);
         }
       }
@@ -419,18 +452,8 @@
           link.addEventListener('click', (e) => {
             e.preventDefault();
             const targetId = link.getAttribute('href').substring(1);
-            const target = document.getElementById(targetId);
-
-            if (target) {
-              const headerOffset = 120;
-              const elementPosition = target.getBoundingClientRect().top;
-              const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-              window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth'
-              });
-
+            if (document.getElementById(targetId)) {
+              scrollToArticle(targetId);
               // Update URL hash without scrolling
               history.pushState(null, null, `#${targetId}`);
             }
