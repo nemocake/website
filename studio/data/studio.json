@@ -243,25 +243,59 @@
           "h": 2200
         },
         {
-          "file": "add01.jpg",
-          "title": "seed 7",
-          "caption": "paint seed 7 cobalt",
-          "w": 2000,
-          "h": 2000
+          "file": "evolution-to-disorder-bacon_dune-917521-poster.jpg",
+          "caption": "",
+          "title": "",
+          "w": 1640,
+          "h": 2200,
+          "trip": 1
         },
         {
-          "file": "add02.jpg",
-          "title": "seed 7",
-          "caption": "paint seed 7 bacon pope",
-          "w": 2000,
-          "h": 2000
+          "file": "evolution-to-disorder-bacon_carcass-180151-poster.jpg",
+          "caption": "",
+          "title": "",
+          "w": 1640,
+          "h": 2200,
+          "trip": 1
         },
         {
-          "file": "add03.jpg",
-          "title": "seed 7",
-          "caption": "paint seed 7 storm",
-          "w": 2000,
-          "h": 2000
+          "file": "evolution-to-disorder-bacon_nurse-482142-poster-d74reading-9x11.jpg",
+          "caption": "",
+          "title": "",
+          "w": 1640,
+          "h": 2200,
+          "trip": 1
+        },
+        {
+          "file": "evolution-to-disorder-bacon_sphinx-89866-43.jpg",
+          "caption": "",
+          "title": "",
+          "w": 2400,
+          "h": 1800
+        },
+        {
+          "file": "evolution-to-disorder-bacon_pope-870543-sq-d96row-10x6.jpg",
+          "caption": "",
+          "title": "",
+          "w": 2160,
+          "h": 2160,
+          "trip": 2
+        },
+        {
+          "file": "evolution-to-disorder-indigo-154148-sq.jpg",
+          "caption": "",
+          "title": "",
+          "w": 2160,
+          "h": 2160,
+          "trip": 2
+        },
+        {
+          "file": "evolution-to-disorder-plum-462525-sq.jpg",
+          "caption": "",
+          "title": "",
+          "w": 2160,
+          "h": 2160,
+          "trip": 2
         }
       ],
       "needsMore": true,
