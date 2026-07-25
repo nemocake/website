@@ -6,7 +6,7 @@
   var THEMES = ["white", "cream", "dark"];
 
   function apply(t, fire) {
-    if (THEMES.indexOf(t) < 0) t = "cream";
+    if (THEMES.indexOf(t) < 0) t = "white";
     document.documentElement.dataset.theme = t;
     try { localStorage.setItem(KEY, t); } catch (_) {}
     document.querySelectorAll(".theme-picker button").forEach(function (b) {
@@ -52,7 +52,7 @@
     // honour the visitor's saved choice across pages; fall back to the page default
     var stored = null;
     try { stored = localStorage.getItem(KEY); } catch (_) {}
-    apply(stored || document.documentElement.dataset.theme || "cream", false);
+    apply(stored || document.documentElement.dataset.theme || "white", false);
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
