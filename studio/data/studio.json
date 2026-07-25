@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-24",
+  "updated": "2026-07-25",
   "title": "STUDIO",
   "intro": "a practice of creating and chasing after images that intrigue me.",
   "series": [
@@ -132,21 +132,88 @@
           "caption": "",
           "title": "seed 168",
           "w": 1600,
-          "h": 989
+          "h": 989,
+          "trip": 1
         },
         {
           "file": "m214.jpg",
           "caption": "",
           "title": "seed 214",
           "w": 1600,
-          "h": 989
+          "h": 989,
+          "trip": 1
         },
         {
-          "file": "survey.jpg",
-          "caption": "survey, cool palette",
+          "file": "enfilade-mondrian-195-2.jpg",
+          "caption": "",
           "title": "",
-          "w": 1600,
-          "h": 989
+          "w": 878,
+          "h": 543,
+          "trip": 1
+        },
+        {
+          "file": "enfilade-albers-235-portrait-s14a5p4x1.jpg",
+          "caption": "sunrise",
+          "title": "",
+          "w": 1706,
+          "h": 2186,
+          "trip": 2
+        },
+        {
+          "file": "enfilade-cyanotype-227-portrait-s20a3p4x3.jpg",
+          "caption": "runset",
+          "title": "",
+          "w": 1706,
+          "h": 2186,
+          "trip": 2
+        },
+        {
+          "file": "enfilade-carbon_neon-57-portrait-s23a2p6x2.jpg",
+          "caption": "pushing perspectives A",
+          "title": "",
+          "w": 1706,
+          "h": 2186,
+          "trip": 3
+        },
+        {
+          "file": "enfilade-film_70-225-portrait-s24a3p4x3.jpg",
+          "caption": "pushing perspectives B",
+          "title": "",
+          "w": 1706,
+          "h": 2186,
+          "trip": 3
+        },
+        {
+          "file": "enfilade-survey-warm-157-land-s20a5p6x1.jpg",
+          "caption": "path before chaos",
+          "title": "",
+          "w": 2400,
+          "h": 1483,
+          "trip": 4
+        },
+        {
+          "file": "enfilade-survey-warm-200-land.jpg",
+          "caption": "path after chaos",
+          "title": "",
+          "w": 2400,
+          "h": 1483,
+          "trip": 4
+        },
+        {
+          "file": "enfilade-mondrian-213-square-s22a5p2x2.jpg",
+          "caption": "",
+          "title": "",
+          "w": 2400,
+          "h": 2400,
+          "trip": 5
+        },
+        {
+          "file": "enfilade-cyanotype-112-square-s16a5p3x2.jpg",
+          "caption": "",
+          "title": "",
+          "w": 2400,
+          "h": 2400,
+          "trip": 5
         }
       ],
       "series": "broken-room",
