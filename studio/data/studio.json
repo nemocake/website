@@ -630,7 +630,7 @@
       "medium": "procedural graphic scores, live in the browser",
       "status": "approved",
       "live": "../visual-scores/",
-      "note": "A homage to score as image, after Cage, Penderecki, De Cesare and Frank Lepold. Each score is generated from five visual vocabularies, three drawn from those artists plus general music notation and mathematical figures, and read in three dimensions. I've always loved data turned into pictures for the look of it alone, and this points that instinct at music.",
+      "note": "A homage to score as image, after Cage, Penderecki, De Cesare, Frank Lepold and others. Each score is generated from a set of visual vocabularies, drawing from artists, general music notation and a series of engineering/math related schematics. Born from a fascination of visual scores as aesthetics and data as sound.",
       "images": [
         {
           "file": "hero.jpg",
@@ -1608,6 +1608,9 @@
       "medium": "one wind field, image and sound",
       "status": "approved",
       "note": "Another project born from nostalgia. Growing up visiting my grandma's house, playing in the backyard, hearing the faint orchestra of wind chimes she had hanging along the porch. I find myself thinking of her whenever I hear one. A place for thinking about her.",
+      "embeds": [
+        { "url": "https://x.com/DlSPUTED/status/2075679440995254684", "caption": "a chime, sounding" }
+      ],
       "images": [
         {
           "file": "hero.jpg",
