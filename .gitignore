@@ -46,3 +46,9 @@ writings/edit.html
 # Internal studio tools (kept local, not shipped)
 studio/curate.html
 studio/editor.html
+writings/draft-abundance.html
+writings/abundance-sources.md
+writings/edit-server.py
+writings/abundance-images.md
+writings/spread.html
+writings/abundance-draft.json
