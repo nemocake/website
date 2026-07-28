@@ -444,6 +444,88 @@
         "Which is maybe the real function of a system like this. Not to replace taste with search, but to walk into rooms i wouldn't have opened, and let me decide which ones to move into.",
         "see both pieces in the studio: <a href=\"../studio/piece.html?w=fugitive\">Fugitive</a> and <a href=\"../studio/piece.html?w=multiform\">Multiform</a>."
       ]
+    },
+    {
+      "id": "the-abundance-of-material",
+      "title": "the abundance of material",
+      "description": "What happens when art and its associated materials become abundant?",
+      "date": "2026-07-27",
+      "body": [
+        "Zach Lieberman recently posted in response to the creative coding community trying to work out what his craft means now that coding is abundant. This got me to think about the broader question of what happens when the material of an art becomes cheap and readily available to the masses?",
+        "It's happened plenty of times in the past. Paint, photography, recorded sound, sculpture, and more. The people who'd spent years mastering the expensive version of a process get put into a position of uncertainty when seemingly cheaper and faster solutions are developed. It's the constant internal battle of an artist whose process is ever-adapting in the age of technology.",
+        "All to say, I'm not interested in the idea of AI replacing the coder, and more interested in the pattern that arises when art and its related materials become more democratized.",
+        {
+          "type": "subhead",
+          "text": "II. Paint and its history of accessibility."
+        },
+        "For most of the history of painting, the material process of creating paint was not easy or convenient. Ultramarine blues were often ground from lapis lazuli that came from basically one set of mines in Afghanistan, carried across the sea, processed and then distributed. Cennino Cennini's handbook from the 1390s describes making it like a bread recipe, kneading the crushed stone into a wax dough and working it in a warm lye bath for days. The first batch to bleed blue is the good grade, each later batch paler and cheaper. Reading through Cennini's rigorous process of just creating the material is reminiscent of the manual labor required in traditional programming. An intense \"behind the scenes\" process that's required before any final visual output is possible.",
+        "Paint was expensive enough that patrons wrote it into the contract. When Ghirlandaio took the commission for the altarpiece at Florence's foundling hospital in 1485, the contract stated the blue had to be ultramarine worth roughly four florins an ounce. Dürer, thirty years later, notes in his travel diary that he traded twelve ducats' worth of his own work for a single ounce of good ultramarine. The color was a line item, negotiated and processed before the picture existed. Part of who got to make a blue painting was just who could afford blue. Something that nowadays seems trivial to the art creation process was once a serious barrier.",
+        {
+          "type": "image",
+          "src": "../assets/images/writings/the-abundance-of-material/vermeer.jpg",
+          "alt": "Johannes Vermeer, Girl with a Pearl Earring, c. 1665 — the turban painted in natural ultramarine.",
+          "caption": "Johannes Vermeer, Girl with a Pearl Earring, c. 1665 · Mauritshuis, The Hague · public domain"
+        },
+        "We eventually get drastic breakthroughs to paint barriers, like John Goffe Rand in 1841 patenting the collapsible metal tube so paint could be used and then sealed. Before that, mixed oil paint lived in a pig's bladder tied off with string, punctured with a pin, impossible to reseal, and usually dead within a day or two. The tube made a full palette portable and storable, and is sometimes credited with letting the Impressionists leave the studio and paint outside. Renoir's son recounts in a memoir that his father said there'd be no Impressionism without paint tubes. Now it's important to state that outdoor painting wasn't impossible prior to Rand's invention, but it became exponentially more accessible and abundant with the advancement.",
+        {
+          "type": "image",
+          "src": "../assets/images/writings/the-abundance-of-material/rand-patent.png",
+          "alt": "John Goffe Rand's 1841 patent drawing for the collapsible metal paint tube, US Patent 2,252.",
+          "caption": "J. Rand, Metal Rolls for Paint, US Patent 2,252, 1841 · US Patent Office · public domain"
+        },
+        {
+          "type": "subhead",
+          "text": "III. Photography ran the same play, faster and louder."
+        },
+        "The early version of photography was a complex and dangerous chemistry problem. A daguerreotype meant polishing a silvered copper plate to a mirror, sensitizing it over toxic iodine fumes, exposing it for a set time, then developing it face-down over a box of heated mercury, all within a more-than-likely unventilated space. Expensive, technical, dangerous, and mostly for the trained and the well-off.",
+        "Baudelaire, reviewing the Salon of 1859, called photography art's most mortal enemy, and described the picture-taking public as Narcissus to a man, rushing to gaze at its trivial image on a scrap of metal. To Baudelaire, it wasn't just the idea of art becoming cheap and easy, but his disgust with the machine seemingly replacing the human and the loss of imagination.",
+        {
+          "type": "quote",
+          "text": "Each day the painter becomes more and more given to painting not what he dreams but what he sees.",
+          "attribution": "Charles Baudelaire, Salon of 1859"
+        },
+        "The technology gets further pushed in 1888 when George Eastman sells the Kodak No. 1 for twenty-five dollars, pre-loaded with a hundred-exposure roll, under a slogan he wrote himself: <b>“You press the button, we do the rest.”</b>",
+        "You shot the roll, mailed the whole camera back to Rochester, and they developed it, printed it, reloaded it and mailed it back. The entire hard development process moved into a factory, away from the photographer. Now we have the vibe coder who sends off their Kodak (prompt) to have it developed (inferenced) behind some larger LLM system running on a data server thousands of miles away.",
+        {
+          "type": "image",
+          "src": "../assets/images/writings/the-abundance-of-material/kodak.jpg",
+          "alt": "The Kodak No. 1 box camera, 1888.",
+          "caption": "The Kodak No. 1, 1888 · Smithsonian, NMAH · CC0"
+        },
+        "The uncertainty Baudelaire had, that the machine would hollow the art out, mostly didn't hold up if we zoom out and see what's happened over the next century. As photography got cheaper and more common, in some ways it did take over one job painting had leaned on for centuries, the literal likeness of an image. As this advanced, we saw painting branch off, as artists began looking for what else it could be. It's too neat to say photography alone caused Impressionism or abstraction, painters were already drifting that way far before the camera arrived, but the pressure was real in the way it urged for new forms. The fear of handing creative processes off doesn't necessarily mean the future work is any less creative.",
+        {
+          "type": "subhead",
+          "text": "IV. Permission becomes abundant"
+        },
+        "Art has always tried to break down the gates of permission. Many of the most critical art history moments are ones where norms are subverted, such as the Salon des Refusés and the impact of new emergent ways of building alternative circuits for under-represented artists to be seen.",
+        "For most of two centuries in France, the Paris Salon decided who counted; its jury decided what got hung. A Salon medal meant commissions and buyers, while rejection meant you were mostly invisible to patrons. Eventually, when the Salon des Refusés was hosted, it pulled over a thousand people a day, although most laughing, it showed the art still had a crowd. People like Durand-Ruel had been building an alternative circuit for underrepresented artists but moments like the Salon des Refusés chipped away at the barrier of permissions. The scarce source of \"representation\" begins to fade away. To this day the idea of representation has been stretched thin. Artist's today have more ways than ever to not only share art on a global scale, but also sell art on the global scale. As satisfying the \"jury\" matters less, having something worth looking at matters the most. It's an idea that abundance leads to the natural need for taste.",
+        {
+          "type": "image",
+          "src": "../assets/images/writings/the-abundance-of-material/manet.jpg",
+          "alt": "Edouard Manet, Le Dejeuner sur l'herbe, 1863, the scandal of the Salon des Refuses.",
+          "caption": "Édouard Manet, Le Déjeuner sur l'herbe, 1863 · Musée d'Orsay, Paris · public domain"
+        },
+        {
+          "type": "quote",
+          "text": "Taste is a question of how to deal with abundance.",
+          "attribution": "Ania Catherine"
+        },
+        {
+          "type": "subhead",
+          "text": "V. Coming back to code"
+        },
+        "The creative coding world itself is a democratization of breaking down barriers that has already been happening for decades. Processing came out in 2001, built by Casey Reas and Ben Fry to let artists and designers write code without becoming programmers first. openFrameworks followed in 2005, p5.js after that. The whole lineage exists to lower one specific barrier, the syntax, the setup, the renderer, so code could be a material for people whose interest may have never been focused in code as engineering but rather code as art. \"more poems, less demos.\"",
+        "LLMs just happen to lower that barrier even more drastically, with the level of interpretation between man and code being simpler than ever. Each one of these shifts made the gesture cheap without touching the judgment. The tube made it easy to lay down paint, not to know what was worth painting. Kodak handled the chemistry, but you still had to decide where to point the thing and when to press. Processing gave you the loop and left you the harder question of which loop was worth writing. This is where the regurgitated, tiring topic of taste always comes into play, because it wasn't always the paint, camera, or code that made the artwork beautiful... it was the human guiding it that made it beautiful. Zach Lieberman is an exemplary example of this, there's a reason his work is so popular, he has an eye for form, colors, and composition that is intangible.",
+        {
+          "type": "image",
+          "src": "../assets/images/writings/the-abundance-of-material/zach-woven.jpg",
+          "alt": "Zach Lieberman, Woven Color Study — woven bands of shifting color.",
+          "caption": "Zach Lieberman, Woven Color Study · Le Random collection"
+        },
+        "I wrote around this once already, in a piece called <a href=\"#changing-tools\">changing tools</a>, and one line from it still holds up for me. Anyone can make a sandwich, but we still have thousands of sandwich shops. The ability being common doesn't kill the demand for someone who does it well. Once anyone can generate a particle system or landing page, being able to \"make\" it stops meaning much on its own, and what's left is whether it's worth someone's attention. Everyone having a kitchen and access to an abundant grocery store doesn't make a good sandwich less rare.",
+        "And there's a privilege inside code worth naming, because many of these past historical examples also contained privileged processes. Writing code was never really free; it needs a computer, time, and enough understanding of programming languages. A lot of that literacy sits behind a course, a degree, or some type of dedicated access to the knowledge. So when a tool lowers a barrier, in a way, it's just a privilege getting passed to more people. That's the part I'm glad about, and the part I think is worth being deliberate about. Abundance is only worth anything if it actually reaches someone, and that part doesn't happen on its own; it depends on whether the people who already have it bother to share.",
+        "To me, the long view is reassuring, and I think it's earned from history rather than wishful pipe-dreams. Every time the material of an art has become abundant, the work or process eventually found somewhere new to go with the freedom that abundance provides. Abundance allows for experimentation and rules to be broken; it allows for failures, which is the only way we learn. I don't know exactly what the evolution of the abundance of code looks like yet, but I am hopeful that we will be pushed into new, interesting art."
+      ]
     }
   ],
   "projects": {
