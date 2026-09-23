@@ -225,7 +225,7 @@ const metaH = w => {
 };
 const linksH = w => {
   const l = [];
-  if (w.live) l.push(`<a href="${esc(w.live)}">open it live ↗</a>`);
+  if (w.live) l.push(/^https?:/.test(w.live) ? `<a href="${esc(w.live)}" target="_blank" rel="noopener">${esc(w.live.replace(/^https?:\/\//, "").replace(/\/$/, ""))} ↗</a>` : `<a href="${esc(w.live)}">open it live ↗</a>`);
   if (w.essay) l.push(`<a href="${esc(w.essay.url)}">essay ↗</a>`);
   if (ARTICLES.has(w.slug)) l.push(`<a href="piece.html?w=${encodeURIComponent(w.slug)}">studio notes ↗</a>`);
   if (w.embeds && w.embeds.length) l.push(`<a href="${esc(w.embeds[0].url)}" target="_blank" rel="noopener">heard ↗</a>`);
