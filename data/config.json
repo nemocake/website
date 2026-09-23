@@ -308,7 +308,7 @@
         },
         "I'm not an artist. Just someone who loves the creativity others have instilled through inspiration.",
         "The next step is to see how to make these scores actually play. The most common thought when viewing generated output is \"what would it sound like?\". The next exploration to be had!",
-        "→ <a href=\"../visual-scores/\" class=\"text-acid hover:underline\">roll your own schematic score on the generator page</a>."
+        "→ <a href=\"https://scores.conradhouse.dev/generator/\" class=\"text-acid hover:underline\">roll your own schematic score on the generator page</a>."
       ]
     },
     {
@@ -532,12 +532,12 @@
   "projects": {
     "visual-scores": {
       "private": true,
-      "title": "Visual Scores",
+      "title": "Schematics n' Scores",
       "description": "procedurally generated visual music scores after cage, penderecki, de cesare",
       "details": [
         "A three.js generator that builds compositions from five \"vocabularies\" — cage, penderecki, de cesare, general music notation, and mathematical equations ranging from basic geometry to differential equations to stress/failure structural engineering calculations from ASCE guidelines.",
         "Inspired by Frank Lepold's Kasse II, the work moves the score from a flat 2d page into a geometric structure with multiple faces. Each composition is a representation of the data visualizations my eyes have always loved.",
-        "→ <a href=\"../visual-scores/\" class=\"text-acid hover:underline\">roll your own schematic score on the generator</a>. remix, regenerate, save."
+        "→ <a href=\"https://scores.conradhouse.dev/generator/\" class=\"text-acid hover:underline\">roll your own schematic score on the generator</a>. remix, regenerate, save."
       ],
       "tags": [
         "three.js",
@@ -546,7 +546,7 @@
         "music"
       ],
       "status": "released",
-      "liveUrl": "../visual-scores/",
+      "liveUrl": "https://scores.conradhouse.dev/",
       "featured": true
     },
     "le-random-explorer": {
