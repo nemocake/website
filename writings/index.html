@@ -10,7 +10,8 @@
   <script src="../assets/js/config-loader.js"></script>
 
   <!-- Tailwind CSS -->
-  <script>try{var t=localStorage.getItem("studio.theme");if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+  <!-- two grounds only: white or dark. Same "studio.theme" key as the other pages; a saved "cream" reads as white. -->
+  <script>try{var t=localStorage.getItem("studio.theme");if(!t&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";document.documentElement.dataset.theme=t==="dark"?"dark":"white";}catch(e){}</script>
   <style>html.preload{opacity:0}</style>
   <script>document.documentElement.classList.add("preload");(function(){function r(){var h=document.documentElement;h.style.transition="opacity .28s ease";h.classList.remove("preload");}addEventListener("DOMContentLoaded",function(){requestAnimationFrame(function(){requestAnimationFrame(r);});});addEventListener("load",r);setTimeout(r,1400);})();</script>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
@@ -45,8 +46,6 @@
     }
   </script>
 
-  <!-- Studio type + retint (self-hosted, no CDN) -->
-  <script src="../assets/catalogue/theme.js" defer></script>
 
   <style>
     /* Scrollbar */
@@ -138,6 +137,96 @@
 
   <!-- STUDIO RETINT — palette + fonts aligned to the catalogue; layout untouched -->
   <link rel="stylesheet" href="../assets/catalogue/retint.css" />
+
+  <style>
+    /* ==================================================================
+       CLEAN PASS — ABC Areal only, pure white or dark, no frames or rules.
+       Same tokens as the home page; page-local until shell/retint follow.
+       ================================================================== */
+    @font-face { font-family: "Areal"; src: url("../assets/catalogue/fonts/ABCAreal-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: "Areal"; src: url("../assets/catalogue/fonts/ABCAreal-RegularItalic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+    @font-face { font-family: "Areal"; src: url("../assets/catalogue/fonts/ABCAreal-Medium.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+
+    :root, :root[data-theme="white"], :root[data-theme="cream"] {
+      --paper-rgb: 255, 255, 255; --paper-deep: #ffffff;
+      --ink-rgb: 17, 17, 17; --ink-soft: #3a3a3a; --ink-faint: #8c8c8c;
+      --rule: rgba(var(--ink-rgb), .14);
+      --sanguine: rgb(var(--ink-rgb)); --sang-rgb: var(--ink-rgb);          /* one accent: the ink itself */
+      --font-display: "Areal", sans-serif; --font-text: "Areal", sans-serif; --font-mono: "Areal", sans-serif;
+    }
+    :root[data-theme="dark"] {
+      --paper-rgb: 14, 14, 14; --paper-deep: #0e0e0e;
+      --ink-rgb: 237, 237, 237; --ink-soft: #bdbdbd; --ink-faint: #7a7a7a;
+      --sanguine: rgb(var(--ink-rgb)); --sang-rgb: var(--ink-rgb);
+    }
+    body { font-size: 14px; }
+    body::after { display: none !important; }                 /* no paper grain */
+    ::selection { background: rgb(var(--ink-rgb)); color: rgb(var(--paper-rgb)); }
+    ::-webkit-scrollbar-thumb:hover { background: var(--rule) !important; }
+
+    /* type: Medium for names, Regular for the rest; no wide tracking, no shouting, no italics */
+    .font-mono, .font-sans { letter-spacing: .005em !important; }
+    .font-display { font-weight: 500 !important; letter-spacing: -.035em !important; }
+    .tracking-widest, .tracking-wider, .uppercase { letter-spacing: .005em !important; }
+    .uppercase { text-transform: none !important; }
+    .italic { font-style: normal !important; }
+    .text-xs, .text-\[10px\] { font-size: 12px !important; line-height: 1.45 !important; }
+
+    /* hard corners, no frames, no rules, no shadows — whitespace separates */
+    *, *::before, *::after { border-radius: 0 !important; }
+    [class*="border"] { border-color: transparent !important; }
+    .glass-panel { background: transparent !important; border: 0 !important; box-shadow: none !important; }
+    [class*="shadow"] { box-shadow: none !important; }
+    .backdrop-blur, .backdrop-blur-sm, .backdrop-blur-md { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+
+    /* top nav: plain row, no bar, no rule */
+    header.mix-blend-difference { border-bottom: 0 !important; background: rgb(var(--paper-rgb)) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+    .site-home { font: 500 14px/1 var(--font-display) !important; letter-spacing: -.035em !important; color: var(--ink) !important; text-transform: none !important; }
+    .site-links { font-size: 12px !important; letter-spacing: .005em !important; }
+    .site-links a.cur, .site-links a:hover { color: var(--ink) !important; }
+
+    /* sidebar: the list of pieces, current one in ink */
+    aside .glass-panel { padding: 0 !important; }
+    aside h2 { font-size: 20px !important; }
+    .nav-link-item { padding: 5px 0 !important; font-size: 13px !important; color: var(--ink-faint) !important; }
+    .nav-link-item:hover, .nav-link-item.is-active { color: var(--ink) !important; }
+    .back-home { display: inline-block; margin-top: 22px; font-size: 12px; color: var(--ink-faint); }
+    .back-home:hover { color: var(--ink); }
+
+    /* the pieces: no panel, separated by air; reading text sized for reading */
+    #writings-articles { display: flex; flex-direction: column; gap: 120px; }
+    #writings-articles > * + * { margin-top: 0 !important; }
+    .writing-section { padding: 0 !important; }
+    .writing-section .w-meta { font-size: 12px; color: var(--ink-faint); margin-bottom: 10px; display: flex; gap: 14px; }
+    .writing-section h2 { font-size: clamp(26px, 3vw, 36px) !important; line-height: 1.05 !important; margin-bottom: 10px !important; color: var(--ink) !important; }
+    aside h2 { color: var(--ink) !important; }
+    .writing-section .w-desc { font-size: 15px !important; color: var(--ink-faint) !important; margin-bottom: 28px !important; max-width: 65ch; }
+    .writing-section .w-body { font-size: 16px !important; line-height: 1.6 !important; color: var(--ink-soft) !important; max-width: 65ch; }
+    .writing-section .w-body p { margin-bottom: 1.1em !important; }
+    .writing-section .w-body a { color: var(--ink) !important; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+    .writing-section .w-body h3 { font-size: 21px !important; line-height: 1.2; color: var(--ink); }
+    .writing-section blockquote { padding-left: 22px !important; color: var(--ink) !important; }
+    .writing-section blockquote footer { font-size: 12px !important; color: var(--ink-faint) !important; }
+    .writing-section figure img { background: transparent !important; }
+    .writing-section figcaption { font-size: 12px !important; color: var(--ink-faint) !important; }
+    .writing-section pre { background: rgba(var(--ink-rgb), .045) !important; font-size: 12.5px !important; scrollbar-width: none; }
+    .writing-section pre::-webkit-scrollbar { display: none; }
+    .writing-section pre code { font-family: "Courier New", ui-monospace, monospace !important; }
+
+    /* footer: no bar; light / dark sits with the links */
+    footer { background: transparent !important; }
+    footer h3 { font-size: 16px !important; }
+    .theme-toggle { display: inline-flex; gap: 12px; }
+    .theme-toggle button { all: unset; cursor: pointer; font: 400 12px var(--font-mono); color: var(--ink-faint); }
+    .theme-toggle button:hover, .theme-toggle button.cur { color: var(--ink); }
+    footer a:hover { color: var(--ink) !important; }
+
+    @media (max-width: 767px) {
+      main { padding-top: 110px !important; }
+      #writings-articles { gap: 80px; }
+      .writing-section .w-body { font-size: 15.5px !important; }
+    }
+  </style>
   <!-- favicon: cube-study plate -->
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
@@ -172,7 +261,6 @@
           <h2 class="font-display text-xl font-bold lowercase">Writings</h2>
         </div>
 
-        <div class="border-t border-dashed border-gray-700 my-4"></div>
 
         <nav>
           <ul id="writings-nav-list" class="space-y-1">
@@ -182,10 +270,7 @@
       </div>
 
       <!-- Back to home -->
-      <a href="../" class="glass-panel p-4 mt-4 flex items-center justify-center gap-2 hover:bg-acid hover:text-black transition-all group rounded-sm">
-        <span class="font-mono text-xl group-hover:-translate-x-1 transition-transform">←</span>
-        <span class="font-mono text-xs uppercase tracking-widest">Back Home</span>
-      </a>
+      <a href="../" class="back-home">← home</a>
     </aside>
 
     <!-- Content Area -->
@@ -211,10 +296,11 @@
         <h3 class="font-display text-2xl mb-2">con.rad</h3>
         <p class="font-mono text-xs text-gray-500">© <span id="current-year"></span> conrad house. curiously tinkering and breaking things.</p>
       </div>
-      <div class="flex gap-6 font-mono text-xs">
+      <div class="flex flex-wrap gap-6 font-mono text-xs">
         <a href="mailto:conradhouse1998@gmail.com" class="hover:text-acid hover:underline">email</a>
         <a href="https://github.com/nemocake" target="_blank" class="hover:text-acid hover:underline">github</a>
         <a href="https://x.com/DlSPUTED" target="_blank" class="hover:text-acid hover:underline">twitter</a>
+        <span class="theme-toggle" role="group" aria-label="page ground"><button type="button" data-t="white">light</button><button type="button" data-t="dark">dark</button></span>
       </div>
     </div>
   </footer>
@@ -287,7 +373,6 @@
         navList.innerHTML = writings.map((item, index) => `
           <li>
             <a href="#${item.id}" class="nav-link-item block font-mono text-xs text-gray-400 hover:text-acid py-2 px-3 border-l-2 border-transparent hover:border-acid/50 transition-all ${index === 0 ? 'is-active' : ''}">
-              <span class="text-gray-600 mr-2">${String(index + 1).padStart(2, '0')}</span>
               ${item.title}
             </a>
           </li>
@@ -343,15 +428,13 @@
 
           return `
             <article class="writing-section glass-panel p-8 rounded-sm hover:border-acid/30 transition-all" id="${item.id}">
-              <div class="flex items-center gap-4 mb-4">
-                <span class="font-mono text-acid text-sm">${String(index + 1).padStart(2, '0')}.</span>
-                <span class="font-mono text-xs text-gray-500 border border-gray-700 px-2 py-0.5">TXT</span>
-                <span class="font-mono text-xs text-gray-500">${formatDate(item.date)}</span>
-                ${item.draft ? `<span class="font-mono text-[10px] uppercase tracking-wider text-gray-500 border border-gray-700 px-2 py-0.5">draft</span>` : ''}
+              <div class="w-meta">
+                <span>${formatDate(item.date)}</span>
+                ${item.draft ? `<span>draft</span>` : ''}
               </div>
               <h2 class="font-display text-2xl md:text-3xl font-bold mb-2 group-hover:text-acid">${item.title}</h2>
-              <p class="font-mono text-sm text-gray-500 mb-6">${item.description}</p>
-              <div class="font-sans text-gray-300 leading-relaxed">
+              <p class="w-desc font-sans">${item.description}</p>
+              <div class="w-body font-sans">
                 ${bodyHtml}
                 ${quoteHtml}
               </div>
@@ -388,7 +471,7 @@
             renderWritings(config.writings);
           } else {
             console.error('[Writings] Config loaded but no writings found');
-            document.getElementById('writings-articles').innerHTML = '<p class="text-gray-500 font-mono">Failed to load writings from config.json</p>';
+            document.getElementById('writings-articles').innerHTML = '<p class="text-gray-500 font-sans">could not load the writings.</p>';
           }
         });
 
@@ -396,7 +479,7 @@
         setTimeout(() => {
           if (!window.SITE_CONFIG || !window.SITE_CONFIG.writings) {
             console.error('[Writings] Config failed to load');
-            document.getElementById('writings-articles').innerHTML = '<p class="text-gray-500 font-mono">Failed to load writings from config.json</p>';
+            document.getElementById('writings-articles').innerHTML = '<p class="text-gray-500 font-sans">could not load the writings.</p>';
           }
         }, 5000);
       }
@@ -480,8 +563,23 @@
     })();
   </script>
 
-  <!-- studio ground selector -->
-  <div class="colophon ground-mount"></div>
+  <script>
+  /* light / dark — writes the shared key only when the visitor actually picks one */
+  (function () {
+    var KEY = "studio.theme";
+    function mark() {
+      var t = document.documentElement.dataset.theme;
+      document.querySelectorAll(".theme-toggle button").forEach(function (b) { b.classList.toggle("cur", b.dataset.t === t); });
+    }
+    document.querySelector(".theme-toggle").addEventListener("click", function (e) {
+      var b = e.target.closest("button"); if (!b) return;
+      document.documentElement.dataset.theme = b.dataset.t;
+      try { localStorage.setItem(KEY, b.dataset.t); } catch (_) {}
+      mark();
+    });
+    mark();
+  })();
+  </script>
   <!-- analytics: goatcounter (privacy-friendly, cookieless) -->
   <script data-goatcounter="https://conradhouse.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
