@@ -482,7 +482,14 @@
   .orow.on .orow-head { background: transparent; }
   .orow .nm { color: var(--ink-faint); }
   .orow.on .nm, .orow:hover .nm { color: var(--ink); }
-  .strip { padding: 4px 0 16px; }
+  .pv-read { scrollbar-width: none; }
+  .pv-read::-webkit-scrollbar { display: none; }
+  .strip { padding: 4px 0 16px; scrollbar-width: none; }
+  .strip::-webkit-scrollbar { display: none; }
+  /* a soft fade on whichever end has more — no bar, no arrows */
+  .strip.more-r { -webkit-mask-image: linear-gradient(to right, #000 82%, transparent); mask-image: linear-gradient(to right, #000 82%, transparent); }
+  .strip.more-l { -webkit-mask-image: linear-gradient(to left, #000 82%, transparent); mask-image: linear-gradient(to left, #000 82%, transparent); }
+  .strip.more-l.more-r { -webkit-mask-image: linear-gradient(to right, transparent, #000 18%, #000 82%, transparent); mask-image: linear-gradient(to right, transparent, #000 18%, #000 82%, transparent); }
   .strip-thumb { border: 0; background: transparent; opacity: .5; transition: opacity .25s ease; }
   .strip-thumb:hover, .strip-thumb.active { opacity: 1; }
   .strip-chip { border: 0; background: transparent; padding: 0 16px 0 0; font-size: 14px; color: var(--ink-faint); }
@@ -644,14 +651,15 @@
       txt.classList.toggle("reading", kind !== "mix");
       let html;
       if (kind === "mix") {
-        html = `<span class="pv-lead">project</span>` +
+        // project: its name heads the panel (no "project" label — the row already says so)
+        html = `<span class="pv-wtitle">${esc(item.title || "")}</span>` +
                `<span class="pv-snip">${esc(item.snippet || "")}</span>`;
         if (item.tags && item.tags.length)
           html += `<span class="pv-tags">${item.tags.slice(0, 6).map(t => `<span class="pv-tag">${esc(t)}</span>`).join("")}</span>`;
         if (item.live)
           html += `<span class="pv-live"><a href="${esc(item.live)}" target="_blank" rel="noopener">live &nearr;</a></span>`;
-        pvNm.textContent = item.title || "";
-        pvMeta.textContent = item.meta || item.status || "";
+        pvNm.textContent = "";
+        pvMeta.textContent = "";
       } else {
         // writing: label / title / one-liner / the piece itself, fading in for reading
         const paras = (item.body || []).slice(0, 14);
@@ -681,6 +689,34 @@
       else showText(item, kind);
     }
 
+    // strips have no scrollbar: resting the pointer near either end drifts the film that way,
+    // slowly at first and a little faster the closer you get to the edge
+    function edgeDrift(el) {
+      const ZONE = 0.24, MAX = 1.4;           // edge band (fraction of width), top speed in px/frame
+      let v = 0, raf = 0;
+      const ends = () => {
+        const max = el.scrollWidth - el.clientWidth;
+        el.classList.toggle("more-r", el.scrollLeft < max - 1);
+        el.classList.toggle("more-l", el.scrollLeft > 1);
+      };
+      const tick = () => {
+        if (!v) { raf = 0; return; }
+        el.scrollLeft += v; ends();
+        raf = requestAnimationFrame(tick);
+      };
+      el.addEventListener("mousemove", e => {
+        const r = el.getBoundingClientRect(), x = (e.clientX - r.left) / r.width;
+        if (el.scrollWidth <= el.clientWidth + 1) { v = 0; return; }
+        v = x > 1 - ZONE ? MAX * ((x - (1 - ZONE)) / ZONE) ** 2
+          : x < ZONE     ? -MAX * ((ZONE - x) / ZONE) ** 2 : 0;
+        if (v && !raf) raf = requestAnimationFrame(tick);
+      });
+      el.addEventListener("mouseleave", () => { v = 0; });
+      el.addEventListener("scroll", ends, { passive: true });
+      new ResizeObserver(ends).observe(el);
+      new MutationObserver(ends).observe(el, { childList: true });
+    }
+
     // build rows
     secs.forEach((s, idx) => {
       const kind = H.SECTION_KIND[s.key] || (s.img ? "image" : "text");
@@ -694,6 +730,7 @@
          <div class="strip-wrap"><div class="strip-clip"><div class="strip"><span class="strip-empty">opening&hellip;</span></div></div></div>`;
 
       const strip = row.querySelector(".strip");
+      edgeDrift(strip);
       let loaded = false, list = null, sample = null;
 
       function buildStrip() {
