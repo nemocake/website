@@ -206,7 +206,7 @@ markTheme();
 
   const links = [];
   links.push(`<a href="./?w=${encodeURIComponent(w.slug)}">see it in the studio ↗</a>`);
-  if (w.live) links.push(`<a href="${esc(w.live)}">open it live ↗</a>`);
+  if (w.live) links.push(/^https?:/.test(w.live) ? `<a href="${esc(w.live)}" target="_blank" rel="noopener">${esc(w.live.replace(/^https?:\/\//, "").replace(/\/$/, ""))} ↗</a>` : `<a href="${esc(w.live)}">open it live ↗</a>`);
   if (w.essay) links.push(`<a href="${esc(w.essay.url)}">i wrote about this: ${low(w.essay.title)} ↗</a>`);
   const art = articles.find(a => a.work === w.slug);
   if (art) links.push(`<a href="../writings/#${encodeURIComponent(art.slug)}">${esc(art.relation || "process writing")}: ${low(art.title)} ↗</a>`);

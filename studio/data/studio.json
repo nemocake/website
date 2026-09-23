@@ -621,7 +621,7 @@
     },
     {
       "slug": "visual-scores",
-      "name": "VISUAL SCORES",
+      "name": "SCHEMATICS N' SCORES",
       "edition": null,
       "kind": "guest",
       "year": 2026,
@@ -629,7 +629,7 @@
       "after": "Cage, Penderecki, De Cesare",
       "medium": "procedural graphic scores, live in the browser",
       "status": "approved",
-      "live": "../visual-scores/",
+      "live": "https://scores.conradhouse.dev/",
       "note": "A homage to score as image, after Cage, Penderecki, De Cesare, Frank Lepold and others. Each score is generated from a set of visual vocabularies, drawing from artists, general music notation and a series of engineering/math related schematics. Born from a fascination of visual scores as aesthetics and data as sound.",
       "images": [
         {
