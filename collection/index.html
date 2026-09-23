@@ -244,10 +244,33 @@
     /* grid */
     .grid-item img, .grid-item:hover img { filter: none !important; }
     .grid-item h3 { font-size: 14px !important; }
-    /* hover caption: a plain label strip, not a scrim */
-    .grid-item .bg-gradient-to-t { background: rgb(var(--paper-rgb)) !important; padding: 8px 10px !important; }
-    .grid-item .bg-gradient-to-t p { color: var(--ink-faint) !important; }
-    [data-thoughts-trigger] { color: var(--ink) !important; }
+    /* hover caption — same treatment as the home page's are.na tiles:
+       an ink scrim rising from the bottom, paper-coloured type, detail at the side */
+    .tile-meta {
+      position: absolute; left: 0; right: 0; bottom: 0; z-index: 10;
+      padding: 38px 12px 10px;
+      display: flex; align-items: flex-end; justify-content: space-between; gap: 12px;
+      background: linear-gradient(0deg, rgba(var(--ink-rgb), .82), rgba(var(--ink-rgb), 0));
+      opacity: 0; transition: opacity .3s ease .04s;
+    }
+    .grid-item:hover .tile-meta, .grid-item:focus-within .tile-meta { opacity: 1; }
+    .grid-item:has(.thoughts-overlay.is-visible) .tile-meta { opacity: 0; pointer-events: none; }
+    .tile-meta .tm-l { min-width: 0; display: flex; flex-direction: column; }
+    .tile-meta .tm-t {
+      font: 500 13px/1.25 var(--font-display); letter-spacing: -.02em; color: rgb(var(--paper-rgb));
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .tile-meta .tm-a { font: 400 11px/1.3 var(--font-text); color: rgba(var(--paper-rgb), .82); }
+    .tile-meta .tm-th {
+      all: unset; cursor: pointer; flex: none; white-space: nowrap;
+      font: 400 11px/1.3 var(--font-text); color: rgba(var(--paper-rgb), .82);
+    }
+    .tile-meta .tm-th:hover { color: rgb(var(--paper-rgb)); text-decoration: underline; text-underline-offset: 2px; }
+    /* the thoughts panel uses the same ink, just deeper, covering the tile */
+    .thoughts-overlay { background: rgba(var(--ink-rgb), .9) !important; }
+    .thoughts-overlay p { color: rgba(var(--paper-rgb), .82) !important; }
+    .thoughts-overlay p:last-child { color: rgb(var(--paper-rgb)) !important; }
+    .thoughts-overlay [data-thoughts-close] { background: transparent !important; color: rgba(var(--paper-rgb), .82) !important; }
 
     /* single view: nav chevrons, loading, plaque, thoughts */
     #side-prev-btn, #side-next-btn { background: transparent !important; color: var(--ink-faint) !important; }
@@ -257,7 +280,8 @@
     #plaque-artist, #plaque-medium { color: var(--ink-faint) !important; margin-top: 2px !important; }
     #plaque-medium:empty { display: none; }
     #artwork-sidebar p:first-child { color: var(--ink-faint) !important; }
-    #sidebar-text, .thoughts-overlay p:last-child { font-size: 14px !important; line-height: 1.5 !important; color: var(--ink-soft) !important; }
+    #sidebar-text { font-size: 14px !important; line-height: 1.5 !important; color: var(--ink-soft) !important; }
+    .thoughts-overlay p:last-child { font-size: 14px !important; line-height: 1.5 !important; }
 
     /* view controls: bare icons */
     #view-controls a, #view-controls button { color: var(--ink-faint) !important; }
@@ -774,10 +798,9 @@
             <div class="grid-item glass-panel overflow-hidden cursor-pointer relative group" data-index="${index}">
               <img src="${item.thumbnail || item.image}" alt="${item.title || ''}" loading="lazy" class="w-full">
               ${badge}
-              ${hasThoughts ? `<button class="thoughts-btn absolute top-3 left-3 px-2 py-1 bg-black/70 backdrop-blur text-[10px] font-mono text-white/90 opacity-0 group-hover:opacity-100 transition-opacity z-10" data-thoughts-trigger>thoughts</button>` : ''}
-              <div class="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-                <h3 class="font-display text-sm font-bold">${item.title || 'Untitled'}</h3>
-                ${item.artist ? `<p class="font-mono text-xs text-gray-400">${item.artist}</p>` : ''}
+              <div class="tile-meta">
+                <span class="tm-l"><span class="tm-t">${item.title || 'untitled'}</span>${item.artist ? `<span class="tm-a">${item.artist}</span>` : ''}</span>
+                ${hasThoughts ? `<button class="tm-th" type="button" data-thoughts-trigger>thoughts</button>` : ''}
               </div>
               ${hasThoughts ? `
                 <div class="thoughts-overlay absolute inset-0 bg-black/95 p-5 flex flex-col justify-center z-20">
