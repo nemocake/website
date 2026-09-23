@@ -2,15 +2,81 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<title>STUDIO · Conrad House</title>
+<title>studio · con.rad</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<script>try{document.documentElement.dataset.theme=localStorage.getItem("studio.theme")||"white"}catch(e){}</script>
-<link rel="stylesheet" href="assets/catalogue.css" />
-<script src="assets/graphite.js" defer></script>
-<script src="assets/masthead.js" defer></script>
-<script src="assets/lightbox.js" defer></script>
-<script src="assets/nav.js" defer></script>
-<script src="assets/theme.js" defer></script>
+<!-- two grounds only: white or dark. Same "studio.theme" key as the rest of the site; a saved "cream" reads as white. -->
+<script>try{var t=localStorage.getItem("studio.theme");if(!t&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";document.documentElement.dataset.theme=t==="dark"?"dark":"white";}catch(e){}</script>
+<style>
+  @font-face { font-family: "Areal"; src: url("../assets/catalogue/fonts/ABCAreal-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Areal"; src: url("../assets/catalogue/fonts/ABCAreal-RegularItalic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+  @font-face { font-family: "Areal"; src: url("../assets/catalogue/fonts/ABCAreal-Medium.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+
+  :root, :root[data-theme="white"] { --bg:#ffffff; --ink:#111111; --soft:#3a3a3a; --mute:#8c8c8c; }
+  :root[data-theme="dark"] { --bg:#0e0e0e; --ink:#ededed; --soft:#bdbdbd; --mute:#7a7a7a; }
+
+  * { box-sizing:border-box; margin:0; padding:0; border-radius:0 !important; }
+  html, body { background:var(--bg); color:var(--ink); font:400 14px/1.55 "Areal", sans-serif; letter-spacing:.005em; }
+  body { overflow-x:hidden; }
+  img, video { display:block; max-width:100%; }
+  button { all:unset; cursor:pointer; }
+  a { color:inherit; text-decoration:none; }
+
+  #top { display:flex; gap:22px; align-items:baseline; padding:22px 28px 0; font-size:12px; }
+  #top .home { font-weight:500; letter-spacing:-.02em; font-size:13px; }
+  #top nav { display:flex; gap:18px; color:var(--mute); }
+  #top nav a:hover, #top nav a.cur { color:var(--ink); }
+  #theme { margin-left:auto; display:flex; gap:10px; color:var(--mute); }
+  #theme button:hover, #theme button.cur { color:var(--ink); }
+
+  main { max-width:1120px; margin:0 auto; padding:clamp(56px, 10vh, 110px) 28px 80px; }
+  .head { max-width:680px; }
+  .name { font:500 clamp(36px, 5vw, 56px)/1 "Areal"; letter-spacing:-.035em; }
+  .note { margin-top:22px; font-size:16px; line-height:1.6; color:var(--soft); white-space:pre-line; }
+  .meta { margin-top:22px; font-size:12px; color:var(--mute); line-height:1.8; }
+  .meta b { font-weight:400; color:var(--ink); font-size:13px; }
+  .links { margin-top:18px; display:flex; flex-wrap:wrap; gap:6px 18px; font-size:12px; color:var(--mute); }
+  .links a:hover { color:var(--ink); }
+
+  .plates { margin-top:clamp(48px, 8vh, 88px); display:flex; flex-direction:column; gap:28px; }
+  .row { display:grid; gap:28px; align-items:end; }
+  .row.n2 { grid-template-columns:1fr 1fr; }
+  .row.n3 { grid-template-columns:1fr 1fr 1fr; }
+  figure a { display:block; }
+  figure img, figure video { width:100%; height:auto; }
+  figcaption { margin-top:8px; font-size:12px; color:var(--mute); }
+
+  .embeds { margin-top:48px; }
+  .embeds .row-e { display:flex; flex-wrap:wrap; gap:20px; }
+  .embeds figure { max-width:520px; flex:1 1 320px; }
+  .embeds .fallback { display:none; }
+  .embeds.embed-failed .fallback { display:inline; }
+
+  section.ss { margin-top:clamp(64px, 10vh, 120px); }
+  section.ss h2 { font:500 clamp(26px, 3.4vw, 36px)/1.05 "Areal"; letter-spacing:-.035em; }
+  section.ss .note { font-size:15px; max-width:680px; }
+
+  .refs { margin-top:48px; }
+  .refs button { font-size:12px; color:var(--mute); }
+  .refs button:hover { color:var(--ink); }
+  .refs .grid { margin-top:18px; display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:22px; align-items:end; }
+  .refs .grid[hidden] { display:none; }
+
+  .back { margin-top:clamp(64px, 10vh, 110px); font-size:12px; color:var(--mute); }
+  .back a:hover { color:var(--ink); }
+
+  footer { max-width:1120px; margin:0 auto; padding:0 28px 48px; display:flex; gap:22px; font-size:12px; color:var(--mute); }
+  footer a:hover { color:var(--ink); }
+
+  .load-error { color:var(--mute); }
+
+  @media (max-width:760px) {
+    #top { padding:16px 16px 0; flex-wrap:wrap; gap:6px 14px; }
+    #top nav { gap:12px; }
+    main { padding:48px 16px 64px; }
+    .row.n2, .row.n3 { grid-template-columns:1fr; }
+    footer { padding:0 16px 40px; }
+  }
+</style>
   <!-- favicon: cube-study plate -->
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
@@ -19,43 +85,47 @@
   <script src="../assets/catalogue/img-upgrade.js"></script>
 </head>
 <body>
-<div class="ground-mount" aria-label="page ground"></div>
-
-<nav class="rail" id="rail" aria-label="studio contents">
-  <a class="rail-mast" href="./" aria-label="back to the studio index"><div class="mast-title">
-    <h1 id="mast-h1">studio</h1>
-    <canvas id="masthead-canvas" data-word="studio" data-cap="58" aria-hidden="true"></canvas>
-  </div></a>
-</nav>
-
-<div class="screens">
-<div class="wrap">
-
-  <nav class="site-nav" aria-label="site">
-    <a class="home" href="../">con.rad</a>
+<div id="top">
+  <a class="home" href="../">con.rad</a>
+  <nav aria-label="site">
     <a href="../writings/">writings</a>
     <a href="../collection/">collection</a>
     <a href="../projects/">projects</a>
     <a class="cur" href="./">studio</a>
   </nav>
-
-  <main id="main"></main>
-
-  <footer class="colophon">
-    <div class="cols">
-      <a href="../">con.rad</a>
-      <a href="mailto:conradhouse1998@gmail.com">email</a>
-      <a href="https://www.are.na/conrad-house" target="_blank" rel="noopener">are.na</a>
-      <a href="https://x.com/DlSPUTED" target="_blank" rel="noopener">twitter</a>
-    </div>
-    <span class="colophon-motto" title="established 02·04·1998">est. ii·iv·mcmxcviii</span>
-  </footer>
-
+  <span id="theme" role="group" aria-label="page ground"><button type="button" data-theme="white">light</button><button type="button" data-theme="dark">dark</button></span>
 </div>
-</div>
+
+<main id="main"></main>
+
+<footer>
+  <a href="../">con.rad</a>
+  <a href="mailto:conradhouse1998@gmail.com">email</a>
+  <a href="https://www.are.na/conrad-house" target="_blank" rel="noopener">are.na</a>
+  <a href="https://x.com/DlSPUTED" target="_blank" rel="noopener">twitter</a>
+</footer>
 
 <script>
+/* the long-form reader for one work: its full note, links out, every plate laid out, substudies, references.
+   Plates open the work in the studio's film view. */
 const IMG_V = "?v=1784771550";
+function esc(s) { return String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
+const low = s => esc(String(s ?? "").toLowerCase());
+const isVid = im => im.video === true || /\.(mp4|webm|mov)$/i.test(im.file);
+
+/* ground: white or dark; only written when the visitor picks one */
+function markTheme() {
+  const t = document.documentElement.dataset.theme;
+  document.querySelectorAll("#theme button").forEach(b => b.classList.toggle("cur", b.dataset.theme === t));
+}
+document.getElementById("theme").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (!b) return;
+  document.documentElement.dataset.theme = b.dataset.theme;
+  try { localStorage.setItem("studio.theme", b.dataset.theme); } catch (_) {}
+  markTheme();
+});
+markTheme();
+
 (async function () {
   const main = document.getElementById("main");
   let data;
@@ -64,63 +134,46 @@ const IMG_V = "?v=1784771550";
     if (!r.ok) throw new Error("HTTP " + r.status);
     data = await r.json();
   } catch (e) {
-    main.innerHTML = `<div class="load-error">could not load data/studio.json — ${e.message}.
-      This page has no embedded fallback; fix the fetch.</div>`;
+    main.innerHTML = `<div class="load-error">could not load data/studio.json — ${esc(e.message)}</div>`;
     return;
   }
 
   const works = data.works || [];
-  let articles = [];
-  try {
-    const al = await fetch("data/articles.json", { cache: "no-store" }).then(r => r.json());
-    for (const a of al.articles || []) {
-      const full = await fetch(`data/articles/${a.slug}.json`, { cache: "no-store" }).then(r => r.json()).catch(() => null);
-      if (full) articles.push(full);
-    }
-  } catch (_) { /* article list is optional on this page */ }
   const SLUG_ALIAS = { paint: "room-with-cube", "paintsystem2-room": "broken-rooms",
     "paintsystem2-die": "horizons", "paintsystem2-chamber": "chamber",
     "paintsystem2-interior": "interior", "jester-poster": "idea-403",
     "idea-044-grid": "idea-044", "idea-107-grid": "idea-107", sleeve: "visual-scores" };
-  let slug = new URLSearchParams(location.search).get("w");
+  const slug = new URLSearchParams(location.search).get("w");
+  if (!slug) { location.replace("./"); return; }
   if (SLUG_ALIAS[slug]) { location.replace(`piece.html?w=${SLUG_ALIAS[slug]}${location.hash}`); return; }
-  const idx = works.findIndex(w => w.slug === slug);
-  if (idx < 0) {
-    main.innerHTML = `<div class="load-error">no work named "${esc(slug)}" in the catalogue.
-      <br /><br /><a href="./" style="text-decoration:underline">back to the index →</a></div>`;
+  const w = works.find(x => x.slug === slug);
+  if (!w) {
+    main.innerHTML = `<div class="load-error">nothing in the studio called "${esc(slug)}". <a href="./" style="text-decoration:underline">back to the studio →</a></div>`;
     return;
   }
-
-  const w = works[idx];
   if (w.parent) { location.replace(`piece.html?w=${encodeURIComponent(w.parent)}#ss-${w.slug}`); return; }
-  const substudies = works.filter(x => x.parent === w.slug).sort((a, b) => (a.edition ?? 999) - (b.edition ?? 999));
-  document.title = `${w.name} · STUDIO · Conrad House`;
 
-  const edLabel = w.edition != null ? "EDITION " + String(w.edition).padStart(2, "0")
-    : w.kind === "exploration" ? "EXPLORATION · A WAY OF SEARCHING"
-    : w.kind === "guest" ? "GUEST · PRE-STUDIO"
-    : "EXPERIMENT · UNNUMBERED";
+  let articles = [];
+  try {
+    const al = await fetch("data/articles.json", { cache: "no-store" }).then(r => r.json());
+    articles = (await Promise.all((al.articles || []).map(a => fetch(`data/articles/${a.slug}.json`, { cache: "no-store" }).then(r => r.json()).catch(() => null)))).filter(Boolean);
+  } catch (_) { /* article links are optional here */ }
+
+  const ed = (a, b) => (a.edition ?? 999) - (b.edition ?? 999);
+  const substudies = works.filter(x => x.parent === w.slug).sort(ed);
   const sdef = (data.series || []).find(s => s.id === w.series);
-  const sibs = sdef ? works.filter(x => x.series === sdef.id && !x.parent).sort((a, b) => (a.edition ?? 999) - (b.edition ?? 999)) : [];
-  const seriesCell = sdef
-    ? `<div><dt>series</dt><dd><a href="./#s-${sdef.id}" style="color:var(--sanguine)">${esc(sdef.numeral)} · ${esc(sdef.name)}</a> — ${sibs.findIndex(x => x.slug === w.slug) + 1} of ${sibs.length}</dd></div>`
-    : "";
-  const imgs = w.images || [];
-  const hero = imgs[0];
-  const rest = imgs.slice(1);
+  document.title = `${w.name.toLowerCase()} · studio · con.rad`;
 
-  // Pack plates into rows by aspect: wide images take a row to themselves;
-  // portrait/square ones sit 2-up (3-up when a page has many), so a page reads
-  // as a laid-out spread instead of one tall stack.
+  // wide plates take a row alone; the rest sit two- or three-up; curated "trip" runs stay together
   function packRows(list) {
     const rows = []; let buf = [];
-    const wideish = im => im.wide === true || im.video === true || (im.w && im.h ? (im.w / im.h) >= 2.1 : false);
+    const wideish = im => im.wide === true || isVid(im) || (im.w && im.h ? (im.w / im.h) >= 2.1 : false);
     const flush = () => { if (buf.length) { rows.push(buf); buf = []; } };
     const narrow = list.filter(im => !wideish(im)).length;
     const cap = narrow >= 6 ? 3 : 2;
     for (let i = 0; i < list.length; i++) {
       const im = list[i];
-      if (im.trip != null) {                   // curated row: consecutive plates sharing a trip stay together
+      if (im.trip != null) {
         flush();
         const grp = [im];
         while (i + 1 < list.length && list[i + 1].trip === im.trip) grp.push(list[++i]);
@@ -134,156 +187,82 @@ const IMG_V = "?v=1784771550";
     flush();
     return rows;
   }
+  function fig(work, im) {
+    const p = (work.images || []).indexOf(im);
+    const url = `assets/img/${work.slug}/${im.file}${IMG_V}`;
+    const media = isVid(im)
+      ? `<video src="${url}" autoplay loop muted playsinline></video>`
+      : `<img src="${url}" alt="${esc(im.caption || work.name)}" loading="lazy" />`;
+    const cap = im.caption || im.title;
+    return `<figure><a href="./?w=${encodeURIComponent(work.slug)}${p ? `&p=${p}` : ""}" title="open in the studio">${media}</a>${cap ? `<figcaption>${esc(cap)}</figcaption>` : ""}</figure>`;
+  }
+  const platesHtml = work => packRows(work.images || []).map(r =>
+    `<div class="row n${Math.min(r.length, 3)}">${r.map(im => fig(work, im)).join("")}</div>`).join("");
+  const refsHtml = (work, id) => (work.refs && work.refs.length) ? `
+    <div class="refs"><button type="button" data-refs="${id}" aria-expanded="false">references ▸</button>
+      <div class="grid" id="refs-${id}" hidden>${work.refs.map(r => `<figure>
+        <img src="assets/img/${work.slug}/${esc(r.file)}${IMG_V}" alt="${esc(r.caption)}" loading="lazy" />
+        <figcaption>${esc(r.caption)}</figcaption></figure>`).join("")}</div></div>` : "";
 
-  let restHtml = packRows(rest).map(r =>
-    r.length === 1 ? fig(r[0], true) : `<div class="row-${r.length}">${r.map(im => fig(im)).join("")}</div>`
-  ).join("");
+  const links = [];
+  links.push(`<a href="./?w=${encodeURIComponent(w.slug)}">see it in the studio ↗</a>`);
+  if (w.live) links.push(`<a href="${esc(w.live)}">open it live ↗</a>`);
+  if (w.essay) links.push(`<a href="${esc(w.essay.url)}">i wrote about this: ${low(w.essay.title)} ↗</a>`);
+  const art = articles.find(a => a.work === w.slug);
+  if (art) links.push(`<a href="../writings/#${encodeURIComponent(art.slug)}">${esc(art.relation || "process writing")}: ${low(art.title)} ↗</a>`);
 
   main.innerHTML = `
-    <div class="pv-layout">
-      <aside class="pv-side">
-        <span class="rn">${w.edition != null ? String(w.edition).padStart(2, "0") : "✦"}</span>
-        <h1 data-drawn data-cap="42" data-orient="vertical">${esc(w.name)}</h1>
-      </aside>
-      <div class="pv-body">
-      <div class="pv-topline"><a href="./">◀ contents</a><span>${edLabel}</span></div>
-
-    <dl class="specs">
-      <div><dt>after</dt><dd>${esc(w.after)}</dd></div>
-      ${seriesCell}
-      ${(w.tags && w.tags.length) ? `<div><dt>tags</dt><dd class="tag-chips">${w.tags.map(t =>
-        `<a class="tag-chip" href="./#/t/${encodeURIComponent(t)}">${esc(t)}</a>`).join("")}</dd></div>` : ""}
-    </dl>
-
-    ${(w.note && w.note.trim()) ? `<p class="note">${esc(w.note)}</p>` : ""}
-    ${w.live ? `<p style="margin-top:18px"><a href="${esc(w.live)}"
-      style="font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:lowercase;color:var(--sanguine);border:1px solid var(--sanguine);padding:8px 14px;display:inline-block">open the live piece ↗</a></p>` : ""}
-    ${w.essay ? `<p style="margin-top:14px"><a href="${esc(w.essay.url)}"
-      style="font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:lowercase;color:var(--sanguine)">→ i wrote about this: “${esc(w.essay.title)}”${w.essay.date ? " · " + esc(w.essay.date) : ""}</a></p>` : ""}
-    ${(() => {
-      const a = articles.find(a => a.work === w.slug);
-      return a ? `<p style="margin-top:18px"><a href="../writings/#${encodeURIComponent(a.slug)}"
-        style="font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;text-transform:lowercase;color:var(--sanguine)">→ ${esc(a.relation || "process writing")}: ${esc(a.title)}</a></p>` : "";
-    })()}
+    <div class="head">
+      <h1 class="name">${low(w.name)}</h1>
+      ${(w.note && w.note.trim()) ? `<p class="note">${esc(w.note)}</p>` : ""}
+      <div class="meta">${[["after", w.after], ["from", sdef && sdef.name.toLowerCase()]]
+        .filter(r => r[1]).map(([l, v]) => `${l} <b>${esc(v)}</b>`).join("<br>")}</div>
+      <div class="links">${links.join("")}</div>
+    </div>
 
     ${(w.embeds && w.embeds.length) ? `
-      <div class="embeds">
-        <div class="embeds-head">heard</div>
-        <div class="embed-row">${w.embeds.map(e => `<figure class="embed-fig">
-          <blockquote class="twitter-tweet" data-dnt="true" data-theme="light"><a href="${esc(e.url)}"></a></blockquote>
-          <noscript><a href="${esc(e.url)}">view on x ↗</a></noscript>
-          ${e.caption ? `<figcaption>${esc(e.caption)} · <a href="${esc(e.url)}" target="_blank" rel="noopener">open on x ↗</a></figcaption>` : ""}
-        </figure>`).join("")}</div>
-      </div>
-      ` : ""}
+      <div class="embeds"><div class="row-e">${w.embeds.map(e => `<figure>
+        <blockquote class="twitter-tweet" data-dnt="true" data-theme="${document.documentElement.dataset.theme === "dark" ? "dark" : "light"}"><a href="${esc(e.url)}"></a></blockquote>
+        <figcaption>${e.caption ? esc(e.caption) + " · " : ""}<a class="fallback" href="${esc(e.url)}" target="_blank" rel="noopener">open on x ↗</a></figcaption>
+      </figure>`).join("")}</div></div>` : ""}
 
-    <div class="piece-plates">
-      ${hero ? fig(hero, true, 1) : ""}
-      ${restHtml}
-    </div>
+    <div class="plates">${platesHtml(w)}</div>
+    ${refsHtml(w, "main")}
 
     ${substudies.map(ss => `
-      <section id="ss-${ss.slug}">
-        <div class="ss-head"><span class="tag">substudy</span><h2 data-drawn data-cap="56">${esc(ss.name)}</h2>
-          <span class="ed">${ss.edition != null ? "ED. " + String(ss.edition).padStart(2, "0") : "✦"} · after ${esc(ss.after)}</span></div>
-        ${(ss.note && ss.note.trim()) ? `<p class="ss-note">${esc(ss.note)}</p>` : ""}
-        <div class="piece-plates" style="margin-top:34px">
-          ${packRows(ss.images || []).map(r => r.map(im => {
-            const i = (ss.images || []).indexOf(im) + 1;
-            const cell = `<figure class="${r.length === 1 ? "wide" : ""}">
-              <div class="img" data-lb data-lb-group="ss-${ss.slug}" data-lb-work="${esc(ss.name)}"
-                data-lb-title="${esc(im.title || "")}" data-lb-caption="${esc(im.caption || "")}"><img src="assets/img/${ss.slug}/${im.file}${IMG_V}" alt="${esc(im.caption)}" loading="lazy" /></div>
-              <figcaption><span class="i">${esc(ss.name.toLowerCase())} · pl. ${i}/${(ss.images || []).length}</span>${(im.caption || im.title) ? `<span class="t">${esc(im.caption || im.title)}</span>` : ""}</figcaption>
-            </figure>`;
-            return cell;
-          }).join("")).map((html, ri) => {
-            const r = packRows(ss.images || [])[ri];
-            return r.length === 1 ? html : `<div class="row-${r.length}">${html}</div>`;
-          }).join("")}
-        </div>
-        ${(ss.refs && ss.refs.length) ? `
-        <div class="refs-toggle"><button type="button" data-refs="ss-${ss.slug}" aria-expanded="false">▸ references (${ss.refs.length})</button></div>
-        <div class="refs-grid" id="refs-ss-${ss.slug}" hidden>${ss.refs.map(r => `
-          <figure class="ref-fig" data-lb data-lb-group="refs-${ss.slug}" data-lb-work="reference" data-lb-caption="${esc(r.caption)}"><img src="assets/img/${ss.slug}/${esc(r.file)}${IMG_V}" alt="${esc(r.caption)}" loading="lazy" />
-          <figcaption>${esc(r.caption)}</figcaption></figure>`).join("")}</div>` : ""}
+      <section class="ss" id="ss-${ss.slug}">
+        <h2>${low(ss.name)}</h2>
+        ${(ss.note && ss.note.trim()) ? `<p class="note">${esc(ss.note)}</p>` : ""}
+        ${ss.after ? `<div class="meta">after <b>${esc(ss.after)}</b></div>` : ""}
+        <div class="plates">${platesHtml(ss)}</div>
+        ${refsHtml(ss, "ss-" + ss.slug)}
       </section>`).join("")}
 
-    ${(w.refs && w.refs.length) ? `
-    <div class="refs-toggle"><button type="button" data-refs="main" aria-expanded="false">▸ references (${w.refs.length})</button></div>
-    <div class="refs-grid" id="refs-main" hidden>
-      ${w.refs.map(r => `<figure class="ref-fig">
-        <img src="assets/img/${w.slug}/${esc(r.file)}${IMG_V}" alt="${esc(r.caption)}" loading="lazy" />
-        <figcaption>${esc(r.caption)}</figcaption>
-      </figure>`).join("")}
-    </div>` : ""}
+    <div class="back"><a href="./?w=${encodeURIComponent(w.slug)}">← back to the studio</a></div>`;
 
-      </div>
-    </div>
-
-    <div class="carousel-head"><span class="h">more from the studio</span><span>scroll ⟶</span></div>
-    <div class="carousel">${(() => {
-      const edS = (a, b) => (a.edition ?? 999) - (b.edition ?? 999);
-      const tops = works.filter(x => !x.parent);
-      const sibs = tops.filter(x => x.slug !== w.slug && x.series && x.series === w.series).sort(edS);
-      const rest2 = tops.filter(x => x.slug !== w.slug && !(x.series && x.series === w.series)).sort(edS);
-      return sibs.concat(rest2).map(x => `
-        <a class="car-card ${x.series && x.series === w.series ? "same-series" : ""}" href="piece.html?w=${encodeURIComponent(x.slug)}">
-          <img src="assets/img/${x.slug}/thumb.jpg${IMG_V}" alt="${esc(x.name)}" loading="lazy"
-            onerror="this.src='assets/img/${x.slug}/hero.jpg'" />
-          <span class="car-name"><span>${esc(x.name)}</span><span class="ed">${x.edition != null ? String(x.edition).padStart(2, "0") : "✦"}</span></span>
-        </a>`).join("");
-    })()}</div>`;
+  if (location.hash) { const t = document.getElementById(location.hash.slice(1)); if (t) t.scrollIntoView(); }
 
   document.querySelectorAll("[data-refs]").forEach(btn => {
     btn.addEventListener("click", () => {
       const g = document.getElementById("refs-" + btn.dataset.refs);
-      if (!g) return;
       g.hidden = !g.hidden;
       btn.setAttribute("aria-expanded", String(!g.hidden));
-      btn.textContent = (g.hidden ? "▸" : "▾") + btn.textContent.slice(1);
-      if (!g.hidden) {
-        if (window.Graphite) Graphite.init(g);
-        if (window.Lightbox) Lightbox.attach(g);
-      }
+      btn.textContent = g.hidden ? "references ▸" : "references ▾";
     });
   });
 
   if (w.embeds && w.embeds.length) {
     const holder = document.querySelector(".embeds");
     const scan = () => { try { window.twttr.widgets.load(holder); } catch (_) {} };
-    if (window.twttr && window.twttr.widgets) scan();
-    else {
-      const s = document.createElement("script");
-      s.async = true; s.charset = "utf-8";
-      s.src = "https://platform.twitter.com/widgets.js";
-      s.onload = () => (window.twttr && window.twttr.ready) ? window.twttr.ready(scan) : scan();
-      s.onerror = () => holder.classList.add("embed-failed");
-      document.head.appendChild(s);
-    }
-    // if the widget never renders (blocked/offline), fall back to plain links
+    const s = document.createElement("script");
+    s.async = true; s.charset = "utf-8";
+    s.src = "https://platform.twitter.com/widgets.js";
+    s.onload = () => (window.twttr && window.twttr.ready) ? window.twttr.ready(scan) : scan();
+    s.onerror = () => holder.classList.add("embed-failed");
+    document.head.appendChild(s);
+    // if the widget never renders (blocked/offline), the plain links show instead
     setTimeout(() => { if (!holder.querySelector("iframe")) holder.classList.add("embed-failed"); }, 6000);
   }
-
-  if (window.Graphite) Graphite.init(); else addEventListener("load", () => Graphite.init());
-  if (window.Masthead) Masthead.init();
-  if (window.Lightbox) Lightbox.attach(); else addEventListener("load", () => Lightbox.attach());
-
-  function fig(im, wide, n) {
-    if (!im) return "";
-    const i = imgs.indexOf(im) + 1;
-    const media = im.video
-      ? `<video src="assets/img/${w.slug}/${im.file}${IMG_V}" autoplay loop muted playsinline
-           poster="assets/img/${w.slug}/${(imgs[0]&&!imgs[0].video)?imgs[0].file:"hero.jpg"}${IMG_V}" style="width:100%;display:block"></video>`
-      : `<img src="assets/img/${w.slug}/${im.file}${IMG_V}" alt="${esc(im.caption)}" loading="lazy" />`;
-    return `<figure class="${wide ? "wide" : ""}">
-      <div class="img" data-lb data-lb-group="plates" data-lb-work="${esc(w.name)}"
-        data-lb-title="${esc(im.title || "")}" data-lb-caption="${esc(im.caption || "")}"
-        data-lb-notes='${JSON.stringify(im.notes || []).replace(/'/g, "&#39;")}'>${media}</div>
-      <figcaption><span class="i">pl. ${i}/${imgs.length}</span>${(im.caption || im.title) ? `<span class="t">${esc(im.caption || im.title)}</span>` : ""}</figcaption>
-    </figure>`;
-  }
-
-  function esc(s) { return String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
 })();
 </script>
   <!-- analytics: goatcounter (privacy-friendly, cookieless) -->

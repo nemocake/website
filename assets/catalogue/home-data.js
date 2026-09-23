@@ -28,10 +28,10 @@ window.HomeData = (function () {
   // ---- favourites: things Conrad is proud of, surfaced without a full entry ----
   // type drives styling; artworks carry an image, writing/project are typographic.
   const FAVORITES = [
-    { type: "artwork", title: "Multiform",          kicker: "colour field system", blurb: "a procedurally generative code study after rothko.", img: "studio/assets/img/multiform/hero.jpg", href: "studio/piece.html?w=multiform" },
-    { type: "artwork", title: "Capriccio",          kicker: "impossible architecture", blurb: "drawn architecture where every element gets its own vanishing point.", img: "studio/assets/img/capriccio/lead.jpg", href: "studio/piece.html?w=capriccio" },
+    { type: "artwork", title: "Multiform",          kicker: "colour field system", blurb: "a procedurally generative code study after rothko.", img: "studio/assets/img/multiform/hero.jpg", href: "studio/?w=multiform" },
+    { type: "artwork", title: "Capriccio",          kicker: "impossible architecture", blurb: "drawn architecture where every element gets its own vanishing point.", img: "studio/assets/img/capriccio/lead.jpg", href: "studio/?w=capriccio" },
     { type: "writing", title: "art rabbit holing",  kicker: "writing", blurb: "on the practice of looking and exploring to understand personal taste.", img: null, href: "writings/#art-rabbit-holing" },
-    { type: "artwork", title: "Fugitive",           kicker: "a way of searching", blurb: "an explorative system built for finding the visual output range of procedural generative systems.", img: "studio/assets/img/fugitive/hero.jpg", href: "studio/piece.html?w=fugitive" },
+    { type: "artwork", title: "Fugitive",           kicker: "a way of searching", blurb: "an explorative system built for finding the visual output range of procedural generative systems.", img: "studio/assets/img/fugitive/hero.jpg", href: "studio/?w=fugitive" },
     { type: "artwork", title: "Schematics n' Scores", kicker: "notation in three dimensions", blurb: "procedurally generated visual music scores, after cage and penderecki, read in 3d.", img: "studio/assets/img/visual-scores/hero.jpg", href: "https://scores.conradhouse.dev/" },
     { type: "project", title: "Le Random Explorer", kicker: "project", blurb: "an interactive 3d knowledge graph for exploring generative art and its history.", img: null, href: "projects/#le-random-explorer" }
   ];
@@ -71,7 +71,7 @@ window.HomeData = (function () {
         kind: "image", title: w.name, thumb: studioThumb(w.slug), img: studioHero(w.slug),
         meta: "",
         sub: w.after ? "after " + w.after : "",
-        href: "studio/piece.html?w=" + encodeURIComponent(w.slug)
+        href: "studio/?w=" + encodeURIComponent(w.slug)
       }));
     }
     if (key === "writings") {

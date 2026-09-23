@@ -10,7 +10,8 @@
   <script src="../assets/js/config-loader.js"></script>
 
   <!-- Tailwind CSS -->
-  <script>try{var t=localStorage.getItem("studio.theme");if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+  <!-- two grounds only: white or dark. Same "studio.theme" key as the other pages; a saved "cream" reads as white. -->
+  <script>try{var t=localStorage.getItem("studio.theme");if(!t&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";document.documentElement.dataset.theme=t==="dark"?"dark":"white";}catch(e){}</script>
   <style>html.preload{opacity:0}</style>
   <script>document.documentElement.classList.add("preload");(function(){function r(){var h=document.documentElement;h.style.transition="opacity .28s ease";h.classList.remove("preload");}addEventListener("DOMContentLoaded",function(){requestAnimationFrame(function(){requestAnimationFrame(r);});});addEventListener("load",r);setTimeout(r,1400);})();</script>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
@@ -45,8 +46,6 @@
     }
   </script>
 
-  <!-- Studio type + retint (self-hosted, no CDN) -->
-  <script src="../assets/catalogue/theme.js" defer></script>
 
   <style>
     /* Scrollbar */
@@ -120,6 +119,91 @@
 
   <!-- STUDIO RETINT — palette + fonts aligned to the catalogue; layout untouched -->
   <link rel="stylesheet" href="../assets/catalogue/retint.css" />
+
+  <style>
+    /* ==================================================================
+       CLEAN PASS — ABC Areal only, pure white or dark, no frames or rules.
+       Same tokens as the home + collection pages; page-local until shell/retint follow.
+       ================================================================== */
+    @font-face { font-family: "Areal"; src: url("../assets/catalogue/fonts/ABCAreal-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: "Areal"; src: url("../assets/catalogue/fonts/ABCAreal-RegularItalic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+    @font-face { font-family: "Areal"; src: url("../assets/catalogue/fonts/ABCAreal-Medium.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+
+    :root, :root[data-theme="white"], :root[data-theme="cream"] {
+      --paper-rgb: 255, 255, 255; --paper-deep: #ffffff;
+      --ink-rgb: 17, 17, 17; --ink-soft: #3a3a3a; --ink-faint: #8c8c8c;
+      --rule: rgba(var(--ink-rgb), .14);
+      --sanguine: rgb(var(--ink-rgb)); --sang-rgb: var(--ink-rgb);          /* one accent: the ink itself */
+      --font-display: "Areal", sans-serif; --font-text: "Areal", sans-serif; --font-mono: "Areal", sans-serif;
+    }
+    :root[data-theme="dark"] {
+      --paper-rgb: 14, 14, 14; --paper-deep: #0e0e0e;
+      --ink-rgb: 237, 237, 237; --ink-soft: #bdbdbd; --ink-faint: #7a7a7a;
+      --sanguine: rgb(var(--ink-rgb)); --sang-rgb: var(--ink-rgb);
+    }
+    body { font-size: 14px; }
+    body::after { display: none !important; }                 /* no paper grain */
+    ::selection { background: rgb(var(--ink-rgb)); color: rgb(var(--paper-rgb)); }
+    ::-webkit-scrollbar-thumb:hover { background: var(--ink-faint) !important; }
+
+    /* type: Medium for names, Regular for the rest; no wide tracking, no shouting, no italics */
+    .font-mono, .font-sans { letter-spacing: .005em !important; }
+    .font-display { font-weight: 500 !important; letter-spacing: -.035em !important; }
+    .tracking-widest, .uppercase { letter-spacing: .005em !important; }
+    .uppercase { text-transform: none !important; }
+    .italic { font-style: normal !important; }
+    .text-xs, .text-\[10px\] { font-size: 12px !important; line-height: 1.45 !important; }
+
+    /* hard corners, no frames, no rules, no shadows — whitespace separates */
+    *, *::before, *::after { border-radius: 0 !important; }
+    [class*="border"] { border-color: transparent !important; }
+    .glass-panel { background: transparent !important; border: 0 !important; box-shadow: none !important; }
+    [class*="shadow"] { box-shadow: none !important; }
+    .backdrop-blur, .backdrop-blur-sm, .backdrop-blur-md { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+
+    /* top nav: plain row, no bar, no rule */
+    header.mix-blend-difference { border-bottom: 0 !important; background: rgb(var(--paper-rgb)) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+    .site-home { font: 500 14px/1 var(--font-display) !important; letter-spacing: -.035em !important; color: var(--ink) !important; }
+    .site-links { font-size: 12px !important; letter-spacing: .005em !important; }
+    .site-links a.cur, .site-links a:hover { color: var(--ink) !important; }
+
+    /* sidebar: a plain list of names, the one in view in ink */
+    aside .glass-panel { padding: 0 !important; }
+    aside h2 { font-size: 20px !important; color: var(--ink) !important; }
+    .nav-link-item { padding: 5px 0 !important; font-size: 13px !important; color: var(--ink-faint) !important; }
+    .nav-link-item:hover, .nav-link-item.is-active { color: var(--ink) !important; }
+    .back-home { display: inline-block; margin-top: 22px; font-size: 12px; color: var(--ink-faint); }
+    .back-home:hover { color: var(--ink); }
+
+    /* project entries: no card, whitespace between them */
+    #projects-grid { display: flex; flex-direction: column; gap: 72px; }
+    #projects-grid > * + * { margin-top: 0 !important; }
+    .project-card { padding: 0 !important; }
+    .project-card h2 { font-size: clamp(26px, 3.2vw, 36px) !important; line-height: 1.05 !important; color: var(--ink) !important; }
+    .pj-status { font-size: 12px; color: var(--ink-faint); margin-bottom: 10px; }
+    .pj-blurb { font-size: 15px; line-height: 1.5; color: var(--ink-soft); margin-bottom: 18px; }
+    .pj-details { font-size: 14px; line-height: 1.6; color: var(--ink-soft); max-width: 62ch; }
+    .pj-details a { color: var(--ink) !important; text-decoration: underline; text-underline-offset: 2px; }
+    .pj-links { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-bottom: 22px; font-size: 13px; }
+    .pj-links a { color: var(--ink) !important; text-decoration: underline; text-underline-offset: 3px; }
+    .pj-links a:hover { text-decoration-thickness: 2px; }
+    .pj-foot { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 14px; font-size: 12px; color: var(--ink-faint); }
+    .pj-foot a { color: var(--ink-faint) !important; margin-left: auto; }
+    .pj-foot a:hover { color: var(--ink) !important; }
+    .pj-imgs { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 22px; }
+    .pj-imgs img { width: 100%; }
+    .pj-empty { font-size: 13px; color: var(--ink-faint); }
+
+    /* intro line */
+    main .text-gray-400 { color: var(--ink-soft) !important; }
+
+    /* footer: no bar; light / dark sits with the links */
+    footer { background: transparent !important; }
+    footer .text-gray-500 { color: var(--ink-faint) !important; }
+    .theme-toggle { display: inline-flex; gap: 12px; }
+    .theme-toggle button { all: unset; cursor: pointer; font: 400 12px var(--font-mono); color: var(--ink-faint); }
+    .theme-toggle button:hover, .theme-toggle button.cur { color: var(--ink); }
+  </style>
   <!-- favicon: cube-study plate -->
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
@@ -154,7 +238,6 @@
           <h2 class="font-display text-xl font-bold lowercase">Projects</h2>
         </div>
 
-        <div class="border-t border-dashed border-gray-700 my-4"></div>
 
         <nav>
           <ul id="projects-nav-list" class="space-y-1">
@@ -164,10 +247,7 @@
       </div>
 
       <!-- Back to home -->
-      <a href="../" class="glass-panel p-4 mt-4 flex items-center justify-center gap-2 hover:bg-acid hover:text-black transition-all group rounded-sm">
-        <span class="font-mono text-xl group-hover:-translate-x-1 transition-transform">←</span>
-        <span class="font-mono text-xs uppercase tracking-widest">Back Home</span>
-      </a>
+      <a href="../" class="back-home">&larr; home</a>
     </aside>
 
     <!-- Content Area -->
@@ -197,6 +277,7 @@
         <a href="mailto:conradhouse1998@gmail.com" class="hover:text-acid hover:underline">email</a>
         <a href="https://github.com/nemocake" target="_blank" class="hover:text-acid hover:underline">github</a>
         <a href="https://x.com/DlSPUTED" target="_blank" class="hover:text-acid hover:underline">twitter</a>
+        <span class="theme-toggle" role="group" aria-label="page ground"><button type="button" data-t="white">light</button><button type="button" data-t="dark">dark</button></span>
       </div>
     </div>
   </footer>
@@ -272,7 +353,7 @@
       // Function to render projects
       function renderProjects(repos) {
         if (!repos || repos.length === 0) {
-          document.getElementById('projects-grid').innerHTML = '<p class="text-gray-500 font-mono">No repositories found.</p>';
+          document.getElementById('projects-grid').innerHTML = '<p class="pj-empty">nothing to show yet.</p>';
           return;
         }
 
@@ -282,10 +363,7 @@
           const displayName = repo.customTitle || repo.name;
           return `
             <li>
-              <a href="#${repo.name}" class="nav-link-item block font-mono text-xs text-gray-400 hover:text-acid py-2 px-3 border-l-2 border-transparent hover:border-acid/50 transition-all ${index === 0 ? 'is-active' : ''}">
-                <span class="text-gray-600 mr-2">${String(index + 1).padStart(2, '0')}</span>
-                ${repo.featured ? '★ ' : ''}${repo.isPrivate ? '○ ' : ''}${displayName}
-              </a>
+              <a href="#${repo.name}" class="nav-link-item block ${index === 0 ? 'is-active' : ''}">${displayName}</a>
             </li>
           `;
         }).join('');
@@ -296,74 +374,36 @@
           const displayTitle = repo.customTitle || repo.name;
           const description = repo.customDescription || repo.description || 'no description provided.';
 
-          // Tags: use custom tags for private, language for public
-          const tagsHtml = repo.isPrivate
-            ? (repo.tags || []).map(tag => `<span class="text-[10px] font-mono border border-gray-700 px-2 py-0.5 text-gray-400">${tag}</span>`).join('')
-            : (repo.language ? `<span class="text-[10px] font-mono border border-gray-700 px-2 py-0.5 text-gray-400">${repo.language}</span>` : '');
+          // tags are plain faint words, like the home project preview
+          const tagList = repo.isPrivate ? (repo.tags || []) : (repo.language ? [repo.language] : []);
+          const tagsHtml = tagList.map(t => `<span>${t}</span>`).join('');
 
-          // Render details paragraphs if available
           const detailsHtml = repo.details.length > 0
-            ? `<div class="font-sans text-gray-300 leading-relaxed mb-6">${repo.details.map(p => `<p class="mb-4 last:mb-0">${p}</p>`).join('')}</div>`
+            ? `<div class="pj-details mb-6">${repo.details.map(p => `<p class="mb-4 last:mb-0">${p}</p>`).join('')}</div>`
             : '';
-
-          // Render images if available
           const imagesHtml = repo.images.length > 0
-            ? `<div class="grid grid-cols-2 gap-4 mb-6">${repo.images.map(img => `<img src="${img}" class="w-full rounded-sm border border-border-dim" alt="${repo.name} screenshot">`).join('')}</div>`
+            ? `<div class="pj-imgs">${repo.images.map(img => `<img src="${img}" alt="${repo.name} screenshot">`).join('')}</div>`
             : '';
 
-          // Type badge
-          const typeBadge = repo.isPrivate
-            ? '<span class="font-mono text-xs text-gray-500 border border-gray-700 px-2 py-0.5">PRIVATE</span>'
-            : '<span class="font-mono text-xs text-gray-500 border border-gray-700 px-2 py-0.5">REPO</span>';
+          // status, lowercase and quiet (no "private"/"repo"/"featured" badges, no numbering, no star/fork counts)
+          const status = [repo.status, repo.status2].filter(Boolean).map(x => String(x).toLowerCase()).join(' · ');
 
-          // Status badges (primary + optional secondary)
-          const statusBadge = repo.status
-            ? `<span class="font-mono text-xs text-neon-blue">${repo.status.toUpperCase()}</span>`
-            : '';
-          const status2Badge = repo.status2
-            ? `<span class="font-mono text-xs text-neon-blue">${repo.status2.toUpperCase()}</span>`
-            : '';
-
-          // Prominent call-to-action links (live tool / the writing), shown right under the blurb
           const cloneHref = repo.isPrivate ? repo.repoUrl : repo.html_url;
           const liveHref = repo.liveUrl || (repo.isPrivate ? null : repo.homepage);
-          const linkCls = "inline-flex items-center gap-2 font-mono text-sm text-acid underline decoration-dotted decoration-acid underline-offset-4 hover:decoration-solid transition-all";
           const primaryLinks = [
-            liveHref ? `<a href="${liveHref}" target="_blank" rel="noopener" class="${linkCls}"><span aria-hidden="true">→</span> open it live</a>` : '',
-            repo.articleUrl ? `<a href="${repo.articleUrl}" class="${linkCls}"><span aria-hidden="true">→</span> read the writing</a>` : ''
+            liveHref ? `<a href="${liveHref}" target="_blank" rel="noopener">open it live &nearr;</a>` : '',
+            repo.articleUrl ? `<a href="${repo.articleUrl}">read the writing &rarr;</a>` : ''
           ].filter(Boolean).join('');
-          const primaryLinksHtml = primaryLinks
-            ? `<div class="flex flex-wrap gap-x-8 gap-y-2 mb-6">${primaryLinks}</div>`
-            : '';
-          // Footer: tags, stats, code link (the enticing links live up under the blurb)
-          const footerContent = `
-              ${tagsHtml}
-              ${!repo.isPrivate ? `<div class="flex items-center gap-4 font-mono text-xs text-gray-500 ml-auto">
-                <span>★ ${repo.stargazers_count}</span>
-                <span>⑂ ${repo.forks_count}</span>
-              </div>` : ''}
-              ${cloneHref ? `<a href="${cloneHref}" target="_blank" class="font-mono text-xs text-acid hover:underline ${repo.isPrivate ? 'ml-auto' : ''}">::git_clone</a>` : ''}
-            `;
 
           return `
-            <article class="project-card glass-panel p-8 rounded-sm hover:border-acid/30 transition-all" id="${repo.name}">
-              <div class="flex items-center flex-wrap gap-4 mb-4">
-                <span class="font-mono text-acid text-sm">${String(index + 1).padStart(2, '0')}.</span>
-                ${typeBadge}
-                ${repo.featured ? '<span class="font-mono text-xs text-acid">FEATURED</span>' : ''}
-                ${statusBadge}
-                ${status2Badge}
-              </div>
-              <h2 class="font-display text-2xl md:text-3xl font-bold mb-2">${displayTitle}</h2>
-              <p class="font-mono text-sm text-gray-500 mb-4">${description}</p>
-              ${primaryLinksHtml}
-
+            <article class="project-card" id="${repo.name}">
+              ${status ? `<div class="pj-status">${status}</div>` : ''}
+              <h2 class="font-display mb-3">${displayTitle}</h2>
+              <p class="pj-blurb">${description}</p>
+              ${primaryLinks ? `<div class="pj-links">${primaryLinks}</div>` : ''}
               ${detailsHtml}
               ${imagesHtml}
-
-              <div class="flex flex-wrap items-center gap-4">
-                ${footerContent}
-              </div>
+              ${(tagsHtml || cloneHref) ? `<div class="pj-foot">${tagsHtml}${cloneHref ? `<a href="${cloneHref}" target="_blank" rel="noopener">code &nearr;</a>` : ''}</div>` : ''}
             </article>
           `;
         }).join('');
@@ -431,7 +471,7 @@
       // Load projects from GitHub API + merge with config
       async function loadProjects() {
         const grid = document.getElementById('projects-grid');
-        grid.innerHTML = '<p class="text-gray-500 font-mono">loading repositories...</p>';
+        grid.innerHTML = '<p class="pj-empty">loading&hellip;</p>';
 
         try {
           // Wait for config to load first (uses helper from config-loader.js)
@@ -457,7 +497,7 @@
 
         } catch (error) {
           console.error('[Projects] Failed to load from GitHub:', error);
-          grid.innerHTML = '<p class="text-gray-500 font-mono">could not load repositories from github.</p>';
+          grid.innerHTML = '<p class="pj-empty">couldn&rsquo;t reach github just now.</p>';
         }
       }
 
@@ -465,8 +505,23 @@
     })();
   </script>
 
-  <!-- studio ground selector -->
-  <div class="colophon ground-mount"></div>
+  <script>
+  /* light / dark — writes the shared key only when the visitor actually picks one */
+  (function () {
+    var KEY = "studio.theme";
+    function mark() {
+      var t = document.documentElement.dataset.theme;
+      document.querySelectorAll(".theme-toggle button").forEach(function (b) { b.classList.toggle("cur", b.dataset.t === t); });
+    }
+    document.querySelector(".theme-toggle").addEventListener("click", function (e) {
+      var b = e.target.closest("button"); if (!b) return;
+      document.documentElement.dataset.theme = b.dataset.t;
+      try { localStorage.setItem(KEY, b.dataset.t); } catch (_) {}
+      mark();
+    });
+    mark();
+  })();
+  </script>
   <!-- analytics: goatcounter (privacy-friendly, cookieless) -->
   <script data-goatcounter="https://conradhouse.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>

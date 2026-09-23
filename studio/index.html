@@ -2,72 +2,128 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<title>STUDIO · Conrad House</title>
+<title>studio · con.rad</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="description" content="a practice of creating and chasing after images that intrigue me. editions, series, and explorations by Conrad House." />
-<script>try{document.documentElement.dataset.theme=localStorage.getItem("studio.theme")||"white"}catch(e){}</script>
-<link rel="stylesheet" href="assets/catalogue.css" />
-<script src="assets/graphite.js" defer></script>
-<script src="assets/theme.js" defer></script>
-<script src="assets/masthead.js" defer></script>
-<script src="assets/lightbox.js" defer></script>
-<script src="assets/nav.js" defer></script>
+<!-- two grounds only: white or dark. Same "studio.theme" key as the rest of the site; a saved "cream" reads as white. -->
+<script>try{var t=localStorage.getItem("studio.theme");if(!t&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";document.documentElement.dataset.theme=t==="dark"?"dark":"white";}catch(e){}</script>
 <style>
-  /* ---------- screens + parallax transition ---------- */
-  .screen { will-change: transform, opacity; }
-  .screen.leave-up { transform: translateY(-16vh); opacity: 0; transition: transform .6s cubic-bezier(.5,0,.3,1), opacity .5s ease; }
-  .screen.enter-below { transform: translateY(52vh); opacity: 0; }
-  .screen.enter-run { transform: none; opacity: 1; transition: transform .78s cubic-bezier(.22,.8,.24,1) .06s, opacity .6s ease .06s; }
-  .screen.gone { display: none; }
-  @media (prefers-reduced-motion: reduce) {
-    .screen.leave-up, .screen.enter-below, .screen.enter-run { transition: none; transform: none; opacity: 1; }
+  @font-face { font-family: "Areal"; src: url("../assets/catalogue/fonts/ABCAreal-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+  @font-face { font-family: "Areal"; src: url("../assets/catalogue/fonts/ABCAreal-RegularItalic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+  @font-face { font-family: "Areal"; src: url("../assets/catalogue/fonts/ABCAreal-Medium.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+
+  :root, :root[data-theme="white"] { --bg:#ffffff; --ink:#111111; --soft:#3a3a3a; --mute:#8c8c8c; }
+  :root[data-theme="dark"] { --bg:#0e0e0e; --ink:#ededed; --soft:#bdbdbd; --mute:#7a7a7a; }
+  :root { --dur:.6s; --ease:cubic-bezier(.65,0,.35,1); }
+
+  * { box-sizing:border-box; margin:0; padding:0; border-radius:0 !important; }
+  html, body { height:100%; overflow:hidden; background:var(--bg); color:var(--ink);
+               font:400 12px/1.45 "Areal", sans-serif; letter-spacing:.005em; transition:background .25s, color .25s; }
+  img, video { display:block; }
+  button { all:unset; cursor:pointer; }
+  a { color:inherit; text-decoration:none; }
+
+  /* ---------- top bar: site nav, index, ground ---------- */
+  #top { position:fixed; z-index:60; left:28px; right:28px; top:22px; display:flex; gap:22px; align-items:baseline; }
+  #top .home { font-weight:500; letter-spacing:-.02em; font-size:13px; }
+  #top nav { display:flex; gap:18px; color:var(--mute); }
+  #top nav a:hover, #top nav a.cur { color:var(--ink); }
+  #top .right { margin-left:auto; display:flex; gap:22px; color:var(--mute); }
+  #top .right button:hover, #top .right button.cur { color:var(--ink); }
+  #theme { display:flex; gap:10px; }
+
+  /* ---------- the frame: sized in JS to the picture's proportions; label + plates ride along ---------- */
+  #frame { position:fixed; transition:left var(--dur) var(--ease), top var(--dur) var(--ease),
+                                      width var(--dur) var(--ease), height var(--dur) var(--ease); }
+  body.instant #frame, body.instant .layer { transition:none !important; }
+  /* two stacked layers crossfade; cover = the old picture is re-cropped by the moving window instead of jumping in scale */
+  .layer { position:absolute; inset:0; opacity:0; cursor:e-resize; }
+  .layer.front { opacity:1; }
+  .layer > img, .layer > video { width:100%; height:100%; object-fit:cover; }
+  .lab, .col { position:absolute; }
+
+  /* ---------- type ---------- */
+  .name { font:500 34px/1 "Areal", sans-serif; letter-spacing:-.035em; }
+  .note { font:400 14px/1.5 "Areal", sans-serif; letter-spacing:-.005em; }
+  .note.clamp { display:-webkit-box; -webkit-line-clamp:6; -webkit-box-orient:vertical; overflow:hidden; }
+  .more { color:var(--mute); margin-top:6px; display:inline-block; }
+  .more:hover { color:var(--ink); }
+  .meta { color:var(--mute); line-height:1.75; }
+  .meta b { font-weight:400; color:var(--ink); font-size:13px; }
+  .links { display:flex; flex-wrap:wrap; gap:6px 16px; color:var(--mute); justify-content:flex-end; }
+  .links a:hover { color:var(--ink); }
+  .stack { display:flex; flex-direction:column; gap:14px; }
+
+  /* the label hangs off the picture's bottom-LEFT edge, set right-aligned toward the picture */
+  .lab { right:calc(100% + 40px); bottom:0; width:280px; text-align:right; }
+  .mplates { display:none; }
+
+  /* the work's plates, stacked on the picture's right edge; scrolls on its own */
+  .col { left:calc(100% + 22px); top:0; bottom:0; width:74px; overflow-y:auto; scrollbar-width:none; }
+  .col::-webkit-scrollbar { display:none; }
+  .col .list { display:flex; flex-direction:column; gap:8px; }
+  .col img, .col video, .mplates img, .mplates video { width:100%; cursor:pointer; opacity:.38; transition:opacity .2s; }
+  .col img:hover, .col video:hover { opacity:.8; }
+  .col .on, .mplates .on { opacity:1; }
+
+  /* ---------- footer film: every work, grouped by series ---------- */
+  #strip { position:fixed; z-index:40; left:0; right:0; bottom:0; height:122px; background:var(--bg);
+           display:flex; align-items:flex-end; gap:36px; padding:0 28px 36px; overflow-x:auto; scrollbar-width:none; transition:background .25s; }
+  #strip::-webkit-scrollbar { display:none; }
+  #strip .grp { flex:none; display:flex; flex-direction:column; gap:8px; }
+  #strip .sname { color:var(--mute); cursor:pointer; white-space:nowrap; }
+  #strip .sname:hover, #strip .grp.cur .sname { color:var(--ink); }
+  #strip .row { display:flex; gap:4px; align-items:flex-end; height:58px; }
+  #strip .t { flex:none; cursor:pointer; }
+  #strip .t img { height:48px; opacity:.35; transition:opacity .2s, height .2s; }
+  #strip .grp.cur .t img { opacity:.7; }
+  #strip .t:hover img { opacity:1; }
+  #strip .t.on img { opacity:1; height:58px; }
+  #strip .t.child img { height:36px; }
+  #strip .t.child.on img { height:46px; }
+  /* hover name lives in a reserved row UNDER the thumbnails — it never covers anything */
+  #tip { position:fixed; z-index:41; pointer-events:none; display:none; white-space:nowrap; color:var(--ink); }
+
+  /* ---------- visual index ---------- */
+  #index { position:fixed; inset:0; z-index:55; background:var(--bg); overflow:auto; padding:84px 28px 60px;
+           opacity:0; pointer-events:none; transition:opacity .3s; }
+  body.idx #index { opacity:1; pointer-events:auto; }
+  body.idx { overflow:hidden; }
+  #index .mode { display:flex; gap:16px; color:var(--mute); margin-bottom:40px; }
+  #index .mode button:hover, #index .mode button.cur { color:var(--ink); }
+  #index .ser { margin-bottom:72px; }
+  #index .ser h2 { font:500 44px/1 "Areal"; letter-spacing:-.035em; margin-bottom:20px; }
+  #index .grid { display:flex; flex-wrap:wrap; gap:28px 22px; align-items:flex-end; }
+  #index .cell { cursor:pointer; }
+  #index .cell img { height:170px; transition:opacity .2s; }
+  #index .cell span { display:block; margin-top:7px; color:var(--mute); }
+  #index .cell:hover span { color:var(--ink); }
+  #index .grid:hover .cell img { opacity:.45; }
+  #index .grid .cell:hover img { opacity:1; }
+  #index .plates { display:flex; flex-wrap:wrap; gap:6px; align-items:flex-end; }
+  #index .plates img { height:120px; cursor:pointer; transition:opacity .2s; }
+  #index .plates:hover img { opacity:.4; }
+  #index .plates img:hover { opacity:1; }
+
+  .load-error { position:fixed; left:28px; top:90px; color:var(--mute); }
+
+  @media (max-width:760px) {
+    #top { left:16px; right:16px; top:16px; flex-wrap:wrap; gap:6px 14px; }
+    #top nav { gap:12px; }
+    #top .right { margin-left:0; width:100%; gap:16px; }
+    .lab { right:0; left:0; top:calc(100% + 16px); bottom:auto; width:auto; text-align:left; }
+    .links { justify-content:flex-start; }
+    .col { display:none; }
+    .mplates { display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; }
+    .mplates::-webkit-scrollbar { display:none; }
+    .mplates img, .mplates video { width:auto; height:44px; flex:none; }
+    .name { font-size:28px; }
+    #strip { height:104px; padding:0 16px 30px; gap:24px; }
+    #index { padding:96px 16px 60px; }
+    #index .cell img { height:110px; }
+    #index .plates img { height:80px; }
+    #index .ser h2 { font-size:32px; }
   }
-
-  /* ---------- cover ---------- */
-  #cover .over { padding-top: 22px; }
-  #cover .contents { margin-top: 24px; }
-
-  /* index / explore mode toggle */
-  .cover-modes { display: flex; gap: 18px; align-items: baseline; margin-top: 22px;
-    border-bottom: 1px solid var(--rule); padding-bottom: 10px; }
-  .cover-modes .mode-btn { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .18em;
-    text-transform: lowercase; color: var(--ink-faint); cursor: pointer; }
-  .cover-modes .mode-btn:hover { color: var(--sanguine); }
-  .cover-modes .mode-btn.cur { color: var(--sanguine); border-bottom: 1px solid var(--sanguine); padding-bottom: 8px; margin-bottom: -11px; }
-  #cover .contents[hidden], #cover .explore-grid[hidden] { display: none; }
-
-  /* visual explore: masonry image wall */
-  .explore-grid { columns: 5 210px; column-gap: 12px; margin-top: 26px; }
-  @media (max-width: 900px) { .explore-grid { columns: 3 160px; } }
-  @media (max-width: 560px) { .explore-grid { columns: 2 130px; } }
-  .ex-tile { display: block; width: 100%; margin: 0 0 12px; position: relative;
-    break-inside: avoid; border: 1px solid var(--rule); background: var(--paper-deep);
-    overflow: hidden; }
-  .ex-tile img { width: 100%; display: block; transition: filter .3s ease, transform .4s ease; }
-  .ex-tile:hover img { filter: none; transform: scale(1.02); }
-  .ex-cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 16px 10px 8px;
-    font-family: var(--font-mono); font-size: 9px; letter-spacing: .1em; text-transform: lowercase;
-    color: #f4f1ea; background: linear-gradient(transparent, rgba(0,0,0,.62));
-    opacity: 0; transition: opacity .25s ease; pointer-events: none; }
-  .ex-tile:hover .ex-cap { opacity: 1; }
-
-  /* ---------- series view ---------- */
-  .sv-head { padding: 30px 0 0; }
-  .sv-topline { display: flex; justify-content: space-between; align-items: baseline;
-    font-family: var(--font-mono); font-size: 10px; letter-spacing: .2em;
-    text-transform: lowercase; color: var(--ink-faint); }
-  .sv-topline a:hover { color: var(--sanguine); }
-  .sv-title { display: flex; gap: 18px; align-items: baseline; border-bottom: 1px solid var(--ink);
-    padding: 10px 0 14px; margin-top: 10px; }
-  .sv-title .rn { font-family: var(--font-mono); font-size: 15px; color: var(--sanguine); }
-  .sv-title h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(34px, 5.4vw, 58px); }
-  .sv-title .n { font-family: var(--font-mono); font-size: 10px; color: var(--ink-faint); margin-left: auto; }
-  .sv-note { font-family: var(--font-text); font-style: italic; font-size: 14.5px; color: var(--ink-faint);
-    max-width: 600px; margin: 14px 0 34px; }
-  .sv-nav { display: flex; justify-content: space-between; margin-top: 64px; border-top: 1px solid var(--ink);
-    padding-top: 14px; font-family: var(--font-mono); font-size: 10px; letter-spacing: .16em;
-    text-transform: lowercase; color: var(--ink-faint); }
-  .sv-nav a:hover { color: var(--sanguine); }
 </style>
   <!-- favicon: cube-study plate -->
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
@@ -76,329 +132,277 @@
   <link rel="manifest" href="/site.webmanifest">
   <script src="../assets/catalogue/img-upgrade.js"></script>
 </head>
-<body class="on-cover">
-<div class="ground-mount" aria-label="page ground"></div>
-
-<nav class="rail" id="rail" aria-label="studio spine">
-  <a class="rail-mast" href="./" aria-label="back to the studio index"><div class="mast-title">
-    <h1 id="mast-h1">studio</h1>
-    <canvas id="masthead-canvas" data-word="studio" data-cap="58" aria-hidden="true"></canvas>
-  </div></a>
-  <div class="rail-jumps" id="rail-jumps"></div>
-</nav>
-
-<div class="screens">
-  <div class="wrap">
-    <nav class="site-nav" aria-label="site">
-      <a class="home" href="../">con.rad</a>
-      <a href="../writings/">writings</a>
-      <a href="../collection/">collection</a>
-      <a href="../projects/">projects</a>
-      <a class="cur" href="./">studio</a>
-    </nav>
-    <main id="main"></main>
-    <footer class="colophon">
-      <div class="cols">
-        <a href="../">con.rad</a>
-        <a href="mailto:conradhouse1998@gmail.com">email</a>
-        <a href="https://www.are.na/conrad-house" target="_blank" rel="noopener">are.na</a>
-        <a href="https://x.com/DlSPUTED" target="_blank" rel="noopener">twitter</a>
-      </div>
-      <span class="colophon-motto" title="established 02·04·1998">est. ii·iv·mcmxcviii</span>
-    </footer>
+<body>
+<div id="top">
+  <a class="home" href="../">con.rad</a>
+  <nav aria-label="site">
+    <a href="../writings/">writings</a>
+    <a href="../collection/">collection</a>
+    <a href="../projects/">projects</a>
+    <a class="cur" href="./">studio</a>
+  </nav>
+  <div class="right">
+    <button id="idx-btn" type="button">index</button>
+    <span id="theme" role="group" aria-label="page ground"><button type="button" data-theme="white">light</button><button type="button" data-theme="dark">dark</button></span>
   </div>
 </div>
 
+<div id="frame"><div class="layer front" id="pa"></div><div class="layer" id="pb"></div><div class="lab"></div><div class="col"></div></div>
+<div id="strip"></div>
+<div id="tip"></div>
+<div id="index" aria-label="visual index"></div>
+
 <script>
 const IMG_V = "?v=1784771550";
-(async function () {
-  const main = document.getElementById("main");
-  let data, articles = [];
+const $ = (s, r = document) => r.querySelector(s);
+const src = (slug, file) => `assets/img/${slug}/${file}${IMG_V}`;
+const thumb = slug => `assets/img/${slug}/thumb.jpg${IMG_V}`;
+const isVid = im => im.video === true || /\.(mp4|webm|mov)$/i.test(im.file);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+const low = s => esc(String(s ?? "").toLowerCase());
+
+let W, GROUPS, SERIES, ARTICLES, wi = 0, k = 0;
+
+/* ---------- ground: white or dark; only written when the visitor picks one ---------- */
+function markTheme() {
+  const t = document.documentElement.dataset.theme;
+  document.querySelectorAll("#theme button").forEach(b => b.classList.toggle("cur", b.dataset.theme === t));
+}
+markTheme();
+
+/* ---------- data ---------- */
+(async function boot() {
+  let d;
   try {
     const r = await fetch("data/studio.json", { cache: "no-store" });
     if (!r.ok) throw new Error("HTTP " + r.status);
-    data = await r.json();
-    const al = await fetch("data/articles.json", { cache: "no-store" }).then(r => r.json()).catch(() => ({ articles: [] }));
-    for (const a of al.articles || []) {
-      const full = await fetch(`data/articles/${a.slug}.json`, { cache: "no-store" }).then(r => r.json()).catch(() => null);
-      if (full) articles.push(full);
-    }
+    d = await r.json();
   } catch (e) {
-    main.innerHTML = `<div class="load-error">could not load data/studio.json — ${e.message}.
-      This page has no embedded fallback; fix the fetch.</div>`;
+    document.body.insertAdjacentHTML("beforeend", `<div class="load-error">could not load data/studio.json — ${esc(e.message)}</div>`);
+    return;
+  }
+  // articles map to works by their own "work" field
+  ARTICLES = new Set();
+  try {
+    const al = await fetch("data/articles.json", { cache: "no-store" }).then(r => r.json());
+    const full = await Promise.all((al.articles || []).map(a => fetch(`data/articles/${a.slug}.json`, { cache: "no-store" }).then(r => r.json()).catch(() => null)));
+    full.forEach(a => { if (a && a.work) ARTICLES.add(a.work); });
+  } catch (_) { /* no article links then */ }
+
+  SERIES = Object.fromEntries((d.series || []).map(s => [s.id, s]));
+  const ed = (x, y) => (x.edition ?? 999) - (y.edition ?? 999);
+  const works = (d.works || []).filter(w => w.images && w.images.length);
+  const top = works.filter(w => !w.parent), kids = slug => works.filter(w => w.parent === slug).sort(ed);
+  const withKids = ws => ws.sort(ed).flatMap(w => [w, ...kids(w.slug)]);
+  GROUPS = [...(d.series || []).map(s => ({ id: s.id, name: s.name.toLowerCase(), works: withKids(top.filter(w => w.series === s.id && w.kind !== "exploration")) })),
+            { id: "explorations", name: "explorations", works: withKids(top.filter(w => w.kind === "exploration")) }].filter(g => g.works.length);
+  W = GROUPS.flatMap(g => g.works);
+
+  // deep link: ?w=<slug>&p=<plate>; old slugs and old #/s/<series>/<slug> links still land
+  const SLUG_ALIAS = { paint: "room-with-cube", "paintsystem2-room": "broken-rooms", "paintsystem2-die": "horizons",
+    "paintsystem2-chamber": "chamber", "paintsystem2-interior": "interior", "jester-poster": "idea-403",
+    "idea-044-grid": "idea-044", "idea-107-grid": "idea-107", sleeve: "visual-scores" };
+  const q = new URLSearchParams(location.search);
+  let slug = q.get("w");
+  if (!slug) { const m = location.hash.match(/^#\/s\/[^/]+\/([^/?#]+)/); if (m) slug = decodeURIComponent(m[1]); }
+  if (!slug) { const m = location.hash.match(/^#s-(.+)$/); const g = m && GROUPS.find(g => g.id === m[1]); if (g) slug = g.works[0].slug; }
+  slug = SLUG_ALIAS[slug] || slug;
+  if (slug) { const n = W.findIndex(w => w.slug === slug); if (n >= 0) { wi = n; k = Math.min(Math.max(0, +q.get("p") || 0), W[n].images.length - 1); } }
+
+  buildStrip(); buildIndex();
+  render(true);
+})();
+
+/* ---------- fragments ---------- */
+const groupOf = w => GROUPS.find(g => g.works.includes(w));
+const seriesOf = w => SERIES[w.series ?? W.find(x => x.slug === w.parent)?.series];
+const noteH = w => !w.note ? "" :
+  `<div><p class="note ${w.note.length > 320 ? "clamp" : ""}">${esc(w.note)}</p>${w.note.length > 320 ? `<button class="more" type="button">more</button>` : ""}</div>`;
+const metaH = w => {
+  const ser = seriesOf(w);
+  return `<div class="meta">${[["after", w.after], ["from", ser && ser.name.toLowerCase()]]
+    .filter(r => r[1]).map(([l, val]) => `${l} <b>${esc(val)}</b>`).join("<br>")}</div>`;
+};
+const linksH = w => {
+  const l = [];
+  if (w.live) l.push(`<a href="${esc(w.live)}">open it live ↗</a>`);
+  if (w.essay) l.push(`<a href="${esc(w.essay.url)}">essay ↗</a>`);
+  if (ARTICLES.has(w.slug)) l.push(`<a href="piece.html?w=${encodeURIComponent(w.slug)}">studio notes ↗</a>`);
+  if (w.embeds && w.embeds.length) l.push(`<a href="${esc(w.embeds[0].url)}" target="_blank" rel="noopener">heard ↗</a>`);
+  return l.length ? `<div class="links">${l.join("")}</div>` : "";
+};
+const plateThumb = (w, im, j) => isVid(im)
+  ? `<video src="${src(w.slug, im.file)}" data-k="${j}" class="${j === k ? "on" : ""}" muted playsinline preload="metadata"></video>`
+  : `<img src="${src(w.slug, im.file)}" data-k="${j}" class="${j === k ? "on" : ""}" loading="lazy" alt="">`;
+const platesList = w => w.images.length < 2 ? "" : `<div class="list">${w.images.map((im, j) => plateThumb(w, im, j)).join("")}</div>`;
+const labH = w => `<div class="stack"><div class="name">${low(w.name)}</div>${noteH(w)}${metaH(w)}${linksH(w)}${
+  w.images.length > 1 ? `<div class="mplates">${w.images.map((im, j) => plateThumb(w, im, j)).join("")}</div>` : ""}</div>`;
+
+/* ---------- layout: picture fits what's left; label + picture + column centre as one group ---------- */
+function frameBox() {
+  const w = W[wi], im = w.images[k], ar = (im.w && im.h) ? im.w / im.h : 1.3;
+  const mobile = innerWidth < 760, rl = mobile ? 0 : 320, rr = mobile ? 0 : 96;
+  const top = mobile ? 96 : 64, bottom = mobile ? 118 : 142, side = mobile ? 16 : 28;
+  const availW = innerWidth - side * 2 - rl - rr;
+  const availH = innerHeight - top - bottom - (mobile ? 250 : 0);
+  let fw = availW, fh = fw / ar;
+  if (fh > availH) { fh = availH; fw = fh * ar; }
+  return { left: (innerWidth - (fw + rl + rr)) / 2 + rl, top: top + (mobile ? 0 : (availH - fh) / 2), width: fw, height: fh };
+}
+function placeFrame() { const b = frameBox(); Object.assign($("#frame").style, { left: b.left + "px", top: b.top + "px", width: b.width + "px", height: b.height + "px" }); }
+function instant(fn) { document.body.classList.add("instant"); fn(); $("#frame").offsetWidth; requestAnimationFrame(() => document.body.classList.remove("instant")); }
+addEventListener("resize", () => W && instant(placeFrame));
+
+const wait = ms => new Promise(r => setTimeout(r, ms));
+// resolves with a ready-to-insert element (the same one that loaded, so nothing fetches twice)
+function load(w, im) {
+  const url = src(w.slug, im.file);
+  if (isVid(im)) return new Promise(r => {
+    const v = document.createElement("video");
+    Object.assign(v, { muted: true, loop: true, autoplay: true, playsInline: true, preload: "auto" });
+    let done = false; const fin = () => { if (done) return; done = true;
+      if (!(im.w && im.h) && v.videoWidth) { im.w = v.videoWidth; im.h = v.videoHeight; }
+      r(v); };
+    v.addEventListener("loadeddata", fin); v.addEventListener("error", fin); setTimeout(fin, 3000);
+    v.src = url;
+  });
+  return new Promise(r => { const i = new Image(); i.alt = "";
+    i.onload = i.onerror = () => (i.decode ? i.decode().catch(() => {}) : Promise.resolve()).then(() => r(i)); i.src = url; });
+}
+function setLayer(layer, el) {
+  layer.querySelectorAll("video").forEach(v => v.pause());
+  layer.replaceChildren(el);
+  if (el.tagName === "VIDEO") el.play().catch(() => {});
+}
+
+/* ---------- text: rolls up block by block, then unrolls with the new words ---------- */
+const EASE = "cubic-bezier(.65,0,.35,1)";
+const blocks = () => [...document.querySelectorAll("#frame .lab .stack > *, #frame .col .list > *")];
+const stagger = i => Math.min(i, 6) * 40;            // long plate lists don't drag the timing out
+const shown  = { opacity: 1, clipPath: "inset(0 0 0% 0)",   transform: "translateY(0)" };
+const hidden = { opacity: 0, clipPath: "inset(0 0 100% 0)", transform: "translateY(-6px)" };
+function rollUp() {
+  return Promise.all(blocks().map((b, i) =>
+    b.animate([shown, hidden], { duration: 240, delay: stagger(i), easing: EASE, fill: "forwards" }).finished.catch(() => {})));
+}
+function unroll() {
+  return Promise.all(blocks().map((b, i) =>
+    b.animate([hidden, shown], { duration: 380, delay: stagger(i), easing: EASE, fill: "backwards" }).finished.catch(() => {})));
+}
+
+let token = 0, first = true, lastLab = "", lastCol = "", rolledUp = false;
+
+async function render(workChanged) {
+  const my = ++token, w = W[wi], f = $("#frame"), lab = $(".lab", f), col = $(".col", f);
+  const im = w.images[k];
+  const DUR = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--dur")) * 1000;
+  history.replaceState(null, "", `?w=${encodeURIComponent(w.slug)}${k ? `&p=${k}` : ""}`);
+  document.title = `${w.name.toLowerCase()} · studio · con.rad`;
+  syncStrip(); $("#tip").style.display = "none";
+  f.querySelectorAll("[data-k]").forEach(t => t.classList.toggle("on", +t.dataset.k === k));
+
+  // only animate words that actually change (stepping plates within a work leaves them alone)
+  const newLab = labH(w), newCol = platesList(w);
+  const textChanges = workChanged && (newLab !== lastLab || newCol !== lastCol);
+  const setText = () => { lab.innerHTML = lastLab = newLab; col.innerHTML = lastCol = newCol; col.scrollTop = 0; rolledUp = false; };
+  // an interrupted click can leave the old words rolled up; if they're staying, bring them back
+  if (!textChanges && rolledUp) { rolledUp = false; unroll(); }
+  if (textChanges && !first) rolledUp = true;
+
+  const out = (textChanges && !first) ? rollUp() : Promise.resolve();   // starts on click, while the picture loads
+  const el = await load(w, im);
+  if (my !== token) return;                                              // a newer click won — drop this one
+
+  const front = $(".layer.front", f), back = $(".layer:not(.front)", f);
+
+  if (first) {
+    first = false;
+    instant(() => { setLayer(back, el); back.classList.add("front"); front.classList.remove("front"); placeFrame(); if (textChanges) setText(); });
     return;
   }
 
-  const works = data.works || [];
-  const seriesDefs = data.series || [];
-  const topWorks = works.filter(w => !w.parent);
-  const childrenOf = slug => works.filter(w => w.parent === slug).sort(edSort);
-  const bySeries = id => topWorks.filter(w => w.series === id).sort(edSort);
-  const explorations = topWorks.filter(w => w.kind === "exploration").sort(edSort);
-  const singles = topWorks.filter(w => !w.series && w.kind !== "exploration").sort(edSort);
-  const articleFor = slug => articles.find(a => a.work === slug);
-  function edSort(a, b) { return (a.order ?? a.edition ?? 999) - (b.order ?? b.edition ?? 999); }
-  function edLbl(w) { return w.edition != null ? String(w.edition).padStart(2, "0") : "✦"; }
-  const bySlug = Object.fromEntries(works.map(w => [w.slug, w]));
-  function leadFile(slugOrWork) {
-    const w = typeof slugOrWork === "string" ? bySlug[slugOrWork] : slugOrWork;
-    const im = w && w.images && w.images[0];
-    return (im && !im.video) ? im.file : "hero.jpg";
+  // the window reshapes while the old picture crossfades into the new one, on the same clock
+  back.style.transition = front.style.transition = `opacity ${DUR}ms var(--ease)`;
+  setLayer(back, el); back.offsetWidth;
+  placeFrame(); back.classList.add("front"); front.classList.remove("front");
+  if (textChanges) {
+    await out; if (my !== token) return;
+    await wait(Math.max(0, DUR * .35 - 240));                          // let the window get moving first
+    if (my !== token) return;
+    setText(); unroll();                                                 // unrolls over the back half of the morph
   }
+}
 
-  const sections = [
-    ...seriesDefs.map(s => ({ id: s.id, numeral: s.numeral, name: s.name, note: s.note, works: bySeries(s.id) })),
-    { id: "explorations", numeral: "◎", name: "Explorations", note: "Not pieces but ways of searching: systems built to explore what the other systems can do, and to tune how that exploring happens.", works: explorations, kind: "exploration" },
-    { id: "singles", numeral: "·", name: "Single Works", note: "", works: singles },
-  ].filter(s => s.works.length);
+function step(d) { const n = W[wi].images.length; if (n < 2) return; k = (k + d + n) % n; render(false); }
+function goWork(slug, plate = 0) {
+  const n = W.findIndex(w => w.slug === slug); if (n < 0) return;
+  if (n !== wi) { wi = n; k = plate; render(true); }
+  else if (plate !== k) { k = plate; render(false); }
+}
 
-  // ---------- rail jumps ----------
-  const jumpHost = document.getElementById("rail-jumps");
-  if (jumpHost) jumpHost.innerHTML =
-    sections.map(s => `<a href="#/s/${s.id}" data-sect="${s.id}" title="${esc(s.name)}">${s.numeral}</a>`).join("");
+/* ---------- footer film ---------- */
+function buildStrip() {
+  $("#strip").innerHTML = GROUPS.map(g => `
+    <div class="grp" data-g="${g.id}">
+      <div class="sname" data-jump="${g.works[0].slug}">${esc(g.name)}</div>
+      <div class="row">${g.works.map(w => `<div class="t ${w.parent ? "child" : ""}" data-w="${w.slug}"><img src="${thumb(w.slug)}" loading="lazy" alt="${esc(w.name)}"></div>`).join("")}</div>
+    </div>`).join("");
+  const strip = $("#strip"), tip = $("#tip");
+  strip.addEventListener("mousemove", e => {
+    const t = e.target.closest(".t"); if (!t) return (tip.style.display = "none");
+    const r = t.getBoundingClientRect();
+    tip.textContent = W.find(w => w.slug === t.dataset.w).name.toLowerCase(); tip.style.display = "block";
+    // left-aligned under the hovered thumbnail, in the empty row below the strip
+    tip.style.left = Math.min(Math.max(28, r.left), innerWidth - tip.offsetWidth - 28) + "px";
+    tip.style.top = r.bottom + 8 + "px";
+  });
+  strip.addEventListener("mouseleave", () => tip.style.display = "none");
+  strip.addEventListener("scroll", () => tip.style.display = "none");
+  strip.addEventListener("wheel", e => { if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) { strip.scrollLeft += e.deltaY; e.preventDefault(); } }, { passive: false });
+}
+function syncStrip() {
+  const w = W[wi], g = groupOf(w);
+  document.querySelectorAll("#strip .t").forEach(t => t.classList.toggle("on", t.dataset.w === w.slug));
+  document.querySelectorAll("#strip .grp").forEach(el => el.classList.toggle("cur", el.dataset.g === g.id));
+  const t = $(`#strip .t[data-w="${w.slug}"]`), strip = $("#strip");
+  strip.scrollTo({ left: t.offsetLeft - strip.clientWidth / 2 + t.offsetWidth / 2, behavior: first ? "auto" : "smooth" });
+}
 
-  // ---------- cover (spine contents + well) ----------
-  const tocSeries = s => `
-    <div class="toc-series">
-      <h4 data-sect="${s.id}" data-thumbs="${s.works.map(w => w.slug).join(",")}">
-        <a href="#/s/${s.id}" style="display:flex;gap:10px;align-items:baseline;flex:1">
-          <span class="rn">${s.numeral}</span> ${esc(s.name).toUpperCase()}</a></h4>
-      ${s.works.map(w => `
-        <a class="toc-row" href="#/s/${s.id}/${w.slug}" data-slug="${w.slug}" data-cap="${w.edition != null ? "ED. " + edLbl(w) + " · " : ""}${esc(w.name)}">
-          <span class="nm">${esc(titleCase(w.name))}</span><span class="dots"></span><span class="ed">${edLbl(w)}</span>
-        </a>` + childrenOf(w.slug).map(c => `
-        <a class="toc-row toc-sub" href="piece.html?w=${w.slug}#ss-${c.slug}" data-slug="${c.slug}" data-cap="${c.edition != null ? "ED. " + edLbl(c) + " · " : ""}${esc(c.name)}">
-          <span class="nm">${esc(titleCase(c.name))}</span><span class="dots"></span><span class="ed">${edLbl(c)}</span>
-        </a>`).join("")).join("")}
-      <div class="toc-strip">${s.works.map(w =>
-        `<a href="#/s/${s.id}/${w.slug}"><img src="assets/img/${w.slug}/thumb.jpg${IMG_V}" loading="lazy" alt="" onerror="this.parentNode.style.display='none'"></a>`).join("")}</div>
-    </div>`;
+/* ---------- visual index: every work, or every plate, by series ---------- */
+function buildIndex(mode = "works") {
+  $("#index").innerHTML =
+    `<div class="mode"><button type="button" data-mode="works" class="${mode === "works" ? "cur" : ""}">works</button><button type="button" data-mode="plates" class="${mode === "plates" ? "cur" : ""}">all plates</button></div>` +
+    GROUPS.map(g => `
+    <div class="ser"><h2>${esc(g.name)}</h2>${mode === "works"
+      ? `<div class="grid">${g.works.map(w => `<div class="cell" data-open="${w.slug}"><img src="${thumb(w.slug)}" loading="lazy" alt=""><span>${low(w.name)}</span></div>`).join("")}</div>`
+      : `<div class="plates">${g.works.flatMap(w => w.images.filter(im => !isVid(im)).map(im =>
+          `<img src="${src(w.slug, im.file)}" data-open="${w.slug}" data-p="${w.images.indexOf(im)}" loading="lazy" alt="${esc(w.name)}" title="${low(w.name)}">`)).join("")}</div>`}
+    </div>`).join("");
+}
+function toggleIndex(on) { document.body.classList.toggle("idx", on); $("#idx-btn").classList.toggle("cur", on); $("#idx-btn").textContent = on ? "close index" : "index"; }
 
-  // writings live in the dedicated writings section now — no writings block in the studio contents
-  const writingsToc = "";
-
-  const coverHtml = `
-    <div class="screen" id="cover">
-      <h1 class="mobile-mast" data-drawn data-cap="82">studio</h1>
-      <div class="over" style="font-family:var(--font-mono);font-size:10px;letter-spacing:.18em;color:var(--ink-faint);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 16px">
-        <span>building curiosity...</span>
-        <span>${esc(data.intro || "")}</span>
-      </div>
-      <div class="cover-modes" id="cover-modes">
-        <a class="mode-btn cur" data-mode="index" href="#">index</a>
-        <a class="mode-btn" data-mode="explore" href="#">visual explore</a>
-      </div>
-      <div class="contents" id="contents">
-        <div class="toc">
-          <div class="toc-grid">${sections.map(tocSeries).join("")}${writingsToc}</div>
-        </div>
-        <div class="well-col">
-          <div class="well" id="well">
-            <img id="well-img" src="assets/img/${sections[0].works[0].slug}/${leadFile(sections[0].works[0])}${IMG_V}" alt="" />
-            <div id="well-sheet"></div>
-          </div>
-          <div class="well-cap" id="well-cap">${sections[0].works[0].edition != null ? "ED. " + edLbl(sections[0].works[0]) + " · " : ""}${esc(sections[0].works[0].name)}</div>
-          <div class="well-note" id="well-note">${esc(sections[0].works[0].note || "")}</div>
-        </div>
-      </div>
-      <div class="explore-grid" id="explore-grid" hidden></div>
-    </div>
-    <div class="screen gone" id="series-view"></div>`;
-
-  main.innerHTML = coverHtml;
-
-  // ---------- visual explore: a shuffled masonry of every studio image ----------
-  function shuffle(a) { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); const t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
-  let exploreBuilt = false;
-  function buildExplore() {
-    if (exploreBuilt) return;
-    exploreBuilt = true;
-    const pool = shuffle(works.flatMap(w => (w.images || [])
-      .filter(im => !im.video)
-      .map(im => ({ slug: w.slug, parent: w.parent, file: im.file, name: w.name }))));
-    document.getElementById("explore-grid").innerHTML = pool.map(t => {
-      const href = t.parent ? `piece.html?w=${encodeURIComponent(t.parent)}#ss-${t.slug}`
-                            : `piece.html?w=${encodeURIComponent(t.slug)}`;
-      return `<a class="ex-tile" href="${href}" title="${esc(titleCase(t.name))}">` +
-        `<img src="assets/img/${t.slug}/${t.file}${IMG_V}" loading="lazy" alt="${esc(t.name)}" ` +
-        `onerror="this.closest('.ex-tile').remove()">` +
-        `<span class="ex-cap">${esc(titleCase(t.name))}</span></a>`;
-    }).join("");
-  }
-  function setMode(mode) {
-    const explore = mode === "explore";
-    if (explore) buildExplore();
-    document.getElementById("contents").hidden = explore;
-    document.getElementById("explore-grid").hidden = !explore;
-    document.querySelectorAll("#cover-modes .mode-btn").forEach(b =>
-      b.classList.toggle("cur", b.dataset.mode === mode));
-  }
-  document.querySelectorAll("#cover-modes .mode-btn").forEach(b =>
-    b.addEventListener("click", e => { e.preventDefault(); setMode(b.dataset.mode); }));
-
-  // ---------- series view rendering ----------
-  const plate = w => `
-    <a class="plate" id="p-${w.slug}" href="piece.html?w=${encodeURIComponent(w.slug)}">
-      <figure>
-        <div class="img"><img src="assets/img/${w.slug}/${leadFile(w)}${IMG_V}" alt="${esc(w.name)}" loading="lazy" /></div>
-        <figcaption>
-          <span class="num">${w.edition != null ? "ED. " + edLbl(w) : "✦"}</span>
-          <span class="name">${esc(w.name)}</span>
-          <span class="after">after ${esc(w.after)}</span>
-        </figcaption>
-      </figure>
-      ${w.kind === "exploration" && articleFor(w.slug) ? `<div class="expl-link">a way of searching — read the writing: “${esc(articleFor(w.slug).title)}”</div>` : ""}
-    </a>`;
-
-  function renderTag(tag) {
-    const view = document.getElementById("series-view");
-    const hits = works.filter(w => (w.tags || []).includes(tag)).sort(edSort);
-    if (!hits.length) return false;
-    view.innerHTML = `
-      <div class="sv-head">
-        <div class="sv-topline"><a href="#/">◀ contents</a><span>tagged</span></div>
-        <div class="sv-title"><span class="rn">#</span><h2 data-drawn data-cap="70">${esc(tag)}</h2><span class="n">${hits.length} works</span></div>
-      </div>
-      <div class="plates">${hits.map(plate).join("")}</div>
-      <div class="sv-nav"><a href="#/">◀ back to contents</a><span></span></div>`;
-    return true;
-  }
-
-  function renderSeries(id) {
-    const view = document.getElementById("series-view");
-    const idx = sections.findIndex(s => s.id === id);
-    if (id === "writings") {
-      view.innerHTML = `
-        <div class="sv-head">
-          <div class="sv-topline"><a href="#/">◀ contents</a><span>writings</span></div>
-          <div class="sv-title"><span class="rn">✎</span><h2 data-drawn data-cap="70">Writings — from the bench</h2><span class="n">${articles.length}</span></div>
-        </div>
-        <div class="writings-list">${articles.map(a => `
-          <a class="writing-row" href="../writings/#${encodeURIComponent(a.slug)}">
-            <span class="w-no">n° ${esc(a.no)}</span><span class="w-title">${esc(a.title)}</span>
-            <span class="w-sub">${esc(a.subtitle)}</span><span class="w-date">${esc(a.date)}</span>
-          </a>`).join("")}</div>
-        <div class="sv-nav"><a href="#/">◀ back to contents</a><span></span></div>`;
-      return true;
-    }
-    if (idx < 0) return false;
-    const s = sections[idx], prev = sections[idx - 1], next = sections[idx + 1];
-    view.innerHTML = `
-      <div class="sv-layout">
-        <aside class="sv-side">
-          <span class="rn">${s.numeral}</span>
-          <h2 data-drawn data-cap="44" data-orient="vertical">${esc(s.name)}</h2>
-        </aside>
-        <div class="sv-body">
-          <div class="sv-topline"><a href="#/">◀ contents</a>
-            <span>${s.works.length} works · ${idx + 1} / ${sections.length}</span></div>
-          ${s.note ? `<p class="sv-note">${esc(s.note)}</p>` : ""}
-          ${(seriesDefs.find(x => x.id === s.id)?.tags || []).length ? `<div class="tag-chips" style="margin:0 0 24px">${seriesDefs.find(x => x.id === s.id).tags.map(t =>
-            `<a class="tag-chip" href="#/t/${encodeURIComponent(t)}">${esc(t)}</a>`).join("")}</div>` : ""}
-          <div class="plates">${s.works.map(plate).join("")}</div>
-        </div>
-      </div>
-      <div class="sv-nav">
-        ${prev ? `<a href="#/s/${prev.id}">◀ ${prev.numeral} ${esc(prev.name)}</a>` : `<a href="#/">◀ contents</a>`}
-        ${next ? `<a href="#/s/${next.id}">${next.numeral} ${esc(next.name)} ▶</a>` : `<a href="#/">▲ contents</a>`}
-      </div>`;
-    return true;
-  }
-
-  // ---------- state machine + parallax transition ----------
-  const cover = document.getElementById("cover");
-  const view = document.getElementById("series-view");
-  let current = "";                                    // "" = cover, else section id
-  const setCoverFlag = () => document.body.classList.toggle("on-cover", !/^#\/?s\//.test(location.hash) && !/^#\/?t\//.test(location.hash));
-  let animating = false;
-
-  function decorate(root) {
-    if (window.Graphite) Graphite.init(root); else addEventListener("load", () => Graphite.init(root));
-    if (window.Masthead) Masthead.init();
-    if (window.Lightbox) Lightbox.attach(root);
-    root.querySelectorAll(".plate").forEach(p => p.classList.add("in"));
-  }
-
-  function markRail(id) {
-    document.querySelectorAll(".rail-jumps a").forEach(a => a.classList.toggle("cur", a.dataset.sect === id));
-    document.querySelectorAll(".nv-group").forEach(g => g.classList.toggle("open", g.dataset.series === id));
-  }
-
-  function swap(fromEl, toEl, after) {
-    if (animating) return;
-    animating = true;
-    scrollTo(0, 0);
-    toEl.classList.remove("gone");
-    toEl.classList.add("enter-below");
-    fromEl.classList.add("leave-up");
-    requestAnimationFrame(() => requestAnimationFrame(() => {
-      toEl.classList.add("enter-run");
-      setTimeout(() => {
-        fromEl.classList.add("gone");
-        fromEl.classList.remove("leave-up");
-        toEl.classList.remove("enter-below", "enter-run");
-        animating = false;
-        if (after) after();
-      }, 820);
-    }));
-  }
-
-  function route() {
-    const h = location.hash.replace(/^#\/?/, "");
-    const tm = h.match(/^t\/(.+)$/i);
-    const m = h.match(/^s\/([a-z0-9-]+)(?:\/([a-z0-9-]+))?$/i);
-    let target = m ? m[1] : "";
-    let workSlug = m && m[2];
-    if (tm) { target = "tag:" + decodeURIComponent(tm[1]); workSlug = null; }
-    if (target === current) { if (workSlug) scrollToPlate(workSlug); return; }
-    if (target) {
-      const ok = target.startsWith("tag:") ? renderTag(target.slice(4)) : renderSeries(target);
-      if (!ok) { location.hash = ""; return; }
-      if (current !== "") {                            // series -> series: no big transition
-        markRail(target); current = target; decorate(view);
-        scrollTo(0, 0); if (workSlug) scrollToPlate(workSlug);
-        return;
-      }
-      swap(cover, view, () => { if (workSlug) scrollToPlate(workSlug); });
-      decorate(view); markRail(target); current = target; setCoverFlag();
-    } else {
-      if (current === "") return;
-      swap(view, cover);
-      markRail(""); current = ""; setCoverFlag();
-    }
-  }
-  function scrollToPlate(slug) {
-    const el = document.getElementById("p-" + slug);
-    if (el) setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "start" }), 200);
-  }
-  addEventListener("hashchange", () => { route(); setCoverFlag(); });
-
-  // ---------- preview well ----------
-  const wImg = document.getElementById("well-img"), wSheet = document.getElementById("well-sheet"),
-        wCap = document.getElementById("well-cap"), wNote = document.getElementById("well-note");
-  document.querySelectorAll(".toc-row[data-slug]").forEach(r => r.addEventListener("mouseenter", () => {
-    wSheet.style.display = "none"; wImg.style.display = "block";
-    wImg.src = `assets/img/${r.dataset.slug}/${leadFile(r.dataset.slug)}${IMG_V}`; wCap.textContent = r.dataset.cap;
-    const w = works.find(x => x.slug === r.dataset.slug);
-    wNote.textContent = (w && w.note) || "";
-  }));
-  document.querySelectorAll(".toc-series h4[data-thumbs]").forEach(h => h.addEventListener("mouseenter", () => {
-    wImg.style.display = "none"; wSheet.style.display = "grid";
-    wSheet.innerHTML = h.dataset.thumbs.split(",").slice(0, 6).map(s =>
-      `<img src="assets/img/${s}/thumb.jpg${IMG_V}" loading="lazy" alt="" onerror="this.style.display='none'">`).join("");
-    wCap.textContent = h.textContent.trim() + " — at a glance";
-    const sd = seriesDefs.find(x => x.id === h.dataset.sect);
-    const sect = sections.find(x => x.id === h.dataset.sect);
-    wNote.textContent = (sd && sd.note) || (sect && sect.note) || "";
-  }));
-
-  decorate(cover);
-  route();                                             // honor a deep link on load
-  setCoverFlag();
-
-  function titleCase(s) { return s.toLowerCase().replace(/(^|\s|-)\S/g, c => c.toUpperCase()); }
-  function esc(s) { return String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])); }
-})();
+/* ---------- input ---------- */
+document.addEventListener("click", e => {
+  const t = e.target;
+  const th = t.closest("#theme button");
+  if (th) { document.documentElement.dataset.theme = th.dataset.theme; try { localStorage.setItem("studio.theme", th.dataset.theme); } catch (_) {} markTheme(); return; }
+  if (t.id === "idx-btn") return toggleIndex(!document.body.classList.contains("idx"));
+  if (t.dataset.mode) return buildIndex(t.dataset.mode);
+  const cell = t.closest("[data-open]"); if (cell) { toggleIndex(false); return goWork(cell.dataset.open, +(cell.dataset.p || 0)); }
+  const hit = t.closest("#strip [data-w]"); if (hit) return goWork(hit.dataset.w);
+  if (t.dataset.jump) return goWork(t.dataset.jump);
+  if (t.dataset.k != null) { k = +t.dataset.k; return render(false); }
+  if (t.classList.contains("more")) { const n = t.previousElementSibling; n.classList.toggle("clamp"); t.textContent = n.classList.contains("clamp") ? "more" : "less"; return; }
+  if (t.closest(".layer")) return step(1);
+});
+addEventListener("keydown", e => {
+  if (e.key === "Escape") return toggleIndex(false);
+  if (!W || document.body.classList.contains("idx") || e.target.closest("input, textarea")) return;
+  if (e.key === "ArrowRight") step(1);
+  else if (e.key === "ArrowLeft") step(-1);
+  else if (e.key === "ArrowDown") { e.preventDefault(); wi = (wi + 1) % W.length; k = 0; render(true); }
+  else if (e.key === "ArrowUp") { e.preventDefault(); wi = (wi - 1 + W.length) % W.length; k = 0; render(true); }
+});
 </script>
   <!-- analytics: goatcounter (privacy-friendly, cookieless) -->
   <script data-goatcounter="https://conradhouse.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
