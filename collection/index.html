@@ -7,7 +7,8 @@
   <title>Collection | con.rad</title>
 
   <!-- Tailwind CSS -->
-  <script>try{var t=localStorage.getItem("studio.theme");if(t)document.documentElement.dataset.theme=t;}catch(e){}</script>
+  <!-- two grounds only: white or dark. Same "studio.theme" key as the other pages; a saved "cream" reads as white. -->
+  <script>try{var t=localStorage.getItem("studio.theme");if(!t&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";document.documentElement.dataset.theme=t==="dark"?"dark":"white";}catch(e){}</script>
   <style>html.preload{opacity:0}</style>
   <script>document.documentElement.classList.add("preload");(function(){function r(){var h=document.documentElement;h.style.transition="opacity .28s ease";h.classList.remove("preload");}addEventListener("DOMContentLoaded",function(){requestAnimationFrame(function(){requestAnimationFrame(r);});});addEventListener("load",r);setTimeout(r,1400);})();</script>
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
@@ -41,9 +42,6 @@
       }
     }
   </script>
-
-  <!-- Studio type (self-hosted) -->
-  <script src="../assets/catalogue/theme.js" defer></script>
 
   <!-- Config Loader -->
   <script src="../assets/js/config-loader.js"></script>
@@ -195,6 +193,110 @@
 
   <!-- STUDIO RETINT — palette + fonts aligned to the catalogue; layout untouched -->
   <link rel="stylesheet" href="../assets/catalogue/retint.css" />
+
+  <style>
+    /* ==================================================================
+       CLEAN PASS — ABC Areal only, pure white or dark, no frames or rules.
+       Same tokens as the home page; page-local until shell/retint follow.
+       ================================================================== */
+    @font-face { font-family: "Areal"; src: url("../assets/catalogue/fonts/ABCAreal-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: "Areal"; src: url("../assets/catalogue/fonts/ABCAreal-RegularItalic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+    @font-face { font-family: "Areal"; src: url("../assets/catalogue/fonts/ABCAreal-Medium.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+
+    :root, :root[data-theme="white"], :root[data-theme="cream"] {
+      --paper-rgb: 255, 255, 255; --paper-deep: #ffffff;
+      --ink-rgb: 17, 17, 17; --ink-soft: #3a3a3a; --ink-faint: #8c8c8c;
+      --rule: rgba(var(--ink-rgb), .14);
+      --sanguine: rgb(var(--ink-rgb)); --sang-rgb: var(--ink-rgb);          /* one accent: the ink itself */
+      --font-display: "Areal", sans-serif; --font-text: "Areal", sans-serif; --font-mono: "Areal", sans-serif;
+    }
+    :root[data-theme="dark"] {
+      --paper-rgb: 14, 14, 14; --paper-deep: #0e0e0e;
+      --ink-rgb: 237, 237, 237; --ink-soft: #bdbdbd; --ink-faint: #7a7a7a;
+      --sanguine: rgb(var(--ink-rgb)); --sang-rgb: var(--ink-rgb);
+    }
+    body { font-size: 14px; }
+    body::after { display: none !important; }                 /* no paper grain */
+    ::selection { background: rgb(var(--ink-rgb)); color: rgb(var(--paper-rgb)); }
+
+    /* type: Medium for names, Regular for the rest; no wide tracking, no shouting, no italics */
+    .font-mono, .font-sans { letter-spacing: .005em !important; }
+    .font-display { font-weight: 500 !important; letter-spacing: -.035em !important; }
+    .tracking-widest, .tracking-tighter, .uppercase { letter-spacing: .005em !important; }
+    .uppercase { text-transform: none !important; }
+    .italic { font-style: normal !important; }
+    .text-xs, .text-\[10px\], .text-\[9px\] { font-size: 12px !important; line-height: 1.45 !important; }
+
+    /* hard corners, no frames, no rules, no shadows — whitespace separates */
+    *, *::before, *::after { border-radius: 0 !important; }
+    [class*="border"] { border-color: transparent !important; }
+    .glass-panel { background: transparent !important; border: 0 !important; }
+    .artwork-frame { background: transparent !important; border: 0 !important; box-shadow: none !important; }
+    [class*="shadow"] { box-shadow: none !important; }
+    .backdrop-blur, .backdrop-blur-sm, .backdrop-blur-md { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+
+    /* top nav: plain row, no bar, no rule */
+    header.mix-blend-difference { border-bottom: 0 !important; background: rgb(var(--paper-rgb)) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+    .site-home { font: 500 14px/1 var(--font-display) !important; letter-spacing: -.035em !important; color: var(--ink) !important; }
+    .site-links { font-size: 12px !important; letter-spacing: .005em !important; }
+    .site-links a.cur, .site-links a:hover { color: var(--ink) !important; }
+
+    /* grid */
+    .grid-item img, .grid-item:hover img { filter: none !important; }
+    .grid-item h3 { font-size: 14px !important; }
+    /* hover caption: a plain label strip, not a scrim */
+    .grid-item .bg-gradient-to-t { background: rgb(var(--paper-rgb)) !important; padding: 8px 10px !important; }
+    .grid-item .bg-gradient-to-t p { color: var(--ink-faint) !important; }
+    [data-thoughts-trigger] { color: var(--ink) !important; }
+
+    /* single view: nav chevrons, loading, plaque, thoughts */
+    #side-prev-btn, #side-next-btn { background: transparent !important; color: var(--ink-faint) !important; }
+    #side-prev-btn:hover, #side-next-btn:hover { color: var(--ink) !important; }
+    #gallery-counter { display: none !important; }                    /* "3 / 18" bookkeeping */
+    #plaque-title { font-size: 22px !important; line-height: 1.1; }
+    #plaque-artist, #plaque-medium { color: var(--ink-faint) !important; margin-top: 2px !important; }
+    #plaque-medium:empty { display: none; }
+    #artwork-sidebar p:first-child { color: var(--ink-faint) !important; }
+    #sidebar-text, .thoughts-overlay p:last-child { font-size: 14px !important; line-height: 1.5 !important; color: var(--ink-soft) !important; }
+
+    /* view controls: bare icons */
+    #view-controls a, #view-controls button { color: var(--ink-faint) !important; }
+    #view-controls a:hover, #view-controls button:hover { color: var(--ink) !important; }
+    #grid-btn.bg-acid { background: transparent !important; color: var(--ink) !important; }
+
+    /* footer: no bar; light / dark sits with the links */
+    footer { background: transparent !important; }
+    .theme-toggle { display: inline-flex; gap: 12px; }
+    .theme-toggle button { all: unset; cursor: pointer; font: 400 12px var(--font-mono); color: var(--ink-faint); }
+    .theme-toggle button:hover, .theme-toggle button.cur { color: var(--ink); }
+
+    /* loader: just the quiet line of text */
+    #collection-loader { background: rgb(var(--paper-rgb)) !important; }
+    #loader-message { color: var(--ink-faint) !important; }
+
+    /* phone: the single view stacks — picture, then name, then thoughts — and scrolls */
+    @media (max-width: 760px) {
+      body.gallery-mode { height: auto; overflow: auto; }
+      body.gallery-mode #gallery-main { height: auto; min-height: 100vh; align-items: flex-start; padding: 96px 16px 96px !important; }
+      #artwork-container { width: 100%; }
+      .artwork-frame img, .artwork-frame video {
+        max-width: 100% !important; min-width: 0 !important; min-height: 0 !important;
+        max-height: 62vh !important; width: 100% !important; height: auto !important;
+      }
+      .artwork-frame--iframe { width: calc(100vw - 32px) !important; height: 62vh !important; }
+      #artwork-plaque, #artwork-sidebar {
+        position: static !important; transform: none !important; width: auto !important;
+        max-width: none !important; max-height: none !important; align-self: stretch; margin-top: 20px;
+      }
+      #side-nav-prev { left: 4px !important; } #side-nav-next { right: 4px !important; }
+      #side-nav-prev, #side-nav-next { top: 40vh !important; }
+    }
+
+    /* the (hidden) player keeps working, in ink */
+    .text-acid { color: var(--ink) !important; }
+    .bg-acid { background-color: var(--ink) !important; }
+    .bg-acid\/20 { background-color: rgba(var(--ink-rgb), .2) !important; }
+  </style>
   <!-- favicon: cube-study plate -->
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
@@ -207,15 +309,9 @@
 
   <!-- Collection Loader -->
   <div id="collection-loader" class="fixed inset-0 z-[100] bg-void flex flex-col items-center justify-center transition-opacity duration-700">
-    <div class="text-center mb-8">
-      <div class="text-acid font-mono text-xs mb-2 animate-pulse">COLLECTION_LOAD_SEQUENCE</div>
-      <div class="text-4xl font-display font-bold tracking-tighter text-white mb-2">GALLERY.exe</div>
-      <div id="loader-message" class="font-mono text-xs text-gray-500 h-4">initializing...</div>
-    </div>
-    <div class="w-64 h-1 bg-gray-900 overflow-hidden">
-      <div id="loader-bar" class="h-full bg-acid w-0 transition-all duration-300 ease-out"></div>
-    </div>
-    <div class="font-mono text-[10px] text-gray-600 mt-3"><span id="loader-percent">0</span>%</div>
+    <div id="loader-message" class="font-mono text-xs text-gray-500 h-4">initializing...</div>
+    <!-- progress bar + percent kept for the loader script's timing, never shown -->
+    <div hidden><div id="loader-bar"></div><span id="loader-percent">0</span></div>
   </div>
 
   <!-- Overlays -->
@@ -266,12 +362,12 @@
       <div class="fixed bottom-8 left-8 max-w-sm z-40" id="artwork-plaque">
         <h1 class="font-display text-xl font-bold mb-1 text-white" id="plaque-title">Untitled</h1>
         <p class="font-mono text-xs text-gray-400" id="plaque-artist"></p>
-        <p class="font-mono text-[10px] text-gray-500 mt-2" id="plaque-medium">Digital Art</p>
+        <p class="font-mono text-[10px] text-gray-500 mt-2" id="plaque-medium"></p>
       </div>
 
       <!-- Sidebar Description -->
       <aside class="fixed top-1/2 right-16 -translate-y-1/2 w-[240px] max-h-[60vh] overflow-y-auto z-40 hidden" id="artwork-sidebar">
-        <p class="font-mono text-[10px] text-acid tracking-widest mb-3">thoughts.</p>
+        <p class="font-mono text-[10px] text-acid tracking-widest mb-3">thoughts</p>
         <p class="font-sans text-sm text-gray-300 leading-relaxed" id="sidebar-text"></p>
       </aside>
     </div>
@@ -279,11 +375,11 @@
     <!-- Empty State -->
     <div class="hidden flex-col items-center justify-center text-gray-500" id="gallery-empty">
       <svg class="w-16 h-16 mb-4 opacity-30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
-        <rect x="3" y="3" width="18" height="18" rx="2"/>
+        <rect x="3" y="3" width="18" height="18"/>
         <circle cx="8.5" cy="8.5" r="1.5"/>
         <path d="M21 15l-5-5L5 21"/>
       </svg>
-      <p class="font-mono text-xs uppercase tracking-widest">No artwork to display</p>
+      <p class="font-mono text-xs">nothing to show yet</p>
     </div>
   </main>
 
@@ -328,10 +424,11 @@
         <h3 class="font-display text-2xl mb-2">con.rad</h3>
         <p class="font-mono text-xs text-gray-500">© <span id="current-year"></span> conrad house. curiously tinkering and breaking things.</p>
       </div>
-      <div class="flex gap-6 font-mono text-xs">
+      <div class="flex flex-wrap gap-6 font-mono text-xs">
         <a href="mailto:conradhouse1998@gmail.com" class="hover:text-acid hover:underline">email</a>
         <a href="https://github.com/nemocake" target="_blank" class="hover:text-acid hover:underline">github</a>
         <a href="https://x.com/DlSPUTED" target="_blank" class="hover:text-acid hover:underline">twitter</a>
+        <span class="theme-toggle" role="group" aria-label="page ground"><button type="button" data-t="white">light</button><button type="button" data-t="dark">dark</button></span>
       </div>
     </div>
   </footer>
@@ -615,7 +712,7 @@
         plaqueTitle.textContent = item.title || 'Untitled';
         plaqueArtist.textContent = item.artist || '';
         plaqueArtist.style.display = item.artist ? 'block' : 'none';
-        plaqueMedium.textContent = item.medium || (isIframe ? 'Generative Art' : 'Digital Art');
+        plaqueMedium.textContent = item.medium || '';
         externalBtn.href = url;
 
         // Sidebar
@@ -685,7 +782,7 @@
               ${hasThoughts ? `
                 <div class="thoughts-overlay absolute inset-0 bg-black/95 p-5 flex flex-col justify-center z-20">
                   <button class="absolute top-3 right-3 w-7 h-7 bg-white/10 rounded-full flex items-center justify-center text-white/70 hover:text-white" data-thoughts-close>×</button>
-                  <p class="font-mono text-[10px] text-acid uppercase tracking-widest mb-2">thoughts.</p>
+                  <p class="font-mono text-[10px] text-gray-500 mb-2">thoughts</p>
                   <p class="font-sans text-sm text-gray-200 leading-relaxed">${item.description}</p>
                 </div>
               ` : ''}
@@ -1151,8 +1248,23 @@
     })();
   </script>
 
-  <!-- studio ground selector -->
-  <div class="colophon ground-mount"></div>
+  <script>
+  /* light / dark — writes the shared key only when the visitor actually picks one */
+  (function () {
+    var KEY = "studio.theme";
+    function mark() {
+      var t = document.documentElement.dataset.theme;
+      document.querySelectorAll(".theme-toggle button").forEach(function (b) { b.classList.toggle("cur", b.dataset.t === t); });
+    }
+    document.querySelector(".theme-toggle").addEventListener("click", function (e) {
+      var b = e.target.closest("button"); if (!b) return;
+      document.documentElement.dataset.theme = b.dataset.t;
+      try { localStorage.setItem(KEY, b.dataset.t); } catch (_) {}
+      mark();
+    });
+    mark();
+  })();
+  </script>
   <!-- analytics: goatcounter (privacy-friendly, cookieless) -->
   <script data-goatcounter="https://conradhouse.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
