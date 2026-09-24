@@ -118,7 +118,11 @@
     #top { left:16px; right:16px; top:16px; flex-wrap:wrap; gap:6px 14px; }
     #top nav { gap:12px; }
     #top .right { margin-left:0; width:100%; gap:16px; }
-    .lab { right:0; left:0; top:calc(100% + 16px); bottom:auto; width:auto; text-align:left; }
+    .lab { right:auto; left:var(--labl, 0px); width:var(--labw, 100%); top:calc(100% + 14px); bottom:auto; text-align:left;
+           max-height:var(--labmax, 40vh); overflow-y:auto; scrollbar-width:none; overscroll-behavior:contain; }
+    .lab::-webkit-scrollbar { display:none; }
+    /* the plates come first on a phone — right under the picture, never pushed off by a long note */
+    .lab .mplates { order:-1; margin-bottom:4px; }
     .links { justify-content:flex-start; }
     .col { display:none; }
     .mplates { display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; }
@@ -255,7 +259,16 @@ function frameBox() {
   if (fh > availH) { fh = availH; fw = fh * ar; }
   return { left: (innerWidth - (fw + rl + rr)) / 2 + rl, top: top + (mobile ? 0 : (availH - fh) / 2), width: fw, height: fh };
 }
-function placeFrame() { const b = frameBox(); Object.assign($("#frame").style, { left: b.left + "px", top: b.top + "px", width: b.width + "px", height: b.height + "px" }); }
+function placeFrame() {
+  const b = frameBox(), f = $("#frame");
+  Object.assign(f.style, { left: b.left + "px", top: b.top + "px", width: b.width + "px", height: b.height + "px" });
+  // phones: the label scrolls in whatever room is left between the picture and the strip
+  if (innerWidth < 760) {
+    f.style.setProperty("--labmax", Math.max(120, innerHeight - (b.top + b.height + 14) - $("#strip").offsetHeight - 10) + "px");
+    f.style.setProperty("--labl", (16 - b.left) + "px");          // full screen width, whatever the picture's shape
+    f.style.setProperty("--labw", (innerWidth - 32) + "px");
+  }
+}
 function instant(fn) { document.body.classList.add("instant"); fn(); $("#frame").offsetWidth; requestAnimationFrame(() => document.body.classList.remove("instant")); }
 addEventListener("resize", () => W && instant(placeFrame));
 
