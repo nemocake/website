@@ -163,6 +163,9 @@
 
     /* top nav: plain row, no bar, no rule */
     header.mix-blend-difference { border-bottom: 0 !important; background: rgb(var(--paper-rgb)) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+    /* grid header: same 22px / 28px spot as every other page */
+    header.mix-blend-difference { padding: 22px 28px 12px !important; align-items: center !important; justify-content: flex-start !important; mix-blend-mode: normal !important; }
+    @media (max-width: 760px) { header.mix-blend-difference { padding: 16px 16px 10px !important; align-items: flex-start !important; } }
     .site-home { font: 500 14px/1 var(--font-display) !important; letter-spacing: -.035em !important; color: var(--ink) !important; }
     .site-links { font-size: 12px !important; letter-spacing: .005em !important; }
     .site-links a.cur, .site-links a:hover { color: var(--ink) !important; }
@@ -210,6 +213,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
+  <script src="../assets/catalogue/gridnav.js" defer></script>
 </head>
 <body class="bg-void text-gray-200 antialiased overflow-x-hidden selection:bg-acid selection:text-black">
 
@@ -219,14 +223,7 @@
 
   <!-- Header -->
   <header class="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex justify-between items-start pointer-events-none mix-blend-difference text-white">
-    <a href="../" class="pointer-events-auto site-home">con.rad</a>
-
-    <nav class="pointer-events-auto site-links" aria-label="site">
-      <a href="../writings/">writings</a>
-      <a href="../collection/">collection</a>
-      <a href="../projects/" class="cur" aria-current="page">projects</a>
-      <a href="../studio/">studio</a>
-    </nav>
+    <div data-gridnav data-cur="projects" class="pointer-events-auto"></div>
   </header>
 
   <!-- Main Layout -->

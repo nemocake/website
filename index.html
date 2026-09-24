@@ -8,6 +8,7 @@
 <script>try{var t=localStorage.getItem("studio.theme");if(!t&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";document.documentElement.dataset.theme=t==="dark"?"dark":"white";}catch(e){}</script>
 <link rel="stylesheet" href="assets/catalogue/shell.css" />
 <script src="assets/catalogue/home-data.js"></script>
+<script src="assets/catalogue/gridnav.js" defer></script>
 <style>
   /* ---- header tuning (KEEP AS-IS) ---- */
   #cover { padding-top: clamp(18px, 4vh, 40px); }
@@ -15,6 +16,8 @@
   #cover .over-mark .wordmark { justify-self: start; }
   #cover .over-mark .est { justify-self: end; }
   #cover .corner-logo { justify-self: center; width: clamp(150px, 20vw, 220px); }
+  #cover .corner-logo { display: flex; justify-content: center; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   #cover .corner-logo .drawn-title { display: flex; justify-content: center; }
   #cover .corner-logo canvas { max-height: 50px; }
   #cover .cover-intro { margin-top: 22px; font-style: italic; text-align: center; max-width: none; }
@@ -535,7 +538,7 @@
   <header class="mast" id="cover">
     <div class="over over-mark">
       <span class="wordmark">building curiosity...</span>
-      <div class="corner-logo"><h1>con.rad</h1></div>
+      <div class="corner-logo"><h1 class="sr-only">con.rad</h1><div data-gridnav data-cur=""></div></div>
       <span class="est">master of none, jack of some, jester of all.</span>
     </div>
     <p class="cover-intro">chronically online, techno-curious, art and music junky.</p>
