@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <title>studio · con.rad</title>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="description" content="a practice of creating and chasing after images that intrigue me. editions, series, and explorations by Conrad House." />
 <!-- two grounds only: white or dark. Same "studio.theme" key as the rest of the site; a saved "cream" reads as white. -->
 <script>try{var t=localStorage.getItem("studio.theme");if(!t&&matchMedia("(prefers-color-scheme: dark)").matches)t="dark";document.documentElement.dataset.theme=t==="dark"?"dark":"white";}catch(e){}</script>
@@ -125,7 +125,11 @@
     .mplates::-webkit-scrollbar { display:none; }
     .mplates img, .mplates video { width:auto; height:44px; flex:none; }
     .name { font-size:28px; }
-    #strip { height:104px; padding:0 16px 30px; gap:24px; }
+    /* phones: the strip sizes to its contents so the series names never clip, and clears the home indicator */
+    #strip { height:auto; padding:10px 16px calc(12px + env(safe-area-inset-bottom)); gap:24px; }
+    #strip .row { height:48px; }
+    #strip .t img { height:40px; } #strip .t.on img { height:48px; }
+    #strip .t.child img { height:30px; } #strip .t.child.on img { height:38px; }
     #index { overflow-y:auto; }
     #ix-cats { position:relative; display:flex; flex-wrap:wrap; gap:8px 16px; padding:92px 16px 18px; }
     .ix-cat { position:static; transform:none !important; font-size:13px; }
@@ -244,7 +248,7 @@ const labH = w => `<div class="stack"><div class="name">${low(w.name)}</div>${no
 function frameBox() {
   const w = W[wi], im = w.images[k], ar = (im.w && im.h) ? im.w / im.h : 1.3;
   const mobile = innerWidth < 760, rl = mobile ? 0 : 320, rr = mobile ? 0 : 96;
-  const top = mobile ? 96 : 64, bottom = mobile ? 118 : 142, side = mobile ? 16 : 28;
+  const top = mobile ? 96 : 64, bottom = mobile ? $("#strip").offsetHeight + 12 : 142, side = mobile ? 16 : 28;
   const availW = innerWidth - side * 2 - rl - rr;
   const availH = innerHeight - top - bottom - (mobile ? 250 : 0);
   let fw = availW, fh = fw / ar;
