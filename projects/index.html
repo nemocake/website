@@ -296,8 +296,10 @@
       function mergeWithConfig(repos, projectsConfig) {
         // names rendered as curated (config-only) cards — skip the fetched repo so it isn't listed twice
         const curatedNames = new Set(Object.entries(projectsConfig || {}).filter(([k, c]) => c.private === true).map(([k]) => k));
+        // "hidden": true in config keeps a repo off the site even though it's public on github
+        const hiddenNames = new Set(Object.entries(projectsConfig || {}).filter(([k, c]) => c.hidden === true).map(([k]) => k.toLowerCase()));
         // Map GitHub repos with config overrides
-        const githubProjects = repos.filter(repo => !curatedNames.has(repo.name)).map(repo => {
+        const githubProjects = repos.filter(repo => !curatedNames.has(repo.name) && !hiddenNames.has(repo.name.toLowerCase())).map(repo => {
           const config = projectsConfig?.[repo.name] || {};
           return {
             ...repo,
@@ -310,6 +312,7 @@
             status: config.status,
             status2: config.status2,
             featured: config.featured || false,
+            order: config.order,
             liveUrl: config.liveUrl,
             articleUrl: config.articleUrl
           };
@@ -317,7 +320,7 @@
 
         // Add private/config-only projects
         const privateProjects = Object.entries(projectsConfig || {})
-          .filter(([key, config]) => config.private === true)
+          .filter(([key, config]) => config.private === true && config.hidden !== true)
           .map(([key, config]) => ({
             name: key,
             isPrivate: true,
@@ -330,6 +333,7 @@
             status: config.status,
             status2: config.status2,
             featured: config.featured || false,
+            order: config.order,
             liveUrl: config.liveUrl,
             repoUrl: config.repoUrl,
             articleUrl: config.articleUrl,
@@ -338,6 +342,9 @@
 
         // Combine and sort
         return [...githubProjects, ...privateProjects].sort((a, b) => {
+          // explicit "order" from config wins; anything unordered follows
+          const ao = a.order ?? Infinity, bo = b.order ?? Infinity;
+          if (ao !== bo) return ao - bo;
           // Featured projects first
           if (a.featured && !b.featured) return -1;
           if (!a.featured && b.featured) return 1;

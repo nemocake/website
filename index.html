@@ -775,7 +775,8 @@
         loaded = true;
         try { list = await H.items(s.key); } catch (e) { list = []; }
         // sample a small RANDOM handful ONCE, stable for the session (fresh on reload)
-        sample = (list && list.length > SAMPLE_N) ? shuffle(list).slice(0, SAMPLE_N) : (list || []);
+        // projects keep their curated order (first few); other sections take a fresh random peek
+        sample = (list && list.length > SAMPLE_N) ? (s.key === "projects" ? list : shuffle(list)).slice(0, SAMPLE_N) : (list || []);
         buildStrip();
       }
 

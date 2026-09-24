@@ -98,7 +98,9 @@ window.HomeData = (function () {
     }
     if (key === "projects") {
       if (!cfg) return [];
-      return Object.entries(cfg.projects || {}).map(([k, v]) => ({
+      // same list and order as the projects page: hidden ones out, then config "order"
+      return Object.entries(cfg.projects || {}).filter(([k, v]) => !v.hidden)
+        .sort(([, a], [, b]) => (a.order ?? Infinity) - (b.order ?? Infinity)).map(([k, v]) => ({
         kind: "mix", title: v.title || k, snippet: snippet(v.description), tags: v.tags || [],
         status: v.status || "", live: v.liveUrl || null,
         meta: v.status || "", href: v.liveUrl || "projects/"

@@ -547,7 +547,8 @@
       ],
       "status": "released",
       "liveUrl": "https://scores.conradhouse.dev/",
-      "featured": true
+      "featured": true,
+      "order": 1
     },
     "le-random-explorer": {
       "private": true,
@@ -567,7 +568,8 @@
       ],
       "status": "released",
       "featured": true,
-      "liveUrl": "https://explorer.lerandom.art/"
+      "liveUrl": "https://explorer.lerandom.art/",
+      "order": 2
     },
     "nft-preservation-tool": {
       "description": "local-first archive for your nft collection",
@@ -580,7 +582,8 @@
       ],
       "status": "released",
       "status2": "open source",
-      "featured": true
+      "featured": true,
+      "order": 7
     },
     "website": {
       "description": "my personal corner of the web",
@@ -590,7 +593,8 @@
         "vanilla html/css/js",
         "a collection gallery for art and thoughts around it, a writings section for ramblings, projects to see what im tinkering with, and are.na pulls for what inspires me the most. who knows what ill wanna add next"
       ],
-      "featured": true
+      "featured": true,
+      "order": 5
     },
     "pantry-planner": {
       "description": "meal planning and grocery management",
@@ -601,7 +605,8 @@
       ],
       "tags": [
         "tinkering"
-      ]
+      ],
+      "hidden": true
     },
     "Sketch-to-site": {
       "description": "browser-based wireframe to website builder",
@@ -610,7 +615,8 @@
       ],
       "tags": [
         "tinkering"
-      ]
+      ],
+      "hidden": true
     },
     "latent-sync": {
       "private": true,
@@ -626,7 +632,8 @@
         "productivity"
       ],
       "status": "in development",
-      "featured": true
+      "featured": true,
+      "order": 3
     },
     "arena-graph": {
       "description": "a visual explorer for your are.na channels",
@@ -640,7 +647,8 @@
         "visualization"
       ],
       "status": "in development",
-      "liveUrl": "../graph/"
+      "liveUrl": "../graph/",
+      "order": 9
     },
     "claude-obsidian-assistant": {
       "description": "a starter obsidian vault wired for claude code",
@@ -655,7 +663,8 @@
       ],
       "status": "released",
       "status2": "open source",
-      "featured": true
+      "featured": true,
+      "order": 4
     },
     "cyberclaude": {
       "private": true,
@@ -673,7 +682,8 @@
         "electron"
       ],
       "status": "in development",
-      "featured": true
+      "featured": true,
+      "order": 6
     },
     "favicon-collage": {
       "private": true,
@@ -691,7 +701,8 @@
       "status": "live",
       "liveUrl": "https://github.com/nemocake/favicon-collage",
       "articleUrl": "../writings/#art-rabbit-holing",
-      "featured": false
+      "featured": false,
+      "order": 8
     }
   },
   "inspirations": {
