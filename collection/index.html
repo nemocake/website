@@ -336,11 +336,13 @@
   <!-- mobile splash removed — collection is now viewable on all devices -->
 
   <!-- Collection Loader -->
+  <!-- loader switched off: its "progress" was a timer, not real loading, so it only delayed the grid.
+       Uncomment this block to bring it back (its script bails out while the element is missing).
   <div id="collection-loader" class="fixed inset-0 z-[100] bg-void flex flex-col items-center justify-center transition-opacity duration-700">
     <div id="loader-message" class="font-mono text-xs text-gray-500 h-4">initializing...</div>
-    <!-- progress bar + percent kept for the loader script's timing, never shown -->
     <div hidden><div id="loader-bar"></div><span id="loader-percent">0</span></div>
   </div>
+  -->
 
   <!-- Overlays -->
   <div class="scanlines"></div>
