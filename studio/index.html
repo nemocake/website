@@ -24,7 +24,7 @@
   a { color:inherit; text-decoration:none; }
 
   /* ---------- top bar: site nav, index, ground ---------- */
-  #top { position:fixed; z-index:60; left:28px; right:28px; top:22px; display:flex; gap:22px; align-items:baseline; }
+  #top { position:fixed; z-index:60; left:28px; right:28px; top:22px; display:flex; gap:22px; align-items:center; }
   #top .home { font-weight:500; letter-spacing:-.02em; font-size:13px; }
   #top nav { display:flex; gap:18px; color:var(--mute); }
   #top nav a:hover, #top nav a.cur { color:var(--ink); }
@@ -131,16 +131,11 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
   <script src="../assets/catalogue/img-upgrade.js"></script>
+<script src="../assets/catalogue/gridnav.js" defer></script>
 </head>
 <body>
 <div id="top">
-  <a class="home" href="../">con.rad</a>
-  <nav aria-label="site">
-    <a href="../writings/">writings</a>
-    <a href="../collection/">collection</a>
-    <a href="../projects/">projects</a>
-    <a class="cur" href="./">studio</a>
-  </nav>
+  <div data-gridnav data-cur="studio"></div>
   <div class="right">
     <button id="idx-btn" type="button">index</button>
     <span id="theme" role="group" aria-label="page ground"><button type="button" data-theme="white">light</button><button type="button" data-theme="dark">dark</button></span>
