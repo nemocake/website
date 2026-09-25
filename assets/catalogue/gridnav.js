@@ -27,15 +27,17 @@
     ".gn-mark a:focus-visible{outline-color:var(--ink,currentColor)}",
     ".gn-sq{position:absolute;left:0;top:0;width:var(--gn-cell);height:var(--gn-cell);background:var(--ink,currentColor);pointer-events:none;",
     "transition:left .45s cubic-bezier(.2,.9,.25,1.12),top .45s cubic-bezier(.2,.9,.25,1.12),opacity .25s}",
-    ".gn-roll{display:block;height:16px;overflow:hidden;margin-left:4px;font:400 var(--gn-font)/16px 'Areal',sans-serif;letter-spacing:.005em;transition:opacity .25s}",
+    /* the label rolls through a window that fades out top and bottom instead of cutting the text off */
+    ".gn-roll{display:block;height:24px;overflow:hidden;margin-left:4px;font:400 var(--gn-font)/24px 'Areal',sans-serif;letter-spacing:.005em;transition:opacity .25s;",
+    "-webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 20%,#000 80%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 20%,#000 80%,transparent 100%)}",
     ".gn-track{transition:transform .45s cubic-bezier(.65,0,.35,1)}",
-    ".gn-track span{display:block;height:16px}",
+    ".gn-track span{display:block;height:24px}",
     "[data-gridnav].gn-none .gn-sq,[data-gridnav].gn-none .gn-roll{opacity:0}",
     "[data-gridnav].gn-snap .gn-sq,[data-gridnav].gn-snap .gn-track{transition:none}",
     /* no current section (home): the label is out of the layout, floating right of the grid,
        so the lockup centres on what's actually visible */
     "[data-gridnav].gn-free{position:relative}",
-    "[data-gridnav].gn-free .gn-roll{position:absolute;left:100%;top:50%;margin:-8px 0 0 14px;white-space:nowrap}",
+    "[data-gridnav].gn-free .gn-roll{position:absolute;left:100%;top:50%;margin:-12px 0 0 14px;white-space:nowrap}",
     "[data-gridnav].gn-free.gn-none .gn-roll{display:none}",
     "@media (prefers-reduced-motion:reduce){.gn-sq,.gn-track{transition:none}}"
   ].join("\n");
@@ -63,7 +65,7 @@
       if (i < 0) { roll.removeAttribute("href"); return; }
       sq.style.left = "calc(var(--gn-step) * " + (i % 2) + ")";
       sq.style.top = "calc(var(--gn-step) * " + Math.floor(i / 2) + ")";
-      track.style.transform = "translateY(" + (-16 * i) + "px)";
+      track.style.transform = "translateY(" + (-24 * i) + "px)";
       roll.href = href(s);
     }
     // start in place without animating
