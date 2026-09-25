@@ -32,6 +32,11 @@
     ".gn-track span{display:block;height:16px}",
     "[data-gridnav].gn-none .gn-sq,[data-gridnav].gn-none .gn-roll{opacity:0}",
     "[data-gridnav].gn-snap .gn-sq,[data-gridnav].gn-snap .gn-track{transition:none}",
+    /* no current section (home): the label is out of the layout, floating right of the grid,
+       so the lockup centres on what's actually visible */
+    "[data-gridnav].gn-free{position:relative}",
+    "[data-gridnav].gn-free .gn-roll{position:absolute;left:100%;top:50%;margin:-8px 0 0 14px;white-space:nowrap}",
+    "[data-gridnav].gn-free.gn-none .gn-roll{display:none}",
     "@media (prefers-reduced-motion:reduce){.gn-sq,.gn-track{transition:none}}"
   ].join("\n");
 
@@ -39,6 +44,7 @@
     if (el.dataset.gnDone) return;
     el.dataset.gnDone = "1";
     var cur = el.getAttribute("data-cur") || "";
+    if (!cur) el.classList.add("gn-free");
     var href = function (s) { return ROOT + s + "/"; };
     el.setAttribute("role", "navigation");
     el.setAttribute("aria-label", "site");
