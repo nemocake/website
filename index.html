@@ -489,7 +489,9 @@
     #cover .corner-logo { order: -1; justify-self: center; }
     #cover .over-spacer { display: none; }
     #cover .over-mark .cover-intro { justify-self: center; max-width: none; text-align: center; }
-    #cover #quote, #cover #quote .q { white-space: nowrap; }
+    /* every piece of the quote stays on one line — including inside words, where the hyphen in
+       "techno-curious" could otherwise break for a frame when the swap starts */
+    #cover #quote, #cover #quote span { white-space: nowrap; }
   }
   /* phones: lockup top-left (same spot as every other page), the quote underneath */
   @media (max-width: 640px) {
