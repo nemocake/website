@@ -464,6 +464,28 @@
   #cover .over { font-size: 12px; text-transform: none; }
   #cover .cover-intro { font-size: 15px; color: var(--ink-soft); font-style: normal; }
   #cover .corner-logo h1 { color: var(--ink); }
+  /* top row: intro line left, lockup centred */
+  #cover .over-mark .cover-intro { justify-self: start; align-self: center; margin: 0; max-width: 34ch;
+                                   font-size: 13px; line-height: 1.4; color: var(--ink-soft); text-align: left; }
+  #cover .corner-logo { width: auto; }
+  /* the shared masthead rule keeps spans in this row on one line — the quote must wrap */
+  #cover #quote, #cover #quote span { white-space: normal; }
+  /* both quotes share one grid cell, so the box is always the longer one's size and never reflows */
+  #quote { display: grid; }
+  #quote .q { grid-area: 1 / 1; }
+  #quote .w { white-space: nowrap; }
+  #quote .c { position: relative; transition: opacity .07s linear; }
+  #quote .c.off { opacity: 0; }
+  /* the ascii edge is drawn over the letter, which keeps its own width underneath */
+  #quote .c.g { color: transparent; }
+  #quote .c.g::after { content: attr(data-g); position: absolute; left: 50%; top: 0; transform: translateX(-50%); color: var(--ink-faint); }
+  /* phones: lockup top-left (same spot as every other page), the quote underneath */
+  @media (max-width: 640px) {
+    #cover .over.over-mark { grid-template-columns: 1fr; justify-items: start; gap: 12px; }
+    #cover .corner-logo { order: -1; justify-self: start; }
+    #cover .over-spacer { display: none; }
+    #cover .over-mark .cover-intro { max-width: 30ch; justify-self: start; text-align: left; }
+  }
   #home-body .orow .nm, #home-body .pv-wtitle, #home-body .pv-cap .pv-nm {
     font-weight: 500; letter-spacing: -.035em;
   }
@@ -537,11 +559,10 @@
 <div class="wrap">
   <header class="mast" id="cover">
     <div class="over over-mark">
-      <span class="wordmark">building curiosity...</span>
+      <p class="cover-intro" id="quote" aria-label="chronically online, techno-curious, art and music junky. master of none, jack of some, jester of all."><span aria-hidden="true">chronically online, techno-curious, art and music junky.</span></p>
       <div class="corner-logo"><h1 class="sr-only">con.rad</h1><div data-gridnav data-cur=""></div></div>
-      <span class="est">master of none, jack of some, jester of all.</span>
+      <span class="over-spacer" aria-hidden="true"></span>
     </div>
-    <p class="cover-intro">chronically online, techno-curious, art and music junky.</p>
   </header>
 
   <!-- ===== BODY: the index that opens (b1) ===== -->
@@ -941,6 +962,65 @@
 
     decide();
   })();
+})();
+</script>
+
+<script>
+/* the corner quote: every so often a wipe runs through it in reading order — the old line fades out,
+   the new one fades in, and a narrow band of faint ascii flickers at the edge. Both lines always sit in
+   the same cell and glyphs are drawn over letters, so the layout never moves. */
+(function () {
+  var QUOTES = ["chronically online, techno-curious, art and music junky.", "master of none, jack of some, jester of all."];
+  var GLYPHS = ".:-=+*#%/\|<>~^";
+  var el = document.getElementById("quote"); if (!el) return;
+  // each quote becomes words of single-letter spans (words never break mid-way)
+  el.innerHTML = QUOTES.map(function (q, n) {
+    return '<span class="q" aria-hidden="true">' + q.split(" ").map(function (w) {
+      return '<span class="w">' + w.split("").map(function (ch) { return '<span class="c' + (n ? " off" : "") + '">' + ch + "</span>"; }).join("") + "</span>";
+    }).join(" ") + "</span>";
+  }).join("");
+  var layers = [].map.call(el.querySelectorAll(".q"), function (q) { return [].slice.call(q.querySelectorAll(".c")); });
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  // every letter gets a reading position in pixels (line × box width + x), shared by both quotes,
+  // so the wipe edge is one place on the page: behind it only the new line, ahead of it only the old
+  var pos = [], total = 1;
+  function measure() {
+    var box = el.getBoundingClientRect(), lh = parseFloat(getComputedStyle(el).lineHeight) || 18;
+    var lines = Math.max(1, Math.round(box.height / lh));
+    pos = layers.map(function (L) { return L.map(function (c) {
+      var r = c.getBoundingClientRect();
+      return Math.round((r.top - box.top) / lh) * box.width + (r.left - box.left) + r.width / 2;
+    }); });
+    total = lines * box.width;
+  }
+  measure(); addEventListener("resize", measure);
+
+  var cur = 0, busy = false, BAND = 56, DUR = 1400;          // edge width in px, wipe duration in ms
+  function glyph() { return GLYPHS[(Math.random() * GLYPHS.length) | 0]; }
+  function set(c, state) {                                    // state: "on" | "off" | "g"
+    c.classList.toggle("off", state === "off");
+    if (state === "g") { if (!c.classList.contains("g") || Math.random() < .35) c.setAttribute("data-g", glyph()); c.classList.add("g"); }
+    else c.classList.remove("g");
+  }
+  function wipe(from, to, done) {
+    var A = layers[from], B = layers[to], PA = pos[from], PB = pos[to], t0 = performance.now(), end = total + BAND;
+    function frame(now) {
+      var f = Math.min(1, (now - t0) / DUR) * end;
+      // old letters: glyphs in the leading half of the edge, gone behind it
+      A.forEach(function (c, k) { var p = PA[k]; set(c, p < f - BAND / 2 ? "off" : p < f ? "g" : "on"); });
+      // new letters: resolve out of glyphs in the trailing half, not there yet ahead of it
+      B.forEach(function (c, k) { var p = PB[k]; set(c, p < f - BAND ? "on" : p < f - BAND / 2 ? "g" : "off"); });
+      if (f < end) requestAnimationFrame(frame); else done();
+    }
+    requestAnimationFrame(frame);
+  }
+  setInterval(function () {
+    if (busy || document.hidden) return;
+    busy = true;
+    var next = (cur + 1) % QUOTES.length;
+    wipe(cur, next, function () { cur = next; busy = false; });
+  }, 7000);
 })();
 </script>
 
