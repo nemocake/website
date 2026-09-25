@@ -538,6 +538,8 @@
   .ltile.hot { border-color: transparent; }
   .ltile img, .lately-grid.mob .ltile img { filter: none; }
   .lt-meta .lt-t, .lt-meta .lt-w { font-size: 10px; text-transform: none; }
+  /* no date on the tiles any more — the title gets the whole caption */
+  .lt-meta .lt-t { flex: 1; -webkit-line-clamp: 3; }
 
   footer.colophon { border-top: 0; font-size: 12px; }
   footer.colophon .cols a, footer.colophon .cols span { text-transform: none; }
@@ -581,7 +583,6 @@
       <div class="lately-head">
         <span class="lh-sub">what i've been looking at</span>
         <button class="lh-listen" id="lh-listen" type="button" aria-label="open the music player">&#9835; listening to</button>
-        <a class="live" id="lately-live" href="https://www.are.na/conrad-house/visually-intriguing" target="_blank" rel="noopener"><span class="dot"></span><span id="lately-live-t">connecting&hellip;</span></a>
       </div>
       <div class="lately-grid" id="lately-grid"><div class="lately-loading">gathering recent finds&hellip;</div></div>
       <a class="lately-more" href="https://www.are.na/conrad-house/visually-intriguing" target="_blank" rel="noopener">see more on are.na <span class="aw">&rarr;</span></a>
@@ -829,17 +830,12 @@
   /* ---------------- ZONE 3 · are.na "lately" — the ORGANISM displacement masonry ---------------- */
   (async function lately() {
     const grid = document.getElementById("lately-grid");
-    const live = document.getElementById("lately-live");
-    const liveT = document.getElementById("lately-live-t");
 
     let res;
     try { res = await H.arena(50); } catch (e) { res = { live: false, blocks: [] }; }
     const blocks = (res.blocks || []).filter(b => b.thumb || b.img).slice(0, 50);
     if (!blocks.length) { document.getElementById("lately").style.display = "none"; return; }
 
-    live.classList.toggle("on", !!res.live);
-    const newest = H.whenAgo(blocks[0].when);
-    liveT.textContent = (res.live ? "live from are.na" : "recent snapshot") + (newest ? " · updated " + newest : "");
 
     const GAP = 10;
     const MAXPUSH = 48;                 // px of shove at the epicentre
@@ -847,11 +843,10 @@
     const isMobile = () => window.matchMedia("(max-width: 560px)").matches;
 
     function tileHTML(b) {
-      const when = H.whenAgo(b.when);
       const title = b.title || "untitled";
       return `<a class="ltile" href="${esc(b.src || "#")}" target="_blank" rel="noopener" title="${esc(title)}">
           <img src="${esc(b.thumb || b.img)}" alt="" loading="lazy" onerror="this.closest('.ltile').style.display='none'">
-          <span class="lt-meta"><span class="lt-t">${esc(title)}</span>${when ? `<span class="lt-w">${esc(when)}</span>` : ""}</span>
+          <span class="lt-meta"><span class="lt-t">${esc(title)}</span></span>
         </a>`;
     }
 
