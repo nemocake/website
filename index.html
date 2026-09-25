@@ -483,6 +483,14 @@
   #quote { --mr: #d7261e; --my: #f4c20d; --mb: #1f4fa3; }
   html[data-theme="dark"] #quote { --mr: #e2463c; --my: #f6cd2c; --mb: #4a78d0; }
   #quote .c.blk::before { content: ""; position: absolute; left: -.04em; right: -.04em; top: .12em; bottom: .06em; background: var(--bc); }
+  /* desktop: the lockup centred, the quote centred under it on one line */
+  @media (min-width: 641px) {
+    #cover .over.over-mark { grid-template-columns: 1fr; justify-items: center; gap: 14px; }
+    #cover .corner-logo { order: -1; justify-self: center; }
+    #cover .over-spacer { display: none; }
+    #cover .over-mark .cover-intro { justify-self: center; max-width: none; text-align: center; }
+    #cover #quote, #cover #quote .q { white-space: nowrap; }
+  }
   /* phones: lockup top-left (same spot as every other page), the quote underneath */
   @media (max-width: 640px) {
     #cover .over.over-mark { grid-template-columns: 1fr; justify-items: start; gap: 12px; }
