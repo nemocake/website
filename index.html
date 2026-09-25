@@ -489,6 +489,9 @@
     #cover .corner-logo { order: -1; justify-self: start; }
     #cover .over-spacer { display: none; }
     #cover .over-mark .cover-intro { max-width: 30ch; justify-self: start; text-align: left; }
+    #home-body { margin-top: 28px; }
+    /* same visible gap above the are.na heading as between the quote and the index (38px of air) */
+    .lately { margin-top: 26px; }
   }
   #home-body .orow .nm, #home-body .pv-wtitle, #home-body .pv-cap .pv-nm {
     font-weight: 500; letter-spacing: -.035em;
@@ -499,7 +502,8 @@
     font-size: 12px; text-transform: none; color: var(--ink-faint);
   }
   #home-body .pv-snip, #home-body .pv-read p { font-size: 14px; line-height: 1.5; }
-  #home-body .lately-head .lh-sub { font-size: 12px; color: var(--ink-faint); }
+  /* the are.na heading stays in full ink so it reads apart from the grey index descriptions */
+  #home-body .lately-head .lh-sub { font-size: 12px; color: var(--ink); }
 
   /* frames, rules and boxes out — whitespace does the separating */
   .pv-layer img { padding: 0; }
@@ -1028,12 +1032,18 @@
     }
     requestAnimationFrame(frame);
   }
-  setInterval(function () {
-    if (busy || document.hidden) return;
-    busy = true;
+  var timer = 0;
+  function swap() {
+    if (busy) return;
+    clearTimeout(timer); busy = true;
     var next = (cur + 1) % QUOTES.length;
-    wipe(cur, next, function () { cur = next; busy = false; });
-  }, 7000);
+    wipe(cur, next, function () { cur = next; busy = false; schedule(); });
+  }
+  function schedule() { clearTimeout(timer); timer = setTimeout(function () { document.hidden ? schedule() : swap(); }, 7000); }
+  // a tap / click swaps it straight away; the timer carries on afterwards
+  el.style.cursor = "pointer"; el.style.touchAction = "manipulation"; el.style.webkitTapHighlightColor = "transparent";
+  el.addEventListener("click", swap);
+  schedule();
 })();
 </script>
 
