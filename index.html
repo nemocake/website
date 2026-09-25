@@ -478,7 +478,11 @@
   #quote .c.off { opacity: 0; }
   /* the ascii edge is drawn over the letter, which keeps its own width underneath */
   #quote .c.g { color: transparent; }
-  #quote .c.g::after { content: attr(data-g); position: absolute; left: 50%; top: 0; transform: translateX(-50%); color: var(--ink-faint); }
+  #quote .c.g::after { content: attr(data-g); position: absolute; left: 50%; top: 0; transform: translateX(-50%); color: var(--gc, var(--ink-faint)); }
+  /* the only colour on the site: mondrian red / yellow / blue, and only inside the moving edge */
+  #quote { --mr: #d7261e; --my: #f4c20d; --mb: #1f4fa3; }
+  html[data-theme="dark"] #quote { --mr: #e2463c; --my: #f6cd2c; --mb: #4a78d0; }
+  #quote .c.blk::before { content: ""; position: absolute; left: -.04em; right: -.04em; top: .12em; bottom: .06em; background: var(--bc); }
   /* phones: lockup top-left (same spot as every other page), the quote underneath */
   @media (max-width: 640px) {
     #cover .over.over-mark { grid-template-columns: 1fr; justify-items: start; gap: 12px; }
@@ -961,12 +965,14 @@
 </script>
 
 <script>
-/* the corner quote: every so often a wipe runs through it in reading order — the old line fades out,
-   the new one fades in, and a narrow band of faint ascii flickers at the edge. Both lines always sit in
-   the same cell and glyphs are drawn over letters, so the layout never moves. */
+/* the corner quote: every so often a wipe runs through it in reading order. At the edge the old letters
+   fall into heavy ascii and the new ones climb back out through light glyphs, in mondrian red / yellow /
+   blue, with some letters dropping onto a small colour tile. Both lines always sit in the same cell and
+   glyphs are drawn over letters, so the layout never moves. */
 (function () {
   var QUOTES = ["chronically online, techno-curious, art and music junky.", "master of none, jack of some, jester of all."];
-  var GLYPHS = ".:-=+*#%/\|<>~^";
+  var RAMP = " .:-=+*#%@";                                     // light → heavy
+  var COLORS = ["var(--mr)", "var(--my)", "var(--mb)"];
   var el = document.getElementById("quote"); if (!el) return;
   // each quote becomes words of single-letter spans (words never break mid-way)
   el.innerHTML = QUOTES.map(function (q, n) {
@@ -990,23 +996,35 @@
     total = lines * box.width;
   }
   measure(); addEventListener("resize", measure);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(measure);   // positions must be in Areal, not the fallback
 
-  var cur = 0, busy = false, BAND = 56, DUR = 1400;          // edge width in px, wipe duration in ms
-  function glyph() { return GLYPHS[(Math.random() * GLYPHS.length) | 0]; }
-  function set(c, state) {                                    // state: "on" | "off" | "g"
-    c.classList.toggle("off", state === "off");
-    if (state === "g") { if (!c.classList.contains("g") || Math.random() < .35) c.setAttribute("data-g", glyph()); c.classList.add("g"); }
-    else c.classList.remove("g");
+  var cur = 0, busy = false, BAND = 160, HALF = 80, DUR = 1800;   // edge width in px, wipe duration in ms
+  function pick(a) { return a[(Math.random() * a.length) | 0]; }
+  // state: "on" | "off" | { g: glyph, blk: on a tile }
+  function set(c, st) {
+    if (st === "on" || st === "off") { c.classList.toggle("off", st === "off"); c.classList.remove("g", "blk"); return; }
+    c.classList.remove("off");
+    if (!c.classList.contains("g") || Math.random() < .3) {
+      c.setAttribute("data-g", st.g);
+      c.style.setProperty("--gc", st.blk ? "rgb(var(--paper-rgb))" : pick(COLORS));
+      if (st.blk) c.style.setProperty("--bc", pick(COLORS));
+    }
+    c.classList.add("g"); c.classList.toggle("blk", !!st.blk);
   }
   function wipe(from, to, done) {
+    measure();                                                // fresh positions every wipe
     var A = layers[from], B = layers[to], PA = pos[from], PB = pos[to], t0 = performance.now(), end = total + BAND;
+    A.concat(B).forEach(function (c) { c._t = Math.random(); });  // which letters get a tile, fixed for this wipe
     function frame(now) {
       var f = Math.min(1, (now - t0) / DUR) * end;
-      // old letters: glyphs in the leading half of the edge, gone behind it
-      A.forEach(function (c, k) { var p = PA[k]; set(c, p < f - BAND / 2 ? "off" : p < f ? "g" : "on"); });
-      // new letters: resolve out of glyphs in the trailing half, not there yet ahead of it
-      B.forEach(function (c, k) { var p = PB[k]; set(c, p < f - BAND ? "on" : p < f - BAND / 2 ? "g" : "off"); });
-      if (f < end) requestAnimationFrame(frame); else done();
+      // old letters thicken into heavy glyphs, then go
+      A.forEach(function (c, k) { var d = f - PA[k];
+        set(c, d < 0 ? "on" : d < HALF ? { g: RAMP[Math.min(9, 5 + ((d / HALF) * 5) | 0)], blk: d > 25 && c._t < .4 } : "off"); });
+      // new letters climb back out through lighter glyphs
+      B.forEach(function (c, k) { var d = f - PB[k];
+        set(c, d > BAND ? "on" : d > HALF ? { g: RAMP[Math.max(1, 9 - (((d - HALF) / HALF) * 9) | 0)], blk: d < 135 && c._t < .4 } : "off"); });
+      if (f < end) requestAnimationFrame(frame);
+      else { A.forEach(function (c) { set(c, "off"); }); B.forEach(function (c) { set(c, "on"); }); done(); }
     }
     requestAnimationFrame(frame);
   }
