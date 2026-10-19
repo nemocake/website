@@ -165,7 +165,8 @@
 <script>
 const IMG_V = "?v=1784771550";
 const $ = (s, r = document) => r.querySelector(s);
-const src = (slug, file) => `assets/img/${slug}/${file}${IMG_V}`;
+// a full http(s) URL (e.g. a video hosted on R2/CDN) is used as-is; a bare name resolves to the work's local asset folder
+const src = (slug, file) => /^https?:\/\//.test(file) ? file : `assets/img/${slug}/${file}${IMG_V}`;
 const thumb = slug => `assets/img/${slug}/thumb.jpg${IMG_V}`;
 const isVid = im => im.video === true || /\.(mp4|webm|mov)$/i.test(im.file);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
@@ -228,11 +229,8 @@ const groupOf = w => GROUPS.find(g => g.works.includes(w));
 const seriesOf = w => SERIES[w.series ?? W.find(x => x.slug === w.parent)?.series];
 const noteH = w => !w.note ? "" :
   `<div><p class="note ${w.note.length > 320 ? "clamp" : ""}">${esc(w.note)}</p>${w.note.length > 320 ? `<button class="more" type="button">more</button>` : ""}</div>`;
-const metaH = w => {
-  const ser = seriesOf(w);
-  return `<div class="meta">${[["after", w.after], ["from", ser && ser.name.toLowerCase()]]
-    .filter(r => r[1]).map(([l, val]) => `${l} <b>${esc(val)}</b>`).join("<br>")}</div>`;
-};
+// the after/from meta line is turned off in the piece view (not worth showing); the data stays in studio.json
+const metaH = w => "";
 const linksH = w => {
   const l = [];
   if (w.live) l.push(/^https?:/.test(w.live) ? `<a href="${esc(w.live)}" target="_blank" rel="noopener">${esc(w.live.replace(/^https?:\/\//, "").replace(/\/$/, ""))} ↗</a>` : `<a href="${esc(w.live)}">open it live ↗</a>`);
