@@ -1823,6 +1823,169 @@
         "perspective",
         "panels"
       ]
+    },
+    {
+      "slug": "hatching",
+      "name": "HATCHING",
+      "edition": null,
+      "kind": "experiment",
+      "year": 2026,
+      "after": "wood engraving, riso printing",
+      "medium": "burin hatching over broken-room perspective",
+      "status": "approved",
+      "images": [
+        {
+          "file": "hero.jpg",
+          "title": "",
+          "caption": "bold over fine",
+          "w": 2000,
+          "h": 1500
+        },
+        {
+          "file": "exchange.jpg",
+          "title": "",
+          "caption": "exchange",
+          "w": 1583,
+          "h": 2000
+        },
+        {
+          "file": "on-end.jpg",
+          "title": "",
+          "caption": "exchange, on end",
+          "w": 2000,
+          "h": 1176
+        },
+        {
+          "file": "focus-pull.jpg",
+          "title": "",
+          "caption": "focus pull",
+          "w": 1000,
+          "h": 750
+        },
+        {
+          "file": "score.jpg",
+          "title": "",
+          "caption": "hatched head",
+          "w": 700,
+          "h": 484
+        },
+        {
+          "file": "cross-hatch.jpg",
+          "title": "",
+          "caption": "cross-hatch",
+          "w": 550,
+          "h": 413
+        }
+      ],
+      "series": "misc",
+      "tags": [
+        "hatching",
+        "engraving",
+        "rooms",
+        "riso",
+        "line"
+      ]
+    },
+    {
+      "slug": "cubify",
+      "name": "CUBIFY",
+      "edition": 90,
+      "kind": "edition",
+      "year": 2026,
+      "after": "Picasso & Gris portraits, Asaro's planes of the head",
+      "medium": "a procedurally cubed 3-D head, painted flat or in Rothko glaze",
+      "status": "approved",
+      "images": [
+        {
+          "file": "hero.jpg",
+          "title": "",
+          "caption": "palettes",
+          "w": 2000,
+          "h": 1979
+        },
+        {
+          "file": "picasso-1.jpg",
+          "title": "",
+          "caption": "picasso",
+          "w": 306,
+          "h": 460
+        },
+        {
+          "file": "picasso-2.jpg",
+          "title": "",
+          "caption": "picasso",
+          "w": 306,
+          "h": 460
+        },
+        {
+          "file": "crowd.jpg",
+          "title": "",
+          "caption": "crowd",
+          "w": 1600,
+          "h": 820
+        },
+        {
+          "file": "https://pub-3c574e9b72834b8c9bc964a4dc739947.r2.dev/cubify-cloud-night.mp4",
+          "title": "",
+          "caption": "cloud, night",
+          "w": 1462,
+          "h": 760,
+          "video": true
+        },
+        {
+          "file": "https://pub-3c574e9b72834b8c9bc964a4dc739947.r2.dev/cubify-shared-cloud.mp4",
+          "title": "",
+          "caption": "shared cloud",
+          "w": 608,
+          "h": 528,
+          "video": true
+        },
+        {
+          "file": "rothko.jpg",
+          "title": "",
+          "caption": "rothko",
+          "w": 460,
+          "h": 460
+        },
+        {
+          "file": "talking-heads.jpg",
+          "title": "",
+          "caption": "talking heads",
+          "w": 2000,
+          "h": 2000
+        },
+        {
+          "file": "descend.jpg",
+          "title": "",
+          "caption": "descend",
+          "w": 2000,
+          "h": 1445
+        },
+        {
+          "file": "glaze.jpg",
+          "title": "",
+          "caption": "glaze",
+          "w": 460,
+          "h": 460
+        },
+        {
+          "file": "https://pub-3c574e9b72834b8c9bc964a4dc739947.r2.dev/cubify-flurry-triptych.mp4",
+          "title": "",
+          "caption": "flurry",
+          "w": 2034,
+          "h": 620,
+          "video": true,
+          "wide": true
+        }
+      ],
+      "series": "misc",
+      "tags": [
+        "cubism",
+        "portrait",
+        "faces",
+        "3d",
+        "glaze"
+      ]
     }
   ]
 }
