@@ -31,6 +31,13 @@
   #top .right { margin-left:auto; display:flex; gap:22px; color:var(--mute); }
   #top .right button:hover, #top .right button.cur { color:var(--ink); }
   #theme { display:flex; gap:10px; }
+  /* grid-zoom slider: only while the index is open */
+  /* grid-density mark: a small, morphing echo of the header's 2×2 logo — only while the index is open */
+  #ix-zoom-wrap { display:none; align-items:center; }
+  body.idx #ix-zoom-wrap { display:flex; }
+  #ix-mark { display:block; cursor:ew-resize; touch-action:none; color:var(--mute); transition:color .2s; }
+  #ix-zoom-wrap:hover #ix-mark { color:var(--ink); }
+  @media (max-width:720px) { #ix-zoom-wrap { display:none !important; } }
 
   /* ---------- the frame: sized in JS to the picture's proportions; label + plates ride along ---------- */
   #frame { position:fixed; transition:left var(--dur) var(--ease), top var(--dur) var(--ease),
@@ -90,11 +97,15 @@
            opacity:0; pointer-events:none; transition:opacity .3s; }
   body.idx #index { opacity:1; pointer-events:auto; }
   body.idx { overflow:hidden; }
-  #ix-field { position:absolute; inset:112px 64px 64px; overflow-y:auto; scrollbar-width:none; }
+  #ix-field { position:absolute; inset:112px 64px 64px; overflow-y:auto; scrollbar-width:none;
+              overscroll-behavior:contain; -webkit-overflow-scrolling:touch; }
   #ix-field::-webkit-scrollbar { display:none; }
   #ix-grid { position:relative; }
   .ix-t { position:absolute; display:block; cursor:pointer; overflow:hidden; z-index:1;
-          transition:transform .45s cubic-bezier(.22,.8,.24,1), opacity .35s ease, filter .35s ease, box-shadow .45s ease; will-change:transform; }
+          background:rgba(var(--ink-rgb), .04); content-visibility:auto;
+          transition:transform .45s cubic-bezier(.22,.8,.24,1), opacity .35s ease, filter .35s ease, box-shadow .45s ease; }
+  /* promote to its own layer only while it is actually moving (hover-repel / FLIP) — not permanently, which would pin ~170 layers and make scrolling draggy */
+  body.ixhover .ix-t, .ix-t.flip { will-change:transform; }
   .ix-t img { width:100%; height:100%; object-fit:cover; }
   .ix-t .m { position:absolute; left:0; right:0; bottom:0; padding:18px 6px 5px;
              background:linear-gradient(0deg, rgba(var(--ink-rgb), .82), rgba(var(--ink-rgb), 0)); opacity:0; transition:opacity .3s ease .04s; pointer-events:none; }
@@ -105,13 +116,15 @@
   .ix-cat { position:absolute; z-index:2; font:500 15px/1 "Areal"; letter-spacing:-.02em; color:var(--mute); cursor:pointer; white-space:nowrap;
             transition:color .25s; }
   .ix-cat.lit { color:var(--ink); }
-  #index.dimcats .ix-cat:not(.lit) { color:rgba(var(--ink-rgb), .25); }
+  #index.dimcats .ix-cat:not(.lit):not(.sel) { color:rgba(var(--ink-rgb), .25); }
   .ix-cat.c0 { left:64px; top:80px; }
   .ix-cat.c1 { right:64px; top:80px; }
   .ix-cat.c2 { left:24px; top:50%; transform:translate(-50%, -50%) rotate(-90deg) translateY(50%); }
   .ix-cat.c3 { right:24px; top:50%; transform:translate(50%, -50%) rotate(90deg) translateY(50%); }
   .ix-cat.c4 { left:50%; bottom:28px; transform:translateX(-50%); }
-
+  /* a drilled-into section: its name stays lit + underlined; a hint offers the way back */
+  .ix-cat.sel { color:var(--ink); }
+  .ix-cat.sel::after { content:""; position:absolute; left:0; right:0; bottom:-5px; height:1px; background:var(--ink); }
   .load-error { position:fixed; left:28px; top:90px; color:var(--mute); }
 
   @media (max-width:760px) {
@@ -152,6 +165,7 @@
 <div id="top">
   <div data-gridnav data-cur="studio"></div>
   <div class="right">
+    <span id="ix-zoom-wrap"><canvas id="ix-mark" title="grid density" aria-label="grid density"></canvas></span>
     <button id="idx-btn" type="button">index</button>
     <span id="theme" role="group" aria-label="page ground"><button type="button" data-theme="white">light</button><button type="button" data-theme="dark">dark</button></span>
   </div>
@@ -386,44 +400,184 @@ function syncStrip() {
 }
 
 /* ---------- visual index: every plate in one grid, the series framing it ---------- */
-const IX_GAP = 8;
-let ixState = [], ixBuilt = false, ixRadius = 200;
+const IX_GAP = 8, IX_BASE = 96;                                   // IX_BASE = target tile width at zoom 1
+let ixState = [], ixBuilt = false, ixRadius = 200, ixSel = null, ixCols = 0, ixColW = 100;   // ixSel = the drilled-into series, null = all
+// grid density locks to whole grids (2×2 .. 5×5); each maps to a target tile zoom for the masonry
+const IX_DMIN = 2, IX_DMAX = 5, IX_DENS_ZOOM = { 2: 4.5, 3: 2.2, 4: 1.25, 5: 0.72 };
+let ixDens = 5;                                                   // densest by default
+try { const d = parseInt(localStorage.getItem("studio.ixdens"), 10); if (d >= IX_DMIN && d <= IX_DMAX) ixDens = d; } catch (_) {}
+let ixZoom = IX_DENS_ZOOM[ixDens];                                // >1 = bigger tiles / fewer columns, <1 = denser
+const ixVisible = () => ixSel ? ixState.filter(s => s.x.g === ixSel) : ixState;
+const FLIP_EASE = "cubic-bezier(.65,0,.35,1)";
 function buildIndex() {
   // mixed order (stable), so a series lights up as a scatter across the grid
   let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
   const plates = GROUPS.flatMap(g => g.works.flatMap(w => w.images.map((im, p) => ({ g: g.id, w, im, p })).filter(x => !isVid(x.im))));
   for (let a = plates.length - 1; a > 0; a--) { const b = Math.floor(rnd() * (a + 1)); [plates[a], plates[b]] = [plates[b], plates[a]]; }
   $("#ix-cats").innerHTML = GROUPS.map((g, n) => `<span class="ix-cat c${n}" data-g="${g.id}">${esc(g.name)}</span>`).join("");
-  $("#ix-grid").innerHTML = plates.map(x => `<a class="ix-t" data-open="${x.w.slug}" data-p="${x.p}" data-g="${x.g}"><img src="${src(x.w.slug, x.im.file)}" loading="lazy" alt="${esc(x.w.name)}"><span class="m"><b>${low(x.w.name)}</b></span></a>`).join("");
-  ixState = [...$("#ix-grid").children].map((el, n) => ({ el, x: plates[n], ar: plates[n].im.w && plates[n].im.h ? plates[n].im.w / plates[n].im.h : 1 }));
+  $("#ix-grid").innerHTML = plates.map(x => `<a class="ix-t" data-open="${x.w.slug}" data-p="${x.p}" data-g="${x.g}"><img src="${src(x.w.slug, x.im.file)}" loading="lazy" decoding="async" alt="${esc(x.w.name)}"><span class="m"><b>${low(x.w.name)}</b></span></a>`).join("");
+  ixState = [...$("#ix-grid").children].map((el, n) => ({ el, x: plates[n], ar: plates[n].im.w && plates[n].im.h ? plates[n].im.w / plates[n].im.h : 1, shown: true }));
   ixState.forEach(s => { s.el.addEventListener("mouseenter", () => ixHot(s)); s.el.addEventListener("mouseleave", ixCool); });
   document.querySelectorAll(".ix-cat").forEach(c => {
-    c.addEventListener("mouseenter", () => ixLight(c.dataset.g, true));
-    c.addEventListener("mouseleave", () => ixLight(null, true));
+    c.addEventListener("mouseenter", () => { if (!ixSel) ixLight(c.dataset.g, true); });   // hover = preview; click = drill in (handled globally)
+    c.addEventListener("mouseleave", () => { if (!ixSel) ixLight(null, true); });
   });
   ixBuilt = true;
 }
 function ixLayout() {
   const Wd = $("#ix-grid").clientWidth; if (!Wd) return;
-  const cols = Math.max(3, Math.min(14, Math.round((Wd + IX_GAP) / (96 + IX_GAP)))), colW = (Wd - (cols - 1) * IX_GAP) / cols;
-  ixRadius = 2.5 * colW;
+  const cols = Math.max(2, Math.min(14, Math.round((Wd + IX_GAP) / (IX_BASE * ixZoom + IX_GAP)))), colW = (Wd - (cols - 1) * IX_GAP) / cols;
+  ixCols = cols; ixColW = colW; ixRadius = 2.5 * colW;
   const colH = new Array(cols).fill(0);
-  ixState.forEach(s => {
+  ixVisible().forEach(s => {
     let c = 0; for (let n = 1; n < cols; n++) if (colH[n] < colH[c]) c = n;
     const h = colW / s.ar, x = c * (colW + IX_GAP), y = colH[c];
     Object.assign(s, { cx: x + colW / 2, cy: y + h / 2 });
     Object.assign(s.el.style, { left: x + "px", top: y + "px", width: colW + "px", height: h + "px" });
     colH[c] += h + IX_GAP;
   });
-  $("#ix-grid").style.height = Math.max(...colH) + "px";
+  $("#ix-grid").style.height = Math.max(0, ...colH) + "px";
 }
+// bring every tile's inline style into agreement with s.shown, cancelling any in-flight animation (whose fill would otherwise stick)
+function ixPrime() {
+  ixState.forEach(s => {
+    s.el.getAnimations().forEach(a => a.cancel());
+    s.el.style.transform = ""; s.el.style.pointerEvents = s.shown ? "" : "none";
+    s.el.style.display = s.shown ? "" : "none"; s.el.style.opacity = "";
+  });
+}
+// drill into a section (or back to all) — FLIP: measure, re-pack the visible set, animate the difference on the compositor
+function ixSelect(id) {
+  if (!document.body.classList.contains("idx")) return;
+  if (id === ixSel) id = null;                                     // click the open section again → back to all
+  ixCool();
+  ixPrime();                                                       // clean resting state so measurements and logic are reliable
+  const first = new Map();
+  ixState.forEach(s => { if (s.shown) first.set(s, s.el.getBoundingClientRect()); });
+  ixSel = id;
+  document.body.classList.toggle("ixsel", !!id);
+  $("#index").classList.toggle("dimcats", !!id);
+  document.querySelectorAll(".ix-cat").forEach(c => c.classList.toggle("sel", !!id && c.dataset.g === id));
+  const willShow = new Set(ixVisible());
+  ixState.forEach(s => { if (willShow.has(s) && !s.shown) { s.el.style.display = ""; s.el.style.opacity = "0"; } });  // reveal returners (hidden) so they get laid out
+  ixLayout();                                                      // LAST positions for the visible set
+  ixState.forEach(s => {
+    const member = willShow.has(s), wasShown = s.shown;
+    if (member && !wasShown) {                                     // returning → fade in at its new spot
+      s.el.style.pointerEvents = ""; s.el.style.opacity = "";
+      s.el.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 420, easing: FLIP_EASE });
+    } else if (member) {                                           // staying → FLIP from old rect to new
+      const f = first.get(s), l = s.el.getBoundingClientRect();
+      const dx = f.left - l.left, dy = f.top - l.top, sx = (f.width / l.width) || 1, sy = (f.height / l.height) || 1;
+      if (dx || dy || sx !== 1 || sy !== 1)
+        s.el.animate([{ transform: `translate(${dx}px,${dy}px) scale(${sx},${sy})`, transformOrigin: "0 0" }, { transform: "none", transformOrigin: "0 0" }], { duration: 560, easing: FLIP_EASE });
+    } else if (wasShown) {                                         // leaving → fade out, then drop from the flow
+      s.el.style.pointerEvents = "none"; s.el.style.opacity = "0";
+      s.el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 300, easing: FLIP_EASE }).onfinish = () => { if (!s.shown) s.el.style.display = "none"; };
+    }
+    s.shown = member;
+  });
+}
+// instant reset (used when the index closes) so it reopens showing everything
+function ixClearSel() {
+  if (!ixSel) return; ixSel = null; document.body.classList.remove("ixsel");
+  document.querySelectorAll(".ix-cat").forEach(c => c.classList.remove("sel"));
+  $("#index").classList.remove("dimcats");
+  ixState.forEach(s => { s.shown = true; });
+  ixPrime(); ixLayout();
+}
+// grid zoom: a bigger target width means fewer, larger columns. Only re-packs (and FLIP-glides) when the column count actually crosses a step, so dragging the slider stays cheap.
+const IX_ZMIN = 0.55, IX_ZMAX = 4.5;                               // the density stops live within these zoom bounds
+function ixSetZoom(z, animate) {
+  z = Math.max(IX_ZMIN, Math.min(IX_ZMAX, z));
+  const live = document.body.classList.contains("idx");
+  const Wd = $("#ix-grid").clientWidth || 1;
+  const newCols = Math.max(2, Math.min(14, Math.round((Wd + IX_GAP) / (IX_BASE * z + IX_GAP))));
+  // same column count -> identical layout, so just remember the value (no per-tick restyle while dragging within a step)
+  if (newCols === ixCols) { ixZoom = z; return; }
+  if (!live || !animate) { ixZoom = z; if (live) ixLayout(); return; }
+  const first = new Map();                                         // FLIP: measure, re-pack, glide the difference on the compositor
+  ixVisible().forEach(s => first.set(s, s.el.getBoundingClientRect()));
+  ixZoom = z; ixLayout();
+  ixVisible().forEach(s => {
+    const f = first.get(s); if (!f) return;
+    const l = s.el.getBoundingClientRect();
+    const dx = f.left - l.left, dy = f.top - l.top, sx = (f.width / l.width) || 1, sy = (f.height / l.height) || 1;
+    if (dx || dy || sx !== 1 || sy !== 1) {
+      s.el.getAnimations().forEach(a => a.cancel());
+      s.el.classList.add("flip");
+      s.el.animate([{ transform: `translate(${dx}px,${dy}px) scale(${sx},${sy})`, transformOrigin: "0 0" }, { transform: "none", transformOrigin: "0 0" }],
+        { duration: 400, easing: FLIP_EASE }).onfinish = () => s.el.classList.remove("flip");
+    }
+  });
+}
+/* ---- grid-density mark: the quantized zoom control; echoes the header's 2×2 logo and pops on each change ---- */
+const ixMark = $("#ix-mark"), ixMctx = ixMark.getContext("2d");
+const IXM_SZ = 34, IXM_DPR = Math.min(2, window.devicePixelRatio || 1);
+ixMark.width = IXM_SZ * IXM_DPR; ixMark.height = IXM_SZ * IXM_DPR;
+ixMark.style.width = ixMark.style.height = IXM_SZ + "px"; ixMctx.scale(IXM_DPR, IXM_DPR);
+let ixMScale = 1, ixMVel = 0, ixMAlpha = 1, ixMRAF = 0;
+function ixMarkDraw() {
+  ixMctx.clearRect(0, 0, IXM_SZ, IXM_SZ);
+  ixMctx.lineCap = "butt"; ixMctx.lineJoin = "miter";
+  ixMctx.strokeStyle = getComputedStyle(ixMark).color || "#000";
+  ixMctx.save();
+  ixMctx.translate(IXM_SZ / 2, IXM_SZ / 2); ixMctx.scale(ixMScale, ixMScale); ixMctx.translate(-IXM_SZ / 2, -IXM_SZ / 2);
+  const n = ixDens, M = 1, span = IXM_SZ - M * 2, gap = Math.min(5, span / n * 0.22), cell = (span - (n - 1) * gap) / n;
+  ixMctx.globalAlpha = ixMAlpha; ixMctx.lineWidth = 1;
+  for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) {
+    const x = M + c * (cell + gap), y = M + r * (cell + gap);
+    ixMctx.strokeRect(Math.round(x) + 0.5, Math.round(y) + 0.5, Math.round(cell) - 1, Math.round(cell) - 1);
+  }
+  ixMctx.globalAlpha = 1; ixMctx.restore();
+}
+function ixMarkAnim() {                                            // springy settle, like the header's travelling square
+  ixMVel += (1 - ixMScale) * 0.22; ixMVel *= 0.68; ixMScale += ixMVel;
+  if (ixMAlpha < 1) ixMAlpha = Math.min(1, ixMAlpha + 0.09);
+  ixMarkDraw();
+  if (Math.abs(1 - ixMScale) < 0.001 && Math.abs(ixMVel) < 0.001 && ixMAlpha >= 1) { ixMScale = 1; ixMVel = 0; ixMRAF = 0; return; }
+  ixMRAF = requestAnimationFrame(ixMarkAnim);
+}
+function ixSetDens(n) {
+  n = Math.max(IX_DMIN, Math.min(IX_DMAX, Math.round(n)));
+  if (n === ixDens) return;
+  ixDens = n;
+  try { localStorage.setItem("studio.ixdens", n); } catch (_) {}
+  ixMScale = 0.84; ixMVel = 0; ixMAlpha = 0.5;                     // pop the new whole grid in
+  if (!ixMRAF) ixMRAF = requestAnimationFrame(ixMarkAnim);
+  ixSetZoom(IX_DENS_ZOOM[n], true);                               // drive the existing masonry FLIP
+}
+// inputs: scroll to step, drag to ratchet, click to cycle
+ixMark.addEventListener("wheel", e => { e.preventDefault(); ixSetDens(ixDens + (e.deltaY > 0 ? 1 : -1)); }, { passive: false });
+let ixMDrag = false, ixMLastX = 0, ixMAcc = 0, ixMMoved = 0;
+ixMark.addEventListener("pointerdown", e => { ixMDrag = true; ixMLastX = e.clientX; ixMAcc = 0; ixMMoved = 0; ixMark.setPointerCapture(e.pointerId); });
+ixMark.addEventListener("pointermove", e => {
+  if (!ixMDrag) return;
+  const dx = e.clientX - ixMLastX; ixMAcc += dx; ixMMoved += Math.abs(dx); ixMLastX = e.clientX;
+  const STEP = 16; while (ixMAcc >= STEP) { ixSetDens(ixDens + 1); ixMAcc -= STEP; } while (ixMAcc <= -STEP) { ixSetDens(ixDens - 1); ixMAcc += STEP; }
+});
+ixMark.addEventListener("pointerup", () => { const wasClick = ixMMoved < 4; ixMDrag = false; if (wasClick) ixSetDens(ixDens >= IX_DMAX ? IX_DMIN : ixDens + 1); });
 function ixHot(h) {
-  h.el.classList.add("hot"); h.el.style.transform = "scale(1.7)";
-  ixState.forEach(o => { if (o === h) return; const dx = o.cx - h.cx, dy = o.cy - h.cy, d = Math.hypot(dx, dy) || 1e-4, m = 40 * Math.exp(-d / ixRadius);
+  document.body.classList.add("ixhover");                          // promote tiles to layers only during the repel
+  // hover-zoom scales with how big the tiles already are: a strong lift when dense (small tiles),
+  // down to a gentle one at the most zoomed-in density (big tiles) so a hovered piece can't balloon off-screen.
+  const grow = 0.1 + 0.6 * Math.max(0, Math.min(1, (380 - ixColW) / 280));   // ~0.7 dense .. ~0.1 zoomed-in
+  const repel = 44 * (grow / 0.7);                                 // neighbours step aside in proportion to the lift
+  // anchor the growth inward near an edge, so a bordering piece expands into the grid instead of spilling off and getting clipped
+  const fr = $("#ix-field").getBoundingClientRect(), tr = h.el.getBoundingClientRect();
+  const gW = tr.width * grow, gH = tr.height * grow;               // total growth on each axis
+  const sL = tr.left - fr.left, sR = fr.right - tr.right, sT = tr.top - fr.top, sB = fr.bottom - tr.bottom;
+  let ox = 0.5, oy = 0.5;
+  if (gW > 0) { if (gW / 2 > sL) ox = Math.max(0, sL / gW); else if (gW / 2 > sR) ox = Math.min(1, 1 - sR / gW); }
+  if (gH > 0) { if (gH / 2 > sT) oy = Math.max(0, sT / gH); else if (gH / 2 > sB) oy = Math.min(1, 1 - sB / gH); }
+  h.el.classList.add("hot");
+  h.el.style.transformOrigin = (ox * 100).toFixed(1) + "% " + (oy * 100).toFixed(1) + "%";
+  h.el.style.transform = `scale(${(1 + grow).toFixed(3)})`;
+  ixState.forEach(o => { if (o === h) return; const dx = o.cx - h.cx, dy = o.cy - h.cy, d = Math.hypot(dx, dy) || 1e-4, m = repel * Math.exp(-d / ixRadius);
     o.el.style.transform = `translate(${(dx / d * m).toFixed(1)}px,${(dy / d * m).toFixed(1)}px)`; });
-  ixLight(h.x.g, false);
+  if (!ixSel) ixLight(h.x.g, false);
 }
-function ixCool() { ixState.forEach(o => { o.el.classList.remove("hot"); o.el.style.transform = ""; }); ixLight(null, false); }
+function ixCool() { document.body.classList.remove("ixhover"); ixState.forEach(o => { o.el.classList.remove("hot"); o.el.style.transform = ""; o.el.style.transformOrigin = ""; }); if (!ixSel) ixLight(null, false); }
 function ixLight(id, focusGrid) {
   document.querySelectorAll(".ix-cat").forEach(c => c.classList.toggle("lit", c.dataset.g === id));
   $("#index").classList.toggle("dimcats", !!id);
@@ -431,15 +585,17 @@ function ixLight(id, focusGrid) {
   if (focusGrid) ixState.forEach(s => s.el.classList.toggle("in", s.x.g === id));
 }
 addEventListener("resize", () => { if (document.body.classList.contains("idx")) { clearTimeout(ixLayout.t); ixLayout.t = setTimeout(ixLayout, 100); } });
-function toggleIndex(on) { if (on && !ixBuilt) buildIndex(); document.body.classList.toggle("idx", on); if (on) requestAnimationFrame(ixLayout); $("#idx-btn").classList.toggle("cur", on); $("#idx-btn").textContent = on ? "close index" : "index"; }
+function toggleIndex(on) { if (on && !ixBuilt) buildIndex(); if (!on) ixClearSel(); document.body.classList.toggle("idx", on); if (on) { ixMarkDraw(); ixLayout(); requestAnimationFrame(ixLayout); } $("#idx-btn").classList.toggle("cur", on); $("#idx-btn").textContent = on ? "close index" : "index"; }
 
 /* ---------- input ---------- */
 document.addEventListener("click", e => {
   const t = e.target;
   const th = t.closest("#theme button");
-  if (th) { document.documentElement.dataset.theme = th.dataset.theme; try { localStorage.setItem("studio.theme", th.dataset.theme); } catch (_) {} markTheme(); return; }
+  if (th) { document.documentElement.dataset.theme = th.dataset.theme; try { localStorage.setItem("studio.theme", th.dataset.theme); } catch (_) {} markTheme(); ixMarkDraw(); return; }
   if (t.id === "idx-btn") return toggleIndex(!document.body.classList.contains("idx"));
+  const cat = t.closest(".ix-cat"); if (cat) return ixSelect(cat.dataset.g);               // drill into a section
   const cell = t.closest("[data-open]"); if (cell) { e.preventDefault(); ixCool(); toggleIndex(false); return goWork(cell.dataset.open, +(cell.dataset.p || 0)); }
+  if (document.body.classList.contains("idx") && ixSel && !t.closest(".ix-t")) return ixSelect(null);   // click empty space → back to all
   const hit = t.closest("#strip [data-w]"); if (hit) return goWork(hit.dataset.w);
   if (t.dataset.jump) return goWork(t.dataset.jump);
   if (t.dataset.k != null) { k = +t.dataset.k; return render(false); }
@@ -447,7 +603,7 @@ document.addEventListener("click", e => {
   if (t.closest(".layer")) return step(1);
 });
 addEventListener("keydown", e => {
-  if (e.key === "Escape") return toggleIndex(false);
+  if (e.key === "Escape") { if (document.body.classList.contains("idx") && ixSel) return ixSelect(null); return toggleIndex(false); }
   if (!W || document.body.classList.contains("idx") || e.target.closest("input, textarea")) return;
   if (e.key === "ArrowRight") step(1);
   else if (e.key === "ArrowLeft") step(-1);
