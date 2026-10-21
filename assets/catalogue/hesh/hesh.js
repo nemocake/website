@@ -45,15 +45,14 @@
   }
 
   var canvas, ctx, DPR = 1, T, Cb, rig, booted = false, mx = 0, my = 0;
-  function resize() { if (!canvas) return; var W = canvas.clientWidth, H = canvas.clientHeight; canvas.width = Math.round(W * DPR); canvas.height = Math.round(H * DPR); }
+  function resize() { if (!canvas) return; var W = canvas.clientWidth, H = canvas.clientHeight; canvas.width = Math.round(W * DPR); canvas.height = Math.round(H * DPR); dirty = true; if (booted) { pYaw = NaN; if (REDUCE) renderStatic(); else wake(); } }
 
-  function facets(res, now, t) {
+  function facets(res, now, t, F) {
     var S = Math.min(canvas.width, canvas.height) * P.sz;
     var cx = canvas.width * (0.5 + P.ox), cy = canvas.height * (0.5 + P.oy);
     function PX(q) { return { x: cx + q[0] * S, y: cy - q[1] * S }; }
     var breathe = 1 + 0.13 * Math.sin(t * 0.5);
     var pitchPx = (6.0 - (P.dens - 2) * 0.4) / 1000 * S * breathe;
-    var F = flurryAmount(now);
     // colour drifts only while a flurry churns; otherwise the steady cmyk set
     if (F > 0.02) { var cyc = t / 7, i0 = Math.floor(cyc) % PALS.length, i1 = (i0 + 1) % PALS.length, ct = cyc - Math.floor(cyc), ce = ct * ct * (3 - 2 * ct);
       for (var ci = 0; ci < 4; ci++) DINK[ci] = hexLerp(PALS[i0][ci], PALS[i1][ci], ce); }
@@ -97,24 +96,51 @@
     ctx.globalAlpha = 1;
   }
 
-  var yaw = BASE_YAW, pitch = BASE_PITCH;
-  function draw() {
-    requestAnimationFrame(draw);
-    if (!booted) return;
-    var now = performance.now(), t = now / 1000;
-    yaw += (BASE_YAW + mx * RANGE_YAW - yaw) * 0.06;
-    pitch += (BASE_PITCH + my * RANGE_PITCH - pitch) * 0.06;
-    var res = Cb.pose(rig, yaw, pitch); res._yaw = yaw;
-    facets(res, now, t);
+  // ---- pose cache: Cb.pose() (polygon-clipping per facet) is the hot path, so only recompute it when the
+  //      head actually turns. While a flurry plays the head is frozen, so we pose ONCE and just re-displace. ----
+  var yaw = BASE_YAW, pitch = BASE_PITCH, pYaw = NaN, pPitch = NaN, cacheRes = null;
+  function posed() {
+    if (yaw !== pYaw || pitch !== pPitch || !cacheRes) { cacheRes = Cb.pose(rig, yaw, pitch); cacheRes._yaw = yaw; pYaw = yaw; pPitch = pitch; }
+    return cacheRes;
+  }
+
+  // ---- render-on-demand loop: draw only while something is actually changing, then SLEEP (0 CPU) ----
+  var rafId = 0, wakeTimer = 0, lastDraw = 0, dirty = true, FRAME = 1000 / 30;   // throttle to ~30fps
+  function render(now) {
+    var t = now / 1000, F = flurryAmount(now);
+    var res = posed();
+    facets(res, now, t, F);
+    return F;
+  }
+  function loop(now) {
+    rafId = requestAnimationFrame(loop);
+    if (document.hidden) { sleep(now); return; }
+    if (now - lastDraw < FRAME) return;                                  // throttle
+    lastDraw = now;
+    var ty = BASE_YAW + mx * RANGE_YAW, tp = BASE_PITCH + my * RANGE_PITCH;
+    var dy = ty - yaw, dp = tp - pitch; yaw += dy * 0.1; pitch += dp * 0.1;
+    var moving = Math.abs(dy) > 0.02 || Math.abs(dp) > 0.02;
+    var F = render(now);                                                 // advances + draws this frame
+    var active = moving || F > 0.0001 || flurry.on;
+    dirty = false;
+    if (!active) sleep(now);                                             // nothing left to animate → stop the loop
+  }
+  function sleep(now) {
+    if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
+    clearTimeout(wakeTimer);
+    if (!document.hidden) wakeTimer = setTimeout(wake, Math.max(200, flurry.next - (now || performance.now())));  // wake for the next flurry
+  }
+  function wake() {
+    clearTimeout(wakeTimer);
+    if (!rafId && !document.hidden && booted && !REDUCE) { lastDraw = 0; rafId = requestAnimationFrame(loop); }
   }
   function renderStatic() {   // prefers-reduced-motion: one still bust, no tracking, no animation
-    var res = Cb.pose(rig, BASE_YAW, BASE_PITCH); res._yaw = BASE_YAW;
-    flurry.next = Infinity; facets(res, 0, 0);
+    flurry.next = Infinity; var res = Cb.pose(rig, BASE_YAW, BASE_PITCH); res._yaw = BASE_YAW; facets(res, 0, 0, 0);
   }
 
   async function boot() {
     canvas = document.getElementById("hesh"); if (!canvas) return;
-    ctx = canvas.getContext("2d"); DPR = Math.min(2, window.devicePixelRatio || 1); resize();
+    ctx = canvas.getContext("2d"); DPR = Math.min(1.25, window.devicePixelRatio || 1); resize();   // faint backdrop → fewer pixels is fine
     window.addEventListener("resize", resize);
     try {
       await loadScript(BASE + "vendor/meshopt_simplifier.js");
@@ -130,11 +156,12 @@
         window.MeshoptSimplifier.ready
       ]);
       Cb.setSources({ canonical: { objText: rs[1], features: rs[2] }, scan: { glb: rs[0] } });
-      rig = Cb.rig({ src: "scan", tris: 600, planeDeg: 12, seed: 7, yaw: 0, pitch: -4 });
+      rig = Cb.rig({ src: "scan", tris: 420, planeDeg: 13, seed: 7, yaw: 0, pitch: -4 });   // fewer facets → cheaper pose() each frame
       booted = true;
-      window.addEventListener("mousemove", function (e) { mx = (e.clientX / window.innerWidth) * 2 - 1; my = (e.clientY / window.innerHeight) * 2 - 1; });
+      window.addEventListener("mousemove", function (e) { mx = (e.clientX / window.innerWidth) * 2 - 1; my = (e.clientY / window.innerHeight) * 2 - 1; wake(); }, { passive: true });
+      document.addEventListener("visibilitychange", function () { if (document.hidden) sleep(); else wake(); });
       schedule(performance.now());
-      if (REDUCE) renderStatic(); else requestAnimationFrame(draw);
+      if (REDUCE) renderStatic(); else wake();
     } catch (e) { /* stay invisible on any failure — the page is fine without it */ }
   }
 
