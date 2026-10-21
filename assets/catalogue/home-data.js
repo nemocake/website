@@ -22,7 +22,7 @@ window.HomeData = (function () {
 
   // a handful of studio slugs per section, for peek mosaics (studio only)
   const SECTION_PEEK = {
-    studio: ["multiform", "capriccio", "fugitive", "flux", "enfilade", "cube-study"]
+    studio: ["multiform", "capriccio", "flux", "enfilade", "cube-study"]
   };
 
   // ---- favourites: things Conrad is proud of, surfaced without a full entry ----
@@ -31,7 +31,7 @@ window.HomeData = (function () {
     { type: "artwork", title: "Multiform",          kicker: "colour field system", blurb: "a procedurally generative code study after rothko.", img: "studio/assets/img/multiform/hero.jpg", href: "studio/?w=multiform" },
     { type: "artwork", title: "Capriccio",          kicker: "impossible architecture", blurb: "drawn architecture where every element gets its own vanishing point.", img: "studio/assets/img/capriccio/lead.jpg", href: "studio/?w=capriccio" },
     { type: "writing", title: "art rabbit holing",  kicker: "writing", blurb: "on the practice of looking and exploring to understand personal taste.", img: null, href: "writings/#art-rabbit-holing" },
-    { type: "artwork", title: "Fugitive",           kicker: "a way of searching", blurb: "an explorative system built for finding the visual output range of procedural generative systems.", img: "studio/assets/img/fugitive/hero.jpg", href: "studio/?w=fugitive" },
+    { type: "project", title: "Fugitive",           kicker: "a way of searching", blurb: "an explorative system built for finding the visual output range of procedural generative systems.", img: null, href: "projects/" },
     { type: "artwork", title: "Schematics n' Scores", kicker: "notation in three dimensions", blurb: "procedurally generated visual music scores, after cage and penderecki, read in 3d.", img: "studio/assets/img/visual-scores/hero.jpg", href: "https://scores.conradhouse.dev/" },
     { type: "project", title: "Le Random Explorer", kicker: "project", blurb: "an interactive 3d knowledge graph for exploring generative art and its history.", img: null, href: "projects/#le-random-explorer" }
   ];

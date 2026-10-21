@@ -581,45 +581,6 @@
       "order": -1
     },
     {
-      "slug": "fugitive",
-      "name": "FUGITIVE",
-      "edition": null,
-      "kind": "exploration",
-      "year": 2026,
-      "after": "MAP-Elites, quality-diversity search",
-      "medium": "search over tiny composition programs",
-      "status": "approved",
-      "note": "Fugitive acts more as an explorative tool than a dedicated piece itself. For me, and many others, the most interesting aspect of procedural generative art is emergence. It always harkens back to the Molnár line, \"the only thing that can replace intuition is randomness\", the idea that sometimes randomness is the only thing that can push us in new, unbiased directions. With every generative system I've made there's a huge gluttonous urge to constantly generate new seeds, and the urge only amplifies when the outputs are surprising. But a problem comes with manually generating thousands of outputs, or batch exporting thousands of randomized variations, and it isn't the time required to export, review and curate. It's duplicated compositions, and output ranges that never get expressed clearly enough efficiently. The atlas system designed around Fugitive is an attempt to solve this as it builds an atlas board for a specific system by generating thousands of outputs and organizing them by discernable visual indicators such as recipe (the script's step process), contrast, palette and chaos. By the end of an atlas run we have a large grid of outputs organized on X and Y axes, showing how the system pushes toward specific visual variables. Just as useful are the parts of the grid left blank, an indicator of the system's boundaries. While an atlas builds we can also favourite specific outputs, guiding the atlas to tune variable ranges and recipes closer to that aesthetic. In a way it's a rudimentary visual training model, adjusted by hand on a handful of random knobs inside our systems.",
-      "images": [
-        {
-          "file": "hero.jpg",
-          "caption": "",
-          "title": "how the search works",
-          "w": 2400,
-          "h": 1720
-        },
-        {
-          "file": "atlas-sheets.jpg",
-          "caption": "the atlas over successive runs; the five colour sheets below",
-          "title": "the atlas, five sheets",
-          "w": 2400,
-          "h": 2389
-        },
-        {
-          "file": "tree.jpg",
-          "caption": "",
-          "title": "family tree",
-          "w": 1800,
-          "h": 1097
-        }
-      ],
-      "tags": [
-        "search",
-        "archive",
-        "map-elites"
-      ]
-    },
-    {
       "slug": "visual-scores",
       "name": "SCHEMATICS N' SCORES",
       "edition": null,
@@ -1609,7 +1570,10 @@
       "status": "approved",
       "note": "Another project born from nostalgia. Growing up visiting my grandma's house, playing in the backyard, hearing the faint orchestra of wind chimes she had hanging along the porch. I find myself thinking of her whenever I hear one. A place for thinking about her.",
       "embeds": [
-        { "url": "https://x.com/DlSPUTED/status/2075679440995254684", "caption": "a chime, sounding" }
+        {
+          "url": "https://x.com/DlSPUTED/status/2075679440995254684",
+          "caption": "a chime, sounding"
+        }
       ],
       "images": [
         {

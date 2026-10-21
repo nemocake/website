@@ -443,7 +443,7 @@
           ]
         },
         "Which is maybe the real function of a system like this. Not to replace taste with search, but to walk into rooms i wouldn't have opened, and let me decide which ones to move into.",
-        "see both pieces in the studio: <a href=\"../studio/piece.html?w=fugitive\">Fugitive</a> and <a href=\"../studio/piece.html?w=multiform\">Multiform</a>."
+        "see <a href=\"../studio/piece.html?w=multiform\">Multiform</a> in the studio, and the <a href=\"../projects/\">Fugitive project</a>."
       ]
     },
     {
@@ -703,6 +703,31 @@
       "articleUrl": "../writings/#art-rabbit-holing",
       "featured": false,
       "order": 8
+    },
+    "fugitive": {
+      "private": true,
+      "title": "Fugitive",
+      "description": "an explorative system built for finding the visual output range of procedural generative systems.",
+      "details": [
+        "Fugitive acts more as an explorative tool than a dedicated piece itself. For me, and many others, the most interesting aspect of procedural generative art is emergence. It always harkens back to the Molnár line, \"the only thing that can replace intuition is randomness\", the idea that sometimes randomness is the only thing that can push us in new, unbiased directions.",
+        "With every generative system I've made there's a huge gluttonous urge to constantly generate new seeds, and the urge only amplifies when the outputs are surprising. But a problem comes with manually generating thousands of outputs, or batch exporting thousands of randomized variations, and it isn't the time required to export, review and curate. It's duplicated compositions, and output ranges that never get expressed clearly enough efficiently.",
+        "The atlas system designed around Fugitive is an attempt to solve this as it builds an atlas board for a specific system by generating thousands of outputs and organizing them by discernable visual indicators such as recipe (the script's step process), contrast, palette and chaos. By the end of an atlas run we have a large grid of outputs organized on X and Y axes, showing how the system pushes toward specific visual variables. Just as useful are the parts of the grid left blank, an indicator of the system's boundaries. While an atlas builds we can also favourite specific outputs, guiding the atlas to tune variable ranges and recipes closer to that aesthetic. In a way it's a rudimentary visual training model, adjusted by hand on a handful of random knobs inside our systems.",
+        "→ <a href=\"../writings/#fugitive\" class=\"text-acid hover:underline\">read the full writeup: Fugitive, finding missing outputs</a>."
+      ],
+      "images": [
+        "../studio/assets/img/fugitive/hero.jpg",
+        "../studio/assets/img/fugitive/atlas-sheets.jpg",
+        "../studio/assets/img/fugitive/tree.jpg"
+      ],
+      "tags": [
+        "generative",
+        "search",
+        "atlas",
+        "map-elites"
+      ],
+      "status": "personal tool",
+      "featured": true,
+      "order": 3
     }
   },
   "inspirations": {
