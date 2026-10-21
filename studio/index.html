@@ -500,12 +500,17 @@ function ixSetZoom(z, animate) {
   // same column count -> identical layout, so just remember the value (no per-tick restyle while dragging within a step)
   if (newCols === ixCols) { ixZoom = z; return; }
   if (!live || !animate) { ixZoom = z; if (live) ixLayout(); return; }
-  const first = new Map();                                         // FLIP: measure, re-pack, glide the difference on the compositor
-  ixVisible().forEach(s => first.set(s, s.el.getBoundingClientRect()));
-  ixZoom = z; ixLayout();
-  ixVisible().forEach(s => {
-    const f = first.get(s); if (!f) return;
-    const l = s.el.getBoundingClientRect();
+  // FLIP, batched to avoid layout thrash: read ALL first rects, write the new layout once, read ALL last rects,
+  // THEN animate — no getBoundingClientRect interleaved with style writes. And only animate tiles near the
+  // viewport; the ~60% that are scrolled off just snap to their new spot (the move is never seen).
+  const vis = ixVisible();
+  const first = new Map(); vis.forEach(s => first.set(s, s.el.getBoundingClientRect()));   // READ
+  ixZoom = z; ixLayout();                                                                  // WRITE (new positions)
+  const last = new Map(); vis.forEach(s => last.set(s, s.el.getBoundingClientRect()));      // READ (one flush)
+  const H = window.innerHeight, M = 200;
+  vis.forEach(s => {                                                                        // WRITE (compositor only)
+    const f = first.get(s), l = last.get(s); if (!f || !l) return;
+    if ((f.bottom < -M || f.top > H + M) && (l.bottom < -M || l.top > H + M)) return;       // off-screen before AND after → skip
     const dx = f.left - l.left, dy = f.top - l.top, sx = (f.width / l.width) || 1, sy = (f.height / l.height) || 1;
     if (dx || dy || sx !== 1 || sy !== 1) {
       s.el.getAnimations().forEach(a => a.cancel());
