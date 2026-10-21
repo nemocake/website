@@ -232,10 +232,14 @@ markTheme();
   if (!slug) { const m = location.hash.match(/^#\/s\/[^/]+\/([^/?#]+)/); if (m) slug = decodeURIComponent(m[1]); }
   if (!slug) { const m = location.hash.match(/^#s-(.+)$/); const g = m && GROUPS.find(g => g.id === m[1]); if (g) slug = g.works[0].slug; }
   slug = SLUG_ALIAS[slug] || slug;
-  if (slug) { const n = W.findIndex(w => w.slug === slug); if (n >= 0) { wi = n; k = Math.min(Math.max(0, +q.get("p") || 0), W[n].images.length - 1); } }
+  let deepLinked = false;
+  if (slug) { const n = W.findIndex(w => w.slug === slug); if (n >= 0) { wi = n; k = Math.min(Math.max(0, +q.get("p") || 0), W[n].images.length - 1); deepLinked = true; } }
 
   buildStrip();
   render(true);
+  // default landing (no piece deep-link) opens the index — the fuller overview of the system;
+  // clicking a tile drops into the piece view (?w=). Keep the bare URL clean.
+  if (!deepLinked) { toggleIndex(true); history.replaceState(null, "", location.pathname); }
 })();
 
 /* ---------- fragments ---------- */
