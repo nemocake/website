@@ -182,6 +182,9 @@ const $ = (s, r = document) => r.querySelector(s);
 // a full http(s) URL (e.g. a video hosted on R2/CDN) is used as-is; a bare name resolves to the work's local asset folder
 const src = (slug, file) => /^https?:\/\//.test(file) ? file : `assets/img/${slug}/${file}${IMG_V}`;
 const thumb = slug => `assets/img/${slug}/thumb.jpg${IMG_V}`;
+// small (≤400px) thumbnail for an index tile — a mirror of the plate under assets/img-thumb/ (see studio/tools/make-index-thumbs.mjs).
+// decode cost scales with pixels, so these decode ~30× cheaper than the full source, which is what the grid-density switch re-pays.
+const ixThumb = (slug, file) => `assets/img-thumb/${slug}/${file.replace(/\.[^.]+$/, "")}.jpg${IMG_V}`;
 const isVid = im => im.video === true || /\.(mp4|webm|mov)$/i.test(im.file);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 const low = s => esc(String(s ?? "").toLowerCase());
@@ -419,7 +422,7 @@ function buildIndex() {
   const plates = GROUPS.flatMap(g => g.works.flatMap(w => w.images.map((im, p) => ({ g: g.id, w, im, p })).filter(x => !isVid(x.im))));
   for (let a = plates.length - 1; a > 0; a--) { const b = Math.floor(rnd() * (a + 1)); [plates[a], plates[b]] = [plates[b], plates[a]]; }
   $("#ix-cats").innerHTML = GROUPS.map((g, n) => `<span class="ix-cat c${n}" data-g="${g.id}">${esc(g.name)}</span>`).join("");
-  $("#ix-grid").innerHTML = plates.map(x => `<a class="ix-t" data-open="${x.w.slug}" data-p="${x.p}" data-g="${x.g}"><img src="${src(x.w.slug, x.im.file)}" loading="lazy" decoding="async" alt="${esc(x.w.name)}"><span class="m"><b>${low(x.w.name)}</b></span></a>`).join("");
+  $("#ix-grid").innerHTML = plates.map(x => `<a class="ix-t" data-open="${x.w.slug}" data-p="${x.p}" data-g="${x.g}"><img src="${ixThumb(x.w.slug, x.im.file)}" onerror="this.onerror=null;this.src='${src(x.w.slug, x.im.file)}'" loading="lazy" decoding="async" alt="${esc(x.w.name)}"><span class="m"><b>${low(x.w.name)}</b></span></a>`).join("");
   ixState = [...$("#ix-grid").children].map((el, n) => ({ el, x: plates[n], ar: plates[n].im.w && plates[n].im.h ? plates[n].im.w / plates[n].im.h : 1, shown: true }));
   ixState.forEach(s => { s.el.addEventListener("mouseenter", () => ixHot(s)); s.el.addEventListener("mouseleave", ixCool); });
   document.querySelectorAll(".ix-cat").forEach(c => {
