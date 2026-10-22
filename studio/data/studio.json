@@ -1839,6 +1839,76 @@
           "caption": "cross-hatch",
           "w": 550,
           "h": 413
+        },
+        {
+          "file": "veil.jpg",
+          "title": "",
+          "caption": "veil",
+          "w": 2000,
+          "h": 1500
+        },
+        {
+          "file": "ukiyoe.jpg",
+          "title": "",
+          "caption": "ukiyo-e separation",
+          "w": 2000,
+          "h": 1500
+        },
+        {
+          "file": "riso-warm.jpg",
+          "title": "",
+          "caption": "riso, warm",
+          "w": 2000,
+          "h": 1500
+        },
+        {
+          "file": "ghosts.jpg",
+          "title": "",
+          "caption": "ghosts",
+          "w": 3200,
+          "h": 1273
+        },
+        {
+          "file": "bounds.jpg",
+          "title": "",
+          "caption": "bounds, a hundred plates",
+          "w": 3200,
+          "h": 2495
+        },
+        {
+          "file": "steel.jpg",
+          "title": "",
+          "caption": "steel",
+          "w": 1480,
+          "h": 1066
+        },
+        {
+          "file": "mondrian-steps.jpg",
+          "title": "",
+          "caption": "mondrian, in six steps",
+          "w": 1480,
+          "h": 1066
+        },
+        {
+          "file": "hatch-steps.jpg",
+          "title": "",
+          "caption": "hatch, in six steps",
+          "w": 1480,
+          "h": 1066
+        },
+        {
+          "file": "study-sheet.jpg",
+          "title": "",
+          "caption": "study sheet",
+          "w": 2000,
+          "h": 1429
+        },
+        {
+          "file": "proof.jpg",
+          "title": "",
+          "caption": "proof",
+          "w": 1400,
+          "h": 1000
         }
       ],
       "series": "misc",
