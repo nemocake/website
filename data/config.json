@@ -594,7 +594,7 @@
         "a collection gallery for art and thoughts around it, a writings section for ramblings, projects to see what im tinkering with, and are.na pulls for what inspires me the most. who knows what ill wanna add next"
       ],
       "featured": true,
-      "order": 5
+      "order": 10
     },
     "pantry-planner": {
       "description": "meal planning and grocery management",
@@ -620,6 +620,7 @@
     },
     "latent-sync": {
       "private": true,
+      "hidden": true,
       "title": "Better Persistent Memory System",
       "description": "transforming claude from a temporary contractor into a long-term partner",
       "details": [
@@ -668,6 +669,7 @@
     },
     "cyberclaude": {
       "private": true,
+      "hidden": true,
       "title": "cyberClaude",
       "description": "personal dashboard monitor specialized for claude",
       "details": [
